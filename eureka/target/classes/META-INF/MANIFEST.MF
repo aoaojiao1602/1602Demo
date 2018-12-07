@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
-Implementation-Title: gezhenzhen
+Implementation-Title: eureka
 Implementation-Version: 0.0.1-SNAPSHOT
 Built-By: ￥ﾈﾘ￦ﾖﾇ￩ﾇﾑ
 Implementation-Vendor-Id: 1602
 Build-Jdk: 1.8.0_152
 Implementation-URL: http://projects.spring.io/spring-boot/zhihuijiaoxu
- e/gezhenzhen/
+ e/eureka/
 Created-By: Maven Integration for Eclipse
 Implementation-Vendor: Pivotal Software, Inc.
 
