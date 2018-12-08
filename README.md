@@ -1,7 +1,8 @@
 zhihuijiaoxue（智慧教学）为1602班总项目<br/>
 -------------------------------项目结构介绍----------------------------------------<br/>
 ├── db                                数据库<br/>
-├── eureka                            注册中心项目<br/>
+├── eureka                            注册中心项目8888<br/>
+├── zuul                              网关8080<br/>
 │   ├── gezhenzhenDb                        葛珍珍数据库<br/>
 │   ├── huangjiongDb                        黄炯数据库<br/>
 │   ├── liuhaofeiDb                         刘豪飞数据库<br/>
@@ -26,6 +27,8 @@ jdk 1.8+<br/>
 eureka注册中心地址<br/>
 defaultZone: http://localhost:8888/eureka/<br/>
 注册服务名称（ application: name） 组长名全拼<br/>
+网关<br/>
+端口号8080<br/>
 8001 黄炯组<br/>
 8002 葛珍珍<br/>
 8003 朱龙豪<br/>
