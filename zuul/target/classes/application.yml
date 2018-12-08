@@ -9,7 +9,7 @@ server:
 spring:
   application:
   #服务名称,随便写
-    name: service-zuul
+    name: zuul
 #------------------------------ 默认行为 ----------------------------------------
 #使用Eureka注册中心则zuul服务网关会自动生成以下路由规则
 #zuul:
