@@ -3,12 +3,6 @@ zhihuijiaoxue（智慧教学）为1602班总项目<br/>
 ├── db                                数据库<br/>
 ├── eureka                            注册中心项目8888<br/>
 ├── zuul                              网关8080<br/>
-│   ├── gezhenzhenDb                        葛珍珍数据库<br/>
-│   ├── huangjiongDb                        黄炯数据库<br/>
-│   ├── liuhaofeiDb                         刘豪飞数据库<br/>
-│   ├── liuwenjinDb                         刘文金数据库<br/>
-│   ├── yongwenzhengDb                      雍文正数据库<br/>
-│   ├── zhulonghaoDb                        朱龙豪数据库<br/>
 ├── gezhenzhen                        葛珍珍项目<br/>
 ├── huangjiong                        黄炯数项目<br/>
 ├── liuhaofei                         刘豪飞项目<br/>
@@ -16,6 +10,12 @@ zhihuijiaoxue（智慧教学）为1602班总项目<br/>
 ├── yongwenzheng                      雍文正项目<br/>
 ├── zhulonghao                        朱龙豪项目<br/>
 ├── static                            每个小组公共资源<br/>
+│   ├── gezhenzhen                        葛珍珍小组资源<br/>
+│   ├── huangjiong                        黄炯小组资源<br/>
+│   ├── liuhaofei                         刘豪飞小组资源<br/>
+│   ├── liuwenjin                         刘文金小组资源<br/>
+│   ├── yongwenzheng                      雍文正小组资源<br/>
+│   ├── zhulonghao                        朱龙豪小组资源<br/>
 ├── public                            项目公用资源<br/>
 ├── pom.xml <br/>
 -------------------------------项目规范说明---------------------------------------<br/>
