@@ -1,0 +1,41 @@
+eureka:
+  client:
+    serviceUrl:
+    #eureka注册中心地址
+      defaultZone: http://localhost:8888/eureka/
+server:
+#项目端口号
+  port: 8889
+spring:
+  application:
+  #服务名称,随便写
+    name: service-zuul
+#------------------------------ 默认行为 ----------------------------------------
+#使用Eureka注册中心则zuul服务网关会自动生成以下路由规则
+#zuul:
+#  routes:
+#    api-a:
+#      path: /service-provider/**
+#      service-id: service-provider
+#    api-b:
+#      path: /service-consumer/**
+#      service-id: service-consumer
+
+#访问http://127.0.0.1:8889/service-provider/getFuture?token=666
+#会被服务网关zuul转发到http://127.0.0.1:8002/getFuture?token=666
+#http://127.0.0.1:8889/service-consumer/getProviderFuture?token=666
+#会被服务网关zuul被转发到http://127.0.0.1:8001/getProviderFutur?token=666
+#-------------------------------- 自定义配置  --------------------------------------
+#亦可以自定义配置zuul服务网关的路由规则
+#zuul:
+#  routes:
+#    api-a:
+#      path: /api-provider/**
+#      service-id: service-provider
+#    api-b:
+#      path: /api-consumer/**
+#      service-id: service-consumer
+
+#发送请求http://127.0.0.1:8889/api-consumer/getProviderFuture?token=666
+#会被服务网关zuul被转发到http://127.0.0.1:8001/getProviderFutur?token=666
+
