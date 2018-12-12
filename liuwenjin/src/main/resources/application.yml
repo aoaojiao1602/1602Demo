@@ -19,9 +19,15 @@ spring:
     username: root
     password: admin
     driver-class-name: com.mysql.jdbc.Driver
- ##JPA配置 
+  ##JPA配置 
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true
     hibernate: 
       ddl-auto: update
+  ##rabbitmq配置 
+  ##rabbitmq:
+    ##host: localhost
+    ##port: 5672
+    ##username: guest
+    ##password: guest
