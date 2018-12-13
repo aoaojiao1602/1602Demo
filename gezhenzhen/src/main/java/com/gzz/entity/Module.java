@@ -1,10 +1,16 @@
 package com.gzz.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -22,6 +28,8 @@ public class Module {
 	private String moduleName;
 	@Column(length=100)
 	private String moduleTitle;
+	@OneToMany(mappedBy="module",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	private List<Project> project=new ArrayList<>();
 	@Transient
 	private Integer Exet1;
 	@Transient
