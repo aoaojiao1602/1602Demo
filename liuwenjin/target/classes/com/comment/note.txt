@@ -1,0 +1,59 @@
+********************* Eureka 服务器提供者  步骤: 6步************
+1>创建SpringBoot项目
+2>2>在pom.xml文件中
+引入Eureka依赖 spring-cloud-starter-eureka-server
+配置 SpringCloud 的子项目版本集中管理 依赖 spring-cloud-dependencies
+配置 SpringCloud 官方远程仓库 https://repo.spring.io/milestone
+
+引入 Eureka依赖
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-eureka</artifactId>
+		</dependency>
+		
+		
+<!-- spring Cloud 依赖管理 :使用springCloud 直接引入SpringCloud环境 -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>Dalston.RC1</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+	
+<!-- spring Cloud 官方提供的库 :使用springCloud 的里程碑版框架直接引入官方提供的库 -->	
+	<repositories>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	
+	
+3> 在项目配置文件application.yml中配置eureka
+eureka:
+  client:
+    serviceUrl:
+    #eureka注册中心地址
+      defaultZone: http://localhost:8888/eureka/
+server:
+#项目端口号
+  port: 8002
+spring:
+  application:
+  #服务名称,随便写
+    name: service-provider
+4>随便写一个控制器服务
+5>在项目入口函数上启用注册中心 客户端@EnableEurekaClient
+6>启动项目
+访问  http://localhost:8002/getFuture 说明项目启动成功
+访问注册中心  http://localhost:8888/ 看到注册中心已经注册service-provider服务
