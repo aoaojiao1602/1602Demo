@@ -13,13 +13,13 @@ public class Courseware {
 	@GeneratedValue
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注:课件编号'  ")
 	private int cw_id;
-	@Column(columnDefinition="comment '备注:课件所属课时 ' ")
+	@Column(columnDefinition="varchar(50) comment '备注:课件所属课时 ' ")
 	private String cw_hour;
-	@Column(columnDefinition="comment '备注:课件类型 ' ")
+	@Column(columnDefinition="varchar(50) comment '备注:课件类型 ' ")
 	private String cw_category;
-	@Column(columnDefinition="comment '备注:课件名称 ' ")
+	@Column(columnDefinition="varchar(50) comment '备注:课件名称 ' ")
 	private String cw_name;
-	@Column(columnDefinition="comment '备注:课件资源URL'")
+	@Column(columnDefinition="varchar(50) comment '备注:课件资源URL'")
 	private String cw_URL;
 	public Courseware() {
 		super();

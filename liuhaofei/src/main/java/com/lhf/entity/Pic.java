@@ -13,9 +13,9 @@ public class Pic {
 	@GeneratedValue
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注:图片编号'  ")
 	private int pic_id;
-	@Column(columnDefinition="comment '备注:所属课程 ' ")
+	@Column(columnDefinition="varchar(50) comment '备注:所属课程 ' ")
 	private String pic_course;
-	@Column(columnDefinition="comment '备注:图片资源URL' ")
+	@Column(columnDefinition="varchar(80) comment '备注:图片资源URL' ")
 	private String pic_URL;
 	public Pic() {
 		super();
