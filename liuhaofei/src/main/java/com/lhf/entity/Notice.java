@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="notice")
@@ -24,7 +23,6 @@ public class Notice {
 	@Column(columnDefinition="comment '备注:公告内容 ' ")
 	private String notice_content;
 	@Column(columnDefinition="comment '备注:发布时间 ' ")
-	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date notice_time;
 	public Notice() {
 		super();
