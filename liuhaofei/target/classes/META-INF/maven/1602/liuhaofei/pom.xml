@@ -21,11 +21,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<!-- Spring Boot devtools 热部署 依赖 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-		</dependency>
+		
 		<!-- Spring Boot JPA 依赖 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
