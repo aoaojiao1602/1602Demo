@@ -33,6 +33,36 @@ public class ProjectReplyNotGood {
 	private Integer Exet1;
 	@Transient
 	private String Exet2;
+	public Integer getProjectReplyNotGoodId() {
+		return ProjectReplyNotGoodId;
+	}
+	public void setProjectReplyNotGoodId(Integer projectReplyNotGoodId) {
+		ProjectReplyNotGoodId = projectReplyNotGoodId;
+	}
+	public ProjectReply getProjectReply() {
+		return projectReply;
+	}
+	public void setProjectReply(ProjectReply projectReply) {
+		this.projectReply = projectReply;
+	}
+	public Integer getProjectReplyNotGoodUid() {
+		return ProjectReplyNotGoodUid;
+	}
+	public void setProjectReplyNotGoodUid(Integer projectReplyNotGoodUid) {
+		ProjectReplyNotGoodUid = projectReplyNotGoodUid;
+	}
+	public Integer getExet1() {
+		return Exet1;
+	}
+	public void setExet1(Integer exet1) {
+		Exet1 = exet1;
+	}
+	public String getExet2() {
+		return Exet2;
+	}
+	public void setExet2(String exet2) {
+		Exet2 = exet2;
+	}
 
 
 }

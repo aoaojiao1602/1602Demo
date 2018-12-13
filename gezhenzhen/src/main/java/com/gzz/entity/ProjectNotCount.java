@@ -33,6 +33,36 @@ public class ProjectNotCount {
 	private Integer Exet1;
 	@Transient
 	private String Exet2;
+	public Integer getProjectNotCountId() {
+		return projectNotCountId;
+	}
+	public void setProjectNotCountId(Integer projectNotCountId) {
+		this.projectNotCountId = projectNotCountId;
+	}
+	public Project getProject() {
+		return project;
+	}
+	public void setProject(Project project) {
+		this.project = project;
+	}
+	public Integer getProjectNotCountUid() {
+		return projectNotCountUid;
+	}
+	public void setProjectNotCountUid(Integer projectNotCountUid) {
+		this.projectNotCountUid = projectNotCountUid;
+	}
+	public Integer getExet1() {
+		return Exet1;
+	}
+	public void setExet1(Integer exet1) {
+		Exet1 = exet1;
+	}
+	public String getExet2() {
+		return Exet2;
+	}
+	public void setExet2(String exet2) {
+		Exet2 = exet2;
+	}
 
 
 }

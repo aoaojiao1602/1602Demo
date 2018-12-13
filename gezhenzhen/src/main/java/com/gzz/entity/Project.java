@@ -64,5 +64,101 @@ public class Project {
 	private Integer Exet1;
 	@Transient
 	private String Exet2;
+	public Integer getProjectId() {
+		return projectId;
+	}
+	public void setProjectId(Integer projectId) {
+		this.projectId = projectId;
+	}
+	public Integer getuId() {
+		return uId;
+	}
+	public void setuId(Integer uId) {
+		this.uId = uId;
+	}
+	public Module getModule() {
+		return module;
+	}
+	public void setModule(Module module) {
+		this.module = module;
+	}
+	public Integer getClazzId() {
+		return clazzId;
+	}
+	public void setClazzId(Integer clazzId) {
+		this.clazzId = clazzId;
+	}
+	public Integer getProjectState() {
+		return projectState;
+	}
+	public void setProjectState(Integer projectState) {
+		this.projectState = projectState;
+	}
+	public String getProjectTitle() {
+		return projectTitle;
+	}
+	public void setProjectTitle(String projectTitle) {
+		this.projectTitle = projectTitle;
+	}
+	public String getProjectContent() {
+		return projectContent;
+	}
+	public void setProjectContent(String projectContent) {
+		this.projectContent = projectContent;
+	}
+	public Date getProjectCreatetime() {
+		return projectCreatetime;
+	}
+	public void setProjectCreatetime(Date projectCreatetime) {
+		this.projectCreatetime = projectCreatetime;
+	}
+	public Timestamp getProjectLastTime() {
+		return projectLastTime;
+	}
+	public void setProjectLastTime(Timestamp projectLastTime) {
+		this.projectLastTime = projectLastTime;
+	}
+	public List<ProjectReply> getProjectReply() {
+		return projectReply;
+	}
+	public void setProjectReply(List<ProjectReply> projectReply) {
+		this.projectReply = projectReply;
+	}
+	public List<ProjectCount> getProjectCount() {
+		return projectCount;
+	}
+	public void setProjectCount(List<ProjectCount> projectCount) {
+		this.projectCount = projectCount;
+	}
+	public List<ProjectNotCount> getProjectNotCountsCount() {
+		return projectNotCountsCount;
+	}
+	public void setProjectNotCountsCount(List<ProjectNotCount> projectNotCountsCount) {
+		this.projectNotCountsCount = projectNotCountsCount;
+	}
+	public List<ProjectReport> getProjectReport() {
+		return projectReport;
+	}
+	public void setProjectReport(List<ProjectReport> projectReport) {
+		this.projectReport = projectReport;
+	}
+	public List<Through> getThrough() {
+		return through;
+	}
+	public void setThrough(List<Through> through) {
+		this.through = through;
+	}
+	public Integer getExet1() {
+		return Exet1;
+	}
+	public void setExet1(Integer exet1) {
+		Exet1 = exet1;
+	}
+	public String getExet2() {
+		return Exet2;
+	}
+	public void setExet2(String exet2) {
+		Exet2 = exet2;
+	}
 	
 }
