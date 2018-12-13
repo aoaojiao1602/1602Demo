@@ -15,7 +15,7 @@ spring:
     name: liuwenjin
   ## 数据源配置 
   datasource:
-    url: jdbc:mysql://localhost:3306/springbootjpdb?useUnicode=true&characterEncoding=utf8&useSSL=true
+    url: jdbc:mysql://localhost:3306/liuwenjin?useUnicode=true&characterEncoding=utf8&useSSL=true
     username: root
     password: admin
     driver-class-name: com.mysql.jdbc.Driver
