@@ -21,7 +21,7 @@ spring:
   #服务名称,随便写
     name: zhulonghao
 
-### 数据源配置
+### 数据源配置6666
 #spring.datasource.url=jdbc:mysql://localhost:3306/springbootall?useUnicode=true&characterEncoding=utf8
 #spring.datasource.username=root
 #spring.datasource.password=
