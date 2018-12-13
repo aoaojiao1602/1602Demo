@@ -13,9 +13,9 @@ public class Score {
 	@GeneratedValue
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注:评分标准编号'  ")
 	private int score_id;
-	@Column(columnDefinition="comment '备注:所属课程 ' ")
+	@Column(columnDefinition="varchar(50) comment '备注:所属课程 ' ")
 	private String score_course;
-	@Column(columnDefinition="comment '备注:内容 ' ")
+	@Column(columnDefinition="varchar(100) comment '备注:内容 ' ")
 	private String score_content;
 	public Score() {
 		super();

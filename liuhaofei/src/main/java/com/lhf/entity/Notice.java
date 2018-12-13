@@ -16,13 +16,13 @@ public class Notice {
 	@GeneratedValue
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注:公告编号'  ")
 	private int notice_id;
-	@Column(columnDefinition="comment '备注:公告所属课程 ' ")
+	@Column(columnDefinition="varchar(50) comment '备注:公告所属课程 ' ")
 	private String notice_course;
-	@Column(columnDefinition="comment '备注:公告名称 ' ")
+	@Column(columnDefinition="varchar(50) comment '备注:公告名称 ' ")
 	private String notice_name;
-	@Column(columnDefinition="comment '备注:公告内容 ' ")
+	@Column(columnDefinition="varchar(100) comment '备注:公告内容 ' ")
 	private String notice_content;
-	@Column(columnDefinition="comment '备注:发布时间 ' ")
+	@Column(columnDefinition="timestamp comment '备注:发布时间 ' ")
 	private Date notice_time;
 	public Notice() {
 		super();

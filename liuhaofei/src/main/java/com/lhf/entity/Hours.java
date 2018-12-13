@@ -14,11 +14,11 @@ public class Hours {
 	@GeneratedValue
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注:课时编号'  ")
 	private int hour_id;
-	@Column(columnDefinition="comment '备注:课时所属课程 ' ")
+	@Column(columnDefinition="varchar(50) comment '备注:课时所属课程 ' ")
 	private String hour_course;
-	@Column(columnDefinition="comment '备注:课时父id ' ")
+	@Column(columnDefinition="int comment '备注:课时父id ' ")
 	private int hour_parent_id;
-	@Column(columnDefinition="comment '课时名称 ' ")
+	@Column(columnDefinition="varchar(50) comment '课时名称 ' ")
 	private String hour_name;
 	@Transient
 	private String hour_xxx;

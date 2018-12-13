@@ -1,6 +1,8 @@
 package com.lhf.entity;
 
-import java.sql.Date;
+
+
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,19 +18,19 @@ public class Courses {
 	@GeneratedValue
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注:课程编号'")
 	private int Course_id;
-	@Column(columnDefinition="comment '备注:课程类别'")
+	@Column(columnDefinition="varchar(50) comment '备注:课程类别'")
 	private String Course_category;
-	@Column(columnDefinition="comment '备注:课程名称'")
+	@Column(columnDefinition="varchar(50) comment '备注:课程名称'")
 	private String Course_name;
-	@Column(columnDefinition="comment '备注:课程说明'")
+	@Column(columnDefinition="varchar(100) comment '备注:课程说明'")
 	private String Course_remark;
-	@Column(columnDefinition="comment '备注:课程创建者'")
+	@Column(columnDefinition="varchar(50) comment '备注:课程创建者'")
 	private String Course_creator;
-	@Column(columnDefinition="comment '备注:是否发布'")
+	@Column(columnDefinition="varchar(10) comment '备注:是否发布'")
 	private String Course_state;
-	@Column(columnDefinition="comment '备注:创建时间'")
+	@Column(columnDefinition="timestamp comment'备注:创建时间'")
 	private Date Course_create_time;
-	@Column(columnDefinition="comment '备注:编辑时间'")
+	@Column(columnDefinition="timestamp comment'备注:编辑时间'")
 	private Date Course_editor_time;
 	public Courses() {
 		super();
