@@ -5,9 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -18,8 +21,12 @@ public class CommentNotGrate {
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注：评论点踩表自动增长主键'")
 	@JsonProperty(value ="id")
 	private Integer CommentNotGrateId;
-	@Column(columnDefinition="int unsigned NOT NULL comment '备注：评论表id外键'")
-	private Integer CommentNotGrateCommentId;
+	@JsonIgnore
+	@ManyToOne(targetEntity = ProjectReply.class)
+	@JoinColumn(name="CommentNotGrateCommentId")
+	private Comment comment;
+	/*@Column(columnDefinition="int unsigned NOT NULL comment '备注：评论表id外键'")
+	private Integer CommentNotGrateCommentId;*/
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注：用户的id外键'")
 	private Integer CommentNotGrateUid;
 	@Transient

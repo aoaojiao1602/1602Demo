@@ -5,9 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -18,8 +21,12 @@ public class ProjectReplyNotGood {
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注：回复点踩自动增长主键'")
 	@JsonProperty(value ="id")
 	private Integer ProjectReplyNotGoodId;
-	@Column(columnDefinition="int unsigned NOT NULL comment '备注：回复表的id外键'")
-	private Integer ProjectReplyNotGoodProjectReplyId;
+	@JsonIgnore
+	@ManyToOne(targetEntity = ProjectReply.class)
+	@JoinColumn(name="ProjectReplyNotGoodProjectReplyId")
+	private ProjectReply projectReply;
+	/*@Column(columnDefinition="int unsigned NOT NULL comment '备注：回复表的id外键'")
+	private Integer ProjectReplyNotGoodProjectReplyId;*/
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注：用户的id外键'")
 	private Integer ProjectReplyNotGoodUid;
 	@Transient
