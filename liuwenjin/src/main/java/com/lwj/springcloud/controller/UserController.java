@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 /**
  * 
  * @Description:   
@@ -33,5 +34,6 @@ public class UserController {
 		list.add("出自端口号:"+serverPort);
 		return list;
 	}
+	
 
 }

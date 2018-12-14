@@ -38,16 +38,16 @@ public class Examinfo {
 	@GeneratedValue	
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注:自动增长主键'")
 	private Integer exId;
-	@Column(columnDefinition="TIMESTAMP",nullable=false,updatable=false,insertable=false)
-	private Timestamp startTime;
-	@Column(columnDefinition="TIMESTAMP",nullable=false,updatable=false,insertable=false)
-	private Timestamp endTime;
+	@Column(columnDefinition="date NOT NULL comment '备注:考试开始时间'")
+	private Date startTime;
+	@Column(columnDefinition="date NOT NULL comment '备注:考试结束时间'")
+	private Date endTime;
 	@Column(columnDefinition="varchar(100) NOT NULL comment '备注:试卷名'")
-	private String paperName;
+	private String paperName;	
 	@Column(columnDefinition="int NOT NULL comment '备注:持续时间'")
 	private Integer cxTime;
-	@Column(columnDefinition="int NOT NULL comment '备注:考试建立时间'")
-	private Date createTime;
+	@Column(columnDefinition="TIMESTAMP",nullable=false,updatable=false,insertable=false)
+	private Timestamp createTime;
 	@Column(columnDefinition="int comment '备注:教师Id'")
 	private Integer teacherId;
 	@Column(columnDefinition="int comment '备注:选择题数量'")
