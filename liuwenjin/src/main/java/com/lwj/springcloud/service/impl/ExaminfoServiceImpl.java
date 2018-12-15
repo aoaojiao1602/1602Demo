@@ -14,15 +14,17 @@ public class ExaminfoServiceImpl implements ExaminfoService {
 	private ExaminfoRepository eRepository;
 
 	@Override
+	@Transactional
 	public Examinfo insertExaminfo(Examinfo examinfo) {
 		// TODO Auto-generated method stub
 		return eRepository.save(examinfo);
 	}
 
 	@Override
+	@Transactional
 	public int updateExaminfo(Examinfo examinfo) {
 		// TODO Auto-generated method stub
-		return 0;
+		return eRepository.updateQuestion(examinfo);
 	}
 
 	@Override
