@@ -33,6 +33,36 @@ public class Through {
 	private Integer Exet1;
 	@Transient
 	private String Exet2;
+	public Integer getThroughId() {
+		return ThroughId;
+	}
+	public void setThroughId(Integer throughId) {
+		ThroughId = throughId;
+	}
+	public Integer getThroughUid() {
+		return ThroughUid;
+	}
+	public void setThroughUid(Integer throughUid) {
+		ThroughUid = throughUid;
+	}
+	public Project getProject() {
+		return project;
+	}
+	public void setProject(Project project) {
+		this.project = project;
+	}
+	public Integer getExet1() {
+		return Exet1;
+	}
+	public void setExet1(Integer exet1) {
+		Exet1 = exet1;
+	}
+	public String getExet2() {
+		return Exet2;
+	}
+	public void setExet2(String exet2) {
+		Exet2 = exet2;
+	}
 
 
 }

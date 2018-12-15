@@ -1,6 +1,7 @@
 package com.lwj.springcloud.entity;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,6 +22,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
@@ -42,7 +44,8 @@ public class Question {
 	@Column(columnDefinition="int NOT NULL comment '备注:章节id'")
 	private Integer sectionId;
 	@Column(columnDefinition="TIMESTAMP",nullable=false,updatable=false,insertable=false)
-	private Timestamp createTime;
+	@JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd")
+	private Date createTime;
 	@ManyToOne(optional = false,targetEntity = Options.class)
 	@JoinColumn(name="option_id")
 	private Options optionId;
