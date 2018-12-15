@@ -15,13 +15,13 @@ public class FansServicesImpl implements FansServices {
 	private FansRepository fdao;
 
 	@Override
-	public List<Fans> getMyFans(String uid) {
+	public List<Fans> getMyFans(Integer uid) {
 
 		return fdao.getMyFans(uid);
 	}
 
 	@Override
-	public List<Fans> getMyfocus(String uid) {
+	public List<Fans> getMyfocus(Integer uid) {
 		return fdao.getMyfocus(uid);
 	}
 

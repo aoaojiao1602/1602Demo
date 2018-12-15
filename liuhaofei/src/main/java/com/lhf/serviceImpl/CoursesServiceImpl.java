@@ -1,6 +1,7 @@
 package com.lhf.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import com.lhf.entity.Courses;
@@ -17,8 +18,8 @@ public class CoursesServiceImpl implements CoursesService {
 	}
 
 	@Override
-	public int deleteCoursesById(Integer Course_id) {
-		return cRepository.deleteCoursesById(Course_id);
+	public int deleteCoursesById(Integer CourseId) {
+		return cRepository.deleteCoursesById(CourseId);
 	}
 
 	@Override
@@ -26,4 +27,12 @@ public class CoursesServiceImpl implements CoursesService {
 		return cRepository.postCoursesById(c);
 	}
 
+	@Override
+	public Page<Courses> queryNameLikeAllPage(String nameLike, Integer page, Integer size) {
+		Sort sort = new Sort(Sort.Direction.ASC, "CourseId"); 
+	    Pageable pageable = new PageRequest(page, size, sort);
+		return cRepository.findByCourseNameLike("%"+nameLike+"%", pageable);
+	}
+
+	
 }

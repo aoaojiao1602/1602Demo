@@ -34,6 +34,42 @@ public class Module {
 	private Integer Exet1;
 	@Transient
 	private String Exet2;
+	public Integer getModuleId() {
+		return moduleId;
+	}
+	public void setModuleId(Integer moduleId) {
+		this.moduleId = moduleId;
+	}
+	public String getModuleName() {
+		return moduleName;
+	}
+	public void setModuleName(String moduleName) {
+		this.moduleName = moduleName;
+	}
+	public String getModuleTitle() {
+		return moduleTitle;
+	}
+	public void setModuleTitle(String moduleTitle) {
+		this.moduleTitle = moduleTitle;
+	}
+	public List<Project> getProject() {
+		return project;
+	}
+	public void setProject(List<Project> project) {
+		this.project = project;
+	}
+	public Integer getExet1() {
+		return Exet1;
+	}
+	public void setExet1(Integer exet1) {
+		Exet1 = exet1;
+	}
+	public String getExet2() {
+		return Exet2;
+	}
+	public void setExet2(String exet2) {
+		Exet2 = exet2;
+	}
 	
 	
 

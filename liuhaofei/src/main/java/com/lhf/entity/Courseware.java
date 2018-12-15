@@ -12,61 +12,62 @@ public class Courseware {
 	@Id
 	@GeneratedValue
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注:课件编号'  ")
-	private int cw_id;
+	private int cwId;
 	@Column(columnDefinition="varchar(50) comment '备注:课件所属课时 ' ")
-	private String cw_hour;
+	private String cwHour;
 	@Column(columnDefinition="varchar(50) comment '备注:课件类型 ' ")
-	private String cw_category;
+	private String cwCategory;
 	@Column(columnDefinition="varchar(50) comment '备注:课件名称 ' ")
-	private String cw_name;
+	private String cwName;
 	@Column(columnDefinition="varchar(50) comment '备注:课件资源URL'")
-	private String cw_URL;
+	private String cwUrl;
 	public Courseware() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Courseware(int cw_id, String cw_hour, String cw_category, String cw_name, String cw_URL) {
+	public Courseware(int cwId, String cwHour, String cwCategory, String cwName, String cwUrl) {
 		super();
-		this.cw_id = cw_id;
-		this.cw_hour = cw_hour;
-		this.cw_category = cw_category;
-		this.cw_name = cw_name;
-		this.cw_URL = cw_URL;
+		this.cwId = cwId;
+		this.cwHour = cwHour;
+		this.cwCategory = cwCategory;
+		this.cwName = cwName;
+		this.cwUrl = cwUrl;
 	}
-	public int getCw_id() {
-		return cw_id;
+	public int getCwId() {
+		return cwId;
 	}
-	public void setCw_id(int cw_id) {
-		this.cw_id = cw_id;
+	public void setCwId(int cwId) {
+		this.cwId = cwId;
 	}
-	public String getCw_hour() {
-		return cw_hour;
+	public String getCwHour() {
+		return cwHour;
 	}
-	public void setCw_hour(String cw_hour) {
-		this.cw_hour = cw_hour;
+	public void setCwHour(String cwHour) {
+		this.cwHour = cwHour;
 	}
-	public String getCw_category() {
-		return cw_category;
+	public String getCwCategory() {
+		return cwCategory;
 	}
-	public void setCw_category(String cw_category) {
-		this.cw_category = cw_category;
+	public void setCwCategory(String cwCategory) {
+		this.cwCategory = cwCategory;
 	}
-	public String getCw_name() {
-		return cw_name;
+	public String getCwName() {
+		return cwName;
 	}
-	public void setCw_name(String cw_name) {
-		this.cw_name = cw_name;
+	public void setCwName(String cwName) {
+		this.cwName = cwName;
 	}
-	public String getCw_URL() {
-		return cw_URL;
+	public String getCwUrl() {
+		return cwUrl;
 	}
-	public void setCw_URL(String cw_URL) {
-		this.cw_URL = cw_URL;
+	public void setCwUrl(String cwUrl) {
+		this.cwUrl = cwUrl;
 	}
 	@Override
 	public String toString() {
-		return "Courseware [cw_id=" + cw_id + ", cw_hour=" + cw_hour + ", cw_category=" + cw_category + ", cw_name="
-				+ cw_name + ", cw_URL=" + cw_URL + "]";
+		return "Courseware [cwId=" + cwId + ", cwHour=" + cwHour + ", cwCategory=" + cwCategory + ", cwName=" + cwName
+				+ ", cwUrl=" + cwUrl + "]";
 	}
+	
 
 }

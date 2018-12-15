@@ -52,6 +52,73 @@ public class Comment {
 	private Integer Exet1;
 	@Transient
 	private String Exet2;
+	public Integer getCommentId() {
+		return commentId;
+	}
+	public void setCommentId(Integer commentId) {
+		this.commentId = commentId;
+	}
+	public ProjectReply getProjectReply() {
+		return projectReply;
+	}
+	public void setProjectReply(ProjectReply projectReply) {
+		this.projectReply = projectReply;
+	}
+	public Integer getCommentUid() {
+		return commentUid;
+	}
+	public void setCommentUid(Integer commentUid) {
+		this.commentUid = commentUid;
+	}
+	public Integer getParentId() {
+		return parentId;
+	}
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
+	}
+	public String getCommentContent() {
+		return commentContent;
+	}
+	public void setCommentContent(String commentContent) {
+		this.commentContent = commentContent;
+	}
+	public Timestamp getCommentCreatetime() {
+		return commentCreatetime;
+	}
+	public void setCommentCreatetime(Timestamp commentCreatetime) {
+		this.commentCreatetime = commentCreatetime;
+	}
+	public List<CommentGrate> getCommentGrate() {
+		return commentGrate;
+	}
+	public void setCommentGrate(List<CommentGrate> commentGrate) {
+		this.commentGrate = commentGrate;
+	}
+	public List<CommentNotGrate> getCommentNotGrate() {
+		return commentNotGrate;
+	}
+	public void setCommentNotGrate(List<CommentNotGrate> commentNotGrate) {
+		this.commentNotGrate = commentNotGrate;
+	}
+	public List<CommentReport> getCommentReport() {
+		return commentReport;
+	}
+	public void setCommentReport(List<CommentReport> commentReport) {
+		this.commentReport = commentReport;
+	}
+	public Integer getExet1() {
+		return Exet1;
+	}
+	public void setExet1(Integer exet1) {
+		Exet1 = exet1;
+	}
+	public String getExet2() {
+		return Exet2;
+	}
+	public void setExet2(String exet2) {
+		Exet2 = exet2;
+	}
+	
 	
 	
 

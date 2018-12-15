@@ -15,61 +15,63 @@ public class Notice {
 	@Id
 	@GeneratedValue
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注:公告编号'  ")
-	private int notice_id;
+	private int noticeId;
 	@Column(columnDefinition="varchar(50) comment '备注:公告所属课程 ' ")
-	private String notice_course;
+	private String noticeCourse;
 	@Column(columnDefinition="varchar(50) comment '备注:公告名称 ' ")
-	private String notice_name;
+	private String noticeName;
 	@Column(columnDefinition="varchar(100) comment '备注:公告内容 ' ")
-	private String notice_content;
+	private String noticeContent;
 	@Column(columnDefinition="timestamp comment '备注:发布时间 ' ")
-	private Date notice_time;
+	private Date noticeTime;
 	public Notice() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Notice(int notice_id, String notice_course, String notice_name, String notice_content, Date notice_time) {
+	public Notice(int noticeId, String noticeCourse, String noticeName, String noticeContent, Date noticeTime) {
 		super();
-		this.notice_id = notice_id;
-		this.notice_course = notice_course;
-		this.notice_name = notice_name;
-		this.notice_content = notice_content;
-		this.notice_time = notice_time;
+		this.noticeId = noticeId;
+		this.noticeCourse = noticeCourse;
+		this.noticeName = noticeName;
+		this.noticeContent = noticeContent;
+		this.noticeTime = noticeTime;
 	}
-	public int getNotice_id() {
-		return notice_id;
+	public int getNoticeId() {
+		return noticeId;
 	}
-	public void setNotice_id(int notice_id) {
-		this.notice_id = notice_id;
+	public void setNoticeId(int noticeId) {
+		this.noticeId = noticeId;
 	}
-	public String getNotice_course() {
-		return notice_course;
+	public String getNoticeCourse() {
+		return noticeCourse;
 	}
-	public void setNotice_course(String notice_course) {
-		this.notice_course = notice_course;
+	public void setNoticeCourse(String noticeCourse) {
+		this.noticeCourse = noticeCourse;
 	}
-	public String getNotice_name() {
-		return notice_name;
+	public String getNoticeName() {
+		return noticeName;
 	}
-	public void setNotice_name(String notice_name) {
-		this.notice_name = notice_name;
+	public void setNoticeName(String noticeName) {
+		this.noticeName = noticeName;
 	}
-	public String getNotice_content() {
-		return notice_content;
+	public String getNoticeContent() {
+		return noticeContent;
 	}
-	public void setNotice_content(String notice_content) {
-		this.notice_content = notice_content;
+	public void setNoticeContent(String noticeContent) {
+		this.noticeContent = noticeContent;
 	}
-	public Date getNotice_time() {
-		return notice_time;
+	public Date getNoticeTime() {
+		return noticeTime;
 	}
-	public void setNotice_time(Date notice_time) {
-		this.notice_time = notice_time;
+	public void setNoticeTime(Date noticeTime) {
+		this.noticeTime = noticeTime;
 	}
 	@Override
 	public String toString() {
-		return "Notice [notice_id=" + notice_id + ", notice_course=" + notice_course + ", notice_name=" + notice_name
-				+ ", notice_content=" + notice_content + ", notice_time=" + notice_time + "]";
+		return "Notice [noticeId=" + noticeId + ", noticeCourse=" + noticeCourse + ", noticeName=" + noticeName
+				+ ", noticeContent=" + noticeContent + ", noticeTime=" + noticeTime + "]";
 	}
+	
+	
 
 }
