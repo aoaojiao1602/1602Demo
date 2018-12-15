@@ -1,7 +1,9 @@
 package com.gzz.serviceImpl;
 
-import com.gzz.service.ReplyReportServive;
+import org.springframework.stereotype.Service;
 
+import com.gzz.service.ReplyReportServive;
+@Service
 public class ReplyReportServiveImpl implements ReplyReportServive {
 
 }

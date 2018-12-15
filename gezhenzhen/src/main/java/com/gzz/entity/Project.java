@@ -33,7 +33,7 @@ public class Project {
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注：用户的id外键'")
 	private Integer uId;	
 	@JsonIgnore
-	@ManyToOne(targetEntity = Project.class)
+	@ManyToOne(targetEntity = Module.class)
 	@JoinColumn(name="projectModuleid")
 	private Module module;
 	/*@Column(columnDefinition="int unsigned NOT NULL comment '备注：模块的id外键'")
@@ -159,6 +159,15 @@ public class Project {
 	}
 	public void setExet2(String exet2) {
 		Exet2 = exet2;
+	}
+	@Override
+	public String toString() {
+		return "Project [projectId=" + projectId + ", uId=" + uId + ", module=" + module + ", clazzId=" + clazzId
+				+ ", projectState=" + projectState + ", projectTitle=" + projectTitle + ", projectContent="
+				+ projectContent + ", projectCreatetime=" + projectCreatetime + ", projectLastTime=" + projectLastTime
+				+ ", projectReply=" + projectReply + ", projectCount=" + projectCount + ", projectNotCountsCount="
+				+ projectNotCountsCount + ", projectReport=" + projectReport + ", through=" + through + ", Exet1="
+				+ Exet1 + ", Exet2=" + Exet2 + "]";
 	}
 	
 }

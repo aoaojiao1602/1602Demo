@@ -1,7 +1,9 @@
 package com.gzz.serviceImpl;
 
-import com.gzz.service.ThroughService;
+import org.springframework.stereotype.Service;
 
+import com.gzz.service.ThroughService;
+@Service
 public class ThroughServiceImpl implements ThroughService {
 
 }

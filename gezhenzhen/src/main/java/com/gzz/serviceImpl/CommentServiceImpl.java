@@ -1,7 +1,9 @@
 package com.gzz.serviceImpl;
 
-import com.gzz.service.CommentService;
+import org.springframework.stereotype.Service;
 
+import com.gzz.service.CommentService;
+@Service
 public class CommentServiceImpl implements CommentService {
 
 }
