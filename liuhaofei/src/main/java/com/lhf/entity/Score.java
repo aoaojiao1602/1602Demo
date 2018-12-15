@@ -12,43 +12,43 @@ public class Score {
 	@Id
 	@GeneratedValue
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注:评分标准编号'  ")
-	private int score_id;
+	private int scoreId;
 	@Column(columnDefinition="varchar(50) comment '备注:所属课程 ' ")
-	private String score_course;
+	private String scoreCourse;
 	@Column(columnDefinition="varchar(100) comment '备注:内容 ' ")
-	private String score_content;
+	private String scoreContent;
 	public Score() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Score(int score_id, String score_course, String score_content) {
+	public Score(int scoreId, String scoreCourse, String scoreContent) {
 		super();
-		this.score_id = score_id;
-		this.score_course = score_course;
-		this.score_content = score_content;
+		this.scoreId = scoreId;
+		this.scoreCourse = scoreCourse;
+		this.scoreContent = scoreContent;
 	}
-	public int getScore_id() {
-		return score_id;
+	public int getScoreId() {
+		return scoreId;
 	}
-	public void setScore_id(int score_id) {
-		this.score_id = score_id;
+	public void setScoreId(int scoreId) {
+		this.scoreId = scoreId;
 	}
-	public String getScore_course() {
-		return score_course;
+	public String getScoreCourse() {
+		return scoreCourse;
 	}
-	public void setScore_course(String score_course) {
-		this.score_course = score_course;
+	public void setScoreCourse(String scoreCourse) {
+		this.scoreCourse = scoreCourse;
 	}
-	public String getScore_content() {
-		return score_content;
+	public String getScoreContent() {
+		return scoreContent;
 	}
-	public void setScore_content(String score_content) {
-		this.score_content = score_content;
+	public void setScoreContent(String scoreContent) {
+		this.scoreContent = scoreContent;
 	}
 	@Override
 	public String toString() {
-		return "Score [score_id=" + score_id + ", score_course=" + score_course + ", score_content=" + score_content
-				+ "]";
+		return "Score [scoreId=" + scoreId + ", scoreCourse=" + scoreCourse + ", scoreContent=" + scoreContent + "]";
 	}
+	
 
 }

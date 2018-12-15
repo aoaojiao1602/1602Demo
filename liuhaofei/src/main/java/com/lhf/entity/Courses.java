@@ -17,91 +17,91 @@ public class Courses {
 	@Id
 	@GeneratedValue
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注:课程编号'")
-	private int Course_id;
+	private int CourseId;
 	@Column(columnDefinition="varchar(50) comment '备注:课程类别'")
-	private String Course_category;
+	private String CourseCategory;
 	@Column(columnDefinition="varchar(50) comment '备注:课程名称'")
-	private String Course_name;
+	private String CourseName;
 	@Column(columnDefinition="varchar(100) comment '备注:课程说明'")
-	private String Course_remark;
+	private String CourseRemark;
 	@Column(columnDefinition="varchar(50) comment '备注:课程创建者'")
-	private String Course_creator;
+	private String CourseCreator;
 	@Column(columnDefinition="varchar(10) comment '备注:是否发布'")
-	private String Course_state;
+	private String CourseState;
 	@Column(columnDefinition="timestamp comment'备注:创建时间'")
-	private Date Course_create_time;
+	private Date CourseCreateTime;
 	@Column(columnDefinition="timestamp comment'备注:编辑时间'")
-	private Date Course_editor_time;
+	private Date CourseEditorTime;
 	public Courses() {
 		super();
 	}
-	public Courses(int course_id, String course_category, String course_name, String course_remark,
-			String course_creator, String course_state, Date course_create_time, Date course_editor_time) {
+	public Courses(int courseId, String courseCategory, String courseName, String courseRemark, String courseCreator,
+			String courseState, Date courseCreateTime, Date courseEditorTime) {
 		super();
-		Course_id = course_id;
-		Course_category = course_category;
-		Course_name = course_name;
-		Course_remark = course_remark;
-		Course_creator = course_creator;
-		Course_state = course_state;
-		Course_create_time = course_create_time;
-		Course_editor_time = course_editor_time;
+		CourseId = courseId;
+		CourseCategory = courseCategory;
+		CourseName = courseName;
+		CourseRemark = courseRemark;
+		CourseCreator = courseCreator;
+		CourseState = courseState;
+		CourseCreateTime = courseCreateTime;
+		CourseEditorTime = courseEditorTime;
 	}
-	public int getCourse_id() {
-		return Course_id;
+	public int getCourseId() {
+		return CourseId;
 	}
-	public void setCourse_id(int course_id) {
-		Course_id = course_id;
+	public void setCourseId(int courseId) {
+		CourseId = courseId;
 	}
-	public String getCourse_category() {
-		return Course_category;
+	public String getCourseCategory() {
+		return CourseCategory;
 	}
-	public void setCourse_category(String course_category) {
-		Course_category = course_category;
+	public void setCourseCategory(String courseCategory) {
+		CourseCategory = courseCategory;
 	}
-	public String getCourse_name() {
-		return Course_name;
+	public String getCourseName() {
+		return CourseName;
 	}
-	public void setCourse_name(String course_name) {
-		Course_name = course_name;
+	public void setCourseName(String courseName) {
+		CourseName = courseName;
 	}
-	public String getCourse_remark() {
-		return Course_remark;
+	public String getCourseRemark() {
+		return CourseRemark;
 	}
-	public void setCourse_remark(String course_remark) {
-		Course_remark = course_remark;
+	public void setCourseRemark(String courseRemark) {
+		CourseRemark = courseRemark;
 	}
-	public String getCourse_creator() {
-		return Course_creator;
+	public String getCourseCreator() {
+		return CourseCreator;
 	}
-	public void setCourse_creator(String course_creator) {
-		Course_creator = course_creator;
+	public void setCourseCreator(String courseCreator) {
+		CourseCreator = courseCreator;
 	}
-	public String getCourse_state() {
-		return Course_state;
+	public String getCourseState() {
+		return CourseState;
 	}
-	public void setCourse_state(String course_state) {
-		Course_state = course_state;
+	public void setCourseState(String courseState) {
+		CourseState = courseState;
 	}
-	public Date getCourse_create_time() {
-		return Course_create_time;
+	public Date getCourseCreateTime() {
+		return CourseCreateTime;
 	}
-	public void setCourse_create_time(Date course_create_time) {
-		Course_create_time = course_create_time;
+	public void setCourseCreateTime(Date courseCreateTime) {
+		CourseCreateTime = courseCreateTime;
 	}
-	public Date getCourse_editor_time() {
-		return Course_editor_time;
+	public Date getCourseEditorTime() {
+		return CourseEditorTime;
 	}
-	public void setCourse_editor_time(Date course_editor_time) {
-		Course_editor_time = course_editor_time;
+	public void setCourseEditorTime(Date courseEditorTime) {
+		CourseEditorTime = courseEditorTime;
 	}
 	@Override
 	public String toString() {
-		return "Courses [Course_id=" + Course_id + ", Course_category=" + Course_category + ", Course_name="
-				+ Course_name + ", Course_remark=" + Course_remark + ", Course_creator=" + Course_creator
-				+ ", Course_state=" + Course_state + ", Course_create_time=" + Course_create_time
-				+ ", Course_editor_time=" + Course_editor_time + "]";
+		return "Courses [CourseId=" + CourseId + ", CourseCategory=" + CourseCategory + ", CourseName=" + CourseName
+				+ ", CourseRemark=" + CourseRemark + ", CourseCreator=" + CourseCreator + ", CourseState=" + CourseState
+				+ ", CourseCreateTime=" + CourseCreateTime + ", CourseEditorTime=" + CourseEditorTime + "]";
 	}
+	
 	
 
 }

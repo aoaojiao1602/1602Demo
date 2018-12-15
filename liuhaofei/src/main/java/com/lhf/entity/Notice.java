@@ -71,5 +71,6 @@ public class Notice {
 		return "Notice [notice_id=" + notice_id + ", notice_course=" + notice_course + ", notice_name=" + notice_name
 				+ ", notice_content=" + notice_content + ", notice_time=" + notice_time + "]";
 	}
+	
 
 }
