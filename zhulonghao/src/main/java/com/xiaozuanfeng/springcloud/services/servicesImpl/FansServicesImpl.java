@@ -24,7 +24,11 @@ public class FansServicesImpl implements FansServices {
 	public List<Fans> getMyfocus(Integer uid) {
 		return fdao.getMyfocus(uid);
 	}
-
+	@Override
+	public int getIsMyfocus(Integer uid, Integer fid) {
+		return fdao.getIsMyfocus(uid, fid);
+	}
+	
 	@Override
 	public int getMyFansCount(Integer uid) {
 		return fdao.getMyFansCount(uid);
@@ -33,5 +37,15 @@ public class FansServicesImpl implements FansServices {
 	@Override
 	public int getMyfocusCount(Integer uid) {
 		return fdao.getMyfocusCount(uid);
+	}
+
+	@Override
+	public int postMyfocus(Integer uid, Integer fid) {
+		return fdao.postMyfocus(uid, fid);
+	}
+
+	@Override
+	public int deleteMyfocus(Integer uid, Integer fid) {
+		return fdao.deleteMyfocus(uid, fid);
 	}
 }

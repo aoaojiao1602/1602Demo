@@ -38,7 +38,9 @@ public class UserController {
 	@RequestMapping("/getMyFans")
 	public List<Fans> getMyFans(Integer uid) {
 		return fss.getMyFans(uid);
-	}/**
+	}
+
+	/**
 	 * http://localhost:8030/user/getMyfocus?uid=1
 	 * 
 	 */
@@ -47,6 +49,7 @@ public class UserController {
 	public List<Fans> getMyfocus(Integer uid) {
 		return fss.getMyFans(uid);
 	}
+
 	/**
 	 * http://localhost:8030/user/getMyFansCount?uid=1
 	 * 
@@ -55,6 +58,16 @@ public class UserController {
 	public List<Fans> getMyFansCount(Integer uid) {
 		return fss.getMyFans(uid);
 	}
+
+	/**
+	 * http://localhost:8030/user/getIsMyfocus?uid=1&fid=2
+	 * 
+	 */
+	@RequestMapping("/getIsMyfocus")
+	public int getIsMyfocus(Integer uid, Integer fid) {
+		return fss.getIsMyfocus(uid, fid);
+	}
+
 	/**
 	 * http://localhost:8030/user/getMyfocusCount?uid=1
 	 * 
@@ -62,6 +75,24 @@ public class UserController {
 	@RequestMapping("/getMyfocusCount")
 	public List<Fans> getMyfocusCount(Integer uid) {
 		return fss.getMyFans(uid);
+	}
+
+	/**
+	 * http://localhost:8030/user/postMyfocus?uid=1&fid=2
+	 * 
+	 */
+	@RequestMapping("/postMyfocus")
+	public int postMyfocus(Integer uid, Integer fid) {
+		return fss.postMyfocus(uid, fid);
+	}
+
+	/**
+	 * http://localhost:8030/user/deleteMyfocus?uid=1&fid=2
+	 * 
+	 */
+	@RequestMapping("/deleteMyfocus")
+	public int deleteMyfocus(Integer uid, Integer fid) {
+		return fss.deleteMyfocus(uid, fid);
 	}
 
 }
