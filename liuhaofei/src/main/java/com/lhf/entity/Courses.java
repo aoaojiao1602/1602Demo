@@ -17,90 +17,80 @@ public class Courses {
 	@Id
 	@GeneratedValue
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注:课程编号'")
-	private int CourseId;
+	private int courseId;
 	@Column(columnDefinition="varchar(50) comment '备注:课程类别'")
-	private String CourseCategory;
+	private String courseCategory;
 	@Column(columnDefinition="varchar(50) comment '备注:课程名称'")
-	private String CourseName;
+	private String courseName;
 	@Column(columnDefinition="varchar(100) comment '备注:课程说明'")
-	private String CourseRemark;
+	private String courseRemark;
 	@Column(columnDefinition="varchar(50) comment '备注:课程创建者'")
-	private String CourseCreator;
+	private String courseCreator;
 	@Column(columnDefinition="varchar(10) comment '备注:是否发布'")
-	private String CourseState;
+	private String courseState;
 	@Column(columnDefinition="timestamp comment'备注:创建时间'")
-	private Date CourseCreateTime;
+	private Date courseCreateTime;
 	@Column(columnDefinition="timestamp comment'备注:编辑时间'")
-	private Date CourseEditorTime;
+	private Date courseEditorTime;
 	public Courses() {
 		super();
 	}
-	public Courses(int courseId, String courseCategory, String courseName, String courseRemark, String courseCreator,
-			String courseState, Date courseCreateTime, Date courseEditorTime) {
-		super();
-		CourseId = courseId;
-		CourseCategory = courseCategory;
-		CourseName = courseName;
-		CourseRemark = courseRemark;
-		CourseCreator = courseCreator;
-		CourseState = courseState;
-		CourseCreateTime = courseCreateTime;
-		CourseEditorTime = courseEditorTime;
-	}
 	public int getCourseId() {
-		return CourseId;
+		return courseId;
 	}
 	public void setCourseId(int courseId) {
-		CourseId = courseId;
+		this.courseId = courseId;
 	}
 	public String getCourseCategory() {
-		return CourseCategory;
+		return courseCategory;
 	}
 	public void setCourseCategory(String courseCategory) {
-		CourseCategory = courseCategory;
+		this.courseCategory = courseCategory;
 	}
 	public String getCourseName() {
-		return CourseName;
+		return courseName;
 	}
 	public void setCourseName(String courseName) {
-		CourseName = courseName;
+		this.courseName = courseName;
 	}
 	public String getCourseRemark() {
-		return CourseRemark;
+		return courseRemark;
 	}
 	public void setCourseRemark(String courseRemark) {
-		CourseRemark = courseRemark;
+		this.courseRemark = courseRemark;
 	}
 	public String getCourseCreator() {
-		return CourseCreator;
+		return courseCreator;
 	}
 	public void setCourseCreator(String courseCreator) {
-		CourseCreator = courseCreator;
+		this.courseCreator = courseCreator;
 	}
 	public String getCourseState() {
-		return CourseState;
+		return courseState;
 	}
 	public void setCourseState(String courseState) {
-		CourseState = courseState;
+		this.courseState = courseState;
 	}
 	public Date getCourseCreateTime() {
-		return CourseCreateTime;
+		return courseCreateTime;
 	}
 	public void setCourseCreateTime(Date courseCreateTime) {
-		CourseCreateTime = courseCreateTime;
+		this.courseCreateTime = courseCreateTime;
 	}
 	public Date getCourseEditorTime() {
-		return CourseEditorTime;
+		return courseEditorTime;
 	}
 	public void setCourseEditorTime(Date courseEditorTime) {
-		CourseEditorTime = courseEditorTime;
+		this.courseEditorTime = courseEditorTime;
 	}
 	@Override
 	public String toString() {
-		return "Courses [CourseId=" + CourseId + ", CourseCategory=" + CourseCategory + ", CourseName=" + CourseName
-				+ ", CourseRemark=" + CourseRemark + ", CourseCreator=" + CourseCreator + ", CourseState=" + CourseState
-				+ ", CourseCreateTime=" + CourseCreateTime + ", CourseEditorTime=" + CourseEditorTime + "]";
+		return "Courses [courseId=" + courseId + ", courseCategory=" + courseCategory + ", courseName=" + courseName
+				+ ", courseRemark=" + courseRemark + ", courseCreator=" + courseCreator + ", courseState=" + courseState
+				+ ", courseCreateTime=" + courseCreateTime + ", courseEditorTime=" + courseEditorTime + "]";
 	}
+	
+	
 	
 	
 

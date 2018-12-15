@@ -4,6 +4,7 @@ package com.lhf.controller;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +21,20 @@ public class CoursesController {
 	private CoursesService cService;
 	//查询
 	@RequestMapping("/query")
-	public Object queryByDynamicSQLPage(Courses courses,int page,int limit) {
-		Page<Courses> sqlPage = cService.queryByDynamicSQLPage(courses, page-1,limit);
-		Map<String, Object> map=new HashMap<String, Object>();
-		map.put("code", 0);
-		map.put("msg", "");
-		map.put("count", sqlPage.getTotalElements());
-		map.put("data", sqlPage.getContent());
-		return map;
+	public Object queryNameLikeAllPage(String name,Integer page,Integer size) {
+		if (name==null||name==""||name.isEmpty()||name.equals("")) {
+			name="%";
+		}
+		Page<Courses> page1 = null;
+		page1 = cService.queryNameLikeAllPage(name,page==0?1:page-1,1);
+    	List<Courses> list = page1.getContent();
+		Long total = page1.getTotalElements();
+    	Map<String, Object> map = new HashMap<>();
+    	map.put("total", total);
+    	map.put("rows", list);
+    	return map;
 	}
+	
 	//添加
 	@RequestMapping("/putCourses")
 	public Object putCourses(Courses c) {
@@ -45,8 +51,8 @@ public class CoursesController {
 	}
 	//删除
 	@RequestMapping("/deleteCourses")
-	public Object deleteCoursesById(Integer Course_id) {
-		int C=cService.deleteCoursesById(Course_id);
+	public Object deleteCoursesById(Integer courseId) {
+		int C=cService.deleteCoursesById(courseId);
 		Map<String, Object> map = new HashMap<>();
 		if(C>0) {
 			map.put("success",true);
