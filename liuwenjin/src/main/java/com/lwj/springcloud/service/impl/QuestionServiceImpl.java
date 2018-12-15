@@ -52,6 +52,7 @@ public class QuestionServiceImpl implements QuestionService {
 			 public Predicate toPredicate(Root<Question> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				 Predicate predicate = cb.conjunction();//动态SQL表达式
 				 List<Expression<Boolean>> exList = predicate.getExpressions();//动态SQL表达式集合
+				 
 				 if( entitysearch.getName() != null && !"".equals(entitysearch.getName()) ){
 					 exList.add(cb.like(root.get("optionId").get("topic").as(String.class), "%"+entitysearch.getName()+"%"));
 				 }
