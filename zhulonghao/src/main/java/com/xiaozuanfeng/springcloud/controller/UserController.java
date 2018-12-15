@@ -78,7 +78,7 @@ public class UserController {
 	}
 
 	/**
-	 * http://localhost:8030/user/postMyfocus?uid=1&fid=2
+	 * http://localhost:8030/user/postMyfocus?uid=1&fid=9
 	 * 
 	 */
 	@RequestMapping("/postMyfocus")
