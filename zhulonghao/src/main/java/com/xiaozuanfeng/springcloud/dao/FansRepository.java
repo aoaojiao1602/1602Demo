@@ -14,14 +14,14 @@ public interface FansRepository extends JpaRepository<Fans, Integer> {
 	 * 根据id获取我的粉丝
 	 */
 	@Query("from Fans f where f.f_fid =:uid")
-	List<Fans> getMyFans(@Param("uid") String uid);
+	List<Fans> getMyFans(@Param("uid") Integer uid);
 	/**
 	 * 根据id获取我的关注
 	 * @param uid
 	 * @return
 	 */
 	@Query("from Fans f where f.f_uid =:fid")
-	List<Fans> getMyfocus(@Param("fid") String uid);
+	List<Fans> getMyfocus(@Param("fid") Integer uid);
 	/**
 	 * 根据id获取我的粉丝数量
 	 * @param uid
