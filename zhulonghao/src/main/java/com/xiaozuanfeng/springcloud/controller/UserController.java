@@ -1,28 +1,29 @@
 package com.xiaozuanfeng.springcloud.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.xiaozuanfeng.springcloud.entity.UserInfo;
+import com.xiaozuanfeng.springcloud.services.FansServices;
+import com.xiaozuanfeng.springcloud.services.UserServices;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
-	
+	@Autowired
+	private UserServices uss;
+	@Autowired
+	private FansServices fss;
 	@Value("${server.port}")
 	private String serverPort;
-
-
 	/**
-	 * http://localhost:8030/getFuture
+	 * http://localhost:8030/getUser?uid=1
 	 * @return
 	 */
-	@RequestMapping("/getFuture")
-	public List<String> getFuture() {
-		List<String> list = new ArrayList<>();
-		list.add("出自端口号:"+serverPort);
-		return list;
+	@RequestMapping("/getUser")
+	public UserInfo getUser(Integer uid) {
+		return uss.getUser(uid);
 	}
 
 }
