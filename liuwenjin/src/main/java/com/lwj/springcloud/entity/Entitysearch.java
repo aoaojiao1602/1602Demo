@@ -21,11 +21,6 @@ import lombok.Data;
  * @version
  *
 */
-
-/**
- * 类名: entitysearch 说明: TODO 作者: 大娃 邮件: 1558936588@qq.com 时间: 2018年11月16日
- * 下午11:04:34 版本: V1.0 公司: 葫芦岛葫芦山葫芦科技有限公司
- */
 @Data
 public class Entitysearch {
 	private String name;
@@ -40,9 +35,15 @@ public class Entitysearch {
 	private Date startUpdateTime;
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME, pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date endUpdateTime;
+	//开始时间
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME, pattern = "yyyy-MM-dd")
 	private Date startTime;
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME, pattern = "yyyy-MM-dd")
+	//结束时间
 	private Date endTime;
+	//题型
+	private String tx;
+	private Integer page;
+	private Integer rows;
 	private Integer isLockout;
 }
