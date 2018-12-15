@@ -1,6 +1,10 @@
 package com.lhf.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -8,7 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lhf.entity.Courses;
 
-public interface CoursesRepository extends JpaRepository<Courses, Integer> {
+public interface CoursesRepository extends JpaRepository<Courses, Integer>,JpaSpecificationExecutor<Courses> {
+	/*public Page<Courses> findByCourse_NameLike(String name,Pageable pageable);*/
 	// 添加课程
 	@Query(value = "insert into courses(course_category,course_create_time,course_creator,course_editor_time,course_name,course_remark,course_state)values"
 			+ "(:#{#c.Course_category},now(),:#{#c.Course_creator},:#{#c.Course_editor_time},:#{#c.Course_name},:#{#c.Course_remark},:#{#c.Course_state})", nativeQuery = true)

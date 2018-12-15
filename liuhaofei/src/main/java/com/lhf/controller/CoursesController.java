@@ -4,9 +4,11 @@ package com.lhf.controller;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +19,17 @@ import com.lhf.service.CoursesService;
 public class CoursesController {
 	@Autowired
 	private CoursesService cService;
+	//查询
+	@RequestMapping("/query")
+	public Object queryByDynamicSQLPage(Courses courses,int page,int limit) {
+		Page<Courses> sqlPage = cService.queryByDynamicSQLPage(courses, page-1, limit);
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("code", 0);
+		map.put("msg", "");
+		map.put("count", sqlPage.getTotalElements());
+		map.put("data", sqlPage.getContent());
+		return map;
+	}
 	//添加
 	@RequestMapping("/putCourses")
 	public Object putCourses(Courses c) {
