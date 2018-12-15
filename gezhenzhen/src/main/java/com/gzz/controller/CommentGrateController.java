@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/commentGrate")
 @CrossOrigin
 public class CommentGrateController {
-
+//豆腐干豆腐干
 }
