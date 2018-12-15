@@ -39,6 +39,48 @@ public class ProjectReport {
 	private Integer Exet1;
 	@Transient
 	private String Exet2;
+	public Integer getProjectReportId() {
+		return projectReportId;
+	}
+	public void setProjectReportId(Integer projectReportId) {
+		this.projectReportId = projectReportId;
+	}
+	public Project getProject() {
+		return project;
+	}
+	public void setProject(Project project) {
+		this.project = project;
+	}
+	public Integer getProjectReportUid() {
+		return projectReportUid;
+	}
+	public void setProjectReportUid(Integer projectReportUid) {
+		this.projectReportUid = projectReportUid;
+	}
+	public String getProjectReportContent() {
+		return projectReportContent;
+	}
+	public void setProjectReportContent(String projectReportContent) {
+		this.projectReportContent = projectReportContent;
+	}
+	public Timestamp getProjectReportTime() {
+		return projectReportTime;
+	}
+	public void setProjectReportTime(Timestamp projectReportTime) {
+		this.projectReportTime = projectReportTime;
+	}
+	public Integer getExet1() {
+		return Exet1;
+	}
+	public void setExet1(Integer exet1) {
+		Exet1 = exet1;
+	}
+	public String getExet2() {
+		return Exet2;
+	}
+	public void setExet2(String exet2) {
+		Exet2 = exet2;
+	}
 
 
 }

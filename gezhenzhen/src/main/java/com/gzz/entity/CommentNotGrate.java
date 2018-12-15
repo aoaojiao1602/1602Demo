@@ -33,6 +33,36 @@ public class CommentNotGrate {
 	private Integer Exet1;
 	@Transient
 	private String Exet2;
+	public Integer getCommentNotGrateId() {
+		return CommentNotGrateId;
+	}
+	public void setCommentNotGrateId(Integer commentNotGrateId) {
+		CommentNotGrateId = commentNotGrateId;
+	}
+	public Comment getComment() {
+		return comment;
+	}
+	public void setComment(Comment comment) {
+		this.comment = comment;
+	}
+	public Integer getCommentNotGrateUid() {
+		return CommentNotGrateUid;
+	}
+	public void setCommentNotGrateUid(Integer commentNotGrateUid) {
+		CommentNotGrateUid = commentNotGrateUid;
+	}
+	public Integer getExet1() {
+		return Exet1;
+	}
+	public void setExet1(Integer exet1) {
+		Exet1 = exet1;
+	}
+	public String getExet2() {
+		return Exet2;
+	}
+	public void setExet2(String exet2) {
+		Exet2 = exet2;
+	}
 
 
 }
