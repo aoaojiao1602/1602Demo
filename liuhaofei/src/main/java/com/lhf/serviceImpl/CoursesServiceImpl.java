@@ -45,22 +45,12 @@ public class CoursesServiceImpl implements CoursesService {
 			public Predicate toPredicate(Root<Courses> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				Predicate predicate = cb.conjunction();// 动态SQL表达式
 				List<Expression<Boolean>> exList = predicate.getExpressions();// 动态SQL表达式集合
-
 				if (courses.getCourse_name() != null && !"".equals(courses.getCourse_name())) {
 					exList.add(cb.like(root.<String>get("Course_name"), "%" + courses.getCourse_name() + "%"));
 				}
-
 				return predicate;
 			}
 
 		};
 	}
-
-	/*@Override*/
-	/*public Page<Courses> queryNameLikeAllPage(String nameLike, Integer page, Integer size) {
-		Sort sort = new Sort(Sort.Direction.ASC, "Course_id"); 
-	    Pageable pageable = new PageRequest(page, size, sort);
-		return cRepository.findByCourse_NameLike("%"+nameLike+"%", pageable);
-	}*/
-
 }

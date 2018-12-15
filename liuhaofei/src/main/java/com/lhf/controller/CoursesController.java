@@ -4,7 +4,6 @@ package com.lhf.controller;
 
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ public class CoursesController {
 	//查询
 	@RequestMapping("/query")
 	public Object queryByDynamicSQLPage(Courses courses,int page,int limit) {
-		Page<Courses> sqlPage = cService.queryByDynamicSQLPage(courses, page-1, limit);
+		Page<Courses> sqlPage = cService.queryByDynamicSQLPage(courses, page-1,limit);
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("code", 0);
 		map.put("msg", "");
