@@ -1,5 +1,7 @@
 package com.lhf.service;
 
+import org.springframework.data.domain.Page;
+
 import com.lhf.entity.Courses;
 
 public interface CoursesService {
@@ -9,4 +11,6 @@ public interface CoursesService {
 	public int deleteCoursesById(Integer Course_id);
 	//修改课程
 	public int postCoursesById(Courses c);
+	
+	public Page<Courses> queryByDynamicSQLPage(Courses courses,Integer page,Integer size);
 }
