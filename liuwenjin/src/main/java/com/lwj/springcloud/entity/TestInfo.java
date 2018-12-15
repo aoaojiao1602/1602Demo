@@ -1,5 +1,6 @@
 package com.lwj.springcloud.entity;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -34,8 +35,8 @@ public class TestInfo {
 	private String testName;
 	@Column(columnDefinition="int comment '备注:测试次数'")
 	private Integer testNum;
-	@Column(columnDefinition="int comment '备注:测试建立时间'")
-	private Integer createTime;
+	@Column(columnDefinition="TIMESTAMP comment '备注:测试建立时间' ",nullable=false,updatable=false,insertable=false)
+	private Timestamp createTime;
 	@Column(columnDefinition="int comment '备注:章节id'")
 	private Integer sectionId;
 	@Column(columnDefinition="int comment '备注:选择题数量'")
