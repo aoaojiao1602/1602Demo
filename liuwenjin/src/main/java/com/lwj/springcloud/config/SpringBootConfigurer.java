@@ -157,7 +157,8 @@ public class SpringBootConfigurer implements WebMvcConfigurer {
 		/**
 		 * addResourceHandlers(这里用一句话描述这个方法的作用)
 		*/
-		
+		registry.addResourceHandler("/**").addResourceLocations("/");
+		registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
 	}
 
 	
@@ -331,4 +332,6 @@ public class SpringBootConfigurer implements WebMvcConfigurer {
 		*/
 		
 	}
+
+	
 }

@@ -20,4 +20,15 @@ public interface QuestionService {
 	
 	Page<Question> indexQuestionPage(Entitysearch search);
 
+	
+	  /** 
+	 * http://localhost:8080/deleteQuestion
+	  * 作者: 大娃   
+	  * 邮件: 1558936588@qq.com  
+	  * 时间: 2018年12月17日 下午7:23:18  
+	  * 版本: V1.0   
+	 */
+	
+	void deleteQuestion(int qid);
+
 }

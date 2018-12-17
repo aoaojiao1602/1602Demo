@@ -26,10 +26,10 @@ public class TestInfoServiceImpl implements TestInfoService {
 		return tRepository.updateTestInfo(t);
 	}
 
-	@Override
+	/*@Override
 	@Transactional
 	public int deleteTestInfo(Integer testId) {
 		// TODO Auto-generated method stub
 		return tRepository.deleteTestInfo(testId);
-	}
+	}*/
 }

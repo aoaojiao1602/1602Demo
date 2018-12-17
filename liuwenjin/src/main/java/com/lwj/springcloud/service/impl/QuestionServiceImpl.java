@@ -52,24 +52,34 @@ public class QuestionServiceImpl implements QuestionService {
 			 public Predicate toPredicate(Root<Question> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				 Predicate predicate = cb.conjunction();//动态SQL表达式
 				 List<Expression<Boolean>> exList = predicate.getExpressions();//动态SQL表达式集合
-				 
-				 if( entitysearch.getName() != null && !"".equals(entitysearch.getName()) ){
+				 /*if(entitysearch.getName()!=null&&entitysearch.getTx().equals("")) {
 					 exList.add(cb.like(root.get("optionId").get("topic").as(String.class), "%"+entitysearch.getName()+"%"));
-				 }
-				 if( entitysearch.getSex() != null && !"".equals(entitysearch.getSex()) ){
-					 exList.add(cb.equal(root.get("sex").as(String.class), entitysearch.getSex()));
-				 }               
-				 if( entitysearch.getMinAge() != null ){
-					 exList.add(cb.greaterThanOrEqualTo(root.<Integer>get("age"), entitysearch.getMinAge()));
-				 }               
-				 if( entitysearch.getMaxAge() != null ){
-					 exList.add(cb.lessThanOrEqualTo(root.get("age").as(Integer.class), entitysearch.getMaxAge()));
-				 }               
+					 exList.add(cb.like(root.get("judgeId").get("topic").as(String.class), "%"+entitysearch.getName()+"%"));
+					 exList.add(cb.like(root.get("fillblankId").get("topic").as(String.class), "%"+entitysearch.getName()+"%"));
+				 }*/
+				 String topic="";
+				 if (entitysearch.getTx()!= null&&entitysearch.getTx().equals("选择题")) {
+					 if (entitysearch.getName() != null) {
+						 topic=entitysearch.getName();
+					}
+					 exList.add(cb.like(root.get("optionId").get("topic").as(String.class), "%"+topic+"%"));
+				}
+				 if (entitysearch.getTx()!= null&&entitysearch.getTx().equals("判断题")) {
+					 if (entitysearch.getName() != null) {
+						 topic=entitysearch.getName();
+					}
+					 exList.add(cb.like(root.get("judgeId").get("topic").as(String.class), "%"+topic+"%"));
+				}
+				 if (entitysearch.getTx()!= null&&entitysearch.getTx().equals("填空题")) {
+					 if( entitysearch.getName() != null && !"".equals(entitysearch.getName()) ){
+						 exList.add(cb.like(root.get("fillblankId").get("topic").as(String.class), "%"+topic+"%"));
+					 }
+				}
 				 if( entitysearch.getStartTime() != null ){
-					 exList.add(cb.greaterThanOrEqualTo(root.<Date>get("userCreateTime"), entitysearch.getStartTime()));//大于等于起始日期
+					 exList.add(cb.greaterThanOrEqualTo(root.<Date>get("createTime"), entitysearch.getStartTime()));//大于等于起始日期
 				 }
 				 if( entitysearch.getEndTime() != null ){ 
-					 exList.add(cb.lessThanOrEqualTo(root.<Date>get("userCreateTime"), entitysearch.getEndTime()));//小于等于截止日期
+					 exList.add(cb.lessThanOrEqualTo(root.<Date>get("createTime"), entitysearch.getEndTime()));//小于等于截止日期
 				 }
 				 if( entitysearch.getIsLockout() != null ){ 
 					 exList.add(cb.equal(root.<Integer>get("userIsLockout"), entitysearch.getIsLockout()));//小于等于截止日期
@@ -78,4 +88,20 @@ public class QuestionServiceImpl implements QuestionService {
 				 }
 			 };
 		 }
+	
+	/* (非 Javadoc) 
+	 * <p>Title: deleteQuestion</p> 
+	 * <p>Description: </p> 
+	 * @param qid 
+	 * @see com.lwj.springcloud.service.QuestionService#deleteQuestion(int) 
+	*/
+	
+	@Override
+	public void deleteQuestion(int qid) {
+		// TODO Auto-generated method stub
+		/**
+		 * deleteQuestion(这里用一句话描述这个方法的作用)
+		*/
+		qRepository.delete(qid);
+	}
 }

@@ -3,15 +3,18 @@ package com.lwj.springcloud.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -43,6 +46,8 @@ public class Options {
 	@Column(columnDefinition="int comment '备注:分数'")
 	private Integer score;
 	@JsonIgnore
-	@OneToMany(mappedBy="optionId",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	private List<Question> optionlist = new ArrayList<>();
+	@OneToOne(optional = false, mappedBy = "options", fetch = FetchType.EAGER)
+	@Cascade(value = { CascadeType.DELETE}) 
+	@JoinColumn(name = "option_id",unique = true)
+	private Question question;
 }

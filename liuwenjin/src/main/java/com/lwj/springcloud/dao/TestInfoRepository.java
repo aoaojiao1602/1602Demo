@@ -14,7 +14,7 @@ public interface TestInfoRepository extends JpaRepository<TestInfo, Integer>,Jpa
 	@Modifying
 	int updateTestInfo(@Param("t")TestInfo t);
 	//删除测试表信息
-	@Query("")
+	/*@Query("")
 	@Modifying
-	int deleteTestInfo(Integer testId);
+	int deleteTestInfo(Integer testId);*/
 }

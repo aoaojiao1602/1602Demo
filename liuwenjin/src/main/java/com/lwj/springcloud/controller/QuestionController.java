@@ -3,8 +3,12 @@
  */ 
 package com.lwj.springcloud.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +42,29 @@ public class QuestionController {
 	@RequestMapping(value="/question", method = RequestMethod.GET)
 	public Object indexQuestionPage(Entitysearch search) {
 		Page<Question> list=qService.indexQuestionPage(search);
-		return list;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("total",list.getTotalElements());
+		map.put("rows",list.getContent());
+		return map;
+	}
+	@ApiOperation(value="添加题库表", notes="添加题库")
+	@ApiImplicitParam(name = "question", value = "题库实体类", required = true, dataType = "Question")
+	@RequestMapping(value="/question", method = RequestMethod.POST)
+	public Object inserQuestion(Question question) {
+		System.out.println(question);
+		return 0;
+	}
+	@ApiOperation(value="删除题库表", notes="删除题库")
+	@ApiImplicitParam(name = "qid", value = "题库id", required = true, dataType = "Intger")
+	@RequestMapping(value="/question", method = RequestMethod.DELETE)
+	public Object deleteQuestion(int qid) {
+		System.out.println(qid);
+		try {
+			qService.deleteQuestion(qid);
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			return false;
+		}
 	}
 }
