@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lhf.entity.Courses;
+import com.lhf.entity.CoursesSearch;
 import com.lhf.service.CoursesService;
 @RestController
 @RequestMapping("/courses")
@@ -20,7 +21,16 @@ public class CoursesController {
 	@Autowired
 	private CoursesService cService;
 	//查询
-	@RequestMapping("/query")
+	public Object queryByDynamicSQLPage(CoursesSearch c,int page,int limit) {
+		Page<Courses> sqlPage = cService.queryByDynamicSQLPage(c, page-1, limit);
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("code", 0);
+		map.put("msg", "");
+		map.put("count", sqlPage.getTotalElements());
+		map.put("data", sqlPage.getContent());
+		return map;
+	}
+	/*@RequestMapping("/query")
 	public Object queryNameLikeAllPage(String name,Integer page,Integer size) {
 		if (name==null||name==""||name.isEmpty()||name.equals("")) {
 			name="%";
@@ -33,7 +43,7 @@ public class CoursesController {
     	map.put("total", total);
     	map.put("rows", list);
     	return map;
-	}
+	}*/
 	
 	//添加
 	@RequestMapping("/putCourses")

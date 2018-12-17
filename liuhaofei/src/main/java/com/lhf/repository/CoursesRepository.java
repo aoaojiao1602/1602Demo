@@ -13,10 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lhf.entity.Courses;
 
 public interface CoursesRepository extends JpaRepository<Courses, Integer>,JpaSpecificationExecutor<Courses> {
+	//分页查询课程
 	public Page<Courses> findByCourseNameLike(String name,Pageable pageable);
 	// 添加课程
 	@Query(value = "insert into courses(course_category,course_create_time,course_creator,course_editor_time,course_name,course_remark,course_state)values"
-			+ "(:#{#c.CourseCategory},now(),:#{#c.CourseCreator},:#{#c.CourseEditorTime},:#{#c.CourseName},:#{#c.CourseRemark},:#{#c.CourseState})", nativeQuery = true)
+			+ "(:#{#c.courseCategory},now(),:#{#c.courseCreator},:#{#c.courseEditorTime},:#{#c.courseName},:#{#c.courseRemark},:#{#c.courseState})", nativeQuery = true)
 	@Modifying
 	@Transactional
 	public int putCourses(@Param("c") Courses c);
@@ -25,9 +26,9 @@ public interface CoursesRepository extends JpaRepository<Courses, Integer>,JpaSp
 	@Query(value = "DELETE FROM courses WHERE course_id =?1", nativeQuery = true)
 	@Modifying
 	@Transactional
-	public int deleteCoursesById(Integer CourseId);
+	public int deleteCoursesById(Integer courseId);
 	//修改课程
-	@Query(value="UPDATE courses SET course_category = #{#c.CourseCategory},course_editor_time =now() , course_name = #{#c.CourseName} , course_remark =#{#c.CourseRemark} WHERE course_id = #{#c.courseId}", nativeQuery = true)
+	@Query(value="UPDATE courses SET course_category = #{#c.courseCategory},course_editor_time =now() , course_name = #{#c.courseName} , course_remark =#{#c.CourseRemark} WHERE course_id = #{#c.courseId}", nativeQuery = true)
 	@Modifying
 	@Transactional
 	public int postCoursesById(@Param("c") Courses c);
