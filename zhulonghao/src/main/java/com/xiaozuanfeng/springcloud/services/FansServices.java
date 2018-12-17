@@ -5,11 +5,12 @@ import java.util.List;
 import org.springframework.data.repository.query.Param;
 
 import com.xiaozuanfeng.springcloud.entity.Fans;
+import com.xiaozuanfeng.springcloud.entity.UserInfo;
 
 public interface FansServices {
-	public List<Fans> getMyFans(@Param("uid") Integer uid);
+	public List<UserInfo> getMyFans(@Param("uid") Integer uid);
 
-	public List<Fans> getMyfocus(@Param("fid") Integer uid);
+	public List<UserInfo> getMyfocus(@Param("fid") Integer uid);
 
 	public int getMyFansCount(Integer uid);
 

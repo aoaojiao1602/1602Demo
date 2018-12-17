@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.xiaozuanfeng.springcloud.dao.FansRepository;
 import com.xiaozuanfeng.springcloud.entity.Fans;
+import com.xiaozuanfeng.springcloud.entity.UserInfo;
 import com.xiaozuanfeng.springcloud.services.FansServices;
 
 @Service
@@ -15,13 +16,13 @@ public class FansServicesImpl implements FansServices {
 	private FansRepository fdao;
 
 	@Override
-	public List<Fans> getMyFans(Integer uid) {
+	public List<UserInfo> getMyFans(Integer uid) {
 
 		return fdao.getMyFans(uid);
 	}
 
 	@Override
-	public List<Fans> getMyfocus(Integer uid) {
+	public List<UserInfo> getMyfocus(Integer uid) {
 		return fdao.getMyfocus(uid);
 	}
 	@Override

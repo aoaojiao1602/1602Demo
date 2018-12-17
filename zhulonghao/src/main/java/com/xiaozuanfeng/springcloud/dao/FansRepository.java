@@ -9,13 +9,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.xiaozuanfeng.springcloud.entity.Fans;
+import com.xiaozuanfeng.springcloud.entity.UserInfo;
 
 public interface FansRepository extends JpaRepository<Fans, Integer> {
 	/*
 	 * 根据id获取我的粉丝
 	 */
-	@Query("from Fans f where f.f_fid =:uid")
-	List<Fans> getMyFans(@Param("uid") Integer uid);
+	@Query(value = "SELECT * FROM userinfotb WHERE u_uid IN(SELECT f_uid FROM fanstb f WHERE f_ufid =:uid)", nativeQuery = true)
+	List<UserInfo> getMyFans(@Param("uid") Integer uid);
 
 	/**
 	 * 根据id获取我的关注
@@ -23,8 +24,8 @@ public interface FansRepository extends JpaRepository<Fans, Integer> {
 	 * @param uid
 	 * @return
 	 */
-	@Query("from Fans f where f.f_uid =:fid")
-	List<Fans> getMyfocus(@Param("fid") Integer uid);
+	@Query(value = "SELECT * FROM userinfotb WHERE u_uid IN(SELECT f_ufid FROM fanstb f WHERE f_uid =:fid)", nativeQuery = true)
+	List<UserInfo> getMyfocus(@Param("fid") Integer uid);
 
 	/**
 	 * 根据id获取我的粉丝数量
