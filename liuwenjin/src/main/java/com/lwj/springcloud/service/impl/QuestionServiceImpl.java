@@ -104,4 +104,22 @@ public class QuestionServiceImpl implements QuestionService {
 		*/
 		qRepository.delete(qid);
 	}
+	
+	/* (非 Javadoc) 
+	 * <p>Title: inserQuestion</p> 
+	 * <p>Description: </p> 
+	 * @param question
+	 * @return 
+	 * @see com.lwj.springcloud.service.QuestionService#inserQuestion(com.lwj.springcloud.entity.Question) 
+	*/
+	
+	@Override
+	public Question inserQuestion(Question question) {
+		// TODO Auto-generated method stub
+		return qRepository.save(question);
+		/**
+		 * inserQuestion(这里用一句话描述这个方法的作用)
+		*/
+		
+	}
 }

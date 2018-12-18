@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,8 +51,8 @@ public class QuestionController {
 	@ApiOperation(value="添加题库表", notes="添加题库")
 	@ApiImplicitParam(name = "question", value = "题库实体类", required = true, dataType = "Question")
 	@RequestMapping(value="/question", method = RequestMethod.POST)
-	public Object inserQuestion(Question question) {
-		System.out.println(question);
+	public Object inserQuestion(@RequestBody Question question) {
+		qService.inserQuestion(question);
 		return 0;
 	}
 	@ApiOperation(value="删除题库表", notes="删除题库")
