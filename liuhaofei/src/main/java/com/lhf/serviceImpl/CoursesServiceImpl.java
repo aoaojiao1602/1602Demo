@@ -40,12 +40,12 @@ public class CoursesServiceImpl implements CoursesService {
 		return cRepository.postCoursesById(c);
 	}
 
-	@Override
+	/*@Override
 	public Page<Courses> queryNameLikeAllPage(String nameLike, Integer page, Integer size) {
 		Sort sort = new Sort(Sort.Direction.ASC, "CourseId"); 
 	    Pageable pageable = new PageRequest(page, size, sort);
 		return cRepository.findByCourseNameLike("%"+nameLike+"%", pageable);
-	}
+	}*/
 
 	@Override
 	public Page<Courses> queryByDynamicSQLPage(CoursesSearch c, Integer page, Integer size) {

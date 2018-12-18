@@ -15,7 +15,7 @@ public class ConsumerController {
 	private ConsumerService cService;
 	@RequestMapping("/getProviderFuture")
 	public List<String> getProviderFuture(){
-		return cService.getProviderFuture();
+		return cService.getCategory();
 	}
 	
 
