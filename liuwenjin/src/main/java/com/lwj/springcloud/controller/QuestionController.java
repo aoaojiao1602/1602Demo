@@ -38,7 +38,7 @@ public class QuestionController {
 	@Autowired
 	private QuestionService qService;
 	@ApiOperation(value="获取题库表", notes="模糊分页获取题库表集合")
-	@ApiImplicitParam(name = "search", value = "搜索实体类", required = true, dataType = "Entitysearch")
+	@ApiImplicitParam(name = "search", value = "搜索实体类", required = true,paramType="Entitysearch")
 	@RequestMapping(value="/question", method = RequestMethod.GET)
 	public Object indexQuestionPage(Entitysearch search) {
 		Page<Question> list=qService.indexQuestionPage(search);
@@ -55,7 +55,7 @@ public class QuestionController {
 		return 0;
 	}
 	@ApiOperation(value="删除题库表", notes="删除题库")
-	@ApiImplicitParam(name = "qid", value = "题库id", required = true, dataType = "Intger")
+	@ApiImplicitParam(name = "qid", value = "题库id", required = true,paramType="Intger")
 	@RequestMapping(value="/question", method = RequestMethod.DELETE)
 	public Object deleteQuestion(int qid) {
 		System.out.println(qid);
