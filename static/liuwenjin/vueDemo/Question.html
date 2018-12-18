@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<!-- 引入饿了么Element样式,本地样式文件所在目录下的fonts目录中需要有样式图标文件element-icons.woff -->
+		<link rel="stylesheet" href="css/element-ui.css">
+		<!-- vue语法环境 -->
+		<script src="js/vue.min.js"></script>
+		<script src="js/router.js"></script>
+		<script src="js/jquery.js"></script>
+
+		<!-- vue使用Ajax -->
+		<script src="js/axios.min.js"></script>
+		<!-- 引入饿了么Element组件库 -->
+		<script src="js/element-ui.js"></script>
+		<style type="text/css">
+			.el-input {
+				width: 150px;
+			}
+
+			.demo-input-suffix {
+				margin-bottom: 10px;
+			}
+
+			.el-inp {
+				margin-right: 15px;
+				margin-top: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<div class="demo-input-suffix">
+				<el-button type="primary" icon="el-icon-plus" @click="dialogformVisible=true"></el-button>
+				<el-button type="primary" icon="el-icon-delete"></el-button>
+				<el-date-picker v-model="date1" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="daterange" align="right"
+				 unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+				</el-date-picker>
+				<el-input placeholder="请输入内容" prefix-icon="el-icon-search" v-model="input1">
+				</el-input>
+				<el-select v-model="value" placeholder="请选择">
+					<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+					</el-option>
+				</el-select>
+				<el-button type="primary" icon="el-icon-search" @click="search()">搜索</el-button>
+				<el-button type="primary">上传<i class="el-icon-upload el-icon--right"></i></el-button>
+			</div>
+			<el-table :data="tableData" border style="width: 100%">
+				<el-table-column type="selection" width="55">
+				</el-table-column>
+				<el-table-column fixed prop="createTime" label="日期" width="150">
+				</el-table-column>
+				<el-table-column prop="teacherId" label="老师id" width="100">
+				</el-table-column>
+				<el-table-column prop="courseId" label="课程id" width="120">
+				</el-table-column>
+				<el-table-column prop="sectionId" label="章节id" width="120">
+				</el-table-column>
+				<el-table-column prop="quest.topic" label="题目" width="300">
+				</el-table-column>
+				<el-table-column prop="quest.answer" label="答案" width="120">
+				</el-table-column>
+				<el-table-column prop="quest.score" label="题/分值" width="120">
+				</el-table-column>
+				<el-table-column fixed="right" label="操作" width="150">
+					<div slot-scope="scope">
+						<el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+						<el-button type="text" size="small">编辑</el-button>
+						<el-button @click="deletequestion(scope.row)" type="text" size="small">删除</el-button>
+					</div>
+				</el-table-column>
+			</el-table>
+			<div class="block">
+				<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+				 :page-sizes="[10, 20, 30, 50]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+				</el-pagination>
+			</div>
+
+			<el-dialog title="添加题库" :visible.sync="dialogformVisible" top="10px">
+				<el-form :model="form" id="j">
+					<el-form-item label="活动名称" :label-width="formLabelWidth">
+						<el-input v-model="form.options.topic" autocomplete="off"></el-input>
+					</el-form-item>
+					<el-form-item label="选择题型" :label-width="formLabelWidth">
+						<el-select v-model="form.tx" @change="txchange" placeholder="题型">
+							<el-option label="选择题" value="选择题"></el-option>
+							<el-option label="判断题" value="判断题"></el-option>
+							<el-option label="填空题" value="填空题"></el-option>
+						</el-select>
+					</el-form-item>
+					<div v-if="isxzhide">
+						<el-form-item label="题目名称" :label-width="formLabelWidth">
+							<el-input v-model="form.options.topic" autocomplete="off"></el-input>
+						</el-form-item>
+						<el-form-item :label-width="formLabelWidth">
+							答案A <el-input class="el-inp" name="options.optionA" v-model="form.options.optiona" autocomplete="off"></el-input>
+							答案B <el-input class="el-inp" v-model="form.options.optionb" autocomplete="off"></el-input><br />
+							答案C <el-input class="el-inp" v-model="form.options.optionc" autocomplete="off"></el-input>
+							答案D <el-input class="el-inp" v-model="form.options.optiond" autocomplete="off"></el-input>
+						</el-form-item>
+						<el-form-item label="答案" :label-width="formLabelWidth">
+							<el-radio v-model="form.options.answer" label="A">答案A</el-radio>
+							<el-radio v-model="form.options.answer" label="B">答案B</el-radio>
+							<el-radio v-model="form.options.answer" label="C">答案C</el-radio>
+							<el-radio v-model="form.options.answer" label="D">答案D</el-radio>
+							<el-form-item label="分值" :label-width="formLabelWidth">
+								<el-input v-model="form.options.score" placeholder="每个答案用/分割" autocomplete="off"></el-input>
+							</el-form-item>
+						</el-form-item>
+					</div>
+					<div v-if="ispdhide">
+						<el-form-item label="题目名称" :label-width="formLabelWidth">
+							<el-input v-model="form.judges.topic" autocomplete="off"></el-input>
+						</el-form-item>
+						<el-form-item label="答案" :label-width="formLabelWidth">
+							<el-radio v-model="form.judges.answer" label="0">是</el-radio>
+							<el-radio v-model="form.judges.answer" label="1">答</el-radio>
+						</el-form-item>
+						<el-form-item label="分值" :label-width="formLabelWidth">
+							<el-input v-model="form.judges.score" placeholder="每个答案用/分割" autocomplete="off"></el-input>
+						</el-form-item>
+					</div>
+					<div v-if="istkhide">
+						<el-form-item label="题目名称" :label-width="formLabelWidth">
+							<el-input v-model="form.Fillblanks.topic" autocomplete="off"></el-input>
+						</el-form-item>
+						<el-form-item label="答案" :label-width="formLabelWidth">
+							<el-input v-model="form.Fillblanks.answer" placeholder="每个答案用/分割" autocomplete="off"></el-input>
+						</el-form-item>
+						<el-form-item label="分值" :label-width="formLabelWidth">
+							<el-input v-model="form.Fillblanks.score" placeholder="每个答案用/分割" autocomplete="off"></el-input>
+						</el-form-item>
+					</div>
+				</el-form>
+				<div slot="footer" class="dialog-footer">
+					<el-button @click="dialogFormVisible = false">取 消</el-button>
+					<el-button type="primary" @click="submit">确 定</el-button>
+				</div>
+			</el-dialog>
+	</body>
+	<script type="text/javascript">
+		new Vue({
+			el: '#app',
+			data: function() {
+				return {
+					input1: '',
+					date1: '',
+					value: '',
+					currentPage: 1,
+					total: '',
+					pageSize: 10,
+					options: [{
+						value: '全部',
+						label: '全部'
+					}, {
+						value: '选择题',
+						label: '选择题'
+					}, {
+						value: '判断题',
+						label: '判断题'
+					}, {
+						value: '填空题',
+						label: '填空题'
+					}],
+					tableData: [],
+					dialogformVisible: false,
+					//表单元素
+					form: {
+						teacherId: 1,
+						courseId: 1,
+						sectionId: 1,
+						options: {
+							topic: '',
+							optiona: '',
+							optionb: '',
+							optionc: '',
+							optiond: '',
+							answer: '',
+							score: ''
+						},
+						judges: {
+							topic: '',
+							answer: '',
+							score: ''
+						},
+						Fillblanks: {
+							topic: '',
+							answer: '',
+							score: ''
+						}
+						//tx: ''
+					},
+					formLabelWidth: '120px',
+					radio: '',
+					isxzhide: true,
+					ispdhide: false,
+					istkhide: false
+				}
+
+			},
+			methods: {
+				//添加
+				submit() {
+					var question = JSON.stringify(this.form);
+						axios({
+						method: 'post',
+						url: "http://localhost:8040/question",
+						data: this.form
+						})
+						.then(function(response) {
+							//console.log(response);
+							other.tableData = response.data.rows;
+							other.total = response.data.total;
+							console.log(response.data);
+						})
+						.catch(function(error) {})
+				},
+				deletequestion(row) {
+					var other=this;
+					this.$confirm('此操作将永久删除该题库, 是否继续?', '提示', {
+						confirmButtonText: '确定',
+						cancelButtonText: '取消',
+						type: 'warning',
+						center: true
+					}).then(() => {
+						var th=this;
+						axios({
+								method: 'delete',
+								url: "http://localhost:8040/question",
+								params: {
+									qid: row.qid
+								}
+							})
+							.then(function(response) {
+								console.log(response);
+								th.$message({
+									type: 'success',
+									message: '删除成功!'
+								});
+								other.search();
+							})
+							.catch(function(error) {
+								th.$message({
+									type: 'success',
+									message: '系统异常!'
+								});
+							})
+					}).catch(() => {
+						this.$message({
+							type: 'info',
+							message: '已取消删除'
+						});
+					});
+					console.log(row.qid);
+				},
+				//添加题型发生改变
+				txchange() {
+					console.log(this.form.tx);
+					if (this.form.tx == "选择题") {
+						this.form.judges=null;
+						this.form.Fillblanks=null;
+						this.isxzhide = true;
+						this.ispdhide = false;
+						this.istkhide = false;
+					}
+					if (this.form.tx == "判断题") {
+						this.form.options=null;
+						this.form.Fillblanks=null;
+						this.isxzhide = false;
+						this.ispdhide = true;
+						this.istkhide = false;
+					}
+					if (this.form.tx == "填空题") {
+						this.form.options=null;
+						this.form.judges=null;
+						this.isxzhide = false;
+						this.ispdhide = false;
+						this.istkhide = true;
+					}
+				},
+				handleClick(row) {
+					console.log(row);
+				},
+				//改变每页多少条
+				handleSizeChange(val) {
+					console.log(`每页 ${val} 条`);
+					this.loadsearch(this.currentPage, val);
+				},
+				//改变当前页
+				handleCurrentChange(val) {
+					console.log(val);
+					this.loadsearch(val, this.pageSize)
+
+				},
+				search() {
+					this.loadsearch(this.currentPage, this.pageSize)
+				},
+				loadsearch(page, size) {
+					console.log(this.currentPage + 66);
+					console.log(size + 88);
+					var other = this;
+					axios.get("http://localhost:8040/question", {
+							params: {
+								page: page,
+								rows: size,
+								name: this.input1,
+								tx: this.value,
+								startTime: this.date1[0],
+								endTime: this.date1[1]
+							}
+						})
+						.then(function(response) {
+							//console.log(response);
+							other.tableData = response.data.rows;
+							other.total = response.data.total;
+							console.log(response.data.rows);
+						})
+						.catch(function(error) {})
+					// 组件创建完后获取数据，
+					// 此时 data 已经被 observed 了
+				}
+
+			},
+			created: function() {
+				var data;
+				//var other = this;
+				this.loadsearch(this.currentPage, this.pageSize)
+			},
+			watch: {
+				tableData: function() {
+					console.log(00);
+				}
+			}
+		})
+	</script>
+
+</html>

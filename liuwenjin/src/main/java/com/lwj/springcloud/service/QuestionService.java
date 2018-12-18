@@ -31,4 +31,16 @@ public interface QuestionService {
 	
 	void deleteQuestion(int qid);
 
+
+	
+	  /** 
+	 * http://localhost:8080/inserQuestion
+	  * 作者: 大娃   
+	  * 邮件: 1558936588@qq.com  
+	  * 时间: 2018年12月18日 下午3:02:07  
+	  * 版本: V1.0   
+	 */
+	
+	Question inserQuestion(Question question);
+
 }
