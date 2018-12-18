@@ -1,10 +1,11 @@
 package com.hwg.service;
 
+
 /**
+ * @Description 学习记录实体
+ * @author gz
  * 
- * @author 郭昭
- *
  */
-public class LearnrecordService {
+public interface LearnrecordService {
 
 }
