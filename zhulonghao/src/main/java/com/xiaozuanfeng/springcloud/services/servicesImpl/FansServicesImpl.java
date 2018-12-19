@@ -16,27 +16,27 @@ public class FansServicesImpl implements FansServices {
 	private FansRepository fdao;
 
 	@Override
-	public List<UserInfo> getMyFans(Integer uid) {
+	public List<Integer> getMyFans(Integer uid) {
 
 		return fdao.getMyFans(uid);
 	}
 
 	@Override
-	public List<UserInfo> getMyfocus(Integer uid) {
+	public List<Integer> getMyfocus(Integer uid) {
 		return fdao.getMyfocus(uid);
 	}
 	@Override
-	public int getIsMyfocus(Integer uid, Integer fid) {
+	public Integer getIsMyfocus(Integer uid, Integer fid) {
 		return fdao.getIsMyfocus(uid, fid);
 	}
 	
 	@Override
-	public int getMyFansCount(Integer uid) {
+	public Integer getMyFansCount(Integer uid) {
 		return fdao.getMyFansCount(uid);
 	}
 
 	@Override
-	public int getMyfocusCount(Integer uid) {
+	public Integer getMyfocusCount(Integer uid) {
 		return fdao.getMyfocusCount(uid);
 	}
 

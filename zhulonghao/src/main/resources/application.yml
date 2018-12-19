@@ -1,12 +1,8 @@
 eureka:
   client:
     serviceUrl:
-    #eureka注册中心地址
       defaultZone: http://localhost:8888/eureka/
-  instance:
-    status-page-url: http://localhost:${server.port}/swagger-ui.html
 server:
-#项目端口号
   port: 8030
 spring:
   datasource:
@@ -20,6 +16,5 @@ spring:
     hibernate: 
       ddl-auto: update
   application:
-  #服务名称,随便写
     name: zhulonghao
 
