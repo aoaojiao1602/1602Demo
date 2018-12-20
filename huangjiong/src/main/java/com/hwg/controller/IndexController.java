@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Description 首页控制器层
  */
 @RestController
+@CrossOrigin
 public class IndexController {
 	/**
 	 * 首页图片轮播
@@ -20,7 +21,7 @@ public class IndexController {
 	 * @return
 	 */
 	@GetMapping("carousel")
-	@CrossOrigin
+
 	public Object getImages() {
 		List<Map<String, Object>> list = new ArrayList<>();
 		for (int i = 1; i <= 6; i++) {
@@ -30,6 +31,19 @@ public class IndexController {
 			list.add(map);
 		}
 		System.out.println(list);
+		return list;
+	}
+	
+	/**
+	 * 查询精彩讨论
+	 * @return
+	 */
+	@GetMapping("getJctl")
+	public Object getJctl() {
+		List<String> list=new ArrayList<String>();
+		for (int i = 0; i < 11; i++) {
+			list.add("ms第"+(i+1)+"论");
+		}
 		return list;
 	}
 }

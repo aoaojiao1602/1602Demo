@@ -29,7 +29,7 @@ public class CourseController {
 		for (int i = 1; i<=8; i++) {
 			Map<String, Object> map=new HashMap<String,Object>();
 			map.put("url", "");
-			map.put("courseName", "马帅第"+i+"课");
+			map.put("courseName", "ms第"+i+"讲");
 			map.put("zj", "进行至一周");
 			map.put("gs", "讲述ms传奇的人生经历 助你走上人生巅峰早日能与太阳肩并肩");
 			list.add(map);
