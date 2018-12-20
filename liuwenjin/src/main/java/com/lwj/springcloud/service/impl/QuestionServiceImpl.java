@@ -16,11 +16,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.lwj.springcloud.dao.QuestionRepository;
 import com.lwj.springcloud.entity.Entitysearch;
 import com.lwj.springcloud.entity.Question;
 import com.lwj.springcloud.service.QuestionService;
+
 @Service
 public class QuestionServiceImpl implements QuestionService {
 	@Autowired
@@ -37,7 +39,7 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	public Page<Question> indexQuestionPage(Entitysearch search) {
 		// TODO Auto-generated method stub
-		Sort sort = new Sort(Sort.Direction.ASC,"qId");
+		Sort sort = new Sort(Sort.Direction.DESC,"qId");
 		Pageable pageable = new PageRequest(search.getPage()-1,search.getRows(), sort);
 		return qRepository.findAll(this.getWhereClause(search),pageable);
 		/**
@@ -62,17 +64,17 @@ public class QuestionServiceImpl implements QuestionService {
 					 if (entitysearch.getName() != null) {
 						 topic=entitysearch.getName();
 					}
-					 exList.add(cb.like(root.get("optionId").get("topic").as(String.class), "%"+topic+"%"));
+					 exList.add(cb.like(root.get("options").get("topic").as(String.class), "%"+topic+"%"));
 				}
 				 if (entitysearch.getTx()!= null&&entitysearch.getTx().equals("判断题")) {
 					 if (entitysearch.getName() != null) {
 						 topic=entitysearch.getName();
 					}
-					 exList.add(cb.like(root.get("judgeId").get("topic").as(String.class), "%"+topic+"%"));
+					 exList.add(cb.like(root.get("judges").get("topic").as(String.class), "%"+topic+"%"));
 				}
 				 if (entitysearch.getTx()!= null&&entitysearch.getTx().equals("填空题")) {
 					 if( entitysearch.getName() != null && !"".equals(entitysearch.getName()) ){
-						 exList.add(cb.like(root.get("fillblankId").get("topic").as(String.class), "%"+topic+"%"));
+						 exList.add(cb.like(root.get("fillblanks").get("topic").as(String.class), "%"+topic+"%"));
 					 }
 				}
 				 if( entitysearch.getStartTime() != null ){
@@ -115,10 +117,50 @@ public class QuestionServiceImpl implements QuestionService {
 	
 	@Override
 	public Question inserQuestion(Question question) {
+		if (question.getTx().equals("选择题")) {
+			question.setJudges(null);
+			question.setFillblanks(null);
+		}
+		if (question.getTx().equals("判断题")) {
+			question.setOptions(null);
+			question.setFillblanks(null);
+		}
+		if (question.getTx().equals("填空题")) {
+			question.setJudges(null);
+			question.setOptions(null);
+		}
 		// TODO Auto-generated method stub
 		return qRepository.save(question);
 		/**
 		 * inserQuestion(这里用一句话描述这个方法的作用)
+		*/
+		
+	}
+	
+	/* (非 Javadoc) 
+	 * <p>Title: updateQuestion</p> 
+	 * <p>Description: </p> 
+	 * @param question
+	 * @return 
+	 * @see com.lwj.springcloud.service.QuestionService#updateQuestion(com.lwj.springcloud.entity.Question) 
+	*/
+	
+	@Override
+	@Transactional
+	public int updateQuestion(Question question) {
+		// TODO Auto-generated method stub
+		if (question.getTx().equals("选择题")) {
+			qRepository.updateOptions(question.getOptions().getOptionId(),question.getOptions().getAnswer(),question.getOptions().getOptionA(),question.getOptions().getOptionB(),question.getOptions().getOptionC(),question.getOptions().getOptionD(),question.getOptions().getScore(),question.getOptions().getTopic());
+		}
+		if (question.getTx().equals("判断题")) {
+			qRepository.updateJudges(question.getJudges().getJudgeId(),question.getJudges().getAnswer(),question.getJudges().getScore(),question.getJudges().getTopic());
+		}
+		if (question.getTx().equals("填空题")) {
+			qRepository.updateFillblanks(question.getFillblanks().getFillblankId(),question.getFillblanks().getAnswer(),question.getFillblanks().getScore(),question.getFillblanks().getTopic());
+		}
+		return qRepository.updateQuestion(question.getQId(),question.getSectionId());/*///qRepository.updateQuestion(question);
+*/		/**
+		 * updateQuestion(这里用一句话描述这个方法的作用)
 		*/
 		
 	}

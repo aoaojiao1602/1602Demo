@@ -33,7 +33,7 @@ public class Judges {
 	private Integer judgeId;
 	@Column(columnDefinition="varchar(100) comment '备注:题目'")
 	private String topic;
-	@Column(columnDefinition="tinyint(1)  comment '备注:答案'")
+	@Column(columnDefinition="varchar(100)  comment '备注:答案'")
 	private String answer;
 	@Column(columnDefinition="int comment '备注:分数'")
 	private Integer score;
@@ -43,14 +43,4 @@ public class Judges {
 	@OneToOne(optional = false, mappedBy = "judges", fetch = FetchType.EAGER)
 	@Cascade(value = { CascadeType.DELETE}) 
 	private Question question;
-	
-	public String getAnswer() {
-		String str="";
-		if (this.answer.equals("0")) {
-			str="是"; 
-		}else {
-			str="否";
-		}
-		return str;
-	}
 }

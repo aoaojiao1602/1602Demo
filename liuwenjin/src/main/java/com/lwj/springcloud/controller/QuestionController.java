@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.lwj.springcloud.entity.Entitysearch;
 import com.lwj.springcloud.entity.Question;
@@ -52,8 +53,14 @@ public class QuestionController {
 	@ApiImplicitParam(name = "question", value = "题库实体类", required = true, dataType = "Question")
 	@RequestMapping(value="/question", method = RequestMethod.POST)
 	public Object inserQuestion(@RequestBody Question question) {
-		qService.inserQuestion(question);
-		return 0;
+		
+		return qService.inserQuestion(question);
+	}
+	@ApiOperation(value="修改题库表", notes="添加题库")
+	@ApiImplicitParam(name = "question", value = "题库实体类", required = true, dataType = "Question")
+	@RequestMapping(value="/question", method = RequestMethod.PUT)
+	public Object updateQuestion(@RequestBody Question question) {
+		return qService.updateQuestion(question);
 	}
 	@ApiOperation(value="删除题库表", notes="删除题库")
 	@ApiImplicitParam(name = "qid", value = "题库id", required = true,paramType="Intger")
@@ -68,4 +75,5 @@ public class QuestionController {
 			return false;
 		}
 	}
+	
 }

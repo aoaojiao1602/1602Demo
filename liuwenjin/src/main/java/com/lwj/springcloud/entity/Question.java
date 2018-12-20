@@ -48,7 +48,7 @@ public class Question {
 	private Integer teacherId;
 	@Column(columnDefinition = "int NOT NULL comment '备注:课程id'")
 	private Integer courseId;
-	@Column(columnDefinition = "int NOT NULL comment '备注:章节id'")
+	@Column(columnDefinition = "int NULL comment '备注:章节id'")
 	private Integer sectionId;
 	@Column(columnDefinition = "TIMESTAMP", nullable = false, updatable = false, insertable = false)
 	@JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd")

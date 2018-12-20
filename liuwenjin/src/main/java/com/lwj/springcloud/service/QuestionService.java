@@ -43,4 +43,16 @@ public interface QuestionService {
 	
 	Question inserQuestion(Question question);
 
+
+	
+	  /** 
+	 * http://localhost:8080/updateQuestion
+	  * 作者: 大娃   
+	  * 邮件: 1558936588@qq.com  
+	  * 时间: 2018年12月20日 下午9:21:14  
+	  * 版本: V1.0   
+	 */
+	
+	int updateQuestion(Question question);
+
 }
