@@ -4,11 +4,17 @@ package com.lhf.entity;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -16,10 +22,10 @@ import javax.persistence.Table;
 public class Courses {
 	@Id
 	@GeneratedValue
-	@Column(columnDefinition="int unsigned NOT NULL comment '备注:课程编号'")
+	@Column(columnDefinition="int NOT NULL comment '备注:课程编号'")
 	private int courseId;
-	@Column(columnDefinition="varchar(50) comment '备注:课程类别'")
-	private String courseCategory;
+	@Column(columnDefinition="int comment '备注:课程类别'")
+	private int courseCategory;
 	@Column(columnDefinition="varchar(50) comment '备注:课程名称'")
 	private String courseName;
 	@Column(columnDefinition="varchar(100) comment '备注:课程说明'")
@@ -32,20 +38,31 @@ public class Courses {
 	private Date courseCreateTime;
 	@Column(columnDefinition="timestamp comment'备注:编辑时间'")
 	private Date courseEditorTime;
+	@JsonIgnore
+	@OneToOne(optional = false, mappedBy = "courses", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name="courses_score",unique = true)
+	private Score score;
 	public Courses() {
 		super();
+	}
+	public Courses(int courseId, int courseCategory, String courseName, String courseRemark, String courseCreator,
+			String courseState, Date courseCreateTime, Date courseEditorTime, Score score) {
+		super();
+		this.courseId = courseId;
+		this.courseCategory = courseCategory;
+		this.courseName = courseName;
+		this.courseRemark = courseRemark;
+		this.courseCreator = courseCreator;
+		this.courseState = courseState;
+		this.courseCreateTime = courseCreateTime;
+		this.courseEditorTime = courseEditorTime;
+		this.score = score;
 	}
 	public int getCourseId() {
 		return courseId;
 	}
 	public void setCourseId(int courseId) {
 		this.courseId = courseId;
-	}
-	public String getCourseCategory() {
-		return courseCategory;
-	}
-	public void setCourseCategory(String courseCategory) {
-		this.courseCategory = courseCategory;
 	}
 	public String getCourseName() {
 		return courseName;
@@ -83,11 +100,25 @@ public class Courses {
 	public void setCourseEditorTime(Date courseEditorTime) {
 		this.courseEditorTime = courseEditorTime;
 	}
+	
+	public int getCourseCategory() {
+		return courseCategory;
+	}
+	public void setCourseCategory(int courseCategory) {
+		this.courseCategory = courseCategory;
+	}
+	public Score getScore() {
+		return score;
+	}
+	public void setScore(Score score) {
+		this.score = score;
+	}
 	@Override
 	public String toString() {
 		return "Courses [courseId=" + courseId + ", courseCategory=" + courseCategory + ", courseName=" + courseName
 				+ ", courseRemark=" + courseRemark + ", courseCreator=" + courseCreator + ", courseState=" + courseState
-				+ ", courseCreateTime=" + courseCreateTime + ", courseEditorTime=" + courseEditorTime + "]";
+				+ ", courseCreateTime=" + courseCreateTime + ", courseEditorTime=" + courseEditorTime + ", score="
+				+ score + "]";
 	}
 	
 	

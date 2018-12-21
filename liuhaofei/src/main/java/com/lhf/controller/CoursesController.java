@@ -30,8 +30,6 @@ public class CoursesController {
 	public Object queryByDynamicSQLPage(CoursesSearch c,int page,int limit) {
 		Page<Courses> sqlPage = cService.queryByDynamicSQLPage(c, page-1, limit);
 		Map<String, Object> map=new HashMap<String, Object>();
-		map.put("code", 0);
-		map.put("msg", "");
 		map.put("count", sqlPage.getTotalElements());
 		map.put("data", sqlPage.getContent());
 		return map;
