@@ -21,6 +21,9 @@ public class ExaminfoServiceImpl implements ExaminfoService {
 	@Transactional
 	public Examinfo insertExaminfo(Examinfo examinfo) {
 		// TODO Auto-generated method stub
+		if (examinfo.getExamType().equals("统一")) {
+			
+		}
 		return eRepository.save(examinfo);
 	}
 

@@ -25,6 +25,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
@@ -38,14 +39,17 @@ public class Examinfo {
 	@GeneratedValue	
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注:自动增长主键'")
 	private Integer exId;
+	@JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
 	@Column(columnDefinition="date NOT NULL comment '备注:考试开始时间'")
 	private Date startTime;
+	@JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
 	@Column(columnDefinition="date NOT NULL comment '备注:考试结束时间'")
 	private Date endTime;
 	@Column(columnDefinition="varchar(100) NOT NULL comment '备注:试卷名'")
 	private String paperName;	
 	@Column(columnDefinition="int NOT NULL comment '备注:持续时间'")
 	private Integer cxTime;
+	@JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd")
 	@Column(columnDefinition="TIMESTAMP",nullable=false,updatable=false,insertable=false)
 	private Timestamp createTime;
 	@Column(columnDefinition="int comment '备注:教师Id'")
@@ -60,6 +64,8 @@ public class Examinfo {
 	private Integer examScore;
 	@Column(columnDefinition="int comment '备注:课程id'")
 	private Integer kId;
+	@Column(columnDefinition="varchar(20) comment '备注:考试类型'")
+	private String examType;
 	@JsonIgnore
 	@OneToOne(optional = false, mappedBy = "examinfo", fetch = FetchType.EAGER)
 	@Cascade(value = { CascadeType.SAVE_UPDATE }) 
