@@ -62,9 +62,6 @@ public class CoursesServiceImpl implements CoursesService {
 				if (c.getCourseName() != null && !"".equals(c.getCourseName())) {
 					exList.add(cb.like(root.<String>get("courseName"), "%" + c.getCourseName() + "%"));
 				}
-				if (c.getCourseCategory() != null && !"".equals(c.getCourseCategory())) {
-					exList.add(cb.equal(root.get("courseCategory").as(String.class), c.getCourseCategory()));
-				}
 				if (c.getCourseRemark() != null && !"".equals(c.getCourseRemark())) {
 					exList.add(cb.equal(root.get("courseRemark").as(String.class), c.getCourseRemark()));
 				}

@@ -5,7 +5,7 @@ package com.lhf.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class CoursesSearch {
-	private String courseCategory;
+	private int courseCategory;
 	private String courseName;
 	private String courseRemark;
 	private String courseCreator;
@@ -18,7 +18,7 @@ public class CoursesSearch {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public CoursesSearch(String courseCategory, String courseName, String courseRemark, String courseCreator,
+	public CoursesSearch(Integer courseCategory, String courseName, String courseRemark, String courseCreator,
 			String courseState, String startCreateTime, String endCreateTime) {
 		super();
 		this.courseCategory = courseCategory;
@@ -29,10 +29,10 @@ public class CoursesSearch {
 		this.startCreateTime = startCreateTime;
 		this.endCreateTime = endCreateTime;
 	}
-	public String getCourseCategory() {
+	public int getCourseCategory() {
 		return courseCategory;
 	}
-	public void setCourseCategory(String courseCategory) {
+	public void setCourseCategory(Integer courseCategory) {
 		this.courseCategory = courseCategory;
 	}
 	public String getCourseName() {
