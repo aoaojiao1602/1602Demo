@@ -13,7 +13,7 @@ import com.lhf.entity.Score;
 
 public interface ScoreRepository extends JpaRepository<Score, Integer>,JpaSpecificationExecutor<Score> {
 	//添加
-	@Query(value = "INSERT INTO score (score_content, score_course) VALUES(:#{#s.scoreContent} ,:#{#s.scoreCourse});", nativeQuery = true)
+	@Query(value = "INSERT INTO score (score_content, score_course,courses_score) VALUES(:#{#s.scoreContent} ,:#{#s.scoreCourse},:#{#s.courses.courseId});", nativeQuery = true)
 	@Modifying
 	@Transactional
 	public int putScore(@Param("s") Score s);
@@ -27,10 +27,5 @@ public interface ScoreRepository extends JpaRepository<Score, Integer>,JpaSpecif
 	@Modifying
 	@Transactional
 	public int postScoreById(@Param("s") Score s);
-	//查询
-	/*@Query(value="SELECT s.score_id,s.score_content,c.course_name FROM score s,courses c WHERE s.score_course=c.course_id", nativeQuery = true)
-	@Modifying
-	@Transactional
-    public Page<Score> getScore(Specification<Score> specification, Pageable pageable);*/
 
 }

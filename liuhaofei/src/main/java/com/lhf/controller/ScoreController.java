@@ -21,7 +21,7 @@ public class ScoreController {
 	Map<String, Object> map = new HashMap<>();
 	/**
 	 * 评分标准添加方法
-	 * http://localhost:8050/score/putScore?scoreContent=你好，我好，大家好&scoreCourse=1
+	 * http://localhost:8050/score/putScore?scoreContent=你好，我好，大家好&courses.courseId=5
 	 * @param s 评分实体类
 	 * @return
 	 */
