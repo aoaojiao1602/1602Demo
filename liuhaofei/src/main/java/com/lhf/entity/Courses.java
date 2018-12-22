@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -21,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name="courses")
 public class Courses {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(columnDefinition="int NOT NULL comment '备注:课程编号'")
 	private int courseId;
 	@Column(columnDefinition="int comment '备注:课程类别'")
