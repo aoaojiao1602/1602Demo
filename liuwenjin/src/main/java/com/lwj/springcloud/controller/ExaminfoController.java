@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lwj.springcloud.entity.Entitysearch;
 import com.lwj.springcloud.entity.Examinfo;
+import com.lwj.springcloud.entity.Question;
 import com.lwj.springcloud.service.ExaminfoService;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -54,5 +55,11 @@ public class ExaminfoController {
 	@RequestMapping(value="/examinfo", method = RequestMethod.DELETE)
 	public int deleteExaminfo(int exId) {		
 		return eService.deleteExaminfo(exId);
+	}
+	@ApiOperation(value="添加考试表", notes="添加考试")
+	@ApiImplicitParam(name = "examinfo", value = "考试实体类", required = true, dataType = "Examinfo")
+	@RequestMapping(value="/examinfo", method = RequestMethod.PUT)
+	public Object updateExaminfo(@RequestBody Examinfo examinfo) {
+		return eService.updateExaminfo(examinfo);
 	}
 }

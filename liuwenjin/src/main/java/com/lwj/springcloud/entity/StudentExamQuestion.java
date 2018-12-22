@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 项目名称：liuwenjin
@@ -32,7 +34,8 @@ import lombok.Data;
 @Entity
 @Table(name = "studentExamQuestiontb")
 @GenericGenerator(name = "seqId", strategy = "increment")
-@Data
+@Getter
+@Setter
 /*学生考试题库表*/
 public class StudentExamQuestion {
 	@Id

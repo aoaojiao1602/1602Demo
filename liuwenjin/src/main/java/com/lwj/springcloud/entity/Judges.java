@@ -20,11 +20,14 @@ import org.hibernate.annotations.GenericGenerator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "judgetb")
 @GenericGenerator(name = "judgeId", strategy = "increment")
-@Data
+@Getter
+@Setter
 //判断题表
 public class Judges {
 	@Id

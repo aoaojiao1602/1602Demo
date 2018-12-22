@@ -14,10 +14,13 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 @Entity
 @Table(name = "studentTestinfotb")
 @GenericGenerator(name = "id", strategy = "increment")
-@Data
+@Getter
+@Setter
 //学生测试信息
 public class StudentTestInfo {
 	@Id

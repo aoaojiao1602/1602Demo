@@ -15,11 +15,16 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 @Entity
 @Table(name = "studentExaminfotb")
 @GenericGenerator(name = "id", strategy = "increment")
-@Data
+@Getter
+@Setter
 //学生考试信息表
 public class StudentExamInfo {
 	@Id
@@ -28,6 +33,7 @@ public class StudentExamInfo {
 	private Integer id;
 	@Column(columnDefinition="int comment '备注:学生id'")
 	private Integer studentId;
+	@JsonIgnore
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="examinfoId",unique = true)
 	private Examinfo examinfo;

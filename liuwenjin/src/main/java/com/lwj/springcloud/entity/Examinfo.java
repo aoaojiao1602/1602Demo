@@ -29,10 +29,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 @Entity
 @Table(name = "examinfotb")
 @GenericGenerator(name = "exId", strategy = "increment")
-@Data
+@Getter
+@Setter
 //考试信息表
 public class Examinfo {
 	@Id

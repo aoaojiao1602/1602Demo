@@ -69,6 +69,11 @@ public class Question {
 	private Object quest;
 	@Transient
 	private Object tx;
+	@Transient
+	private Integer my;
+	public Integer getMy() {
+		return this.qId;
+	}
 	/* 考试题库表 */
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER) // 指定多对多关系 //默认懒加载,只有调用getter方法时才加载数据
@@ -91,5 +96,6 @@ public class Question {
 		}
 		return quest;
 	}
+
 
 }
