@@ -77,7 +77,7 @@ public class StudentExamInfoController {
 	@ApiImplicitParam(name = "stuid", value = "学生id", required = true,paramType="Integer")
 	@RequestMapping(value="/studentExamInfo", method = RequestMethod.PUT)
 	public Object updatestudentExamInfoAndScore(int stuid,int examid,@RequestParam(value = "daans[]") String[] daans,@RequestParam(value = "qids[]") int[] qids) {
-		//分数
+		//计算出分数
 		int score=stuExaService.checkDaan(qids,daans);
 		stuExaService.updateStudentExamInfoScore(stuid,examid,score);
 		//Map<String, Object>  map=stuExaService.indexStudentExamInfo(stuid,examid);
