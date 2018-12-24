@@ -1,0 +1,62 @@
+******************** MS ************************
+SpringCloud 集群服务 的 权限统一管理,使用SpringCloud-Oauth2的用户名密码认证模式即可
+使用步骤如下
+1>启动授权认证中心 springcloud-oauth2-server-memory
+启动资源服务器 oauth2-resources-order
+2>获取access_token令牌(使用postman或者poster)
+http://localhost:8080/oauth/token?grant_type=password&username=user_1&password=123456&client_id=client_1&client_secret=123456&scope=all
+{
+    "access_token": "0e9dcad5-4fb5-4df2-868d-309a4525ac47",
+    "token_type": "bearer",
+    "refresh_token": "d32fd869-34ae-4459-ad8d-49496087039f",
+    "expires_in": 7199,
+    "scope": "all"
+}
+其中&username=user_1&password=123456 为系统用户usertb表中数据
+其中&client_id=client_1&client_secret=123456是一个集群服务公用,所有资源服务器都需要复制粘贴如下配置
+security:
+  oauth2:
+    resource:
+      ####从认证授权中心上验证token
+      tokenInfoUri: http://localhost:8080/oauth/check_token
+      preferTokenInfo: true
+    client:
+      accessTokenUri: http://localhost:8080/oauth/token
+      userAuthorizationUri: http://localhost:8080/oauth/authorize
+#      ###appid
+      clientId: client_1
+#      ###appSecret
+      clientSecret: 123456
+2>验证access_token是否有效
+http://localhost:8080/oauth/check_token?token=0e9dcad5-4fb5-4df2-868d-309a4525ac47
+{
+    "active": true,
+    "exp": 1543855119,
+    "user_name": "user_1",
+    "authorities": [
+        "ROLE_USER"
+    ],
+    "client_id": "client_1",
+    "scope": [
+        "all"
+    ]
+}
+3>刷新新的access_token,把原来的access_token置为无效,返回一个全新的access_token
+http://localhost:8080/oauth/token?grant_type=refresh_token&refresh_token=d32fd869-34ae-4459-ad8d-49496087039f&client_id=client_1&client_secret=123456
+{
+    "access_token": "871e40a6-171a-4a64-b508-93a907b7d426",
+    "token_type": "bearer",
+    "refresh_token": "d32fd869-34ae-4459-ad8d-49496087039f",
+    "expires_in": 7200,
+    "scope": "all"
+}
+4>注销token的实现思路有两种方式,第一种正式使用的方式,当access_token存储在mysql等等数据库或者redis等等数据库中时,自己实现删除token操作即可.
+第二种方式,通过refresh_token直接把access_token置为无效即可.
+
+
+grant_type:
+authorization_code：授权码模式(即先登录获取code,再获取token)
+password：密码模式(将用户名,密码传过去,直接获取token)
+client_credentials：客户端模式(无用户,用户向客户端注册,然后客户端以自己的名义向’服务端’获取资源)
+implicit：简化模式(在redirect_uri 的Hash传递token; Auth客户端运行在浏览器中,如JS,Flash)
+refresh_token：刷新access_token
