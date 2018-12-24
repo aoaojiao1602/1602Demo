@@ -55,6 +55,7 @@ public class CoursesServiceImpl implements CoursesService {
 	}
 	private Specification<Courses> getWhereClause(final CoursesSearch c) {
 		return new Specification<Courses>() {
+			@SuppressWarnings("unlikely-arg-type")
 			@Override
 			public Predicate toPredicate(Root<Courses> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				Predicate predicate = cb.conjunction();// 动态SQL表达式
@@ -64,6 +65,9 @@ public class CoursesServiceImpl implements CoursesService {
 				}
 				if (c.getCourseRemark() != null && !"".equals(c.getCourseRemark())) {
 					exList.add(cb.equal(root.get("courseRemark").as(String.class), c.getCourseRemark()));
+				}
+				if (c.getCourseCategory() != null && !"".equals(c.getCourseCategory())) {
+					exList.add(cb.equal(root.get("courseCategory").as(Integer.class), c.getCourseCategory()));
 				}
 				if (c.getCourseCreator() != null && !"".equals(c.getCourseCreator())) {
 					exList.add(cb.equal(root.get("courseCreator").as(String.class), c.getCourseCreator()));

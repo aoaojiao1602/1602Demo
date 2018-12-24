@@ -29,7 +29,7 @@ public class CoursesSearch {
 		this.startCreateTime = startCreateTime;
 		this.endCreateTime = endCreateTime;
 	}
-	public int getCourseCategory() {
+	public Integer getCourseCategory() {
 		return courseCategory;
 	}
 	public void setCourseCategory(Integer courseCategory) {
