@@ -104,7 +104,7 @@ public class QuestionServiceImpl implements QuestionService {
 		/**
 		 * deleteQuestion(这里用一句话描述这个方法的作用)
 		*/
-		qRepository.delete(qid);
+		qRepository.deleteById(qid);
 	}
 	
 	/* (非 Javadoc) 

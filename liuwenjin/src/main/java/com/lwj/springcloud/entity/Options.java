@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -25,13 +26,12 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "optiontb")
-@GenericGenerator(name = "optionId", strategy = "increment")
 @Getter
 @Setter
 //选择题表
 public class Options {
-	@Id
-	@GeneratedValue	
+	@Id // 指定主键 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注:自动增长主键'")
 	private Integer optionId;
 	@Column(columnDefinition="varchar(100) comment '备注:题目'")

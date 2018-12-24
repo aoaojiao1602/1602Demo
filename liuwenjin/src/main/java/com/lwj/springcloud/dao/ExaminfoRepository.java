@@ -10,6 +10,8 @@ import org.springframework.data.repository.query.Param;
 
 import com.lwj.springcloud.entity.Examinfo;
 import com.lwj.springcloud.entity.Options;
+import com.lwj.springcloud.entity.Question;
+import com.lwj.springcloud.entity.StudentExamQuestion;
 
 public interface ExaminfoRepository extends JpaRepository<Examinfo, Integer>,JpaSpecificationExecutor<Examinfo> {
 	//修改考试
@@ -53,4 +55,60 @@ public interface ExaminfoRepository extends JpaRepository<Examinfo, Integer>,Jpa
 	 */
 	@Query("select q.qId from Question q,Fillblanks f where q.fillblanks=f.question")
 	List<Integer> queryFillblankNums();
+	
+	  /** 
+	 * http://localhost:8080/queryQuestion
+	  * 作者: 大娃   
+	  * 邮件: 1558936588@qq.com  
+	  * 时间: 2018年12月22日 下午7:15:23  
+	  * 版本: V1.0   
+	 */
+	//q.qId,q.options.topic,q.options.optionA,q.options.optionB,q.options.optionC,q.options.optionD,q.options.score,q.Judges.topic,q.Judges.score,q.Fillblanks.topic,q.Fillblanks.score,q.daan 
+	@Query(" from Question q where qId=?1 ")
+	Question queryQuestion(Integer integer);
+	
+	  /** 
+	 * http://localhost:8080/queryExamQuestion
+	  * 作者: 大娃   
+	  * 邮件: 1558936588@qq.com  
+	  * 时间: 2018年12月22日 下午7:33:04  
+	  * 版本: V1.0   
+	 */
+	@Query(value=" SELECT se.examquestiontb_question_id FROM  exam_questiontb se WHERE  se.examquestiontb_examinfo_id=?1",nativeQuery=true)
+	List<Integer> queryExamQuestion(Integer exId);
+	
+	  /** 
+	 * http://localhost:8080/inserStudentQuerExamQuestiontb
+	  * 作者: 大娃   
+	  * 邮件: 1558936588@qq.com  
+	  * 时间: 2018年12月22日 下午7:50:47  
+	  * 版本: V1.0   
+	 */
+	@Query(value="INSERT INTO student_exam_questiontb(student_id,exam_id,questiontb_id) VALUES (?1,?2,?3)",nativeQuery=true)
+	@Modifying
+	int inserStudentQuerExamQuestiontb(int stuid, int examid, int integer);
+	
+	  /** 
+	 * http://localhost:8080/queryStudentQuerExamQuestiontb
+	  * 作者: 大娃   
+	  * 邮件: 1558936588@qq.com  
+	  * 时间: 2018年12月22日 下午9:10:00  
+	  * 版本: V1.0   
+	 */
+	@Query("FROM  StudentExamQuestion  seq WHERE  seq.studentId=?1 AND seq.examId=?2")
+	List<StudentExamQuestion> queryStudentQuerExamQuestiontb(int stuid, int examid);
+	
+	  /** 
+	 * http://localhost:8080/queryQuestionDaan
+	  * 作者: 大娃   
+	  * 邮件: 1558936588@qq.com  
+	  * 时间: 2018年12月24日 下午3:14:54  
+	  * 版本: V1.0   
+	 */
+	@Query("from Question q where qId=?1 ")
+	Question queryQuestionDaan(int i);
+	
+	
+	
+	
 }

@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -33,13 +34,12 @@ import lombok.Setter;
 */
 @Entity
 @Table(name = "studentExamQuestiontb")
-@GenericGenerator(name = "seqId", strategy = "increment")
 @Getter
 @Setter
 /*学生考试题库表*/
 public class StudentExamQuestion {
-	@Id
-	@GeneratedValue	
+	@Id // 指定主键 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注:自动增长主键'")
 	private Integer seqId;
 	@Column(columnDefinition="int comment '备注:题库id'")

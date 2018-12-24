@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -23,13 +24,12 @@ import lombok.Getter;
 import lombok.Setter;
 @Entity
 @Table(name = "testinfotb")
-@GenericGenerator(name = "testId", strategy = "increment")
 @Getter
 @Setter
 //测试信息表
 public class TestInfo {
-	@Id
-	@GeneratedValue	
+	@Id // 指定主键 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注:自动增长主键'")
 	private Integer testId;
 	@Column(columnDefinition="int comment '备注:剩余时间'")

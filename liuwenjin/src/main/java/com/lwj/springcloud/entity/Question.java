@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -35,13 +36,12 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "questiontb")
-@GenericGenerator(name = "qId", strategy = "increment")
 @Setter
 @Getter
 //题库表
 public class Question {
-	@Id
-	@GeneratedValue
+	@Id // 指定主键 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(columnDefinition = "int unsigned NOT NULL comment '备注:自动增长主键'")
 	private Integer qId;
 	@Column(columnDefinition = "int NOT NULL comment '备注:教师id'")
@@ -71,19 +71,20 @@ public class Question {
 	private Object tx;
 	@Transient
 	private Integer my;
+	@Transient
+	private String daan;
 	public Integer getMy() {
 		return this.qId;
 	}
 	/* 考试题库表 */
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER) // 指定多对多关系 //默认懒加载,只有调用getter方法时才加载数据
-	@Cascade(value = { CascadeType.SAVE_UPDATE }) // 设置级联关系
+	@Cascade(value={CascadeType.PERSIST})
 	@JoinTable(name = "exam_questiontb", // 指定第三张中间表名称
 			joinColumns = { @JoinColumn(name = "examquestiontb_question_id") }, inverseJoinColumns = {
 					@JoinColumn(name = "examquestiontb_examinfo_id") })
 	@NotFound(action = NotFoundAction.IGNORE)
 	private Set<Examinfo> eSet = new HashSet<Examinfo>();
-
 	public Object getQuest() {
 		if (this.options != null) {
 			quest=options;
@@ -95,6 +96,12 @@ public class Question {
 			quest=fillblanks;
 		}
 		return quest;
+	}
+	public Set<Examinfo> geteSet() {
+		return null;
+	}
+	public void seteSet(Set<Examinfo> eSet) {
+		this.eSet = eSet;
 	}
 
 

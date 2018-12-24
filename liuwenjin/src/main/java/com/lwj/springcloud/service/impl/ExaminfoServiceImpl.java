@@ -38,7 +38,7 @@ public class ExaminfoServiceImpl implements ExaminfoService {
 				}
 				
 			}
-			/*if (examinfo.getJudgeNum()>0) {
+			if (examinfo.getJudgeNum()>0) {
 				List<Integer> qpList=eRepository.queryJudges();
 				System.err.println(qpList);
 				List<Integer> oidlist= Random.GetRandomIsRepeat(examinfo.getJudgeNum(), qpList);
@@ -46,7 +46,7 @@ public class ExaminfoServiceImpl implements ExaminfoService {
 					eRepository.insetExamQuestiontb(oidlist.get(i),exa.getExId());
 				}
 				
-			}
+			}/*
 			if (examinfo.getFillblankNum()>0) {
 				List<Integer> qpList=eRepository.queryFillblankNums();
 				System.err.println(qpList);

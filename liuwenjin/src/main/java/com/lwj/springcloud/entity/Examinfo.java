@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -33,13 +34,12 @@ import lombok.Getter;
 import lombok.Setter;
 @Entity
 @Table(name = "examinfotb")
-@GenericGenerator(name = "exId", strategy = "increment")
 @Getter
 @Setter
 //考试信息表
 public class Examinfo {
-	@Id
-	@GeneratedValue	
+	@Id // 指定主键 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注:自动增长主键'")
 	private Integer exId;
 	@JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
@@ -71,7 +71,6 @@ public class Examinfo {
 	private String examType;
 	@JsonIgnore
 	@OneToOne(optional = false, mappedBy = "examinfo", fetch = FetchType.EAGER)
-	@Cascade(value = { CascadeType.SAVE_UPDATE }) 
 	@JoinColumn(name="examinfoId",unique = true)
 	private StudentExamInfo studentExamInfo ;
 	
