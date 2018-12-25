@@ -2,6 +2,7 @@ package com.lwj.springcloud.config;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -20,6 +21,12 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+
+import com.lwj.springcloud.websocket.SpringBootHandshakeInterceptor;
+import com.lwj.springcloud.websocket.SpringBootWebSocketHandler;
 
 /**
  * 项目名称：mavenDemo_Lwj
@@ -34,7 +41,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  *
 */
 @Configuration
-public class SpringBootConfigurer implements WebMvcConfigurer {
+@EnableWebSocket //启动WebSocket服务器
+public class SpringBootConfigurer implements WebMvcConfigurer, WebSocketConfigurer {
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		//允许所有域名下的客户端以任意请求方式跨域访问本项目下的任意URL
@@ -157,8 +165,8 @@ public class SpringBootConfigurer implements WebMvcConfigurer {
 		/**
 		 * addResourceHandlers(这里用一句话描述这个方法的作用)
 		*/
-		registry.addResourceHandler("/**").addResourceLocations("/");
-		registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
+		/*registry.addResourceHandler("/**").addResourceLocations("/");*/
+		registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/");
 	}
 
 	
@@ -332,6 +340,34 @@ public class SpringBootConfigurer implements WebMvcConfigurer {
 		*/
 		
 	}
+
+
+	
+	/* (非 Javadoc) 
+	 * <p>Title: registerWebSocketHandlers</p> 
+	 * <p>Description: </p> 
+	 * @param registry 
+	 * @see org.springframework.web.socket.config.annotation.WebSocketConfigurer#registerWebSocketHandlers(org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry) 
+	*/
+	@Autowired
+	private SpringBootWebSocketHandler handler;
+	@Autowired
+	private SpringBootHandshakeInterceptor handshakeInterceptor;
+	@Override
+	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+		// TODO Auto-generated method stub
+			//-------------------- 允许跨域访问WebSocket ------------------------
+		      String[] allowsOrigins = {"*"};//允许连接的域,只能以http或https开头 
+		      /**
+		  	 * http://localhost:8080
+		  	 * http://localhost:8080/index.html
+		  	 */
+		      //7. 设置websocket服务器地址     ws://localhost:8080/SpringBootWebSocketupdateStudentExamInfo
+			registry.addHandler(handler, "/webSocketjoin").addInterceptors(handshakeInterceptor).setAllowedOrigins(allowsOrigins);
+//			registry.addHandler(handler, "/SpringBootWebSocket/sockjs").addInterceptors(handshakeInterceptor).setAllowedOrigins(allowsOrigins).withSockJS();//兼容以前老版本的sockJS
+			
+		}
+
 
 	
 }

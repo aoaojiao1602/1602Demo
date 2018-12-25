@@ -23,16 +23,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class Redirect {
 	@RequestMapping(value = "/a") 
-	public ModelAndView getxxxList(){
-		//ModelAndView modelAndView = new ModelAndView("/xxx/xxxList");//跳转
-		ModelAndView modelAndView = new ModelAndView("redirect:index.html");//重定向
-		try{ //检索参数回显
-			//modelAndView.addObject("xxxDTO",xxxDTO); //执行查询
-			//modelAndView.addObject("xxxList",xxxList); 
-			}catch (Exception e){
-				e.printStackTrace(); 
-			}
-		return modelAndView; 
+	public String getxxxList(){
+		return "index.html"; 
 	}
 	
 }
