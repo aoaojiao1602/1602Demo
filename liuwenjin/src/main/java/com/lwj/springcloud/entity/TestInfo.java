@@ -1,8 +1,6 @@
 package com.lwj.springcloud.entity;
 
 import java.sql.Timestamp;
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,11 +13,10 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 @Entity
@@ -38,6 +35,7 @@ public class TestInfo {
 	private String testName;
 	@Column(columnDefinition="int comment '备注:测试次数'")
 	private Integer testNum;
+	@JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd")
 	@Column(columnDefinition="TIMESTAMP comment '备注:测试建立时间' ",nullable=false,updatable=false,insertable=false)
 	private Timestamp createTime;
 	@Column(columnDefinition="int comment '备注:章节id'")
