@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import com.gzz.entity.ProjectReplyGood;
 
 public interface ReplyGoodReopsitory extends JpaRepository<ProjectReplyGood, Integer> {
+	//查询当前用户有没有对该回复进行点踩
+    @Query(value="SELECT COUNT(*) FROM projectreplynotgoodtb WHERE  project_reply_not_good_uid=?1 AND project_reply_not_good_project_reply_id=?2",nativeQuery=true)
+    public int getReplyUid(Integer replyGoodUid,Integer replyId);
 	// 对回复进行点赞，查询当前用户有没有对该帖子进行点赞
 	@Query(value = "SELECT COUNT(*) FROM projectreplygoodtb WHERE project_reply_good_uid=?1 AND project_reply_good_project_reply_id=?2", nativeQuery = true)
 	public int getReplyByUid(Integer replyGoodUid,Integer replyId);

@@ -3,6 +3,8 @@ package com.gzz.service;
 import com.gzz.entity.ProjectCount;
 
 public interface ProjectCountService {
+	//查询当前用户有没有进行点踩
+	public int getUidCount(Integer projectId,Integer projectCountUids);
 	//对主题进行点赞
 	public int putProjectCount(Integer projectId,Integer projectCountUids);
 	//查询当前用户有没有对该主题进行点赞

@@ -39,10 +39,32 @@ public class ProjectServiceImpl implements ProjectService {
 			Integer moduleId) {
 		return repository.putProjects(projectContent, projectCreatetime, projectTitle, projectUid, moduleId);
 	}
-	//分页查询用户自己所关注的主题
+	//查询用户自己所关注的主题
 	@Transactional
 	public List<Project> getProjectByProjectState(Integer projectState,Integer uId) {
 		return repository.getProjectByProjectState(projectState, uId);
+	}
+	//查询用户自己所关注的主题的id
+	@Transactional
+	public List<Integer> getProjectId(Integer projectUid){
+		return repository.getProjectId(projectUid);
+	}
+	//根据模块查询当前最先发布的主题
+	
+	public Project getProject(Integer projectModule) {
+		return repository.getProject(projectModule);
+	}
+	//查询某个帖子的浏览数
+	public int getThroug(Integer projectId) {
+		return repository.getThroug(projectId);
+	}
+	//查询某个帖子的回复数
+	public int getReply(Integer projectId) {
+		return repository.getReply(projectId);
+	}
+	//查询某个帖子的投票数
+	public int getCount(Integer projectId) {
+		return repository.getCount(projectId);
 	}
 
 }

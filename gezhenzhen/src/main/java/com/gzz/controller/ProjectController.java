@@ -1,14 +1,13 @@
 package com.gzz.controller;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gzz.entity.Project;
@@ -100,6 +99,7 @@ public class ProjectController {
 	}
 
 	/**
+	 * 查询自己所关注的主题
 	 * http://localhost:8021/project/getProjectStatePage?projectState=0&uId=3
 	 * @param projectState是否关注
 	 * @param uId用户的id
@@ -109,6 +109,63 @@ public class ProjectController {
 	public Object getProjectStatePage(Integer projectState,Integer uId) {
 		List<Project> list=new ArrayList<>();
 		list=service.getProjectByProjectState(projectState, uId);	
+		System.out.println("list>>>>>>>"+list);
 		return list;
+	}
+	/**
+	 * 查询用户自己所关注的主题的id
+	 * http://localhost:8021/project/getProjectId?projectUid=3
+	 * @param projectId主题的id
+	 * @return
+	 */
+	@RequestMapping("/getProjectId")
+	public Object getProjectId(Integer projectUid) {
+		List<Integer> list=new ArrayList<>();
+		list=service.getProjectId(projectUid);
+		return list;
+	}
+	/**
+	 * 查询所属的模块的主题
+	 * http://localhost:8021/project/getProject?projectModule=1
+	 * @param projectModule模块的id
+	 * @return
+	 */
+	@RequestMapping("/getProject")
+	public Object getProject(@RequestParam(value="projectModule",required=false)Integer projectModule) {
+		System.out.println(">>>>>>>>>>>"+projectModule);
+		return service.getProject(projectModule);
+	}
+	/**
+	 * http://localhost:8021/project/getThroug?projectId=1
+	 * 查询某个帖子的浏览数
+	 * @param projectId
+	 * @return
+	 */
+	@RequestMapping("/getThroug")
+	public Object getThroug(Integer projectId) {
+		int n=service.getThroug(projectId);
+		return n;
+	}
+	/**
+	 * http://localhost:8021/project/getReply?projectId=1
+	 * 查询某个帖子的回复数
+	 * @param projectId
+	 * @return
+	 */
+	@RequestMapping("/getReply")
+	public Object getReply(Integer projectId) {
+		int n=service.getReply(projectId);
+		return n;
+	}
+	/**
+	 * http://localhost:8021/project/getCount?projectId=1
+	 * 查询某个帖子的投票数
+	 * @param projectId
+	 * @return
+	 */
+	@RequestMapping("/getCount")
+	public Object getCount(Integer projectId) {
+		int n=service.getCount(projectId);
+		return n;
 	}
 }

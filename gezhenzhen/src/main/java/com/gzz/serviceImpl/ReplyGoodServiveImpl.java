@@ -2,6 +2,7 @@ package com.gzz.serviceImpl;
 
 import javax.transaction.Transactional;
 
+import org.apache.catalina.startup.ClassLoaderFactory.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,11 @@ public class ReplyGoodServiveImpl implements ReplyGoodServive {
 	@Transactional
 	public int putReplyGood(Integer replyGoodUid, Integer replyId) {
 		return reopsitory.putReplyGood(replyGoodUid, replyId);
+	}
+	@Transactional
+	//查询当前用户有没有对该回复进行点踩
+	 public int getReplyUid(Integer replyGoodUid,Integer replyId) {
+		return reopsitory.getReplyByUid(replyGoodUid, replyId);
 	}
 
 }
