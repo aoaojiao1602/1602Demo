@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="no-js">
+	<!--no-js 检测当前浏览器是否支持css3、h5 并且使浏览器支持h5新标签。。-->
+
+	<head>
+		<meta charset="utf-8" />
+		<title>河南工业大学IT教育</title>
+	</head>
+	<!--自定义css文件-->
+	<link rel="stylesheet" href="css/hj_css.css" type="text/css" />
+	<link rel="stylesheet" href="css/element-ui.css" />
+	<!--模板首页工共js、css文件引用-->
+	<script src="js/commonCss.js"></script>
+	<script src="js/commonJs.js"></script>
+
+	<script src="js/vue.min.js"></script>
+	<script src="js/axios.min.js"></script>
+	<script src="js/element-ui.js"></script>
+
+	<body id="body" class="wide-layout preloader-active">
+		<noscript>
+        <div class="noscript alert-error">
+			要实现本站点的全部功能，必须启用JavaScript。这里是<a href="http://www.enable-javascript.com/" target="_blank">如何在web浏览器中启用JavaScript的说明</a>
+        </div>
+    </noscript>
+
+		<!-- 预加载器-->
+		<div id="preloader" class="preloader">
+			<div class="loader-cube">
+				<div class="loader-cube__item1 loader-cube__item"></div>
+				<div class="loader-cube__item2 loader-cube__item"></div>
+				<div class="loader-cube__item4 loader-cube__item"></div>
+				<div class="loader-cube__item3 loader-cube__item"></div>
+			</div>
+		</div>
+		<!-- 预加载器结束 -->
+
+		<!--包装器-->
+		<div id="pageWrapper" class="page-wrapper" style="position:  relative;">
+			<!-- –––––––––––––––[ 首部 ]––––––––––––––– -->
+			<header id="mainHeader" class="main-header">
+				<!--导航栏-->
+				<div class="header-menu bg-blue topPosition" id="topMenu" style="line-height:0" :style="topgd<150?classA:classB">
+					<div class="container">
+						<div class="row">
+							<div class="container">
+								<nav class="nav-bar">
+									<div class="nav-header">
+										<span class="nav-toggle" data-toggle="#header-navbar">
+			                        		<i></i>
+			                        		<i></i>
+			                        		<i></i>
+			                    		</span>
+									</div>
+									<div id="header-navbar" class="nav-collapse">
+										<ul class="nav-menu">
+											<li>
+												<span>
+												<a href="index.html" class="logo" style="margin-left: -10px;">
+													<img src="http://localhost:8010/MSLOGO1.PNG" alt="" width="120px" style="height: 50px" >
+												</a>
+											</span>
+											</li>
+											<li class="dropdown-mega-menu">
+												<a>课程</a>
+												<div class="mega-menu" style="width: 39%;">
+													<ul style="overflow: hidden; width: 100%;">
+														<li v-for="(a,index) in category" v-if="index<6" style="width: 200px; float: left;">
+															<a href="#"><img src="http://localhost:8010/img/apple-touch-icon.png" class="manuImg" />{{a}}</a>
+														</li>
+														<li v-else style="width:200px; float: left;">
+															<a href="#"><img src="http://localhost:8010/img/apple-touch-icon.png" class="manuImg" />{{a}}</a>
+														</li>
+													</ul>
+												</div>
+											</li>
+											<li>
+												<a href="coupons_grid.html">2019考研</a>
+											</li>
+											<li>
+												<a href="stores_01.html">学校云</a>
+											</li>
+											<li>
+												<a href="contact_us_01.html">名师专栏</a>
+											</li>
+											<li style=" margin-left: 100px;">
+												<input type="text" class="form-control input-lg search-input" placeholder="搜索感兴趣的课程" required="required" style=" border: none; margin-top:9px; background-color: white; height: 39px; width: 260px;" />
+											</li>
+											<li>
+												<el-button type="success" style=" margin-top: 9px;" icon="el-icon-search"></el-button>
+											</li>
+											<li id="topUser" style="margin-top: 8px; width: 100px; height: 10px; ">
+												<div id="myCenter1" style="width: 100%;" >
+													<el-menu class="el-menu-demo" mode="horizontal" style="border-bottom: none;" active-text-color="#fff">
+														<el-submenu index="2">
+															<template slot="title" >
+																<a href="myCenter.html" style="color: white;">个人中心</a>
+															</template>
+															<div style="width: 20%; margin: 5px auto;">
+																<img src="http://localhost:8010/MSLOGO.png" class="myImage" style="border:  solid 1px rosybrown;">
+															</div>
+															<div style="margin: 0 auto; text-align: center; font-size: 20px;">userName</div>
+															<el-menu-item >
+																<div class="myCourse" style="text-align: center;"><a>计算机</a></div>
+															</el-menu-item>
+															<el-menu-item>
+																<div class="myCourse"  style="text-align: center;"><a>大数据分析</a></div>
+															</el-menu-item>
+															<el-menu-item>
+																<div class="myCourse"  style="text-align: center;"><a>面向对象编程Java</a></div>
+															</el-menu-item>
+															<div class="myButton">
+																<a href="myCenter.html"><span style="color: #FFFFFF;">我的课程</span></a>
+															</div>
+														</el-submenu>
+													</el-menu>
+												</div>
+											</li>
+											<li id="topUser" style="float: left; margin-top:8px; width:120px; ">
+												<div id="myHeadPic1" >
+													<el-menu class="el-menu-demo" mode="horizontal"  style="border-bottom: none;" active-text-color="#fff">
+														<el-submenu>
+															<template slot="title">
+																<a href="myCenter.html"><img src="http://localhost:8010/MSLOGO.png" style="border:  solid 1px rosybrown; width: 100%;" class="myPic"></a>
+															</template>
+															<div style="font-size: 14px; color: #869791; text-align: center; ">"张三"登录中</div>
+															<hr />
+															<el-menu-item>
+																<div class="mySetting">我的认证证书</div>
+															</el-menu-item>
+															<el-menu-item>
+																<div class="mySetting">我的优惠券</div>
+															</el-menu-item>
+															<el-menu-item>
+																<div class="mySetting">设置</div>
+															</el-menu-item>
+															<el-menu-item>
+																<div class="mySetting">退出</div>
+															</el-menu-item>
+														</el-submenu>
+													</el-menu>
+												</div>
+											</li>
+										</ul>
+									</div>
+									
+								</nav>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 窗口顶部结束 -->
+
+				<!-- logo顶部 -->
+				<div class="header-header bg-white">
+					<div class="container">
+						<div class="row row-rl-0 row-tb-20 row-md-cell">
+							<!--logo-->
+							<div class="brand col-md-3 t-xs-center t-md-left valign-middle">
+								<a href="index.html" class="logo">
+									<img src="http://localhost:8010/MSLOGO.PNG" alt="" width="250" style="height: 60px;">
+								</a>
+							</div>
+							<!--logo结束-->
+							
+							<!--搜索框开始 -->
+							<div class="header-search col-md-9">
+								<div class="row row-tb-10 ">
+									<!--搜索框-->
+									<div class="col-sm-8">
+										<form class="search-form">
+											<div class="input-group">
+												<input type="text" class="form-control input-lg search-input" placeholder="搜索感兴趣的课程" required="required">
+												<div class="input-group-btn">
+													<div class="input-group">
+														<!--<select class="form-control input-lg search-select">
+                                                        <option>Select Your Category</option>
+                                                        <option>Deals</option>
+                                                        <option>Coupons</option>
+                                                        <option>Discounts</option>
+                                                    </select>-->
+														<div class="input-group-btn">
+															<button type="submit" class="btn btn-lg btn-search btn-block" icon="el-icon-search">
+																搜索
+                                                      	  	</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</form>
+									</div>
+									<!--搜索框结束-->
+
+									<!--搜索框右侧区域-->
+									<div class="col-sm-4 t-xs-center t-md-right">
+										<div id="myCenter" style=" width:40% ;float: left;">
+											<el-menu class="el-menu-demo" mode="horizontal" active-text-color="#fff">
+												<el-submenu index="2">
+													<template slot="title">
+														<a href="myCenter.html">个人中心</a>
+													</template>
+													<div style="width: 20%; margin: 5px auto;">
+														<img src="http://localhost:8010/MSLOGO.png" class="myImage" style="border:  solid 1px rosybrown;">
+													</div>
+													<div style="margin: 0 auto; text-align: center; font-size: 20px;">userName</div>
+													<el-menu-item >
+														<div class="myCourse" style="text-align: center;"><a>计算机</a></div>
+													</el-menu-item>
+													<el-menu-item>
+														<div class="myCourse"  style="text-align: center;"><a>大数据分析</a></div>
+													</el-menu-item>
+													<el-menu-item>
+														<div class="myCourse"  style="text-align: center;"><a>面向对象编程Java</a></div>
+													</el-menu-item>
+													<div class="myButton">
+														<a href="myCenter.html"><span style="color: #FFFFFF;">我的课程</a>
+													</div>
+												</el-submenu>
+											</el-menu>
+										</div>
+										<div id="myHeadPic" style="float: left; width: 30%;">
+											<el-menu class="el-menu-demo" mode="horizontal" active-text-color="#fff">
+												<el-submenu>
+													<template slot="title">
+														<a href="myCenter.html"><img src="http://localhost:8010/MSLOGO.png" style=" width: 100%;border:  solid 1px rosybrown;" class="myPic"></a>
+													</template>
+													<div style="font-size: 14px; color: #869791; text-align: center; ">"张三"登录中</div>
+													<hr />
+													<el-menu-item>
+														<div class="mySetting">我的认证证书</div>
+													</el-menu-item>
+													<el-menu-item>
+														<div class="mySetting">我的优惠券</div>
+													</el-menu-item>
+													<el-menu-item>
+														<div class="mySetting">设置</div>
+													</el-menu-item>
+													<el-menu-item>
+														<div class="mySetting">退出</div>
+													</el-menu-item>
+												</el-submenu>
+											</el-menu>
+										</div>
+									</div>
+									<!--搜索框右侧结束-->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- logo顶部结束 -->
+
+				<!-- 搜索框下部导航 -->
+				<div class="header-menu bg-blue">
+					<div class="container">
+						<nav class="nav-bar">
+							<div class="nav-header">
+								<span class="nav-toggle" data-toggle="#header-navbar">
+		                        <i></i>
+		                        <i></i>
+		                        <i></i>
+		                    </span>
+							</div>
+							<div id="header-navbar" class="nav-collapse">
+								<ul class="nav-menu">
+									<li class="active">
+										<a href="index.html">首页</a>
+									</li>
+									<li class="dropdown-mega-menu">
+										<a>课程</a>
+									</li>
+									<li>
+										<a href="coupons_grid.html">2019考研</a>
+									</li>
+									<li>
+										<a href="stores_01.html">学校云</a>
+									</li>
+									<li>
+										<a href="contact_us_01.html">名师专栏</a>
+									</li>
+								</ul>
+							</div>
+							<div class="nav-menu nav-menu-fixed">
+								<li>
+									<a href="#">极客战记</a>
+								</li>
+								<li>
+									<a href="#">网易云课堂</a>
+								</li>
+								<li class="dropdown-mega-menu">
+									<a href="#">更多课程频道</a>
+									<div class="mega-menu">
+										<div>
+											<div>
+												<ul>
+													<li>
+														<a href="deals_grid.html">大学先修课</a>
+													</li>
+													<li>
+														<a href="deals_grid_sidebar.html">职业教育课</a>
+													</li>
+													<li>
+														<a href="deals_list.html">教师系列MOOC</a>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</li>
+							</div>
+						</nav>
+					</div>
+				</div>
+				<!-- 顶部菜单结束 -->
+
+			</header>
+			<!-- –––––––––––––––[ 首部结束 ]––––––––––––––– -->
+
+			<!-- –––––––––––––––[ 页面内容]––––––––––––––– -->
+			<main id="mainContent" class="main-content" style="position: relative;">
+				<div class="page-container ptb-10" >
+					<div class="container">
+						<div class="section deals-header-area ptb-30">
+							<div class="row row-tb-20">
+								<!--图片轮播-->
+								<div class="col-xs-12 col-md-8 col-lg-9" style="margin-left: 25%;">
+									<div id="slider" class="block">
+										<el-carousel height="430px" arrow="always">
+											<el-carousel-item v-for="(img,index) in imgs">
+												<img :src="img.url" :alt="img.index" width="100%">
+											</el-carousel-item>
+										</el-carousel>
+									</div>
+								</div>
+								<!--图片轮播结束-->
+							</div>
+							<!--侧菜单-->
+							<div id="menu" style=" position: absolute; top: 3%;  opacity:0.9; z-index: 8;  width: 23%; ">
+								<aside>
+									<ul class="nav-coupon-category panel" v-for="(a,index) in category" >
+										<!--循环所有数据-->
+										<li v-if="index<8">
+											<!--如果下标小于8 正常拼接-->
+											<a href="#" ><img src="http://localhost:8010/img/apple-touch-icon.png" class="manuImg" /><i class="fa"></i>{{a}}</a>
+										</li>
+										<li v-else-if="index==8">
+											<!--如果下表等于8 添加更多选项按钮-->
+											<a  @mouseover="cl=''" @mouseout="cl='ulXs'" :class="cl"><img src="http://localhost:8010/img/apple-touch-icon.png" class="manuImg" /><i class="fa"></i>更多</a>
+											<ul v-for="(a,index) in category" @mouseover="cl=''" @mouseout="cl='ulXs'">
+												<!--再次循环数据-->
+												<li v-if="index>=8">
+													<!--拼接出下标为8以后的数据（包含下标8）-->
+													<a  href="index.html?cid=1"><img src="http://localhost:8010/img/apple-touch-icon.png" class="manuImg" /><i class="fa"></i>{{a}}</a>
+												</li>
+											</ul>
+
+										</li>
+									</ul>
+								</aside>
+							</div>
+							<!--轮播推荐课程-->
+							<section class="section latest-coupons-area ptb-30">
+								<header class="panel ptb-15 prl-20 pos-r mb-30">
+									<h3 class="section-title font-18">推荐课程</h3>
+									<a class="btn btn-o btn-xs pos-a right-10 pos-tb-center">View All</a>
+								</header>
+								<el-carousel indicator-position="outside" id="kctj" style=" height: 350px; width: 100%;">
+									<el-carousel-item style=" height: 320px; background-color: #E9EBEE;">
+										<div v-for="(a,index) in dt" v-if="index<4" style=" float: left; width: 260px; margin-left: 20px;">
+											<a>
+												<div class="coupon-single panel t-center a_img">
+													<div class="ribbon-wrapper is-hidden-xs-down">
+														<div class="ribbon">新课</div>
+													</div>
+													<div class="row">
+														<div class="col-xs-12">
+															<div class="text-center p-20">
+																<img class="store-logo" src="http://localhost:8010/img/deal_01.jpg" alt="">
+															</div>
+														</div>
+														<div class="col-xs-12">
+															<div class="panel-body">
+																<h4>{{a.courseName}}</h4>
+																<ul class="deal-meta list-inline mb-10">
+																	<li class="color-green"><i class="ico lnr lnr-smile mr-5"></i>进行至一周</li>
+																	<li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>666</li>
+																</ul>
+																<div class="color-muted" style="text-align: left;">
+																		如何坐在太阳身边畅谈人生？
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</a>
+										</div>
+									</el-carousel-item>
+									<el-carousel-item style=" height: 320px;  background-color: #E9EBEE;">
+										<div v-for="(a,index) in dt" v-if="index>3" style=" float: left; width: 260px; margin-left: 20px;">
+											<a>
+												<div class="coupon-single panel t-center a_img">
+													<div class="ribbon-wrapper is-hidden-xs-down">
+														<div class="ribbon">新课</div>
+													</div>
+													<div class="row">
+														<div class="col-xs-12">
+															<div class="text-center p-20">
+																<img class="store-logo" src="http://localhost:8010/img/deal_01.jpg" alt="">
+															</div>
+														</div>
+														<div class="col-xs-12">
+															<div class="panel-body">
+																<h4>{{a.courseName}}</h4>
+																<ul class="deal-meta list-inline mb-10">
+																	<li class="color-green"><i class="ico lnr lnr-smile mr-5"></i>进行至一周</li>
+																	<li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>666</li>
+																</ul>
+																<div class="color-muted" style="text-align: left;">
+																	如何坐在太阳身边畅谈人生？
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</a>
+										</div>
+									</el-carousel-item>
+								</el-carousel>
+							</section>
+							<!--轮播推荐课程结束-->
+						</div>
+					</div>
+				</div>
+			</main>
+
+			<main id="mainContent" class="main-content" style="background-color: #617FA5; ">
+				<div class="container">
+					<span style="  color:  white; float: left;">
+						
+						<span  style="font-size:70px; font-style: oblique;">
+							精彩讨论
+						</span>
+					<br />
+					<span style="font-size: 20px;">
+								一起讨论、一起学习
+						</span>
+					<br />
+					<span>
+								?人在线讨论
+						</span>
+					</span>
+
+					<!--精彩讨论轮播-->
+					<div id="jctl" style="width: 70%;  float: right; margin-top: 10px; margin-right: 60px;">
+						<el-carousel style="width: 110%; margin-right: 60px; ">
+							<el-carousel-item v-for="(item,index) in i1" style="background-color: #617FA5;">
+								<div class="panel" v-for="(d,index2) in dt" v-if="(index2+1)>=(index+1)*2-1 && (index2+1)<=(index+1)*2" style=" width: 40%; height: 75%; margin-left:60px; float: left;">
+									<div class="panel-body a_div" @click="alert(index2)">
+										<!--	<div style="text-align: left; font-size: 15px;">
+											<img src="http://localhost:8010/MSLOGO.PNG" />
+										</div>-->
+										<!--右上角-->
+										<div style="float: right;">
+											<span class="color-muted" style="font-size: 12px;">
+												来自:&nbsp
+											</span>
+											<span>
+												HJiong							
+											</span>
+										</div>
+
+										<!--左上角-->
+										<div style="text-align: left; font-size: 15px;" class="divLeft10">
+											<!--头像-->
+											<div style="float: left; width:10% ; margin-top: -5px;">
+												<img src="http://localhost:8010/MSLOGO.png" style="border:  solid 1px rosybrown; width:100%; float: left;" class="myPic">
+											</div>
+											<!--name-->
+											<div style="float: left;  font-size: 12px; ">
+												{{ d }}
+											</div>
+											<!--角色-->
+											<div style="background-color: #FACC50; float: left; margin: ; width: 40px; height: 20px; color: white; font-size: 12px; text-align: center;">
+												老师
+											</div>
+										</div>
+										<!--内容-->
+										<div style="text-align: left; margin-top: 50px; margin-left: 10px; font-size: 18px;">
+											666
+										</div>
+
+										<!--底部-->
+										<div style="margin-top: 30%; margin-left: 40%;">
+											<span class="color-green" style="font-size: 12px;">?人</span>参加讨论
+
+										</div>
+									</div>
+								</div>
+							</el-carousel-item>
+						</el-carousel>
+					</div>
+				</div>
+			</main>
+			<!-- scrolling=no(取消iframe滚动条) onLoad事件调用iFrameHeight方法解决iframe自适应高度问题 -->
+			<iframe src="buttom.html" id="iframepage"  scrolling=no width="100%"  onLoad="iFrameHeight()" style="margin-top: 30px; margin-bottom: -7px;" ></iframe>
+				
+	</body>
+	<!--js解决ifram高度自适应-->
+	<script>
+		function iFrameHeight() { 
+			var ifm= document.getElementById("iframepage"); 
+			var subWeb = document.frames ? document.frames["iframepage"].document : ifm.contentDocument; 
+			if(ifm != null && subWeb != null) { 
+			ifm.height = subWeb.body.scrollHeight; 
+			} 
+		} 
+	</script>
+	
+	
+	<!-- 分类菜单dom-->
+	<script>
+		let menu = new Vue({
+			el: '#menu',
+			data: {
+				category: [],
+				cl: 'ulXs'
+			},
+			methods: {
+				//获取所有分类
+				getCategory: function() {
+					let tis = this;
+					// 为给定 ID 的 user 创建请求
+					axios.get('http://localhost:8010/category').then(function(response) {
+						tis.category = response.data
+					}).catch(function(error) {
+						console.log(error);
+					});
+				}
+			},
+			mounted() {
+				this.getCategory();
+			}
+		})
+	</script>
+	<!--顶部导航 虚拟dom-->
+	<script>
+		let topMenu = new Vue({
+			el: '#topMenu',
+			data: {
+				category: [],
+				classA: 'display: none;',
+				classB: 'display: block',
+				topgd: 1 //用于判断滚动条位置
+
+			},
+			methods: {
+				//监听滚动条
+				handleScroll: function() {
+					var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+					this.topgd = scrollTop
+				},
+				//获取所有分类
+				getCategory: function() {
+					let tis = this;
+					axios.get('http://localhost:8010/category').then(function(response) {
+						tis.category = response.data
+					}).catch(function(error) {
+						console.log(error);
+					});
+				}
+			},
+			mounted() {
+				this.getCategory();
+				window.addEventListener('scroll', this.handleScroll) //添加滚动条监听事件
+			}
+		})
+	</script>
+
+	<!--课程推荐-->
+	<script>
+		let kctj = new Vue({
+			el: '#kctj',
+			data: {
+				dt: []
+			},
+			mounted() {
+				let tis = this;
+				axios.get('http://localhost:8010/course').then(function(response) {
+					tis.dt = response.data;
+				});
+			}
+		})
+	</script>
+	<!--图片轮播-->
+	<script>
+		let carousel = new Vue({
+			el: '#slider',
+			data: {
+				imgs: []
+			},
+			methods: {
+				getCarousel: function() {
+					let tis = this;
+					// 为给定 ID 的 user 创建请求
+					axios.get('http://localhost:8010/carousel').then(function(response) {
+						tis.imgs = response.data
+						console.log(response.data)
+					}).catch(function(error) {
+						console.log(error);
+					});
+				}
+			},
+			mounted() {
+				this.getCarousel();
+			}
+		})
+	</script>
+
+	<!--精彩讨论-->
+	<script>
+		let jctl = new Vue({
+			el: '#jctl',
+			data: {
+				i1: 0,
+				dt: []
+			},
+			mounted() {
+				let tis = this;
+				axios.get('http://localhost:8010/getJctl').then(function(response) {
+					tis.i1 = Math.ceil(response.data.length / 2)
+					tis.dt = response.data
+				});
+			}
+		})
+	</script>
+
+	<!--个人中心-->
+	<script>
+		new Vue().$mount('#myCenter')
+		new Vue().$mount('#myHeadPic')
+	</script>
+
+	<!--个人中心-->
+	<!--<style>
+		.el-menu.el-menu--horizontal {
+			border-bottom: solid 1px #fff;
+		}
+		
+		.myCourse {
+			cursor: pointer;
+			color: #869791;
+		}
+		
+		.mySetting {
+			cursor: pointer;
+			color: #000000;
+		}
+		
+	
+		.mySetting:hover {
+			color: #67C23A;
+		}
+		
+		.myButton {
+			width: 80%;
+			margin: 10px auto;
+			padding: 5px;
+			text-align: center;
+			background: #67C23A;
+			cursor: pointer;
+		}
+		
+		.myButton:hover {
+			background: #13CE66;
+		}
+		
+		.myImage {
+			cursor: pointer;
+			width: 100%;
+			display: block;
+			border-radius: 50%;
+		}
+		
+		.myPic {
+			cursor: pointer;
+			width: 30%;
+			border-radius: 50%;
+		}
+		#topUser .el-submenu__title{
+			background-color:#314555;
+			border: none;
+			height: 100%;
+		}
+		#topUser .el-submenu__title:hover{
+			background-color:#314555
+		}
+		.el-carousel__arrow{
+			z-index: 7;
+		}
+		#topUser .el-submenu__icon-arrow{
+			display: none;
+			
+		}
+	</style>-->
+
+</html>

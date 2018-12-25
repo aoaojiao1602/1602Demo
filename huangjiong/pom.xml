@@ -29,13 +29,13 @@
  		<!-- SpringCloud Eureka 客户端 依赖 -->     
  		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-eureka</artifactId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
 		
 		<!-- SpringCloud Feign 依赖 -->        
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-feign</artifactId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
   </dependencies>
 </project>
