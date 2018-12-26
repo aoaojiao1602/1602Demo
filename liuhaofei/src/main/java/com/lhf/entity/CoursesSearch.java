@@ -8,7 +8,7 @@ public class CoursesSearch {
 	private int courseCategory;
 	private String courseName;
 	private String courseRemark;
-	private String courseCreator;
+	private int courseCreator;
 	private String courseState;
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private String startCreateTime;
@@ -18,7 +18,7 @@ public class CoursesSearch {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public CoursesSearch(Integer courseCategory, String courseName, String courseRemark, String courseCreator,
+	public CoursesSearch(Integer courseCategory, String courseName, String courseRemark, int courseCreator,
 			String courseState, String startCreateTime, String endCreateTime) {
 		super();
 		this.courseCategory = courseCategory;
@@ -47,10 +47,10 @@ public class CoursesSearch {
 	public void setCourseRemark(String courseRemark) {
 		this.courseRemark = courseRemark;
 	}
-	public String getCourseCreator() {
+	public Integer getCourseCreator() {
 		return courseCreator;
 	}
-	public void setCourseCreator(String courseCreator) {
+	public void setCourseCreator(Integer courseCreator) {
 		this.courseCreator = courseCreator;
 	}
 	public String getCourseState() {
