@@ -31,8 +31,8 @@ public class Courses {
 	private String courseName;
 	@Column(columnDefinition="varchar(100) comment '备注:课程说明'")
 	private String courseRemark;
-	@Column(columnDefinition="varchar(50) comment '备注:课程创建者'")
-	private String courseCreator;
+	@Column(columnDefinition="int comment '备注:课程创建者'")
+	private int courseCreator;
 	@Column(columnDefinition="varchar(10) comment '备注:是否发布'")
 	private String courseState;
 	@Column(columnDefinition="timestamp comment'备注:创建时间'")
@@ -46,7 +46,7 @@ public class Courses {
 	public Courses() {
 		super();
 	}
-	public Courses(int courseId, int courseCategory, String courseName, String courseRemark, String courseCreator,
+	public Courses(int courseId, int courseCategory, String courseName, String courseRemark, int courseCreator,
 			String courseState, Date courseCreateTime, Date courseEditorTime, Score score) {
 		super();
 		this.courseId = courseId;
@@ -77,10 +77,10 @@ public class Courses {
 	public void setCourseRemark(String courseRemark) {
 		this.courseRemark = courseRemark;
 	}
-	public String getCourseCreator() {
+	public Integer getCourseCreator() {
 		return courseCreator;
 	}
-	public void setCourseCreator(String courseCreator) {
+	public void setCourseCreator(Integer courseCreator) {
 		this.courseCreator = courseCreator;
 	}
 	public String getCourseState() {
