@@ -36,5 +36,5 @@ public interface CoursesRepository extends JpaRepository<Courses, Integer>,JpaSp
 	@Query(value="SELECT * FROM courses WHERE course_creator=?1", nativeQuery = true)
 	@Modifying
 	@Transactional
-	public List<Courses> getCoursesById(Integer cousesId);
+	public List<Courses> getCoursesById(Integer courseCreator);
 }

@@ -100,8 +100,8 @@ public class CoursesServiceImpl implements CoursesService {
 	}
 
 	@Override
-	public List<Courses> getCoursesById(Integer cousesId) {
-		return cRepository.getCoursesById(cousesId);
+	public List<Courses> getCoursesById(Integer courseCreator) {
+		return cRepository.getCoursesById(courseCreator);
 	}
 	
 }

@@ -38,8 +38,8 @@ public class CoursesController {
 		return map;
 	}
 	@RequestMapping("/queryCourses")
-	public Object getCoursesById(Integer courseId) {
-		List<Courses> list=cService.getCoursesById(courseId);
+	public Object getCoursesById(Integer courseCreator) {
+		List<Courses> list=cService.getCoursesById(courseCreator);
 		return list;
 	}
 	/**
