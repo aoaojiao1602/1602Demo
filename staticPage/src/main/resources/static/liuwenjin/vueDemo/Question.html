@@ -118,7 +118,7 @@
 									<span>{{ props.row.judges.topic }}</span>
 								</el-form-item><br />
 								<el-form-item label="答案" class="el-form-red">
-									<span>{{ props.row.judges.answer1 }}</span>
+									<span>{{ props.row.judges.answer }}</span>
 								</el-form-item>
 								<el-form-item label="分值" class="el-form-red">
 									<span>{{ props.row.judges.score }}</span>
@@ -396,7 +396,6 @@
 			methods: {
 				//修改显示
 				updatexs(rows){
-					console.log(rows.judges.answer)
 					var other = this;
 					other.dialogform1Visible=true;
 					//other.form1=rows;

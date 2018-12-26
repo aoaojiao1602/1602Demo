@@ -142,7 +142,7 @@
 									<i class="el-icon-success"></i>
 									<span slot="title">考试管理</span>
 								</template>
-								<el-menu-item index="" ><i class="el-icon-document"></i>所有考试</el-menu-item>
+								<el-menu-item index="" @click="dj('Examinfo.html')" ><i class="el-icon-document"></i>所有考试</el-menu-item>
 								<el-menu-item index="1-2"><i class="el-icon-document"></i>选项2</el-menu-item>
 								<el-menu-item index="1-3"><i class="el-icon-document"></i>选项3</el-menu-item>
 							</el-submenu>
@@ -151,7 +151,7 @@
 									<i class="el-icon-star-on"></i>
 									<span slot="title">测试管理</span>
 								</template>
-								<el-menu-item index="1"><i class="el-icon-document"></i>所有测试</el-menu-item>
+								<el-menu-item index="1" @click="dj('TestInfo.html')"><i class="el-icon-document"></i>所有测试</el-menu-item>
 								<el-menu-item index="1-2"><i class="el-icon-document"></i>选项2</el-menu-item>
 								<el-menu-item index="1-3"><i class="el-icon-document"></i>选项3</el-menu-item>
 							</el-submenu>
