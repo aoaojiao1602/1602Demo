@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>考试管理</title>
+		<link rel="stylesheet" href="css/element-ui.css">
+		<!-- vue语法环境 -->
+		<script src="js/vue.min.js"></script>
+		<script src="js/router.js"></script>
+		<!-- vue使用Ajax -->
+		<script src="js/axios.min.js"></script>
+		<!-- 引入饿了么Element组件库 -->
+		<script src="js/element-ui.js"></script>
+		<style type="text/css">
+			.el-input {
+				width: 150px;
+			}
+
+			.demo-input-suffix {
+				margin-bottom: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<div class="demo-input-suffix">
+				<el-button type="primary" icon="el-icon-plus" @click="dialogformVisible=true"></el-button>
+				<el-button type="primary" icon="el-icon-delete"></el-button>
+				<!-- <el-date-picker v-model="date1" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="daterange" align="right"
+				 unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+				</el-date-picker> -->
+				<el-input placeholder="请输入内容" prefix-icon="el-icon-search" v-model="input1">
+				</el-input>
+				<!-- <el-select v-model="value" placeholder="请选择">
+					<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+					</el-option>
+				</el-select> -->
+				<el-button type="primary" icon="el-icon-search" @click="search()">搜索</el-button>
+			</div>
+			<el-table :data="tableData" border style="width: 80%" cell-style="padding:7.5px">
+				<el-table-column fixed prop="createTime" label="创建日期" width="150">
+				</el-table-column>
+				<el-table-column prop="sectionId" label="章节id" width="70">
+				</el-table-column>
+				<!-- <el-table-column prop="kid" label="课程id" width="70">
+				</el-table-column> -->
+				<el-table-column prop="testName" label="测试内容" width="150">
+				</el-table-column>
+				<!-- <el-table-column prop="examType" label="考试类型" width="100">
+				</el-table-column> -->
+				<el-table-column prop="optionNum" label="选择题数量" width="100">
+				</el-table-column>
+				<!-- <el-table-column prop="judgeNum" label="判断题数量" width="100">
+				</el-table-column>
+				<el-table-column prop="fillblankNum" label="填空题数量" width="100">
+				</el-table-column> -->
+				<el-table-column prop="spareTime" label="时间/小时" width="100">
+				</el-table-column>
+				<!-- <el-table-column prop="startTime" label="开始时间" width="200">
+				</el-table-column>
+				<el-table-column prop="endTime" label="结束时间" width="200">
+				</el-table-column> -->
+				</el-table-column>
+				<el-table-column prop="testNum" label="测试次数" width="150">
+				</el-table-column>
+				<el-table-column prop="testScore" label="分数" width="100">
+				</el-table-column>
+				<el-table-column fixed="right" align='center' label="操作" width="180">
+					<div slot-scope="scope">
+						<!-- <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button> -->
+						<el-button type="warning" size="mini" @click="updatexs(scope.row)">编辑</el-button>
+						<el-button @click="deleteTest(scope.row)" type="danger" size="mini">删除</el-button>
+					</div>
+				</el-table-column>
+			</el-table>
+			<div class="block">
+				<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+				 :page-sizes="[10, 20, 30, 50]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+				</el-pagination>
+			</div>
+			<el-dialog title="添加测试" width="70%" :visible.sync="dialogformVisible" top="15px" :before-close="closeDialog ">
+				<el-form ref="form" :model="form" label-width="80px">
+					<el-form-item label="测试名称">
+						<el-input v-model="form.testName"></el-input>
+					</el-form-item>
+					<el-form-item label="测试次数">
+						<el-input v-model="form.testNum"></el-input>
+					</el-form-item>
+					<el-form-item label="测试内容">
+						<el-select v-model="form.kId" placeholder="请选择课程">
+							<el-option label="区域一" value="1"></el-option>
+							<el-option label="区域二" value="2"></el-option>
+						</el-select>
+						<el-select v-model="form.sectionId" placeholder="请选择章节">
+							<el-option label="区域一" value="1"></el-option>
+							<el-option label="区域二" value="2"></el-option>
+						</el-select>
+					</el-form-item>
+					<el-form-item>
+						<el-input-group>
+							选择题 <el-input-number v-model="form.optionNum" @change="handleChange" :min="1" :max="20" label="选择题数量"></el-input-number>
+							<!-- 判断题<el-input-number v-model="form.judgeNum" @change="handleChange" :min="1" :max="10" label="描述文字"></el-input-number>
+							填空题<el-input-number v-model="form.fillblankNum" @change="handleChange" :min="1" :max="20" label="描述文字"></el-input-number> -->
+							</el-checkbox-group>
+					</el-form-item>
+					<el-form-item label="持续时间">
+						<el-input v-model="form.spareTime"></el-input>
+					</el-form-item>
+					<el-form-item>
+						<el-button type="primary" @click="onSubmit">立即创建</el-button>
+						<el-button @click="dialogformVisible=false">取消</el-button>
+					</el-form-item>
+				</el-form>
+
+			</el-dialog>
+
+			<el-dialog title="修改测试" width="70%" :visible.sync="dialogform1Visible" top="15px" :before-close="closeDialog ">
+				<el-form ref="form" :model="form" label-width="80px">
+					<el-form-item label="测试名称">
+						<el-input v-model="form1.testName"></el-input>
+					</el-form-item>
+					<el-form-item label="测试次数">
+						<el-input v-model="form1.testNum"></el-input>
+					</el-form-item>
+					<el-form-item label="测试内容">
+						<el-select v-model="form1.kId" placeholder="请选择课程">
+							<el-option label="区域一" value="1"></el-option>
+							<el-option label="区域二" value="2"></el-option>
+						</el-select>
+						<el-select v-model="form1.sectionId" placeholder="请选择章节">
+							<el-option label="区域一" value="1"></el-option>
+							<el-option label="区域二" value="2"></el-option>
+						</el-select>
+					</el-form-item>
+					<el-form-item>
+						<el-input-group>
+							选择题 <el-input-number v-model="form.optionNum" @change="handleChange" :min="1" :max="20" label="选择题数量"></el-input-number>
+							<!-- 判断题<el-input-number v-model="form.judgeNum" @change="handleChange" :min="1" :max="10" label="描述文字"></el-input-number>
+										填空题<el-input-number v-model="form.fillblankNum" @change="handleChange" :min="1" :max="20" label="描述文字"></el-input-number> -->
+							</el-checkbox-group>
+					</el-form-item>
+					<el-form-item label="持续时间">
+						<el-input v-model="form1.spareTime"></el-input>
+					</el-form-item>
+					<el-form-item>
+						<el-button type="primary" @click="update">立即修改</el-button>
+						<el-button @click="dialogform1Visible=false">取消</el-button>
+					</el-form-item>
+				</el-form>
+
+			</el-dialog>
+		</div>
+	</body>
+	<script type="text/javascript">
+		new Vue({
+			el: '#app',
+			data: function() {
+				return {
+					input1: '',
+					//date1: '',
+					value: '',
+					currentPage: 1,
+					total: '',
+					pageSize: 10,
+					tableData: [],
+					options: [{
+						value: 1,
+						label: 'javaoop'
+					}, {
+						value: 2,
+						label: 'javaweb'
+					}, {
+						value: 3,
+						label: 'jfinal'
+					}, {
+						value: 4,
+						label: 'mau'
+					}],
+					dialogformVisible: false,
+// 					data1: '',
+// 					delivery: false,
+					form: {
+						testName: '',
+						spareTime: null,
+						sectionId: null,
+						optionNum: 10,
+						// 						judgeNum: 10,
+						// 						fillblankNum: 1,
+						testScore: 100,
+						testNum: null,
+						kid: null,
+					},
+					dialogform1Visible: false,
+					form1: {
+						testName: '',
+						spareTime: null,
+						sectionId: null,
+						optionNum: 10,
+						testScore: 100,
+						testNum: null,
+						kid: null,
+					}
+				}
+			},
+			methods: {
+				updatexs(rows) {
+					console.log(rows);
+					var other = this;
+					other.form1 = rows;
+					other.dialogform1Visible = true
+				},
+				update() {
+					var other = this;
+					axios({
+							method: 'put',
+							url: "http://localhost:8040/testInfo",
+							data: this.form1
+						})
+						.then(function(response) {
+							var th = this;
+							if (response.data > 0) {
+								other.$message({
+									type: 'success',
+									message: '修改成功!'
+								});
+							}
+							other.search();							
+							other.dialogform1Visible = false;
+						})
+						.catch(function(error) {
+							other.$message({
+								type: 'success',
+								message: '系统异常!'
+							});
+						})
+
+				},
+				deleteTest(row) {
+					var other = this;
+					this.$confirm('此操作将永久删除该测试, 是否继续?', '提示', {
+						confirmButtonText: '确定',
+						cancelButtonText: '取消',
+						type: 'warning',
+						center: true
+					}).then(() => {
+						var th = this;
+						axios({
+								method: 'delete',
+								url: "http://localhost:8040/testInfo",
+								params: {
+									testId: row.testId
+								}
+							})
+							.then(function(response) {
+								console.log(response);
+								th.$message({
+									type: 'success',
+									message: '删除成功!'
+								});
+								other.search();
+							})
+							.catch(function(error) {
+								th.$message({
+									type: 'success',
+									message: '系统异常!'
+								});
+							})
+					}).catch(() => {
+						this.$message({
+							type: 'info',
+							message: '已取消删除'
+						});
+					});
+					console.log(row.testId);
+				},
+				handleChange(value) {
+					console.log(value);
+				},
+				onSubmit() {
+					var other = this;
+					axios({
+							method: 'post',
+							url: "http://localhost:8040/testInfo",
+							data: this.form
+						})
+						.then(function(response) {
+							var th = this;
+							if (response.data != null) {
+								other.$message({
+									type: 'success',
+									message: '添加成功!'
+								});
+								//other.$refs['form'].resetFields();
+							}
+							other.search();
+							other.dialogformVisible = false;
+						})
+						.catch(function(error) {
+							other.$message({
+								type: 'success',
+								message: '系统异常!'
+							});
+						})
+				},
+				closeDialog(done) {
+					done();
+				},
+				//改变每页多少条
+				handleSizeChange(val) {
+					this.pageSize = val;
+					console.log(`每页 ${val} 条`);
+					this.loadsearch(this.currentPage, val);
+				},
+				//改变当前页
+				handleCurrentChange(val) {
+					console.log(val);
+					this.currentPage = val;
+					this.loadsearch(val, this.pageSize)
+
+				},
+				search() {
+					this.loadsearch(1, this.pageSize)
+				},
+				loadsearch(page, size) {
+					var other = this;
+					axios.get("http://localhost:8040/testInfo", {
+							params: {
+								page: page,
+								rows: size,
+								name: this.input1 //,
+								//tx: this.value,
+								// 								startTime: this.date1[0],
+								// 								endTime: this.date1[1]
+							}
+						})
+						.then(function(response) {
+							//console.log(response);
+							other.tableData = response.data.rows;
+							other.total = response.data.total;
+							console.log(response.data.rows);
+						})
+						.catch(function(error) {})
+					// 组件创建完后获取数据，
+					// 此时 data 已经被 observed 了
+				}
+			},
+			created: function() {
+				//var other = this;
+				this.loadsearch(this.currentPage, this.pageSize)
+			},
+			watch: {
+				data1(val, newval) {
+					console.log(newval);
+					this.form.startTime = this.data1[0];
+					this.form.endTime = this.data1[1];
+				},
+				delivery(val, newval) {
+					console.log(newval);
+					if (!newval) {
+						this.form.examType = '统一'
+					} else {
+						this.form.examType = '自主'
+					}
+					console.log(this.form.examType);
+				}
+			}
+		})
+	</script>
+</html>
