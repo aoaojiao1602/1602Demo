@@ -1,22 +1,25 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>1602</groupId>
-  <artifactId>zhihuijiaoxue</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>pom</packaging>
-  <modules>
-  	<module>liuwenjin</module>
-  	<module>zhulonghao</module>
-  	<module>yongwenzheng</module>
-  	<module>huangjiong</module>
-  	<module>liuhaofei</module>
-  	<module>gezhenzhen</module>
-  	<module>eureka</module>
-  	<module>zuul</module>
-  	<module>a</module>
-  	<module>oauth2</module>
-  </modules>
-  <!-- SpringBoot 项目 统一 父依赖 -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>1602</groupId>
+	<artifactId>zhihuijiaoxue</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<modules>
+		<module>liuwenjin</module>
+		<module>zhulonghao</module>
+		<module>yongwenzheng</module>
+		<module>huangjiong</module>
+		<module>liuhaofei</module>
+		<module>gezhenzhen</module>
+		<module>eureka</module>
+		<module>zuul</module>
+		<module>a</module>
+		<module>oauth2</module>
+		<module>staticPage</module>
+	</modules>
+	<!-- SpringBoot 项目 统一 父依赖 -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -33,48 +36,50 @@
 		<junit-version>4.12</junit-version>
 	</properties>
 	<dependencies>
-		<!-- SpringCloud  Eureka  注册中心  依赖 -->
+		<!-- SpringCloud Eureka 注册中心 依赖 -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
 		</dependency>
-		<!-- SpringBoot  Test  测试框架 依赖 -->
+		<!-- SpringBoot Test 测试框架 依赖 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
-	 	 <!-- Junit 单元测试 依赖 -->   
-	 	<dependency>            
-	 	<groupId>junit</groupId>            
-	 	<artifactId>junit</artifactId>            
-	 	<version>${junit-version}</version>        
-	 	</dependency>
-		 <!-- SpringCloud  Eureka  注册中心  依赖 -->
-		<!-- <dependency>
+
+		<!-- Junit 单元测试 依赖 -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit-version}</version>
+		</dependency>
+		<!-- SpringCloud Eureka 注册中心 依赖 -->
+		<!-- <dependency> <groupId>org.springframework.cloud</groupId> <artifactId>spring-cloud-starter-eureka</artifactId> 
+			</dependency> -->
+		<!-- SpringCloud Zuul 网关路由 依赖 -->
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-eureka</artifactId>
-		</dependency>  -->
-		<!-- SpringCloud  Zuul 网关路由  依赖 -->
-		<dependency>
-		        <groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-starter-netflix-zuul</artifactId>
+			<artifactId>spring-cloud-starter-netflix-zuul</artifactId>
 		</dependency>
-		<!-- SpringCloud  swagger  依赖 -->
 		<dependency>
-		    <groupId>com.spring4all</groupId>
-		    <artifactId>swagger-spring-boot-starter</artifactId>
-		    <version>1.7.0.RELEASE</version>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
-		
+		<!-- SpringCloud swagger 依赖 -->
+		<dependency>
+			<groupId>com.spring4all</groupId>
+			<artifactId>swagger-spring-boot-starter</artifactId>
+			<version>1.7.0.RELEASE</version>
+		</dependency>
+
 	</dependencies>
-	<!-- SpringCloud 所有子项目 版本集中管理.MS:统一所有SpringCloud依赖项目的版本   依赖-->
+	<!-- SpringCloud 所有子项目 版本集中管理.MS:统一所有SpringCloud依赖项目的版本 依赖 -->
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -84,12 +89,12 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			
+
 		</dependencies>
 	</dependencyManagement>
 	<build>
 		<plugins>
-		<!-- SpringBoot 项目打jar包的Maven插件 -->
+			<!-- SpringBoot 项目打jar包的Maven插件 -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
