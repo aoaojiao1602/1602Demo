@@ -2,6 +2,8 @@ package com.lhf.service;
 
 
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 
 import com.lhf.entity.Courses;
@@ -17,5 +19,6 @@ public interface CoursesService {
 	public int postCoursesById(Courses c);
 	//分页查询课程
 	public Page<Courses> queryByDynamicSQLPage(CoursesSearch CSearch,Integer page,Integer size);
-
+    //根据ID查老师课程
+	public List<Courses> getCoursesById(Integer cousesId);
 }

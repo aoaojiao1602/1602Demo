@@ -1,6 +1,8 @@
 package com.lhf.repository;
 
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -30,4 +32,9 @@ public interface CoursesRepository extends JpaRepository<Courses, Integer>,JpaSp
 	@Modifying
 	@Transactional
 	public int postCoursesById(@Param("c") Courses c);
+	//根据ID查老师课程
+	@Query(value="SELECT * FROM courses WHERE course_id=?1", nativeQuery = true)
+	@Modifying
+	@Transactional
+	public List<Courses> getCoursesById(Integer cousesId);
 }
