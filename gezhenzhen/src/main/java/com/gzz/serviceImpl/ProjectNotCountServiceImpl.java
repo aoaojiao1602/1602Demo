@@ -23,5 +23,10 @@ public class ProjectNotCountServiceImpl implements ProjectNotCountService {
 	public int putProjectNotCount(Integer projectNotCountUid, Integer projectNotCountProjectId) {
 		return reopsitory.putProjectNotCount(projectNotCountUid, projectNotCountProjectId);
 	}
+	@Transactional
+	//查询当前用户有没有对主题进行过点赞
+	public int getUidNotCount(Integer projectNotCountProjectId,Integer projectNotCountUid) {
+		return reopsitory.getUidNotCount(projectNotCountProjectId, projectNotCountUid);
+	}
 
 }

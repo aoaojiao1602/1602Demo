@@ -25,19 +25,28 @@ public class ReplyGoodController {
 	@RequestMapping("/putReplyGood")
 	public Object putReplyGood(Integer replyGoodUid, Integer replyId) {
 		Map<String, Object> map=new HashMap<String, Object>();
-		//查询当前用户有没有对该回复进行点赞
-		int n=servive.getReplyByUid(replyGoodUid, replyId);
-		if (n>0) {
-			//如果点过赞则再次操作时取消点赞
-			servive.deleteReplyByUid(replyGoodUid, replyId);
+		//查询当前用户有没有对该回复进行点踩
+		int k=servive.getReplyByUid(replyGoodUid, replyId);
+		if (k>0) {
 			map.put("success", false);
-			map.put("msg", "该用户已点过赞,再次点击是取消点赞");
-		}else {
-			//如果没有点赞则进行点赞
-			servive.putReplyGood(replyGoodUid, replyId);
-			map.put("success", true);
-			map.put("msg", "点赞成功");
+			map.put("msg", "该用户对回复进行过点踩则不能进行点赞了");
+		} else {
+			//查询当前用户有没有对该回复进行点赞
+			int n=servive.getReplyByUid(replyGoodUid, replyId);
+			if (n>0) {
+				//如果点过赞则再次操作时取消点赞
+				servive.deleteReplyByUid(replyGoodUid, replyId);
+				map.put("success", false);
+				map.put("msg", "该用户已点过赞,再次点击是取消点赞");
+			}else {
+				//如果没有点赞则进行点赞
+				servive.putReplyGood(replyGoodUid, replyId);
+				map.put("success", true);
+				map.put("msg", "点赞成功");
+			}
+
 		}
+		
 		return map;
 	}
 

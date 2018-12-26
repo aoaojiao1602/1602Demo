@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import com.gzz.entity.ProjectNotCount;
 
 public interface ProjectNotCountReopsitory extends JpaRepository<ProjectNotCount, Integer>{
+	//查询当前用户有没有对主题进行过点赞
+	@Query(value="SELECT COUNT(*) FROM projectcounttb WHERE project_count_project_id=?1 AND project_count_uid=?2",nativeQuery=true)
+	public int getUidNotCount(Integer projectNotCountProjectId,Integer projectNotCountUid);
 	//对主题进行点踩，查询当前用户是否对该主题进行点踩
 	@Query(value="SELECT COUNT(*) FROM projectnotcounttb WHERE project_not_count_uid=?1 AND project_not_count_project_id=?2",nativeQuery=true)
 	public int getProjectNotCountByUid(Integer projectNotCountUid,Integer projectNotCountProjectId);

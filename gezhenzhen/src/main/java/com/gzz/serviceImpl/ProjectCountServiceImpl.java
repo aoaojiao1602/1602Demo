@@ -2,6 +2,7 @@ package com.gzz.serviceImpl;
 
 import javax.transaction.Transactional;
 
+import org.apache.catalina.startup.ClassLoaderFactory.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,9 @@ public class ProjectCountServiceImpl implements ProjectCountService {
 	public int getUid(Integer projectId, Integer projectCountUids) {
 		return reopsitory.getUid(projectId, projectCountUids);
 	}
-	
+	@Transactional
+	public int getUidCount(Integer projectId,Integer projectCountUids) {
+		return reopsitory.getUidCount(projectId, projectCountUids);
+	}
 
 }
