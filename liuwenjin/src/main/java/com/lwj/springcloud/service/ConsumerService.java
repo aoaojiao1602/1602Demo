@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 /**
  * 
  * @Description:   
@@ -15,6 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @FeignClient("liuhaofei")
 public interface ConsumerService {
 	
-	@RequestMapping("/courses/test")
-	public Object getProviderFuture();
+	@RequestMapping("/courses/queryCourses")
+	public Object queryCourses(@RequestParam("courseId")int tid);
 }

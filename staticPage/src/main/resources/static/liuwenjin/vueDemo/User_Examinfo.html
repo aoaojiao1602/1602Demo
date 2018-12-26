@@ -153,9 +153,14 @@
 
 			},
 			methods: {
+				//获取url中的参数
+				getUrlKey(name) {
+					return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[
+						1].replace(/\+/g, '%20')) || null
+				},
 				// 获取row的key值
-
-				//修改显示
+				
+								//修改显示
 				change(row) {
 					console.log(row.daan);
 					console.log(row.my);

@@ -145,7 +145,7 @@
 				<el-form :model="form" ref="form">
 					<el-form-item label="选择课程" :label-width="formLabelWidth" prop="courseId">
 						<el-select v-model="form.courseId" placeholder="课程" >
-							<el-option v-for="item in course" :key="item.value" :label="item.label" :value="item.value">
+							<el-option v-for="item in course" :key="item.courseId" :label="item.courseName" :value="item.courseId">
 						</el-select>
 					</el-form-item>
 					<el-form-item label="选择章节" :label-width="formLabelWidth" prop="sectionId">
@@ -301,19 +301,7 @@
 					}],
 					tableData: [],
 					dialogformVisible: false,
-					course: [{
-						value: 1,
-						label: 'javaoop'
-					}, {
-						value: 2,
-						label: 'javaweb'
-					}, {
-						value: 3,
-						label: 'jfinal'
-					}, {
-						value: 4,
-						label: 'mau'
-					}],
+					course: [],
 					section: [{
 						value: 1,
 						label: '第一章'
@@ -613,9 +601,20 @@
 
 			},
 			created: function() {
-				var data;
-				//var other = this;
-				this.loadsearch(this.currentPage, this.pageSize)
+				var other = this;
+				this.loadsearch(this.currentPage, this.pageSize);
+				var tid=window.localStorage.getItem("tid");
+				other.teacherId=tid;
+				console.log(tid);
+				 axios.get("http://localhost:8040/queryCourses", {
+							params: {
+								tid:tid,
+							}
+						})
+					.then(function(response) {
+						other.course=response.data;
+					})
+					.catch(function(error) {}) 
 			},
 			watch: {
 				tableData: function() {
