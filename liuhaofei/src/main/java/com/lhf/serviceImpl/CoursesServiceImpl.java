@@ -66,11 +66,11 @@ public class CoursesServiceImpl implements CoursesService {
 				if (c.getCourseRemark() != null && !"".equals(c.getCourseRemark())) {
 					exList.add(cb.equal(root.get("courseRemark").as(String.class), c.getCourseRemark()));
 				}
-				if (c.getCourseCategory() != null && !"".equals(c.getCourseCategory())) {
+				if (c.getCourseCategory() != null) {
 					exList.add(cb.equal(root.get("courseCategory").as(Integer.class), c.getCourseCategory()));
 				}
-				if (c.getCourseCreator() != null && !"".equals(c.getCourseCreator())) {
-					exList.add(cb.equal(root.get("courseCreator").as(String.class), c.getCourseCreator()));
+				if (c.getCourseCreator()!= null) {
+					exList.add(cb.equal(root.get("courseCreator").as(Integer.class), c.getCourseCreator()));
 				}
 				if (c.getCourseState() != null && !"".equals(c.getCourseState())) {
 					exList.add(cb.equal(root.get("courseState").as(String.class), c.getCourseState()));
