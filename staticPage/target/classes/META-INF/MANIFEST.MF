@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: staticPage
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: 刘文金
+Implementation-Vendor-Id: 1602
+Build-Jdk: 1.8.0_152
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/zhihuijiaoxue/staticPage
+Created-By: Maven Integration for Eclipse
+

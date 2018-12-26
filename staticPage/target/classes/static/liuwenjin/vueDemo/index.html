@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<!-- 引入饿了么Element样式,本地样式文件所在目录下的fonts目录中需要有样式图标文件element-icons.woff -->
+		<link rel="stylesheet" href="css/element-ui.css">
+		<!-- vue语法环境 -->
+		<script src="js/vue.min.js"></script>
+		<script src="js/router.js"></script>
+		<!-- vue使用Ajax -->
+		<script src="js/axios.min.js"></script>
+		<!-- 引入饿了么Element组件库 -->
+		<script src="js/element-ui.js"></script>
+		<style>
+			.el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 210px;
+    min-height: 650px;
+  }
+			.el-header{
+				margin-left: 3px;
+				margin-top: -15px;
+			}
+			
+			  .el-row {
+    margin-bottom: 20px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .el-col {
+    border: 4px;
+		background-color: #545c64;
+		padding-top: 20px;
+		margin-left: -12px;
+		margin-bottom: -25px;
+		margin-top: 10px;
+  }
+  .bg-purple-dark {
+    background: #99a9bf;
+  }
+  .bg-purple {
+    background: #d3dce6;
+  }
+  .bg-purple-light {
+    background: #e5e9f2;
+  }
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+  }
+  .row-bg {
+    padding: 10px 0;
+    background-color: #f9fafc;
+  }
+	.el-menu{
+	}
+	.main-footer{
+			margin-left: -300px;
+			text-align: center;
+			background-color: #545c64;
+	}
+	.el-main{
+		margin-left: -100px;
+	}
+	.ifram{
+		width: 100%;
+		height: 600px;
+		border: none;
+	}
+	.el-aside{
+		
+	}
+	.header_icon{
+		background-color: #545c64;
+		width: 600px;
+	}
+	.item {
+  margin-top: 10px;
+  margin-right: 40px;
+	background-color: #545c64;
+}
+#badge{
+	
+}
+#icon{
+	font-size: 30px;
+	color: white;
+}
+		</style>
+	</head>
+	<body>
+		<div id="appDialog">
+			<el-container>
+				<!-- 头部部分 -->
+				<el-header>
+					<el-row :gutter="22">
+						<el-col :span="3">
+							<i class="el-icon-edit-outline" id="icon"></i><span  style=" margin-left: 10px;  font-size: 16px; font-weight:bolder; color: lavender;">测试与考试中心</span>
+						</el-col>
+						<el-col :span="21">
+							<el-menu class="el-header"  :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect"
+							 background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+								<!-- <div>考试管理系统</div> -->
+								<el-menu-item index="1">处理中心</el-menu-item>
+								<el-submenu index="2">
+									<template slot="title">我的工作台</template>
+									<el-menu-item index="2-1">选项1</el-menu-item>
+									<el-menu-item index="2-2">选项2</el-menu-item>
+									<el-menu-item index="2-3">选项3</el-menu-item>
+									<el-submenu index="2-4">
+										<template slot="title">选项4</template>
+										<el-menu-item index="2-4-1">选项1</el-menu-item>
+										<el-menu-item index="2-4-2">选项2</el-menu-item>
+										<el-menu-item index="2-4-3">选项3</el-menu-item>
+									</el-submenu>
+								</el-submenu>
+								<el-menu-item index="3">消息中心</el-menu-item>
+								<el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
+							</el-menu>
+						</el-col>
+					
+				</el-header>
+
+
+				<el-container>
+					<!-- 左部部分 -->
+					<el-aside>
+						<el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse"
+						 background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+							<el-submenu index="1">
+								<template slot="title">
+									<i class="el-icon-menu"></i>
+									<span slot="title">题库管理</span>
+								</template>
+								<el-menu-item index="" @click="dj('Question.html')"><i class="el-icon-search"></i>所有题库</el-menu-item>
+								<!-- <el-menu-item index="1-2"><i class="el-icon-document"></i>选项2</el-menu-item>
+								<el-menu-item index="1-3"><i class="el-icon-document"></i>选项3</el-menu-item> -->
+							</el-submenu>
+							<el-submenu index="2">
+								<template slot="title">
+									<i class="el-icon-success"></i>
+									<span slot="title">考试管理</span>
+								</template>
+								<el-menu-item index="" ><i class="el-icon-document"></i>所有考试</el-menu-item>
+								<el-menu-item index="1-2"><i class="el-icon-document"></i>选项2</el-menu-item>
+								<el-menu-item index="1-3"><i class="el-icon-document"></i>选项3</el-menu-item>
+							</el-submenu>
+							<el-submenu index="3">
+								<template slot="title">
+									<i class="el-icon-star-on"></i>
+									<span slot="title">测试管理</span>
+								</template>
+								<el-menu-item index="1"><i class="el-icon-document"></i>所有测试</el-menu-item>
+								<el-menu-item index="1-2"><i class="el-icon-document"></i>选项2</el-menu-item>
+								<el-menu-item index="1-3"><i class="el-icon-document"></i>选项3</el-menu-item>
+							</el-submenu>
+							<el-submenu index="4">
+								<template slot="title">
+									<i class="el-icon-share"></i>
+									<span slot="title">其他管理</span>
+								</template>
+								<el-menu-item index="1-2"><i class="el-icon-document"></i>选项2</el-menu-item>
+								<el-menu-item index="1-3"><i class="el-icon-document"></i>选项3</el-menu-item>
+							</el-submenu>
+							<el-menu-item index="5" @click="isopen">
+								<i class="el-icon-setting"></i>
+								<span slot="title">设置</span>
+							</el-menu-item>
+						</el-menu>
+					</el-aside>
+					<!-- 中部部分 -->
+					<el-container>
+						<el-main class="el-main">
+							<iframe class="ifram" :src="url"></iframe>
+							<!-- <el-tabs v-model="editableTabsValue2" type="card" closable @tab-remove="removeTab">
+								<el-tab-pane v-for="(item, index) in editableTabs2" :key="item.name" :label="item.title" :name="item.name">
+								</el-tab-pane>
+							</el-tabs> -->
+							<!-- <div><img src="img/time.jpg"></div> -->
+						</el-main>
+						<el-footer class="main-footer">
+							<p>页脚</p>
+						</el-footer>
+					</el-container>
+				</el-container>
+			</el-container>
+		</div>
+
+	</body>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: '#appDialog',
+			data: function() {
+				return {
+					isCollapse: false,
+					activeIndex: '1',
+					activeIndex2: '1',
+					/* 	aswidth:"200px", */
+					editableTabsValue2: '2',
+					url: "default.html",
+				}
+			},
+			methods: {
+				dj(url){
+					this.url=url;
+				},
+				handleOpen(key, keyPath) {
+					console.log(key, keyPath);
+				},
+				handleClose(key, keyPath) {
+					console.log(key, keyPath);
+				},
+				handleSelect(key, keyPath) {
+					console.log(key, keyPath);
+				},
+				isopen() {
+					var other = this;
+					if (other.isCollapse) {
+						/* this.aswidth="200px"; */
+						this.isCollapse = false;
+					} else {
+						/* this.aswidth="60px"; */
+						this.isCollapse = true;
+					}
+					console.log(other.isCollapse);
+
+				}
+				/* addTab(key, keyPath){
+					console.log(key, keyPath);
+				},
+				removeTab(targetName) {
+					let tabs = this.editableTabs2;
+					let activeName = this.editableTabsValue2;
+					if (activeName === targetName) {
+						tabs.forEach((tab, index) => {
+							if (tab.name === targetName) {
+								let nextTab = tabs[index + 1] || tabs[index - 1];
+								if (nextTab) {
+									activeName = nextTab.name;
+								}
+							}
+						});
+					}
+
+					this.editableTabsValue2 = activeName;
+					this.editableTabs2 = tabs.filter(tab => tab.name !== targetName);
+				} */
+
+			}
+		});
+	</script>
+</html>

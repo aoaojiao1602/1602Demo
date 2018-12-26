@@ -1,0 +1,13 @@
+eureka:
+  client:
+    serviceUrl:
+    #eureka注册中心地址
+      defaultZone: http://localhost:8888/eureka/
+        #eureka注册中心展示的微服务信息页面,默认为 http://localhost:${server.port}/info
+server:
+#项目端口号
+  port: 8000
+spring:
+  application:
+  #服务名称,随便写
+    name: staticPage
