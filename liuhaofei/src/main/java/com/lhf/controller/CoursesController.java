@@ -4,6 +4,7 @@ package com.lhf.controller;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,21 +37,11 @@ public class CoursesController {
 		map.put("data", sqlPage.getContent());
 		return map;
 	}
-	/*@RequestMapping("/query")
-	public Object queryNameLikeAllPage(String name,Integer page,Integer size) {
-		if (name==null||name==""||name.isEmpty()||name.equals("")) {
-			name="%";
-		}
-		Page<Courses> page1 = null;
-		page1 = cService.queryNameLikeAllPage(name,page==0?1:page-1,1);
-    	List<Courses> list = page1.getContent();
-		Long total = page1.getTotalElements();
-    	Map<String, Object> map = new HashMap<>();
-    	map.put("total", total);
-    	map.put("rows", list);
-    	return map;
-	}*/
-	
+	@RequestMapping("/queryCourses")
+	public Object getCoursesById(Integer courseId) {
+		List<Courses> list=cService.getCoursesById(courseId);
+		return list;
+	}
 	/**
 	 * 添加方法
 	 * http://localhost:8050/courses/putCourses?courseName=诗经&courseCategory=国学经典&courseCreator=李四
