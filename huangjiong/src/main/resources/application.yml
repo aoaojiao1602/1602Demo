@@ -4,6 +4,8 @@ eureka:
     serviceUrl:
     #eureka注册中心地址
       defaultZone: http://localhost:8888/eureka/
+  instance:
+    status-page-url: http://localhost:${server.port}/swagger-ui.html
 spring:
   #数据源
   datasource:
