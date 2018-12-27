@@ -1,7 +1,9 @@
 package com.hwg.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,4 +39,25 @@ public class CategoryController {
 		return list;
 	}
 
+	/**
+	 * 查询课程列表 http://localhost:8010/getCourseDetails
+	 * @return
+	 */
+	@GetMapping("getCourseDetails")
+	@CrossOrigin
+	public Object getCourseDetails() {
+		List<Map<String, Object>> list = new ArrayList<>();
+		for (int i = 1; i <= 12; i++) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("url", "http://localhost:8010/img/deal_" + i + ".jpg");
+			map.put("name", "课程"+i);
+			map.put("teacher", "教师"+i);
+			map.put("desc", "课程简介"+i);
+			map.put("member", i);
+			map.put("going", i);			
+			list.add(map);
+		}
+		System.out.println(list);
+		return list;
+	}
 }
