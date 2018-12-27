@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lhf.entity.Courses;
 import com.lhf.entity.CoursesSearch;
+import com.lhf.entity.Hours;
 import com.lhf.service.CoursesService;
 @CrossOrigin
 @RestController
@@ -40,6 +41,11 @@ public class CoursesController {
 	@RequestMapping("/queryCourses")
 	public Object getCoursesById(Integer courseCreator) {
 		List<Courses> list=cService.getCoursesById(courseCreator);
+		return list;
+	}
+	@RequestMapping("/queryhours")
+	public Object getHoursBycourseCreatorAndcourseId(Integer courseId) {
+		List<Hours> list=cService.getHoursBycourseCreatorAndcourseId(courseId);
 		return list;
 	}
 	/**

@@ -3,6 +3,7 @@ package com.lhf.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -10,11 +11,11 @@ import javax.persistence.Table;
 @Table(name="courseware")
 public class Courseware {
 	@Id
-	@GeneratedValue
-	@Column(columnDefinition="int unsigned NOT NULL comment '备注:课件编号'  ")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(columnDefinition="int  NOT NULL comment '备注:课件编号'  ")
 	private int cwId;
-	@Column(columnDefinition="varchar(50) comment '备注:课件所属课时 ' ")
-	private String cwHour;
+	@Column(columnDefinition="int comment '备注:课件所属课时 ' ")
+	private int cwHour;
 	@Column(columnDefinition="varchar(50) comment '备注:课件类型 ' ")
 	private String cwCategory;
 	@Column(columnDefinition="varchar(50) comment '备注:课件名称 ' ")
@@ -25,7 +26,7 @@ public class Courseware {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Courseware(int cwId, String cwHour, String cwCategory, String cwName, String cwUrl) {
+	public Courseware(int cwId, int cwHour, String cwCategory, String cwName, String cwUrl) {
 		super();
 		this.cwId = cwId;
 		this.cwHour = cwHour;
@@ -39,10 +40,10 @@ public class Courseware {
 	public void setCwId(int cwId) {
 		this.cwId = cwId;
 	}
-	public String getCwHour() {
+	public Integer getCwHour() {
 		return cwHour;
 	}
-	public void setCwHour(String cwHour) {
+	public void setCwHour(Integer cwHour) {
 		this.cwHour = cwHour;
 	}
 	public String getCwCategory() {

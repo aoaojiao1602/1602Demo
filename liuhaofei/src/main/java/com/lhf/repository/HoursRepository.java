@@ -1,6 +1,8 @@
 package com.lhf.repository;
 
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -32,6 +34,9 @@ public interface HoursRepository extends JpaRepository<Hours, Integer>,JpaSpecif
 		@Transactional
 		public int postHoursById(@Param("h") Hours h);
 
+		//根据老师Id、课程Id查询章节
+		@Query(value="SELECT * FROM hours h  WHERE  h.hour_course=?1 AND h.hour_parent_id=0", nativeQuery = true)
+		public List<Hours> getHoursBycourseCreatorAndcourseId(Integer courseId);
 		
 
 }

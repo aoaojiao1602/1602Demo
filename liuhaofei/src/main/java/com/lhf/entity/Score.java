@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -15,7 +16,7 @@ import javax.persistence.Table;
 @Table(name="score")
 public class Score {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(columnDefinition="int  NOT NULL comment '备注:评分标准编号'  ")
 	private int scoreId;
 	@Column(columnDefinition="int comment '备注:所属课程 ' ")

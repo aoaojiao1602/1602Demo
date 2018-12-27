@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lhf.entity.Courses;
+import com.lhf.entity.Hours;
 
 public interface CoursesRepository extends JpaRepository<Courses, Integer>,JpaSpecificationExecutor<Courses> {
 	//分页查询课程
@@ -37,4 +38,5 @@ public interface CoursesRepository extends JpaRepository<Courses, Integer>,JpaSp
 	@Modifying
 	@Transactional
 	public List<Courses> getCoursesById(Integer courseCreator);
+	
 }

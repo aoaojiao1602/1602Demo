@@ -4,6 +4,7 @@ package com.lhf.entity;
 
 import java.util.Date;
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,7 +38,7 @@ public class Courses {
 	private String courseState;
 	@Column(columnDefinition="timestamp comment'备注:创建时间'")
 	private Date courseCreateTime;
-	@Column(columnDefinition="timestamp comment'备注:编辑时间'")
+	@Column(columnDefinition="timestamp DEFAULT CURRENT_TIMESTAMP comment'备注:编辑时间'")
 	private Date courseEditorTime;
 	@JsonIgnore
 	@OneToOne(optional = false, mappedBy = "courses", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
