@@ -59,7 +59,7 @@
 				<span>考试时长：{{examinfo.cxTime}}小时</span>
 				<span> 剩余时间：{{stuTime}}秒</span>
 				<span>考生id:{{studentExamInfo.id}}</span>
-				<span>考生姓名:张三</span>
+				<span>考生姓名:{{stuName}}</span>
 				<el-button type="success" icon="el-icon-upload2" @click="submitExam">提交</el-button>
 			</div>
 			<hr />
@@ -146,7 +146,8 @@
 					question: [],
 					studentExamInfo: [],
 					stuid: 2,
-					examid: 13,
+					stuName: '疾风',
+					examid: 15,
 					timer: null,
 					stuTime: 0
 				}
@@ -306,6 +307,9 @@
 				}
 			},
 			created: function() {
+				var stuid= this.getUrlKey('stuid');
+				var examid=this.getUrlKey('examid');
+				var stuName=this.getUrlKey('stuName');
 				var other = this;
 				//查询该是否第一次进入考试
 				axios.get("http://localhost:8040/studentExamInfo", {

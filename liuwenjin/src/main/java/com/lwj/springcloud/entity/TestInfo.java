@@ -44,7 +44,8 @@ public class TestInfo {
 	private Integer optionNum;
 	@Column(columnDefinition="int comment '备注:分数'")
 	private Integer testScore;
-	
+	@Column(columnDefinition="int comment '备注:教师Id'")
+	private Integer teacherId;
 	@JsonIgnore
 	@OneToOne(optional = false, mappedBy = "testInfo", fetch = FetchType.EAGER)
 	@Cascade(value = { CascadeType.SAVE_UPDATE }) 

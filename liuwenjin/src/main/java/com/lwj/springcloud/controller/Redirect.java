@@ -31,9 +31,9 @@ import com.lwj.springcloud.service.ConsumerService;
 public class Redirect {
 	@Autowired
 	private ConsumerService consumerService;
-	@RequestMapping(value = "/a") 
+/*	@RequestMapping(value = "/a") 
 	public Object getxxxList(){
 		return consumerService.getProviderFuture();
-	}
+	}*/
 	
 }

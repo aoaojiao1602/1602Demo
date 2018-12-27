@@ -144,13 +144,13 @@
 			<el-dialog title="添加题库" :visible.sync="dialogformVisible" top="15px" :before-close="closeDialog ">
 				<el-form :model="form" ref="form">
 					<el-form-item label="选择课程" :label-width="formLabelWidth" prop="courseId">
-						<el-select v-model="form.courseId" placeholder="课程" >
+						<el-select v-model="form.courseId" placeholder="课程" @change="changeCourse(form.courseId)" >
 							<el-option v-for="item in course" :key="item.courseId" :label="item.courseName" :value="item.courseId">
 						</el-select>
 					</el-form-item>
 					<el-form-item label="选择章节" :label-width="formLabelWidth" prop="sectionId">
 						<el-select v-model="form.sectionId" placeholder="章节">
-							<el-option v-for="item in section" :key="item.value" :label="item.label" :value="item.value">
+							<el-option v-for="item in section" :key="item.hourId" :label="item.hourName" :value="item.hourId">
 						</el-select>
 					</el-form-item>
 					<el-form-item label="选择题型" :label-width="formLabelWidth" prop="tx">
@@ -217,7 +217,7 @@
 					</el-form-item>
 					<el-form-item label="选择章节" :label-width="formLabelWidth" prop="sectionId">
 						<el-select v-model="form1.sectionId" placeholder="章节">
-							<el-option v-for="item in section" :key="item.value" :label="item.label" :value="item.value">
+							<el-option v-for="item in section" :key="item.hourId" :label="item.hourName" :value="item.hourId">
 						</el-select>
 					</el-form-item>
 					<el-form-item label="选择题型" :label-width="formLabelWidth" prop="tx">
@@ -302,19 +302,7 @@
 					tableData: [],
 					dialogformVisible: false,
 					course: [],
-					section: [{
-						value: 1,
-						label: '第一章'
-					}, {
-						value: 2,
-						label: '第二章'
-					}, {
-						value: 3,
-						label: '第三章'
-					}, {
-						value: 4,
-						label: '第四章'
-					}],
+					section: [],
 					//表单元素
 					form: {
 						teacherId: 1,
@@ -382,6 +370,20 @@
 
 			},
 			methods: {
+				changeCourse(courseId){
+					var other = this;
+					other.section=[];
+					console.log(other.section);
+					axios.get("http://localhost:8040/querySection", {
+							params: {
+								courseId:courseId,
+							}
+						})
+					.then(function(response) {
+						other.section=response.data;
+					})
+					.catch(function(error) {}) 
+				},
 				//修改显示
 				updatexs(rows){
 					var other = this;
@@ -504,7 +506,6 @@
 								}
 							})
 							.then(function(response) {
-								console.log(response);
 								th.$message({
 									type: 'success',
 									message: '删除成功!'
