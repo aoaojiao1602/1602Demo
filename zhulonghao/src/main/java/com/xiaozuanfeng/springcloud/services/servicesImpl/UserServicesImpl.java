@@ -17,7 +17,7 @@ public class UserServicesImpl implements UserServices {
 	@Override
 	public UserInfo getUser(Integer uid) {
 
-		return udao.getOne(uid);
+		return udao.getUser(uid);
 	}
 
 	public List<UserInfo> getMyFans(List<Integer> ilist) {
