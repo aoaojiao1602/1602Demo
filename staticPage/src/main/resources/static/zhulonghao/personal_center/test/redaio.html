@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=utf-8 />
+		<title>test</title>
+		<script type="text/javascript">
+			window.onload = function() {
+				var radios = document.getElementsByName('object');
+				for (var i = 0; i < radios.length; i++) {
+					radios[i].indexs = i + 1;
+					radios[i].onchange = function() {
+						if (this.checked) {
+							document.getElementById("id1").style.display = "none";
+							document.getElementById("id2").style.display = "none";
+							document.getElementById("id" + this.indexs).style.display = "block";
+						}
+					}
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<table>
+			<tr>
+				<td>
+					<input id="users" class="radio" type="radio" name="object" value="0" />
+					<label for="users">非用户组</label>
+					<input id="usergroup" class="radio" type="radio" name="object" value="1" />
+					<label for="usergroup">用户组</label>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span id="id1" style="display: none;">内容1</span>
+					<span id="id2" style="display: none;">内容2</span>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>
