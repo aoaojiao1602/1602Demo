@@ -41,9 +41,8 @@ public class HelloWorldController {
 		String originalFilename = myfile.getOriginalFilename();//得到上传文件的名称		
 		String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));//后缀	
     	String fileName =UUID.randomUUID().toString().replaceAll("-", "")+suffix;
-    	String classpath = ClassLoader.getSystemResource("").toString();
-    	classpath = classpath.replaceAll("file:/", "");
-    	classpath+="1602Demo/";
+    	String classpath ="C:\\Users\\Administrator\\git\\1602Demo\\file\\src\\main\\resources\\1602Demo\\";
+    	
 		try {
 			OutputStream output = new FileOutputStream(new File(classpath+fileName));
 			IOUtils.copy(myfile.getInputStream(), output);

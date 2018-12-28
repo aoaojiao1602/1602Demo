@@ -27,6 +27,7 @@ public class FileSliceUploadController {
 	private FileService fileService;
 	
 	/**
+	 * C:\Users\Administrator\git\1602Demo\file\src\main\resources\1602Demo\
 	 * http://localhost:8080/file/beforeUpload
 	 * 文件上传之前的准备工作
 	 * @param name
@@ -105,22 +106,24 @@ public class FileSliceUploadController {
     	//删除uuid.properties文件
     	PropUtil.deleteFileSlice(fileSlice.getFid());
     	
+    	String classpath ="C:\\Users\\Administrator\\git\\1602Demo\\file\\src\\main\\resources\\1602Demo\\";
+    	
     	FileM fileM=new FileM();
     	String suffix = fileSlice.getName().substring(fileSlice.getName().lastIndexOf("."));//后缀	
    		if (suffix.equals(".mp4")||suffix.equals(".mp3")) {
    			fileM.setFileName(fileSlice.getFid()+suffix);
 			fileM.setFileOldName(fileSlice.getName());
 			fileM.setFileSize(fileSlice.getTotalSize()+"b");
-			Integer sc=	VideoAudioUtils.getVideoSecond("C:\\Users\\Administrator\\Desktop\\"+fileSlice.getFid()+suffix);
+			Integer sc=	VideoAudioUtils.getVideoSecond(classpath+fileSlice.getFid()+suffix);
 			fileM.setFileTime(sc.toString());//文件时长
 			fileM.setFileType(suffix);
-			fileM.setFileUrl("C:\\Users\\Administrator\\Desktop\\");
+			fileM.setFileUrl(classpath);
 		}else {
 			fileM.setFileName(fileSlice.getFid()+suffix);
 			fileM.setFileOldName(fileSlice.getName());
 			fileM.setFileSize(fileSlice.getTotalSize()+"b");
 			fileM.setFileType(suffix);
-			fileM.setFileUrl("C:\\Users\\Administrator\\Desktop\\");
+			fileM.setFileUrl(classpath);
 		}
    		
     	Integer a=fileService.insertFileByFile(fileM);
