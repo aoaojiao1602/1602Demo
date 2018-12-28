@@ -2,7 +2,8 @@
 SQLyog 企业版 - MySQL GUI v8.14 
 MySQL - 5.7.20-log : Database - springcloudfile
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -27,7 +28,7 @@ CREATE TABLE `filetb` (
   `file_size` varchar(20) DEFAULT NULL COMMENT '备注:文件大小',
   `file_time` varchar(50) DEFAULT NULL COMMENT '备注:文件时长如MP4',
   `file_type` varchar(10) DEFAULT NULL COMMENT '备注:文件类型 ',
-  `file_url` varchar(40) DEFAULT NULL COMMENT '备注:文件地址',
+  `file_url` varchar(1000) DEFAULT NULL COMMENT '备注:文件地址',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
