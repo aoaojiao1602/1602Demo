@@ -27,15 +27,15 @@ public class Courses {
 	@Column(columnDefinition="int NOT NULL comment '备注:课程编号'")
 	private int courseId;
 	@Column(columnDefinition="int comment '备注:课程类别'")
-	private int courseCategory;
+	private Integer courseCategory;
 	@Column(columnDefinition="varchar(50) comment '备注:课程名称'")
 	private String courseName;
 	@Column(columnDefinition="varchar(100) comment '备注:课程说明'")
 	private String courseRemark;
 	@Column(columnDefinition="int comment '备注:课程创建者'")
-	private int courseCreator;
+	private Integer courseCreator;
 	@Column(columnDefinition="varchar(10) comment '备注:是否发布'")
-	private String courseState;
+	private String courseState="未发布";
 	@Column(columnDefinition="timestamp comment'备注:创建时间'")
 	private Date courseCreateTime;
 	@Column(columnDefinition="timestamp DEFAULT CURRENT_TIMESTAMP comment'备注:编辑时间'")
@@ -47,7 +47,7 @@ public class Courses {
 	public Courses() {
 		super();
 	}
-	public Courses(int courseId, int courseCategory, String courseName, String courseRemark, int courseCreator,
+	public Courses(int courseId, Integer courseCategory, String courseName, String courseRemark, Integer courseCreator,
 			String courseState, Date courseCreateTime, Date courseEditorTime, Score score) {
 		super();
 		this.courseId = courseId;
@@ -103,10 +103,10 @@ public class Courses {
 		this.courseEditorTime = courseEditorTime;
 	}
 	
-	public int getCourseCategory() {
+	public Integer getCourseCategory() {
 		return courseCategory;
 	}
-	public void setCourseCategory(int courseCategory) {
+	public void setCourseCategory(Integer courseCategory) {
 		this.courseCategory = courseCategory;
 	}
 	public Score getScore() {
