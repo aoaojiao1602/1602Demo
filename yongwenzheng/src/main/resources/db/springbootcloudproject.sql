@@ -1,4 +1,4 @@
-/*
+﻿/*
 SQLyog 企业版 - MySQL GUI v8.14 
 MySQL - 5.7.20-log : Database - springbootcloudproject
 *********************************************************************
@@ -16,7 +16,7 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`springbootcloudproject` /*!40100 DEFAUL
 
 USE `springbootcloudproject`;
 
-/*Table structure for table `clazztb` */
+/*Table structure for table `clazztb` **/
 
 DROP TABLE IF EXISTS `clazztb`;
 
