@@ -2,12 +2,21 @@ package com.ysd.boot.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 
+import com.ysd.boot.entity.Clazz;
 import com.ysd.boot.entity.Professional;
 
 public interface ProfessionalService {
 
+	 /**
+              * 通过departmentId得到Professional
+       * @param departmentId
+       * @return
+    */
+	public List<Professional> getAllProfessionalBydepartmentId(Integer departmentId);
+	
 	/**
 	 * 通过id得到系信息
 	 * @param id
@@ -15,12 +24,6 @@ public interface ProfessionalService {
 	 */
 	public Professional getAllById(Integer id);
 	
-	/**
-	 * 通过老师id得到系id
-	 * @param tid
-	 * @return
-	 */
-	public Integer getIdByuId(Integer tid);
 	
 	/**
 	 * 添加系信息
@@ -52,4 +55,15 @@ public interface ProfessionalService {
 	 * @return
 	 */
     public List<Professional> getAllProfessionalList();
+    
+    /**
+           * 分页查询系信息
+     * @param name
+     * @param pageable
+     * @return
+    */
+   public Page<Professional> queryProfessionalByPage(Integer page,Integer rows,String name);
+   
+   
+    
 }

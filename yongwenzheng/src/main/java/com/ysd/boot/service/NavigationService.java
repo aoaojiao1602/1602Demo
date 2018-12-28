@@ -2,6 +2,8 @@ package com.ysd.boot.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.ysd.boot.entity.Navigation;
 
 public interface NavigationService {
@@ -36,4 +38,13 @@ public interface NavigationService {
 	   * @return
 	   */
 	  public List<Navigation> getALLNavigationList();
+	  
+	  /***
+	   * 通过导航名称分页查询
+	   * @param page
+	   * @param rows
+	   * @param navName
+	   * @return
+	   */
+	  public Page<Navigation> queryNavigationByPage(Integer page,Integer rows,String navName);
 }

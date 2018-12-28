@@ -1,9 +1,11 @@
 package com.ysd.boot.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +21,9 @@ import com.ysd.boot.entity.School;
 import com.ysd.boot.service.ClazzService;
 import com.ysd.boot.service.DepartmentService;
 import com.ysd.boot.service.ProfessionalService;
+import com.ysd.boot.service.RolesService;
 import com.ysd.boot.service.SchoolService;
+import com.ysd.boot.service.UsersService;
 import com.ysd.boot.tool.Result;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -42,6 +46,50 @@ public class SchoolController {
 	@Autowired
 	private ClazzService clazzService;
 	
+	@Autowired
+	private UsersService usersService;
+	
+	@Autowired
+	private RolesService rolesService;
+	
+	/***
+	 * 通过用户id得到用户角色信息
+	 * @param uid
+	 * @param access_token
+	 * @return
+	 */
+	@ApiOperation(value="获取用户角色信息", notes=" 通过用户id得到用户角色信息")
+	@GetMapping("/getRoleByUid")
+	public Object getRoleByUid(@RequestParam Integer uid,@RequestParam String access_token) {
+		//通过用户id得到角色id
+		Integer rid=usersService.getRoleByUid(uid);
+		//通过角色id得到角色信息
+		return rolesService.getRoleByRid(rid);
+	}
+	
+	
+	/***
+	 * 修改学生机构信息
+	 * @param pid
+	 * @param sid
+	 * @return
+	 */
+	@ApiOperation(value="获取学校信息", notes=" 修改学生机构信息")
+	@PostMapping("/updateJG")
+	public Object updateJG(@RequestParam Integer pid,@RequestParam Integer sid,@RequestParam String access_token) {
+		int cid=clazzService.getCidByPid(pid);
+		Result result=new Result();
+		if (clazzService.updatejigou(cid, sid)>0) {
+			result.setState(1);
+			result.setMsg("修改成功");
+			
+		} else {
+			result.setState(0);
+			result.setMsg("修改失败");
+		}
+		return result;
+		
+	}
 	
 	/***
 	 * 通过tid获取老师院校信息
@@ -50,22 +98,17 @@ public class SchoolController {
 	 * @return
 	 */
 	@ApiOperation(value="获取用户院校信息", notes="根据url的tid来获取老师院校信息")
-	@ApiImplicitParams({
-	@ApiImplicitParam(name = "tid", value = "老师TID", required = true, paramType = "query",dataType = "Integer"),
-	@ApiImplicitParam(name = "access_token", value = "token", required = true, dataType = "String", paramType = "query")
-	})
+	
 	@GetMapping("/getSchoolBytId")
 	public Object getSchoolBytId(@RequestParam Integer tid,@RequestParam String access_token) {
 		Map<String, Object> map=new HashMap<String, Object>();
-		Integer pid=professionalService.getIdByuId(tid);
-		
-		Professional professional=professionalService.getAllById(pid);
-		Department department=departmentService.getAllById(professional.getDepartment().getDepartmentId());
-		School school=schoolService.getAllById(department.getSchool().getSchoolId());
-		
+		//通过老师id得到部门id
+		Integer did=departmentService.getDidBytid(tid);
+		//通过部门id得到部门信息
+		Department department=departmentService.getAllById(did);
+		School school=schoolService.getAllById(department.getSchool().getSchoolId());		
 		map.put("schoolName", school.getSchoolName());
 		map.put("departmentName", department.getDepartmentName());
-		map.put("professionalName", professional.getProfessionalName());
 		return map;
 		
 	}
@@ -76,14 +119,11 @@ public class SchoolController {
 	 * @return
 	 */
 	@ApiOperation(value="获取用户院校信息", notes="根据url的sid来获取学生院校信息")
-	@ApiImplicitParams({
-	@ApiImplicitParam(name = "sid", value = "学生SID", required = true, dataType = "Integer", paramType = "query"),
-	@ApiImplicitParam(name = "access_token", value = "token", required = true, dataType = "String", paramType = "query")
-	})
+	
 	@GetMapping("/getSchoolBysId")
 	public Object getSchoolBysId(@RequestParam Integer sid,@RequestParam String access_token) {
 		Map<String, Object> map=new HashMap<String, Object>();
-		Integer cid=clazzService.getClazzIdBytId(sid);
+		Integer cid=clazzService.getCidBysid(sid);
 		Clazz clazz=clazzService.getAllById(cid);	
 		Professional professional=professionalService.getAllById(clazz.getProfessional().getProfessionalId());
 		Department department=departmentService.getAllById(professional.getDepartment().getDepartmentId());
@@ -96,6 +136,8 @@ public class SchoolController {
 		return map;
 		
 	}
+	
+	
 	
 	
 	
@@ -180,8 +222,31 @@ public class SchoolController {
 	@ApiOperation(value="获取学校信息", notes=" 查询全部的学校")
 	@ApiImplicitParam(name = "access_token", value = "token", required = true, dataType = "String", paramType = "query")
 	@GetMapping("/getAllSchool")
-	private Object getAllSchool(@RequestParam String access_token) {
+	private List<School> getAllSchool(@RequestParam String access_token) {
 		
 		return schoolService.getAllSchoolList();
+	}
+	
+	 /**
+	  	* 分页查询学校
+	  	* @param name
+	  	* @param pageable
+	  	* @return
+	  	*/
+	@ApiOperation(value="获取学校信息", notes=" 分页查询学校")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "page", value = "页码", required = true, dataType = "Integer", paramType = "query"),
+		@ApiImplicitParam(name = "rows", value = "行数", required = true, dataType = "Integer", paramType = "query"),
+		@ApiImplicitParam(name = "name", value = "学校名称", required = false, dataType = "String", paramType = "query"),
+		@ApiImplicitParam(name = "access_token", value = "token", required = true, dataType = "String", paramType = "query")
+	})
+	@GetMapping("/querySchoolByPage") 
+	public Object querySchoolByPage(@RequestParam Integer page,@RequestParam Integer rows,@RequestParam String name,@RequestParam String access_token){
+		Page<School> pages=schoolService.querySchoolByPage(page, rows, name);
+		Map<String, Object> map = new HashMap<>();
+		map.put("total", pages.getTotalElements());
+		map.put("rows",pages.getContent());
+		return map;
+
 	}
 }

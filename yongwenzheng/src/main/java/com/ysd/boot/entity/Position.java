@@ -42,11 +42,4 @@ public class Position {
 	@Column(columnDefinition="varchar(20) comment '备注:备注'  ")
 	private String positionRemark;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy="position",fetch=FetchType.LAZY,cascade=CascadeType.DETACH)
-	private List<Course> listCourse = new ArrayList<>();
-	
-	@JsonIgnore
-	@OneToMany(mappedBy="position",fetch=FetchType.LAZY,cascade=CascadeType.DETACH)
-	private List<Discusscourse> listDiscusscourse = new ArrayList<>();
 }

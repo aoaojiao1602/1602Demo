@@ -2,6 +2,9 @@ package com.ysd.boot.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
+import com.ysd.boot.entity.Clazz;
 import com.ysd.boot.entity.School;
 
 public interface SchoolService {
@@ -39,5 +42,13 @@ public interface SchoolService {
 	 * @return
 	 */
 	public int updateSchool(String schoolName,Integer schoolId);
+	
+	  /** 
+	  	* 分页查询学校
+	  	* @param name
+	  	* @param pageable
+	  	* @return
+	  	*/
+    public Page<School> querySchoolByPage(Integer page,Integer rows,String name);
 
 }

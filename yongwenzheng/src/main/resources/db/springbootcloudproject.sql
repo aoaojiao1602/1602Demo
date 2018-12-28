@@ -27,7 +27,7 @@ CREATE TABLE `clazztb` (
   PRIMARY KEY (`class_id`),
   KEY `FKhausash8pl5n0k985rv3jyujh` (`professional_id`),
   CONSTRAINT `FKhausash8pl5n0k985rv3jyujh` FOREIGN KEY (`professional_id`) REFERENCES `professionaltb` (`professional_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `clazztb` */
 
@@ -40,19 +40,17 @@ DROP TABLE IF EXISTS `coursetb`;
 CREATE TABLE `coursetb` (
   `course_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '备注:课程推荐id',
   `course_status` int(10) unsigned DEFAULT '0' COMMENT '备注:课程推荐',
-  `course_weigh` int(10) unsigned DEFAULT NULL COMMENT '备注:权重',
-  `kech_id` int(10) unsigned DEFAULT NULL COMMENT '备注:课程id',
+  `course_weigh` int(10) unsigned DEFAULT '0' COMMENT '备注:权重',
+  `kech_id` int(11) DEFAULT NULL COMMENT '备注:课程id',
   `nav_remark` varchar(100) DEFAULT NULL COMMENT '备注:备注',
-  `navigation_id` int(10) unsigned NOT NULL COMMENT '备注:',
-  `position_id` int(10) unsigned NOT NULL COMMENT '备注:',
-  PRIMARY KEY (`course_id`),
-  KEY `FK2kr05awmy1q5tyg0p3ilgos47` (`navigation_id`),
-  KEY `FKo63ai7o8lxtcl4brpwjlawjdr` (`position_id`),
-  CONSTRAINT `FK2kr05awmy1q5tyg0p3ilgos47` FOREIGN KEY (`navigation_id`) REFERENCES `navigation` (`nav_id`),
-  CONSTRAINT `FKo63ai7o8lxtcl4brpwjlawjdr` FOREIGN KEY (`position_id`) REFERENCES `positiontb` (`position_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `navigation_id` int(11) DEFAULT NULL COMMENT '备注:导航id',
+  `positions_id` int(11) DEFAULT '0' COMMENT '备注:位置id',
+  PRIMARY KEY (`course_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 /*Data for the table `coursetb` */
+
+insert  into `coursetb`(`course_id`,`course_status`,`course_weigh`,`kech_id`,`nav_remark`,`navigation_id`,`positions_id`) values (1,1,1,1,NULL,1,1),(2,0,0,2,NULL,2,0),(3,0,0,3,NULL,3,0),(4,0,0,4,NULL,4,0),(5,0,0,5,NULL,5,0);
 
 /*Table structure for table `departmenttb` */
 
@@ -65,11 +63,11 @@ CREATE TABLE `departmenttb` (
   PRIMARY KEY (`department_id`),
   KEY `FKbk37m8jfw3fsuphlvn1y9x06i` (`school_id`),
   CONSTRAINT `FKbk37m8jfw3fsuphlvn1y9x06i` FOREIGN KEY (`school_id`) REFERENCES `schooltb` (`school_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 /*Data for the table `departmenttb` */
 
-insert  into `departmenttb`(`department_id`,`department_name`,`school_id`) values (1,'粮食食品学院',1),(2,'土木及建筑学院',4),(3,'机电工程学院',4),(4,'材料科学与工程学院',3),(5,'信息科学与工程学院',2),(6,'化学化工学院',2),(7,'国际教育学院',1),(8,'理学院',1),(10,'大大大',1);
+insert  into `departmenttb`(`department_id`,`department_name`,`school_id`) values (1,'经济学',1),(2,'法学',1),(3,'文学',1),(4,'理学',1),(5,'工学',1),(6,'农学',1),(7,'管理学',1),(8,'艺术学',1),(9,'材料与能源',1),(10,'土建',NULL);
 
 /*Table structure for table `discusscoursetb` */
 
@@ -77,18 +75,18 @@ DROP TABLE IF EXISTS `discusscoursetb`;
 
 CREATE TABLE `discusscoursetb` (
   `discusscourse_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '备注:课程推荐id',
-  `discuss_remark` varchar(100) NOT NULL COMMENT '备注:备注',
-  `discuss_status` int(10) unsigned DEFAULT NULL COMMENT '备注:主题推荐状态',
-  `discuss_weigh` int(10) unsigned DEFAULT NULL COMMENT '备注:权重',
-  `kech_id` int(10) unsigned DEFAULT NULL COMMENT '备注:课程id',
-  `teacher_id` int(10) unsigned DEFAULT NULL COMMENT '备注:老师id',
-  `position_id` int(10) unsigned NOT NULL COMMENT '备注:',
-  PRIMARY KEY (`discusscourse_id`),
-  KEY `FK2grft6fs9djmuli82dwp6h07b` (`position_id`),
-  CONSTRAINT `FK2grft6fs9djmuli82dwp6h07b` FOREIGN KEY (`position_id`) REFERENCES `positiontb` (`position_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `discuss_remark` varchar(100) DEFAULT NULL COMMENT '备注:备注',
+  `discuss_status` int(10) unsigned DEFAULT '0' COMMENT '备注:主题推荐状态',
+  `discuss_weigh` int(10) unsigned DEFAULT '0' COMMENT '备注:权重',
+  `kech_id` int(11) DEFAULT NULL COMMENT '备注:课程id',
+  `positions_id` int(11) DEFAULT '0' COMMENT '备注:位置id',
+  `teacher_id` int(11) DEFAULT NULL COMMENT '备注:老师id',
+  PRIMARY KEY (`discusscourse_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `discusscoursetb` */
+
+insert  into `discusscoursetb`(`discusscourse_id`,`discuss_remark`,`discuss_status`,`discuss_weigh`,`kech_id`,`positions_id`,`teacher_id`) values (1,NULL,0,0,1,0,1),(2,NULL,0,0,2,0,2),(3,NULL,0,0,3,0,3);
 
 /*Table structure for table `module_roles` */
 
@@ -165,7 +163,7 @@ CREATE TABLE `permissiontb` (
   `permission_name` varchar(50) DEFAULT NULL COMMENT '备注:权限名称',
   `permission_value` varchar(50) DEFAULT NULL COMMENT '备注:权限值',
   PRIMARY KEY (`permission_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `permissiontb` */
 
@@ -197,11 +195,11 @@ CREATE TABLE `professionaltb` (
   PRIMARY KEY (`professional_id`),
   KEY `FK8jimwtr63b1jjn618mrrkdm9h` (`department_id`),
   CONSTRAINT `FK8jimwtr63b1jjn618mrrkdm9h` FOREIGN KEY (`department_id`) REFERENCES `departmenttb` (`department_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
 /*Data for the table `professionaltb` */
 
-insert  into `professionaltb`(`professional_id`,`professional_name`,`department_id`) values (1,'粮食工程系',1),(2,'油脂工程系',1),(3,'粮油储藏系',1),(4,'制造工程系',3),(5,'机械设计系',3),(6,'机电工程系',3),(7,'汽车工程系',3),(8,'土木工程系',2),(9,'工程管理系',2),(10,'建筑学系',2),(11,'建筑环境与设备系',2),(12,'道路与桥梁',2),(13,'高分子材料系',4),(14,'无机非金属材料系',4),(15,'材料科学与工程系',4),(16,'信息与通信工程系信息与通信工程系',5),(17,'计算机科学系',5),(18,'计算机工程系',5),(19,'电子与控制工程系',5),(20,'化学系',6),(21,'应用化学系',6),(22,'化学工程与工艺系',6),(23,'环境工程系',6),(24,'食品科学与工程',7),(25,'生物技术',7),(26,'人力资源管理',7),(27,'会计学',7),(28,'市场营销',7),(29,'数学与应用数学',8),(30,'生物工程学院:',8),(31,'应用数学和凝聚态物理',8);
+insert  into `professionaltb`(`professional_id`,`professional_name`,`department_id`) values (1,'经济学专业',1),(2,'财政学专业',1),(3,'金融学专业',1),(4,'法学专业',2),(5,'英语专业',3),(6,'日语专业',3),(7,'网络与新媒体专业',3),(8,'应用物理学专业',4),(9,'化学专业',4),(10,'应用化学专业',4),(11,'生物技术专业',4),(12,'工程力学专业',5),(13,'机械类专业',5),(14,'机械设计制造及其自动化专业',5),(15,'过程装备与控制工程专业',5),(16,'动物科学专业',6),(17,'工程管理专业',7),(18,'工商管理专业',7),(19,'物流管理专业',7),(20,'化学系专业',7),(21,'播音与主持艺术专业',8),(22,'动画专业',8),(23,'材料工程技术专业',9),(24,'磨料磨具制造专业',9);
 
 /*Table structure for table `rolemoduletb` */
 
@@ -242,11 +240,11 @@ CREATE TABLE `schooltb` (
   `school_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '备注:学校id',
   `school_name` varchar(20) DEFAULT NULL COMMENT '备注:学校名称',
   PRIMARY KEY (`school_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `schooltb` */
 
-insert  into `schooltb`(`school_id`,`school_name`) values (1,'河南工业大学'),(2,'郑州大学'),(3,'北京大学'),(4,'清华大学'),(5,'武汉大学'),(6,'厦门大学');
+insert  into `schooltb`(`school_id`,`school_name`) values (1,'河南工业大学'),(2,'郑州大学'),(3,'北京大学'),(4,'清华大学'),(5,'武汉大学');
 
 /*Table structure for table `users_clazz` */
 
@@ -263,24 +261,24 @@ CREATE TABLE `users_clazz` (
 
 /*Data for the table `users_clazz` */
 
-insert  into `users_clazz`(`users_clazz_id`,`clazz_users_id`) values (4,1),(5,2),(6,3);
+insert  into `users_clazz`(`users_clazz_id`,`clazz_users_id`) values (4,4),(5,2),(6,3);
 
-/*Table structure for table `users_professional` */
+/*Table structure for table `users_department` */
 
-DROP TABLE IF EXISTS `users_professional`;
+DROP TABLE IF EXISTS `users_department`;
 
-CREATE TABLE `users_professional` (
-  `professional_users_id` int(10) unsigned NOT NULL COMMENT '备注:专业id',
-  `users_professional_id` int(10) unsigned NOT NULL COMMENT '备注:用户自动增长主键',
-  PRIMARY KEY (`users_professional_id`,`professional_users_id`),
-  KEY `FKpln55qq1crcqkl5ywle9q2v8l` (`professional_users_id`),
-  CONSTRAINT `FKg7pqwrju0mfqfgh2tksfcecsd` FOREIGN KEY (`users_professional_id`) REFERENCES `userstb` (`users_id`),
-  CONSTRAINT `FKpln55qq1crcqkl5ywle9q2v8l` FOREIGN KEY (`professional_users_id`) REFERENCES `professionaltb` (`professional_id`)
+CREATE TABLE `users_department` (
+  `department_users_id` int(10) unsigned NOT NULL COMMENT '备注:专业id',
+  `users_department_id` int(10) unsigned NOT NULL COMMENT '备注:用户自动增长主键',
+  PRIMARY KEY (`users_department_id`,`department_users_id`),
+  KEY `FKpln55qq1crcqkl5ywle9q2v8l` (`department_users_id`),
+  CONSTRAINT `FKg7pqwrju0mfqfgh2tksfcecsd` FOREIGN KEY (`users_department_id`) REFERENCES `userstb` (`users_id`),
+  CONSTRAINT `FKpln55qq1crcqkl5ywle9q2v8l` FOREIGN KEY (`department_users_id`) REFERENCES `professionaltb` (`professional_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `users_professional` */
+/*Data for the table `users_department` */
 
-insert  into `users_professional`(`professional_users_id`,`users_professional_id`) values (1,1),(2,2),(3,3);
+insert  into `users_department`(`department_users_id`,`users_department_id`) values (1,1),(2,2),(3,3);
 
 /*Table structure for table `users_roles` */
 

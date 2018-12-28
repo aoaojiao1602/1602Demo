@@ -5,6 +5,9 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ysd.boot.dao.DepartmentMapper;
@@ -17,6 +20,18 @@ public class DepartmentServiceImpl implements DepartmentService{
 	@Autowired
 	private DepartmentMapper departmentMapper;
 	
+	
+	/**
+	 * 通过学校id查部门信息
+	 * @param schoolid
+	 * @return
+	 */
+	public List<Department> getDepartmentListBYschoolid(Integer schoolid){
+		System.out.println("getDepartmentListBYschoolid====>"+schoolid);
+		
+		return departmentMapper.getDepartmentListBYschoolid(schoolid);
+	}
+	
 	/**
 	 * 通过id得到部门信息
 	 * @param id
@@ -27,6 +42,16 @@ public class DepartmentServiceImpl implements DepartmentService{
 		// TODO Auto-generated method stub
 		return departmentMapper.getOne(id);
 	}	
+	
+	/***
+	 * 通过老师id得到DepartmentId
+	 * @param tid
+	 * @return
+	 */
+	public int getDidBytid(Integer tid) {
+		
+		return departmentMapper.getDidBytid(tid);
+	}
 	
 	/**
 	 * 添加部门信息
@@ -72,4 +97,32 @@ public class DepartmentServiceImpl implements DepartmentService{
 		
 		return departmentMapper.findAll();
 	}
+	
+	
+	
+	
+	/**
+	 * 分页查询部门信息
+	 * @param name
+	 * @param pageable
+	 * @return
+	 */
+	public Page<Department> queryDepartmentByPage(Integer page,Integer rows,String name){
+		  Pageable pageable = new PageRequest(page-1, rows);
+    	  return departmentMapper.findByDepartmentNameContaining(name, pageable);	
+	}
+
+	
+	
+	
+	/***
+	 *  通过学校id得到部门信息
+	 * @param id
+	 * @return
+	 */
+	/*public List<Department> getDepartmentListById(Integer schoolId){
+		
+		
+	}*/
+
 }

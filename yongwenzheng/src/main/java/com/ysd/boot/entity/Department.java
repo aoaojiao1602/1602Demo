@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
@@ -51,4 +52,7 @@ public class Department {
 	@JsonIgnore
 	@OneToMany(mappedBy="department",fetch=FetchType.LAZY,cascade=CascadeType.DETACH)
 	private List<Professional> listProfessional = new ArrayList<>();	
+	
+	
+	
 }

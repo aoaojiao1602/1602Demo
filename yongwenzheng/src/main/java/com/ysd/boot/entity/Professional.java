@@ -56,10 +56,6 @@ public class Professional {
 	@OneToMany(mappedBy="professional",fetch=FetchType.LAZY,cascade=CascadeType.DETACH)
 	private List<Clazz> list = new ArrayList<>();	
 	
-	@JsonIgnore
-	@ManyToMany(cascade=javax.persistence.CascadeType.DETACH,fetch=FetchType.EAGER)	
-	@JoinTable(name="users_professional",joinColumns={@JoinColumn(name="professional_users_id")},
-	inverseJoinColumns= {@JoinColumn(name="users_professional_id")})
-    private Set<Users> setUsers=new HashSet<Users>();
+	
 	
 }

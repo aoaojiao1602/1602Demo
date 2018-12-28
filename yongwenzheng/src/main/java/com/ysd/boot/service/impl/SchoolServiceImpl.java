@@ -5,6 +5,9 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ysd.boot.dao.SchoolMapper;
@@ -70,5 +73,18 @@ public class SchoolServiceImpl implements SchoolService{
 	public int updateSchool(String schoolName,Integer schoolId){
 		
 		return schoolMapper.updateSchool(schoolName, schoolId);
+	}
+	
+	 /** 
+	  	* 分页查询班级
+	  	* @param name
+	  	* @param pageable
+	  	* @return
+	  	*/
+	public Page<School> querySchoolByPage(Integer page,Integer rows,String name){
+		
+		Pageable pageable = new PageRequest(page-1, rows);
+		
+		return schoolMapper.findBySchoolNameContaining(name, pageable);
 	}
 }

@@ -1,8 +1,11 @@
 package com.ysd.boot.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ysd.boot.entity.Clazz;
 import com.ysd.boot.entity.Professional;
 import com.ysd.boot.service.ProfessionalService;
 import com.ysd.boot.tool.Result;
@@ -25,6 +29,19 @@ public class ProfessionalController {
 
 	@Autowired
 	private ProfessionalService professionalService;
+	
+	 /**
+             * 通过departmentId得到Professional
+      * @param departmentId
+     * @return
+      */
+	@ApiOperation(value="获取系信息", notes="通过departmentId得到Professional")
+	@GetMapping("/getAllProfessionalBydepartmentId")
+    public List<Professional> getAllProfessionalBydepartmentId(@RequestParam Integer departmentId,@RequestParam String access_token){
+    	
+    	return professionalService.getAllProfessionalBydepartmentId(departmentId);
+    }
+	
 	
 	/**
 	 * 添加系信息
@@ -119,4 +136,29 @@ public class ProfessionalController {
     	
     	return professionalService.getAllProfessionalList();
     }
+	 /**
+             * 分页查询系信息
+      * @param name
+      * @param pageable
+      * @return
+      */
+	@ApiOperation(value="获取系信息", notes=" 分页查询系信息")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "page", value = "页码", required = true, dataType = "Integer", paramType = "query"),
+			@ApiImplicitParam(name = "rows", value = "行数", required = true, dataType = "Integer", paramType = "query"),
+			@ApiImplicitParam(name = "name", value = "系名称", required = false, dataType = "String", paramType = "query"),
+			@ApiImplicitParam(name = "access_token", value = "token", required = true, dataType = "String", paramType = "query")
+     })
+	@GetMapping("/queryProfessionalByPage") 
+	public Object queryProfessionalByPage(@RequestParam Integer page,@RequestParam Integer rows,@RequestParam String name,@RequestParam String access_token){
+        Page<Professional> pages=professionalService.queryProfessionalByPage(page, rows, name);
+        Map<String, Object> map = new HashMap<>();
+	       map.put("total", pages.getTotalElements());
+	       map.put("rows",pages.getContent());
+	    return map;
+
+     }
+	
+	
+	
 }

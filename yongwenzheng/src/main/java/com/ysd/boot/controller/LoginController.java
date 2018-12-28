@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -86,6 +87,34 @@ public class LoginController {
 		return map;
 		
 	}
+	/****
+	 * 修改用户密码
+	 * @param usersPassword
+	 * @param usersId
+	 * @return
+	 */
+	 @PostMapping("/updateUserPassById")
+	 public Object updateUserPassById(String oldPassword,String newPassword, Integer usersId) {
+		 Result result=new Result();
+		 Users users=usersService.getUsersById(usersId);
+		 PasswordEncoder encoderMd5 = new PasswordEncoder(users.getUsersName(), "MD5");
+		 String encodePass = encoderMd5.encode(oldPassword, 5);// 用户名做盐,哈希五次MD5加密
+		 if (!users.getUsersPassword().equals(encodePass)) {
+			    result.setState(0);
+				result.setMsg("原密码输入错误");
+			}
+		
+		 if (usersService.updateUsers(newPassword, usersId)>0) {
+				result.setState(1);
+				result.setMsg("修改成功");
+				
+		} else {
+				result.setState(0);
+				result.setMsg("修改失败");
+		}
+		
+		 return result;
+	 }
 	
 	
 
