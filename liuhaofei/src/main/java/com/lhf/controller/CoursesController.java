@@ -52,7 +52,7 @@ public class CoursesController {
 	 * @return
 	 */
 	@RequestMapping("/putCourses")
-	public Object putCourses(Courses c) {
+	public Object putCourses(@RequestBody Courses c) {
 		int C=cService.putCourses(c);
 		Map<String, Object> map = new HashMap<>();
 		if(C>0) {
