@@ -87,7 +87,7 @@ public class CoursesController {
 	/**
 	 * 修改方法
 	 * http://localhost:8050/courses/postCourses?courseCategory=aaa&courseName=aaaaa&courseId=6
-	 * @param c 实体类课程
+	 * @param c 实体类课程666
 	 * @return
 	 */
 	@RequestMapping("/postCourses")
