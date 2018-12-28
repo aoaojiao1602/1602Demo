@@ -18,6 +18,7 @@
 		<module>a</module>
 		<module>oauth2</module>
 		<module>staticPage</module>
+		<module>file</module>
 	</modules>
 	<!-- SpringBoot 项目 统一 父依赖 -->
 	<parent>
@@ -52,11 +53,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- Spring Boot devtools 热部署 依赖 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-		</dependency>
+		
 		<!-- Junit 单元测试 依赖 -->
 		<dependency>
 			<groupId>junit</groupId>
