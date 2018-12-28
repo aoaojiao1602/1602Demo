@@ -1,8 +1,4 @@
 package com.lhf.controller;
-
-
-
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -94,7 +91,7 @@ public class CoursesController {
 	 * @return
 	 */
 	@RequestMapping("/postCourses")
-	public Object postCoursesById(Courses c) {
+	public Object postCoursesById(@RequestBody Courses c) {
 		int C=cService.postCoursesById(c);
 		Map<String, Object> map = new HashMap<>();
 		if(C>0) {
