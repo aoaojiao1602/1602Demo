@@ -87,13 +87,11 @@
 						<el-input v-model="form.testNum"></el-input>
 					</el-form-item>
 					<el-form-item label="测试内容">
-						<el-select v-model="form.kId" placeholder="请选择课程">
-							<el-option label="区域一" value="1"></el-option>
-							<el-option label="区域二" value="2"></el-option>
+						<el-select v-model="form.kId" placeholder="请选择课程" @change="changeCourse(form.kId)">
+							<el-option v-for="item in course" :key="item.courseId" :label="item.courseName" :value="item.courseId">
 						</el-select>
 						<el-select v-model="form.sectionId" placeholder="请选择章节">
-							<el-option label="区域一" value="1"></el-option>
-							<el-option label="区域二" value="2"></el-option>
+							<el-option v-for="item in section" :key="item.hourId" :label="item.hourName" :value="item.hourId">
 						</el-select>
 					</el-form-item>
 					<el-form-item>
@@ -176,10 +174,13 @@
 						value: 4,
 						label: 'mau'
 					}],
+					course: [],
+					section: [],
 					dialogformVisible: false,
 // 					data1: '',
 // 					delivery: false,
 					form: {
+						teacherId: 1,
 						testName: '',
 						spareTime: null,
 						sectionId: null,
@@ -192,6 +193,7 @@
 					},
 					dialogform1Visible: false,
 					form1: {
+						teacherId: 1,
 						testName: '',
 						spareTime: null,
 						sectionId: null,
@@ -203,6 +205,20 @@
 				}
 			},
 			methods: {
+				changeCourse(courseId){
+					var other = this;
+					other.section=[];
+					console.log(other.section);
+					axios.get("http://localhost:8040/querySection", {
+							params: {
+								courseId:courseId,
+							}
+						})
+					.then(function(response) {
+						other.section=response.data;
+					})
+					.catch(function(error) {}) 
+				},
 				updatexs(rows) {
 					console.log(rows);
 					var other = this;
@@ -345,8 +361,20 @@
 				}
 			},
 			created: function() {
-				//var other = this;
-				this.loadsearch(this.currentPage, this.pageSize)
+				var other = this;
+				this.loadsearch(this.currentPage, this.pageSize);
+				var tid=window.localStorage.getItem("tid");
+				other.form.teacherId=tid;
+				other.form1.teacherId=tid;
+				axios.get("http://localhost:8040/queryCourses", {
+							params: {
+								tid:tid,
+							}
+						})
+					.then(function(response) {
+						other.course=response.data;
+					})
+					.catch(function(error) {}) 
 			},
 			watch: {
 				data1(val, newval) {

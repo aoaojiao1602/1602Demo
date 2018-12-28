@@ -72,4 +72,14 @@ public interface StudentExamInfoService {
 	 */
 	
 	public int updateStudentExamInfoScore(int stuid, int examid, int score);
+	
+	  /** 
+	 * http://localhost:8080/checkExamInfo
+	  * 作者: 大娃   
+	  * 邮件: 1558936588@qq.com  
+	  * 时间: 2018年12月28日 下午3:52:59  
+	  * 版本: V1.0   
+	 */
+	
+	public Map<String, Object> checkExamInfo(int stuid, int examid);
 }

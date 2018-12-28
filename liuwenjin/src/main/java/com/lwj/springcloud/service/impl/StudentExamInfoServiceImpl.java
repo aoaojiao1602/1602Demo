@@ -232,5 +232,29 @@ public class StudentExamInfoServiceImpl implements StudentExamInfoService {
 		
 	}
 
+	
+	/* (非 Javadoc) 
+	 * <p>Title: checkExamInfo</p> 
+	 * <p>Description: </p> 
+	 * @param stuid
+	 * @param examid
+	 * @return 
+	 * @see com.lwj.springcloud.service.StudentExamInfoService#checkExamInfo(int, int) 
+	*/
+	
+	@Override
+	public Map<String, Object> checkExamInfo(int stuid, int examid) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		//查询该考试的信息
+		map.put("studentExamInfo",sExamInfoRepository.indexStudentExamInfo(stuid,examid));
+		map.put("examInfo",sExamInfoRepository.queryExaminfo(examid));
+		return map;
+		/**
+		 * checkExamInfo(这里用一句话描述这个方法的作用)
+		*/
+		
+	}
+
 
 }

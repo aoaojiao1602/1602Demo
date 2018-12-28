@@ -83,4 +83,11 @@ public class StudentExamInfoController {
 		//Map<String, Object>  map=stuExaService.indexStudentExamInfo(stuid,examid);
 		return score;
 	}
+	@ApiOperation(value="学生考试状态", notes="验证学生状态")
+	@ApiImplicitParam(name = "stuid", value = "学生id", required = true,paramType="Integer")
+	@RequestMapping(value="/checkExamInfo", method = RequestMethod.GET)
+	public Object checkExamInfo(int stuid,int examid) {
+		//计算出分数
+		return stuExaService.checkExamInfo(stuid,examid);
+	}
 }

@@ -2,7 +2,6 @@ package com.lwj.springcloud.entity;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -34,8 +34,8 @@ public class StudentExamInfo {
 	@Column(columnDefinition="int comment '备注:学生id'")
 	private Integer studentId;
 	@JsonIgnore
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="examinfoId",unique = true)
+	@ManyToOne(targetEntity = Examinfo.class)
+	@JoinColumn(name="examinfoId")
 	private Examinfo examinfo;
 	@Column(columnDefinition="int comment '备注:分数'")
 	private Integer examScore;

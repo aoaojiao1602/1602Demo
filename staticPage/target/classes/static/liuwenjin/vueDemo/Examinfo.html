@@ -32,7 +32,7 @@
 				<el-input placeholder="请输入内容" prefix-icon="el-icon-search" v-model="input1">
 				</el-input>
 				<el-select v-model="value" placeholder="请选择">
-					<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+					<el-option v-for="item in course" :key="item.courseId" :label="item.courseName" :value="item.courseId">
 					</el-option>
 				</el-select>
 				<el-button type="primary" icon="el-icon-search" @click="search()">搜索</el-button>
@@ -83,7 +83,7 @@
 					</el-form-item>
 					<el-form-item label="考试内容">
 						<el-select v-model="form.kId" placeholder="请选择课程">
-							<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+							<el-option v-for="item in course" :key="item.courseId" :label="item.courseName" :value="item.courseId">
 							</el-option>
 						</el-select>
 					</el-form-item>
@@ -123,7 +123,7 @@
 								</el-form-item>
 								<el-form-item label="考试内容">
 									<el-select v-model="form1.kid" placeholder="请选择课程">
-										<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+										<el-option v-for="item in course" :key="item.courseId" :label="item.courseName" :value="item.courseId">
 										</el-option>
 									</el-select>
 								</el-form-item>
@@ -169,19 +169,7 @@
 					total: '',
 					pageSize: 10,
 					tableData: [],
-					options: [{
-						value: 1,
-						label: 'javaoop'
-					}, {
-						value: 2,
-						label: 'javaweb'
-					}, {
-						value: 3,
-						label: 'jfinal'
-					}, {
-						value: 4,
-						label: 'mau'
-					}],
+					course: [],
 					dialogformVisible: false,
 					data1: '',
 					delivery: false,
@@ -358,8 +346,20 @@
 				}
 			},
 			created: function() {
-				//var other = this;
-				this.loadsearch(this.currentPage, this.pageSize)
+				var other = this;
+				this.loadsearch(this.currentPage, this.pageSize);
+				var tid=window.localStorage.getItem("tid");
+				other.form.teacherId=tid;
+				other.form1.teacherId=tid;
+				axios.get("http://localhost:8040/queryCourses", {
+							params: {
+								tid:tid,
+							}
+						})
+					.then(function(response) {
+						other.course=response.data;
+					})
+					.catch(function(error) {}) 
 			},
 			watch: {
 				data1(val, newval) {

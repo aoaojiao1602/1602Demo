@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -27,8 +28,8 @@ public class StudentTestInfo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注:自动增长主键'")
 	private Integer id;
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="testinfoId",unique = true)
+	@ManyToOne(targetEntity = TestInfo.class)
+	@JoinColumn(name="testinfoId")
 	private TestInfo testInfo;
 	private Integer studentId;
 	@Column(columnDefinition="int comment '备注:测试次数'")

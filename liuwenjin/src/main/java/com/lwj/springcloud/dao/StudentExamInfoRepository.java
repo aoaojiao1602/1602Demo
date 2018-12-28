@@ -83,4 +83,6 @@ public interface StudentExamInfoRepository extends JpaRepository<StudentExamInfo
 	@Modifying
 	int updateStudentExamInfoScore(int stuid, int examid, int score);
 	
+	@Query(value="SELECT * FROM student_examinfotb se WHERE student_id =?1 AND examinfo_id=?2",nativeQuery=true)
+	StudentExamInfo queryStudentExamInfo(int stuid, int examid);
 }

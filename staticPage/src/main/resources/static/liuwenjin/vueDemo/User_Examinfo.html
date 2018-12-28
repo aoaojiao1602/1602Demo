@@ -60,7 +60,7 @@
 				<span> 剩余时间：{{stuTime}}秒</span>
 				<span>考生id:{{studentExamInfo.id}}</span>
 				<span>考生姓名:{{stuName}}</span>
-				<el-button type="success" icon="el-icon-upload2" @click="submitExam">提交</el-button>
+				<el-button type="success" icon="el-icon-upload2" :disabled="disabled" @click="submitExam">提交</el-button>
 			</div>
 			<hr />
 			<el-table :data="question" border :row-key="getRowKeys" :expand-row-keys="expands" style="width: 100%; margin-left: 50px;">
@@ -145,11 +145,12 @@
 					examinfo: [],
 					question: [],
 					studentExamInfo: [],
-					stuid: 2,
-					stuName: '疾风',
-					examid: 15,
+					stuid: null,
+					stuName: null,
+					examid: null,
 					timer: null,
-					stuTime: 0
+					stuTime: 0,
+					disabled: false
 				}
 
 			},
@@ -189,6 +190,7 @@
 				//提交考试
 				submitExam() {
 					var other = this;
+					other.disabled=true;
 					this.$confirm('您将提交本次考试确认将不可取消, 是否继续?', '提示', {
 						confirmButtonText: '确定',
 						cancelButtonText: '取消',
@@ -307,10 +309,13 @@
 				}
 			},
 			created: function() {
+				var other = this;
 				var stuid= this.getUrlKey('stuid');
 				var examid=this.getUrlKey('examid');
 				var stuName=this.getUrlKey('stuName');
-				var other = this;
+				other.stuid=stuid;
+				other.examid=examid;
+				other.stuName=stuName;
 				//查询该是否第一次进入考试
 				axios.get("http://localhost:8040/studentExamInfo", {
 						params: {

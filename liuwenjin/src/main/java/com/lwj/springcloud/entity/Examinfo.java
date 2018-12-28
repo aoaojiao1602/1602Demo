@@ -70,9 +70,8 @@ public class Examinfo {
 	@Column(columnDefinition="varchar(20) comment '备注:考试类型'")
 	private String examType;
 	@JsonIgnore
-	@OneToOne(optional = false, mappedBy = "examinfo", fetch = FetchType.EAGER)
-	@JoinColumn(name="examinfoId",unique = true)
-	private StudentExamInfo studentExamInfo ;
+	@OneToMany(mappedBy="examinfo",fetch=FetchType.LAZY)
+	private List<StudentExamInfo> studentExamInfo=new ArrayList<>();
 	
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER) // 指定多对多关系 //默认懒加载,只有调用getter方法时才加载数据

@@ -1,6 +1,9 @@
 package com.lwj.springcloud.entity;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -47,8 +51,7 @@ public class TestInfo {
 	@Column(columnDefinition="int comment '备注:教师Id'")
 	private Integer teacherId;
 	@JsonIgnore
-	@OneToOne(optional = false, mappedBy = "testInfo", fetch = FetchType.EAGER)
-	@Cascade(value = { CascadeType.SAVE_UPDATE }) 
-	@JoinColumn(name="testinfoId",unique = true)
-	private StudentTestInfo studentTestInfo ;
+	@OneToMany(mappedBy="testInfo",fetch=FetchType.LAZY)
+	private List<StudentTestInfo> studentTestInfo=new ArrayList<>();
+	
 }

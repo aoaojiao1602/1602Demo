@@ -59,8 +59,8 @@
 				<span>考试时长：{{examinfo.cxTime}}小时</span>
 				<span> 剩余时间：{{stuTime}}秒</span>
 				<span>考生id:{{studentExamInfo.id}}</span>
-				<span>考生姓名:张三</span>
-				<el-button type="success" icon="el-icon-upload2" @click="submitExam">提交</el-button>
+				<span>考生姓名:{{stuName}}</span>
+				<el-button type="success" icon="el-icon-upload2" :disabled="disabled" @click="submitExam">提交</el-button>
 			</div>
 			<hr />
 			<el-table :data="question" border :row-key="getRowKeys" :expand-row-keys="expands" style="width: 100%; margin-left: 50px;">
@@ -145,17 +145,24 @@
 					examinfo: [],
 					question: [],
 					studentExamInfo: [],
-					stuid: 2,
-					examid: 13,
+					stuid: null,
+					stuName: null,
+					examid: null,
 					timer: null,
-					stuTime: 0
+					stuTime: 0,
+					disabled: false
 				}
 
 			},
 			methods: {
+				//获取url中的参数
+				getUrlKey(name) {
+					return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[
+						1].replace(/\+/g, '%20')) || null
+				},
 				// 获取row的key值
-
-				//修改显示
+				
+								//修改显示
 				change(row) {
 					console.log(row.daan);
 					console.log(row.my);
@@ -183,6 +190,7 @@
 				//提交考试
 				submitExam() {
 					var other = this;
+					other.disabled=true;
 					this.$confirm('您将提交本次考试确认将不可取消, 是否继续?', '提示', {
 						confirmButtonText: '确定',
 						cancelButtonText: '取消',
@@ -302,6 +310,12 @@
 			},
 			created: function() {
 				var other = this;
+				var stuid= this.getUrlKey('stuid');
+				var examid=this.getUrlKey('examid');
+				var stuName=this.getUrlKey('stuName');
+				other.stuid=stuid;
+				other.examid=examid;
+				other.stuName=stuName;
 				//查询该是否第一次进入考试
 				axios.get("http://localhost:8040/studentExamInfo", {
 						params: {
