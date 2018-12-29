@@ -17,5 +17,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface ConsumerService {
 	
 	@RequestMapping("/courses/queryCourses")
-	public Object queryCourses(@RequestParam("courseId")int tid);
+	public Object queryCourses(@RequestParam("courseCreator")int tid);
 }
