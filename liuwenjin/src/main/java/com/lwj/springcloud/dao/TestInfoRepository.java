@@ -1,5 +1,7 @@
 package com.lwj.springcloud.dao;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,6 +10,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.lwj.springcloud.entity.Question;
 import com.lwj.springcloud.entity.TestInfo;
 
 public interface TestInfoRepository extends JpaRepository<TestInfo, Integer>, JpaSpecificationExecutor<TestInfo> {
@@ -23,4 +26,14 @@ public interface TestInfoRepository extends JpaRepository<TestInfo, Integer>, Jp
 	@Query("delete from TestInfo t where t.testId=?1")
 	@Modifying
 	int deleteTestInfo(Integer testId);
+	
+	@Query("select q.qId from Question q,Options o where q.options=o.question AND q.sectionId=?1")
+	List<Integer> queryOptions(int sectionId);
+	
+	
+	@Query(" from Question q where q.qId=?1 ")
+	Question queryQuestion(Integer integer);
+//	@Query(value="INSERT INTO student_exam_questiontb(student_id,exam_id,questiontb_id) VALUES (?1,?2,?3)",nativeQuery=true)
+//	@Modifying
+//	int inserStudentQuerExamQuestiontb(int stuid, int examid, int integer);
 }

@@ -5,10 +5,10 @@ package com.lhf.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class CoursesSearch {
-	private int courseCategory;
+	private Integer courseCategory;
 	private String courseName;
 	private String courseRemark;
-	private int courseCreator;
+	private Integer courseCreator;
 	private String courseState;
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private String startCreateTime;
@@ -18,7 +18,7 @@ public class CoursesSearch {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public CoursesSearch(Integer courseCategory, String courseName, String courseRemark, int courseCreator,
+	public CoursesSearch(Integer courseCategory, String courseName, String courseRemark, Integer courseCreator,
 			String courseState, String startCreateTime, String endCreateTime) {
 		super();
 		this.courseCategory = courseCategory;

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.lwj.springcloud.entity.StudentTestInfo;
+import com.lwj.springcloud.entity.TestInfo;
 
 public interface StudentTestInfoRepository
 		extends JpaRepository<StudentTestInfo, Integer>, JpaSpecificationExecutor<StudentTestInfo> {
@@ -20,4 +21,17 @@ public interface StudentTestInfoRepository
 	@Query("delete from StudentTestInfo s where s.id=?1")
 	@Modifying
 	public int deleteStudentTestInfo(Integer id);
+	
+	@Query(value="SELECT * FROM student_testinfotb WHERE student_id =?1 AND testinfo_id=?2",nativeQuery=true)
+	StudentTestInfo indexStudentTestInfo(int stuid, int testid);
+	
+	@Query("SELECT t FROM TestInfo t WHERE t.testId=?1")
+	TestInfo queryTestInfo(int testId);
+	
+	@Query(value="UPDATE student_testinfotb SET test_score=?3,test_num=?4 WHERE student_id =?1 AND testinfo_id=?2",nativeQuery=true)
+	@Modifying
+	int updateStudentTestInfoScore(int stuid, int testid, int score,int num);
+	
+	@Query(value="SELECT * FROM student_testinfotb WHERE testinfo_id = ?1",nativeQuery=true)
+	StudentTestInfo queryStudentTestInfo(int testId);
 }
