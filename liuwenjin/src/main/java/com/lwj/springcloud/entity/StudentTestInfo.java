@@ -1,4 +1,5 @@
 package com.lwj.springcloud.entity;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,9 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GenericGenerator;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 @Entity
@@ -33,4 +32,6 @@ public class StudentTestInfo {
 	private Integer testNum;
 	@Column(columnDefinition="int comment '备注:测试剩余时间'")
 	private Integer spareTime;
+	@Column(columnDefinition="int comment '备注:分数'")
+	private Integer testScore;
 }
