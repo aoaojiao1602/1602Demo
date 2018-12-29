@@ -1,5 +1,7 @@
 package com.lwj.springcloud.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +14,7 @@ import com.lwj.springcloud.dao.TestInfoRepository;
 import com.lwj.springcloud.entity.Entitysearch;
 import com.lwj.springcloud.entity.TestInfo;
 import com.lwj.springcloud.service.TestInfoService;
+import com.lwj.springcloud.tools.Random;
 @Service
 public class TestInfoServiceImpl implements TestInfoService {
 	@Autowired
@@ -21,7 +24,17 @@ public class TestInfoServiceImpl implements TestInfoService {
 	@Transactional
 	public TestInfo insertTestInfo(TestInfo t) {
 		// TODO Auto-generated method stub
-		return tRepository.save(t);
+		TestInfo tInfo=tRepository.save(t);
+		if (t.getOptionNum()>0) {
+			List<Integer> qpList=tRepository.queryOptions(t.getSectionId());
+			System.err.println(qpList);
+			Random.GetRandomIsRepeat(t.getOptionNum(), qpList);
+//			for (int i = 0; i < oidlist.size(); i++) {
+//				tRepository.insetTestQuestiontb(oidlist.get(i),tInfo.getTestId());
+//			}
+			
+		}
+		return tInfo;
 	}
 
 	@Override
