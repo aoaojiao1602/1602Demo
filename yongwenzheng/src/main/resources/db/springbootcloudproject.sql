@@ -1,8 +1,9 @@
 ﻿/*
 SQLyog 企业版 - MySQL GUI v8.14 
 MySQL - 5.7.20-log : Database - springbootcloudproject
-*********************************************************************
-*/
+************************************************************
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -16,7 +17,7 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`springbootcloudproject` /*!40100 DEFAUL
 
 USE `springbootcloudproject`;
 
-/*Table structure for table `clazztb` **/
+/*Table structure for table `clazztb` */
 
 DROP TABLE IF EXISTS `clazztb`;
 
@@ -46,7 +47,7 @@ CREATE TABLE `coursetb` (
   `navigation_id` int(11) DEFAULT NULL COMMENT '备注:导航id',
   `positions_id` int(11) DEFAULT '0' COMMENT '备注:位置id',
   PRIMARY KEY (`course_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `coursetb` */
 
@@ -150,7 +151,7 @@ CREATE TABLE `permissions_roles` (
 
 /*Data for the table `permissions_roles` */
 
-insert  into `permissions_roles`(`roles_permissions_id`,`permissions_roles_id`) values (1,1),(1,2),(2,1),(2,2);
+insert  into `permissions_roles`(`roles_permissions_id`,`permissions_roles_id`) values (1,1),(1,2),(2,1),(3,3),(4,4);
 
 /*Table structure for table `permissiontb` */
 
@@ -167,7 +168,7 @@ CREATE TABLE `permissiontb` (
 
 /*Data for the table `permissiontb` */
 
-insert  into `permissiontb`(`permission_id`,`permission_last_update_time`,`permission_module`,`permission_name`,`permission_value`) values (1,NULL,'订单管理','订单删除','order:deleteOrder'),(2,NULL,'订单管理','订单添加','order:addOrder');
+insert  into `permissiontb`(`permission_id`,`permission_last_update_time`,`permission_module`,`permission_name`,`permission_value`) values (1,NULL,'订单管理','订单删除','order:deleteOrder'),(2,NULL,'订单管理','订单添加','order:addOrder'),(3,NULL,'教师管理','教师权限','teacher'),(4,NULL,'学生管理','学生权限','student');
 
 /*Table structure for table `positiontb` */
 
@@ -195,7 +196,7 @@ CREATE TABLE `professionaltb` (
   PRIMARY KEY (`professional_id`),
   KEY `FK8jimwtr63b1jjn618mrrkdm9h` (`department_id`),
   CONSTRAINT `FK8jimwtr63b1jjn618mrrkdm9h` FOREIGN KEY (`department_id`) REFERENCES `departmenttb` (`department_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 /*Data for the table `professionaltb` */
 
@@ -226,11 +227,11 @@ CREATE TABLE `roletb` (
   `roles_last_update_time` datetime DEFAULT NULL COMMENT '备注:角色最后修改时间',
   `roles_name` varchar(20) NOT NULL COMMENT '备注:角色名称',
   PRIMARY KEY (`roles_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `roletb` */
 
-insert  into `roletb`(`roles_id`,`roles_create_time`,`roles_explan`,`roles_last_update_time`,`roles_name`) values (1,'2018-12-18 15:22:18',NULL,NULL,'管理员'),(2,'2018-12-18 23:09:19',NULL,NULL,'经理');
+insert  into `roletb`(`roles_id`,`roles_create_time`,`roles_explan`,`roles_last_update_time`,`roles_name`) values (1,'2018-12-18 15:22:18',NULL,NULL,'管理员'),(2,'2018-12-18 23:09:19',NULL,NULL,'经理'),(3,'2018-12-28 10:21:46',NULL,NULL,'老师'),(4,'2018-12-28 10:21:54',NULL,NULL,'学生');
 
 /*Table structure for table `schooltb` */
 
@@ -240,7 +241,7 @@ CREATE TABLE `schooltb` (
   `school_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '备注:学校id',
   `school_name` varchar(20) DEFAULT NULL COMMENT '备注:学校名称',
   PRIMARY KEY (`school_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `schooltb` */
 
@@ -295,7 +296,7 @@ CREATE TABLE `users_roles` (
 
 /*Data for the table `users_roles` */
 
-insert  into `users_roles`(`users_roles_id`,`roles_users_id`) values (1,1),(1,2);
+insert  into `users_roles`(`users_roles_id`,`roles_users_id`) values (1,1),(2,2),(3,3),(4,4);
 
 /*Table structure for table `userstb` */
 
