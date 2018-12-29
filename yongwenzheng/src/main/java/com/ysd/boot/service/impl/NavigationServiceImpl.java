@@ -5,6 +5,9 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ysd.boot.dao.NavigationMapper;
@@ -60,5 +63,19 @@ public class NavigationServiceImpl implements NavigationService{
 	  public List<Navigation> getALLNavigationList(){
 		  
 		  return navigationMapper.findAll();
+	  }
+	  
+	  /***
+	   * 通过导航名称分页查询
+	   * @param page
+	   * @param rows
+	   * @param navName
+	   * @return
+	   */
+	  public Page<Navigation> queryNavigationByPage(Integer page,Integer rows,String navName){
+		  
+		  Pageable pageable = new PageRequest(page-1, rows);
+		  
+		  return navigationMapper.findByNavNameContaining(navName, pageable);
 	  }
 }

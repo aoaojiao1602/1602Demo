@@ -1,5 +1,7 @@
 package com.ysd.boot.dao;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -39,4 +41,11 @@ public interface NavigationMapper extends JpaRepository<Navigation, Integer>,Jpa
 	  @Query(value = "UPDATE navigation SET nav_name = ?2 WHERE nav_id = ?1", nativeQuery = true)
 	  public int updateNavigation(@Param("navId")Integer navId,@Param("navName")String navName);
 	  
+	  /**
+	   * 带条件的分页查询
+	   * @param navName
+	   * @param pageable
+	   * @return
+	   */
+	  public Page<Navigation> findByNavNameContaining(String navName,Pageable pageable);
 }

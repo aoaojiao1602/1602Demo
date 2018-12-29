@@ -1,6 +1,11 @@
 package com.ysd.boot.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ysd.boot.entity.Department;
 import com.ysd.boot.service.DepartmentService;
 import com.ysd.boot.tool.Result;
 
@@ -22,6 +28,19 @@ public class DepartmentController {
 	
 	@Autowired
 	private DepartmentService departmentService;
+	
+	/**
+	 * 通过学校id查部门信息
+	 * @param schoolid
+	 * @return
+	 */
+	@ApiOperation(value="获取部门信息", notes="通过学校id查部门信息")
+	@GetMapping("/getDepartmentListBYschoolid")
+	public List<Department> getDepartmentListBYschoolid(@RequestParam Integer schoolid,@RequestParam String access_token){
+		
+		return departmentService.getDepartmentListBYschoolid(schoolid);
+		
+	}
 	
 	/***
 	  * 添加部门信息
@@ -116,4 +135,44 @@ public class DepartmentController {
     	return departmentService.getAllDepartmentLIst();
     }
 
+	
+	  /**
+	  	* 分页查询部门信息
+	  	* @param name
+	  	* @param pageable
+	  	* @return
+	  	*/
+		@ApiOperation(value="获取部门信息", notes=" 部门信息")
+		@ApiImplicitParams({
+			@ApiImplicitParam(name = "page", value = "页码", required = true, dataType = "Integer", paramType = "query"),
+			@ApiImplicitParam(name = "rows", value = "行数", required = true, dataType = "Integer", paramType = "query"),
+			@ApiImplicitParam(name = "name", value = "部门名称", required = false, dataType = "String", paramType = "query"),
+			@ApiImplicitParam(name = "access_token", value = "token", required = true, dataType = "String", paramType = "query")
+		})
+		@GetMapping("/queryDepartmentByPage") 
+		public Object queryDepartmentByPage(@RequestParam Integer page,@RequestParam Integer rows,@RequestParam String name,@RequestParam String access_token){
+			Page<Department> pages=departmentService.queryDepartmentByPage(page, rows, name);
+			Map<String, Object> map = new HashMap<>();
+			map.put("total", pages.getTotalElements());
+			map.put("rows",pages.getContent());
+			return map;
+
+		}
+		
+		
+		/**
+		 * 通过id得到部门信息
+		 * @param id
+		 * @return
+		 */
+		@ApiOperation(value="获取部门信息", notes=" 通过id得到部门信息")
+		@ApiImplicitParams({
+			@ApiImplicitParam(name = "id", value = "部门名称", required = false, dataType = "Integer", paramType = "query"),
+			@ApiImplicitParam(name = "access_token", value = "token", required = true, dataType = "String", paramType = "query")
+		})
+		@GetMapping("/getDepartmentById") 
+		public Department getDepartmentById(@RequestParam Integer id,@RequestParam String access_token) {
+			
+			return departmentService.getAllById(id);
+		}
 }

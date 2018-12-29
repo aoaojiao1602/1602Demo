@@ -1,0 +1,117 @@
+.manuImg{
+	width: 17px;
+	height: 17px;
+	margin-left: 4%;
+	margin-right: 4%;
+	margin-bottom: 2%;
+}
+.ulXs ~ ul{
+	display: none;
+}
+.topPosition{
+position: fixed;
+top: 0px;
+width: 100%;
+z-index: 10;
+}
+
+.a_img img{
+	cursor: pointer;
+	transition: all 0.6s;
+
+}
+.a_img img:hover{
+	transform: scale(1.1);
+}
+.a_div{
+	cursor: pointer;
+	transition: all 0.6s;
+
+}
+.a_div:hover{
+	transform: scale(0.9);
+}
+.el-carousel__item h3 {
+    color: #475669;
+    font-size: 18px;
+    opacity: 0.75;
+    line-height: 300px;
+    margin: 0;
+  }
+  
+  .el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+  }
+  
+  .el-carousel__item:nth-child(2n+1) {
+    background-color: #d3dce6;
+  }
+
+.divLeft10 div{
+	margin-left: 10px;
+}
+
+.all *{
+	float: left;
+	margin-left: 20px;
+}
+	/*头部*/
+	.el-menu.el-menu--horizontal {
+			border-bottom: solid 1px #fff;
+		}
+		
+		.myCourse {
+			cursor: pointer;
+			color: #869791;
+		}
+		
+		.mySetting {
+			cursor: pointer;
+			color: #000000;
+		}
+		
+	
+		.mySetting:hover {
+			color: #67C23A;
+		}
+		
+		.myButton {
+			width: 80%;
+			margin: 10px auto;
+			padding: 5px;
+			text-align: center;
+			background: #67C23A;
+			cursor: pointer;
+		}
+		
+		.myButton:hover {
+			background: #13CE66;
+		}
+		
+		.myImage {
+			cursor: pointer;
+			width: 100%;
+			display: block;
+			border-radius: 50%;
+		}
+		
+		.myPic {
+			cursor: pointer;
+			width: 30%;
+			border-radius: 50%;
+		}
+		#topUser .el-submenu__title{
+			background-color:#314555;
+			border: none;
+			height: 100%;
+		}
+		#topUser .el-submenu__title:hover{
+			background-color:#314555
+		}
+		.el-carousel__arrow{
+			z-index: 7;
+		}
+		#topUser .el-submenu__icon-arrow{
+			display: none;
+			
+		}

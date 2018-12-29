@@ -18,13 +18,16 @@ import org.springframework.stereotype.Service;
 
 import com.lhf.entity.Courses;
 import com.lhf.entity.CoursesSearch;
+import com.lhf.entity.Hours;
 import com.lhf.repository.CoursesRepository;
+import com.lhf.repository.HoursRepository;
 import com.lhf.service.CoursesService;
 @Service
 public class CoursesServiceImpl implements CoursesService {
 	@Autowired
 	private CoursesRepository cRepository;
-
+	@Autowired
+	private HoursRepository hRepository;
 	@Override
 	public int putCourses(Courses c) {
 		return cRepository.putCourses(c);
@@ -102,6 +105,11 @@ public class CoursesServiceImpl implements CoursesService {
 	@Override
 	public List<Courses> getCoursesById(Integer courseCreator) {
 		return cRepository.getCoursesById(courseCreator);
+	}
+
+	@Override
+	public List<Hours> getHoursBycourseCreatorAndcourseId(Integer courseId) {
+		return hRepository.getHoursBycourseCreatorAndcourseId(courseId);
 	}
 	
 }

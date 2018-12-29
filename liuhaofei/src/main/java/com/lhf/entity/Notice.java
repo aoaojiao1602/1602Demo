@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -13,11 +14,11 @@ import javax.persistence.Table;
 @Table(name="notice")
 public class Notice {
 	@Id
-	@GeneratedValue
-	@Column(columnDefinition="int unsigned NOT NULL comment '备注:公告编号'  ")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(columnDefinition="int  NOT NULL comment '备注:公告编号'  ")
 	private int noticeId;
-	@Column(columnDefinition="varchar(50) comment '备注:公告所属课程 ' ")
-	private String noticeCourse;
+	@Column(columnDefinition="int comment '备注:公告所属课程 ' ")
+	private int noticeCourse;
 	@Column(columnDefinition="varchar(50) comment '备注:公告名称 ' ")
 	private String noticeName;
 	@Column(columnDefinition="varchar(100) comment '备注:公告内容 ' ")
@@ -28,7 +29,7 @@ public class Notice {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Notice(int noticeId, String noticeCourse, String noticeName, String noticeContent, Date noticeTime) {
+	public Notice(int noticeId, int noticeCourse, String noticeName, String noticeContent, Date noticeTime) {
 		super();
 		this.noticeId = noticeId;
 		this.noticeCourse = noticeCourse;
@@ -42,10 +43,10 @@ public class Notice {
 	public void setNoticeId(int noticeId) {
 		this.noticeId = noticeId;
 	}
-	public String getNoticeCourse() {
+	public Integer getNoticeCourse() {
 		return noticeCourse;
 	}
-	public void setNoticeCourse(String noticeCourse) {
+	public void setNoticeCourse(Integer noticeCourse) {
 		this.noticeCourse = noticeCourse;
 	}
 	public String getNoticeName() {

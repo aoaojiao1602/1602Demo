@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript" src="../js/vue.min.js"></script>
+		<script type="text/javascript" src="../js/element-ui.js"></script>
+		<link rel="stylesheet" type="text/css" href="../css/element-ui.css" />
+		<script type="text/javascript" src="../js/axios.min.js"></script>
+	</head>
+	<body>
+		<input id="trz" type="button" value="跳转个人中心" />
+		<script>
+			var app = new Vue({
+				el: "#trz",
+				data() {
+					return {
+						urlPre:
+					};
+				},
+				created: function() {
+					var vm = this;
+					axios.get(`${vm.urlPre}/getMyFans?uid=1`)
+						.then(function(response) {
+							vm.fanslist = response.data;
+							console.log(response);
+							//alert(response.data)
+							console.log(response.data);
+						})
+						.catch(function(error) {
+							console.log(error);
+						});
+				}
+			});
+		</script>
+	</body>
+</html>

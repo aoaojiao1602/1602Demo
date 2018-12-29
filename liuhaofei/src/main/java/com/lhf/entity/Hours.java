@@ -3,6 +3,7 @@ package com.lhf.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -11,11 +12,11 @@ import javax.persistence.Transient;
 @Table(name="hours")
 public class Hours {
 	@Id
-	@GeneratedValue
-	@Column(columnDefinition="int unsigned NOT NULL comment '备注:课时编号'  ")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(columnDefinition="int  NOT NULL comment '备注:课时编号'  ")
 	private int hourId;
-	@Column(columnDefinition="varchar(50) comment '备注:课时所属课程 ' ")
-	private String hourCourse;
+	@Column(columnDefinition="int comment '备注:课时所属课程 ' ")
+	private int hourCourse;
 	@Column(columnDefinition="int comment '备注:课时父id ' ")
 	private int hourParentId;
 	@Column(columnDefinition="varchar(50) comment '课时名称 ' ")
@@ -26,7 +27,7 @@ public class Hours {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Hours(int hourId, String hourCourse, int hourParentId, String hourName, String hour_xxx) {
+	public Hours(int hourId, int hourCourse, int hourParentId, String hourName, String hour_xxx) {
 		super();
 		this.hourId = hourId;
 		this.hourCourse = hourCourse;
@@ -40,10 +41,10 @@ public class Hours {
 	public void setHourId(int hourId) {
 		this.hourId = hourId;
 	}
-	public String getHourCourse() {
+	public Integer getHourCourse() {
 		return hourCourse;
 	}
-	public void setHourCourse(String hourCourse) {
+	public void setHourCourse(Integer hourCourse) {
 		this.hourCourse = hourCourse;
 	}
 	public int getHourParentId() {

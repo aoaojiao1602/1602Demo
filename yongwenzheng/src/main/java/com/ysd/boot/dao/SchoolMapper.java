@@ -1,5 +1,7 @@
 package com.ysd.boot.dao;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -10,6 +12,8 @@ import com.ysd.boot.entity.School;
 
 public interface SchoolMapper extends JpaRepository<School, Integer>,JpaSpecificationExecutor<School>{
 
+	
+	
 	/***
 	 *修改学校
 	 * @param school
@@ -36,5 +40,13 @@ public interface SchoolMapper extends JpaRepository<School, Integer>,JpaSpecific
     @Modifying
     @Query(value = "INSERT INTO schooltb (school_name) VALUES(?1)", nativeQuery = true)
     public int addSchool(String schoolName);
+      
+    /**
+     	* 分页查询班级
+     	* @param name
+     	* @param pageable
+     	* @return
+     	*/
+    public Page<School> findBySchoolNameContaining(String name,Pageable pageable);
 	
 }

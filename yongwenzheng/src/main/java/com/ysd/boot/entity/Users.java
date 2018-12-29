@@ -80,10 +80,6 @@ public class Users {
 	inverseJoinColumns= {@JoinColumn(name="clazz_users_id")})
     private Set<Clazz> setClazz=new HashSet<Clazz>();
 	
-	@JsonIgnore
-	@ManyToMany(cascade=javax.persistence.CascadeType.DETACH,fetch=FetchType.EAGER)	
-	@JoinTable(name="users_professional",joinColumns={@JoinColumn(name="users_professional_id")},
-	inverseJoinColumns= {@JoinColumn(name="professional_users_id")})
-    private Set<Professional> setProfessional=new HashSet<Professional>();
+	
 	
 }

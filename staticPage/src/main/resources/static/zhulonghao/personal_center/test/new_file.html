@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE> top.html </TITLE>
+	</HEAD>
+	<script language="JavaScript">
+		window.onbeforeunload = function() {
+			//  这是用来设定一个时间, 时间到了, 就会执行一个指定的 method。
+			setTimeout(onunloadcancel, 10);
+			return "真的离开?";
+		}
+		window.onunloadcancel = function() {
+			alert("取消离开");
+		}
+	</script>
+
+	<BODY>
+		<p> 点击关闭按钮 监听</p>
+	</BODY>
+</HTML>

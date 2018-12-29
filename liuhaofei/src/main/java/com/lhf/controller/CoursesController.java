@@ -1,8 +1,4 @@
 package com.lhf.controller;
-
-
-
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,11 +6,13 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lhf.entity.Courses;
 import com.lhf.entity.CoursesSearch;
+import com.lhf.entity.Hours;
 import com.lhf.service.CoursesService;
 @CrossOrigin
 @RestController
@@ -42,6 +40,11 @@ public class CoursesController {
 		List<Courses> list=cService.getCoursesById(courseCreator);
 		return list;
 	}
+	@RequestMapping("/queryhours")
+	public Object getHoursBycourseCreatorAndcourseId(Integer courseId) {
+		List<Hours> list=cService.getHoursBycourseCreatorAndcourseId(courseId);
+		return list;
+	}
 	/**
 	 * 添加方法
 	 * http://localhost:8050/courses/putCourses?courseName=诗经&courseCategory=国学经典&courseCreator=李四
@@ -49,7 +52,7 @@ public class CoursesController {
 	 * @return
 	 */
 	@RequestMapping("/putCourses")
-	public Object putCourses(Courses c) {
+	public Object putCourses(@RequestBody Courses c) {
 		int C=cService.putCourses(c);
 		Map<String, Object> map = new HashMap<>();
 		if(C>0) {
@@ -84,11 +87,11 @@ public class CoursesController {
 	/**
 	 * 修改方法
 	 * http://localhost:8050/courses/postCourses?courseCategory=aaa&courseName=aaaaa&courseId=6
-	 * @param c 实体类课程
+	 * @param c 实体类课程666
 	 * @return
 	 */
 	@RequestMapping("/postCourses")
-	public Object postCoursesById(Courses c) {
+	public Object postCoursesById(@RequestBody Courses c) {
 		int C=cService.postCoursesById(c);
 		Map<String, Object> map = new HashMap<>();
 		if(C>0) {

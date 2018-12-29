@@ -1,8 +1,11 @@
 package com.ysd.boot.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -116,4 +119,28 @@ public class NavigationController {
     	
     	return navigationService.getALLNavigationList();
     }
+    
+    /***
+	   * 通过导航名称分页查询
+	   * @param page
+	   * @param rows
+	   * @param navName
+	   * @return
+	   */
+    @ApiOperation(value="获取导航信息", notes="通过导航名称分页查询")
+    @ApiImplicitParams({
+		@ApiImplicitParam(name = "page", value = "页码", required = true, dataType = "Integer", paramType = "query"),
+		@ApiImplicitParam(name = "rows", value = "行数", required = true, dataType = "Integer", paramType = "query"),
+		@ApiImplicitParam(name = "name", value = "导航名称", required = false, dataType = "String", paramType = "query"),
+	    @ApiImplicitParam(name = "access_token", value = "token", required = true, dataType = "String", paramType = "query")
+	})
+    @GetMapping("/queryNavigationByPage") 
+    public Object queryNavigationByPage(@RequestParam Integer page,@RequestParam Integer rows,@RequestParam String name,@RequestParam String access_token){
+		  Page<Navigation> pages=navigationService.queryNavigationByPage(page, rows, name);
+		   Map<String, Object> map = new HashMap<>();
+	    	map.put("total", pages.getTotalElements());
+	    	map.put("rows",pages.getContent());
+	    	return map;
+		  
+	  }
 }

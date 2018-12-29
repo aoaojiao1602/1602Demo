@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>个人中心</title>
+		<script type="text/javascript" src="../js/vue.min.js"></script>
+		<script type="text/javascript" src="../js/element-ui.js"></script>
+		<link rel="stylesheet" type="text/css" href="../css/element-ui.css" />
+		<script type="text/javascript" src="../js/axios.min.js"></script>
+		<style type="text/css">
+			.text {
+				float: left;
+				height: 120px;
+				width: 348px;
+				background: gray;
+			}
+
+			#fansdig {
+				position: absolute;
+				top: 5%;
+				left: 20%;
+				overflow: auto;
+				heighe: 350px;
+				width: 750px;
+			}
+
+			#fans {
+				width: 750px;
+				height: 350px;
+			}
+			#daxiao{
+				width: 749px;
+				height: 349px;
+				overflow: auto;
+			}
+
+			#u_name {
+				width: 100px;
+				height: 10px;
+			}
+
+			#timg {
+				width: 100px;
+				height: 100px;
+				border-radius: 50%;
+			}
+		</style>
+	</head>
+	<body>
+		<el-tabs v-model="activeName" type="card" id="fansdig" @tab-click="handleClick">
+			<el-tab-pane id="fans" label="我的粉丝" name="myfans">
+				<div id="daxiao">
+					<div class="text" v-for="l in lessons">
+						<a href="../user_update.html">
+							<img id="timg" :src="'../'+l.ui_headportrait+'/'+l.ui_headportraitname" />
+						</a>
+						<div id="u_name" v-text="l.ui_nickname"></div>
+					</div>
+				</div>
+			</el-tab-pane>
+			<el-tab-pane label="我的关注" name="myfours"></el-tab-pane>
+		</el-tabs>
+		<script type="text/javascript">
+			var app = new Vue({
+				el: '#fansdig',
+				data: {
+					activeName: 'myfans',
+					urlPre: "http://localhost:8030/user",
+					lessons: []
+				},
+				methods: {
+					handleClick(tab, event) {
+						console.log(tab, event);
+					}
+				},
+				created: function() {
+					var vm = this;
+					axios.get(`${vm.urlPre}/getMyFans?uid=1`)
+						.then(function(response) {
+							vm.lessons = response.data;
+							console.log(response);
+							//alert(response.data)
+							console.log(response.data);
+						})
+						.catch(function(error) {
+							console.log(error);
+						});
+				}
+			});
+		</script>
+	</body>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script type="text/javascript" src="../js/vue.min.js"></script>
+		<script type="text/javascript" src="../js/element-ui.js"></script>
+		<link rel="stylesheet" type="text/css" href="../css/element-ui.css" />
+		<script type="text/javascript" src="../js/axios.min.js"></script>
+		<style>
+			.xh {
+				float: left;
+				height: 120px;
+				width: 348px;
+				background: lightgray;
+			}
+			#fansdig {
+				overflow: auto;
+				heighe: 600px;
+				width: 750px;
+			}
+			.daxiao{
+				width: 749px;
+				height: 349px;
+				overflow: auto;
+			}
+			.fansfans {
+				width: 750px;
+				height: 350px;
+			}
+			.fname {
+				width: 100px;
+				height: 10px;
+			}
+			.ftimg {
+				width: 80px;
+				height: 80px;
+				border-radius: 50%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="fansorfous">
+			<el-button type="text" @click="a">粉丝{{fs}}人</el-button>
+			<el-button type="text" @click="b">粉丝{{gz}}人</el-button>
+			<el-dialog width="820px" :visible.sync="op" style="margin-top: -50px;">
+				<el-tabs style="margin-top: -50px;" v-model="activeName" id="fansdig" @tab-click="handleClick">
+					<el-tab-pane class="fansfans" :label="ss" name="myfans">
+						<div class="daxiao">
+							<div class="xh" v-for="l in fanslist">
+								<a href="../user_update.html">
+									<img class="ftimg" :src="'../'+l.ui_headportrait+'/'+l.ui_headportraitname" />
+								</a>
+								<div class="fname" v-text="l.ui_nickname"></div>
+							</div>
+						</div>
+
+					</el-tab-pane>
+					<el-tab-pane class="fansfans" :label="sa" name="second">
+						<div class="daxiao">
+							<div class="xh" v-for="l in fouslist">
+								<a href="../user_update.html">
+									<img class="ftimg" :src="'../'+l.ui_headportrait+'/'+l.ui_headportraitname" />
+								</a>
+								<div class="fname" v-text="l.ui_nickname"></div>
+							</div>
+						</div>
+					</el-tab-pane>
+				</el-tabs>
+			</el-dialog>
+		</div>
+		<script type="text/javascript">
+			var app = new Vue({
+				el: '#fansorfous',
+				data() {
+					return {
+						fs: 5,
+						gz: 3,
+						op: false,
+						activeName: '',
+						fanslist: [],
+						fouslist:[],
+						ss: "粉丝5人",
+						sa: "关注3人",
+						urlPre: "http://localhost:8030/user",
+					};
+				},
+				methods: {
+					a() {
+						var vm = this;
+						vm.op = true;
+						vm.activeName = "myfans";
+						
+					},
+					b() {
+						var vm = this;
+						vm.op = true;
+						vm.activeName = "second";
+					},
+					handleClick(tab, event) {
+						console.log(tab, event);
+					}
+				},
+				created: function() {
+					var vm = this;
+					axios.get(`${vm.urlPre}/getMyFans?uid=1`)
+						.then(function(response) {
+							vm.fanslist = response.data;
+							console.log(response);
+							//alert(response.data)
+							console.log(response.data);
+						})
+						.catch(function(error) {
+							console.log(error);
+						});
+				},
+				mounted: function() {
+					var vm = this;
+					axios.get(`${vm.urlPre}/getMyfocus?uid=1`)
+						.then(function(response) {
+							vm.fouslist = response.data;
+							console.log(response);
+							//alert(response.data)
+							console.log(response.data);
+						})
+						.catch(function(error) {
+							console.log(error);
+						});
+				}
+			});
+		</script>
+	</body>
+</html>

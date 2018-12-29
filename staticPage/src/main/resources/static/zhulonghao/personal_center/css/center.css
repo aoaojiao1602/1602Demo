@@ -1,0 +1,214 @@
+#center_user {
+	background-color: #409EFF;
+	position: relative;
+	height: auto;
+	top: 61px;
+	width: 100%;
+	margin: auto;
+}
+
+#xinxi {
+	background-color: #00FFFF;
+	height: 200px;
+	width: 100%;
+	margin: auto;
+}
+
+#tongji {
+	height: auto;
+	width: 100%;
+	margin: auto;
+}
+
+#ktz {
+	background-color: #6F7180;
+	height: auto;
+	width: 100%;
+	margin: auto;
+}
+
+#test {
+	background-color: #B3D8FF;
+	height: 420px;
+	width: 1333px;
+	margin: auto;
+}
+
+#test2 {
+	background-color: #C0C4CC;
+	height: 580px;
+	width: 1333px;
+	margin: auto;
+}
+
+#touxiang {
+	height: 100px;
+	width: 100px;
+	border-radius: 50%;
+	z-index: 200;
+	position: relative;
+	left: 100px;
+	top: 30px;
+}
+
+#guanzhu {
+	position: relative;
+	height: 15px;
+	width: 30px;
+	left: 115px;
+	top: 45px;
+
+}
+
+#timg {
+	height: 100px;
+	width: 100px;
+	border-radius: 50%;
+}
+
+#nickname {
+	font-size: 30px;
+	color: #8CC5FF;
+	position: relative;
+	left: 230px;
+	top: -85px;
+}
+
+#zhiye {
+	font-size: 15px;
+	color: #8CC5FF;
+	position: relative;
+	left: 230px;
+	top: -90px;
+}
+
+#fansorfous {
+	position: relative;
+	left: 230px;
+	top: -89px;
+
+}
+
+.xh {
+	float: left;
+	height: 120px;
+	width: 348px;
+}
+
+#fansdig {
+	overflow: auto;
+	heighe: 600px;
+	width: 750px;
+}
+
+.daxiao {
+	width: 749px;
+	height: 349px;
+	overflow: auto;
+}
+
+.fansfans {
+	width: 750px;
+	height: 350px;
+}
+
+.fname {
+	position: relative;
+	left: 100px;
+	font-size: 15px;
+	top: -60px;
+	width: 100px;
+	height: 10px;
+}
+
+.ftimg {
+	position: relative;
+	left: 20px;
+	top: 5px;
+	width: 70px;
+	height: 70px;
+	border-radius: 50%;
+}
+
+.fxinxi {
+	position: relative;
+	left: 100px;
+	top: -45px;
+}
+
+.fguanzhu {
+	position: relative;
+	left: -80px;
+	top: -17px;
+}
+
+.qfguanzhu {
+	position: relative;
+	left: -80px;
+	top: -17px;
+}
+
+#huifutubiao {
+	position: relative;
+	left:830px;
+	top: -200px;
+}
+
+#huifufont {
+	position: relative;
+	left: 888px;
+	top: -272px;
+}
+
+#huifunum {
+	font-size: 20px;
+	color: #8CC5FF;
+	position: relative;
+	left: 915px;
+	top: -275px;
+}
+
+#huozantubiao {
+	position: relative;
+	left: 990px;
+	top: -350px;
+}
+
+#huozanfont {
+	position: relative;
+	left: 1048px;
+	top: -424px;
+}
+
+#huozannum {
+	font-size: 20px;
+	color: #8CC5FF;
+	position: relative;
+	left: 1070px;
+	top: -428px;
+}
+
+#xuefentubiao {
+	position: relative;
+	left: 1150px;
+	top: -507px;
+}
+
+#xuefenfont {
+	position: relative;
+	left: 1205px;
+	top: -580px;
+}
+
+#xuefennum {
+	font-size: 20px;
+	color: #8CC5FF;
+	position: relative;
+	left: 1225px;
+	top: -585px;
+}
+
+a {
+	text-decoration: none;
+	outline-style: none;
+}

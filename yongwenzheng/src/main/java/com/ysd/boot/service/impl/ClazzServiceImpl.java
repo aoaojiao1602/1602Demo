@@ -5,6 +5,9 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ysd.boot.dao.ClazzMapper;
@@ -17,6 +20,40 @@ public class ClazzServiceImpl implements ClazzService{
 	@Autowired
 	private ClazzMapper clazzMapper;
 	
+	
+	/***
+	 * 通过学生id修改班级id
+	 * @param cid
+	 * @param sid
+	 * @return
+	 */
+	 @Transactional
+	public int updatejigou(Integer cid,Integer sid) {
+		 
+		 return clazzMapper.updatejigou(cid, sid);
+	 }
+	
+	
+	/***
+	 * 通过professional_id得到class_id
+	 * @param pid
+	 * @return
+	 */
+	public int getCidByPid(Integer pid) {
+		
+		return clazzMapper.getCidByPid(pid);
+	}
+	
+	/****
+	 * 通过学生id得到班级id
+	 * @param sid
+	 * @return
+	 */
+	public int getCidBysid(Integer sid) {
+		
+		return clazzMapper.getCidBysid(sid);
+	}
+	
 	/**
 	 * 通过id得到班级信息
 	 * @param id
@@ -27,15 +64,7 @@ public class ClazzServiceImpl implements ClazzService{
 	}
 	
 	
-	/***
-	 * 通过id得到班级id
-	 * @param sid
-	 * @return
-	 */
-	public Integer getClazzIdBytId(Integer sid) {
-		
-		return clazzMapper.getClazzIdBytId(sid);
-	}
+	
 	
 	
 	  /**
@@ -80,7 +109,16 @@ public class ClazzServiceImpl implements ClazzService{
     	  return clazzMapper.findAll();
       }
 	
-	
+      /**
+                * 分页查询班级
+        * @param name
+        * @param pageable
+        * @return
+         */
+      public Page<Clazz> queryClazzByPage(Integer page,Integer rows,String name){
+    	  Pageable pageable = new PageRequest(page-1, rows);
+    	  return clazzMapper.findByClassNameContaining(name, pageable);
+      }
 	
 }
 

@@ -41,8 +41,5 @@ public class Navigation {
 	@Column(columnDefinition="varchar(100) comment '备注:备注'  ")
 	private String navRemark;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy="navigation",fetch=FetchType.LAZY,cascade=CascadeType.DETACH)
-	private List<Course> list = new ArrayList<>();
 	
 }

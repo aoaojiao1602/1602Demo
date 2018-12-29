@@ -1,7 +1,4 @@
 package com.ysd.boot.comfig;
-
-import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +24,7 @@ import com.ysd.boot.service.impl.UserDetailsServiceImpl;
 
 // 授权认证服务中心配置
 @Configuration
+//@EnableAuthorizationServer 开启 授权认证服务中心
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 	
@@ -34,21 +32,26 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	private UserDetailsServiceImpl uDetailsServiceImpl;
 
 	
-	// @EnableAuthorizationServer 开启 授权认证服务中心
+	
 	// accessToken 有效期 2小时
 	private static final int ACCESSTOKENVALIDITYSECONDS = 7200;// 两小时
 	private static final int REFRESHTOKENVALIDITYSECONDS = 7200;// 两小时
 	// 配置 appid、appkey 、回调地址、token有效期
 
+	  //ClientDetailsServiceConfigurer：用来配置客户端详情服务（ClientDetailsService），客户端详情信息在这里进行初始化，你能够把客户端详情信息写死在这里或者是通过数据库来存储调取详情信息
 	// 思考问题：accessToken 怎么办？ 使用刷新令牌获取新的accessToken 至少提前10分钟调用刷新令牌接口进行刷新
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-
+		//clientId：（必须的）用来标识客户的Id。
+		//secret：（需要值得信任的客户端）客户端安全码，如果有的话。
+		//scope：用来限制客户端的访问范围，如果为空（默认）的话，那么客户端拥有全部的访问范围。
+	  //authorizedGrantTypes：此客户端可以使用的授权类型，默认为空。
+	 //authorities：此客户端可以使用的权限（基于Spring Security authorities）
 		// 思考： 如果合作机构需要做oauth2认证的话 第一步操作的是什么？
 		// 1.申请获取到appid 和 appkey 写死的
 		 clients.inMemory().withClient("client_1").secret(passwordEncoder().encode("123456"))
-		 .redirectUris("http://www.mayikt.com")	//授权码授权模式下的回调地址
-		 .authorizedGrantTypes("authorization_code", "password",
+		// .redirectUris("http://www.mayikt.com")	//授权码授权模式下的回调地址
+		 .authorizedGrantTypes("password",
 		 "refresh_token").scopes("all")
 		 .accessTokenValiditySeconds(ACCESSTOKENVALIDITYSECONDS)
 		 .refreshTokenValiditySeconds(REFRESHTOKENVALIDITYSECONDS);// 授权类型
@@ -66,6 +69,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	}
 
 	// 设置token类型
+	//AuthorizationServerEndpointsConfigurer：用来配置授权（authorization）以及令牌（token）的访问端点和令牌服务(token services)。
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
 		endpoints.authenticationManager(authenticationManager()).allowedTokenEndpointRequestMethods(HttpMethod.GET,
 				HttpMethod.POST);
@@ -76,7 +80,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		// 之前的accessToken b55c980c-31f7-4498-a783-bd905608fb18
 		// 刷新之后accessToken d40f7915-dd06-4503-83c8-2815915c9368
 	}
-
+	//AuthorizationServerSecurityConfigurer：用来配置令牌端点(Token Endpoint)的安全约束
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
 		// 允许表单认证
