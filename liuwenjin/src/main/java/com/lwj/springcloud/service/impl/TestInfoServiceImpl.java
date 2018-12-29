@@ -25,7 +25,7 @@ public class TestInfoServiceImpl implements TestInfoService {
 	public TestInfo insertTestInfo(TestInfo t) {
 		// TODO Auto-generated method stub
 		TestInfo tInfo=tRepository.save(t);
-		if (t.getOptionNum()>0) {
+		/*if (t.getOptionNum()>0) {
 			List<Integer> qpList=tRepository.queryOptions(t.getSectionId());
 			System.err.println(qpList);
 			Random.GetRandomIsRepeat(t.getOptionNum(), qpList);
@@ -33,7 +33,7 @@ public class TestInfoServiceImpl implements TestInfoService {
 //				tRepository.insetTestQuestiontb(oidlist.get(i),tInfo.getTestId());
 //			}
 			
-		}
+		}*/
 		return tInfo;
 	}
 

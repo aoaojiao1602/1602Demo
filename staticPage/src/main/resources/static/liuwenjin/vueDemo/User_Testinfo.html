@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<!-- 引入饿了么Element样式,本地样式文件所在目录下的fonts目录中需要有样式图标文件element-icons.woff -->
+		<link rel="stylesheet" href="css/element-ui.css">
+		<!-- vue语法环境 -->
+		<script src="js/vue.min.js"></script>
+		<script src="js/router.js"></script>
+		<script src="js/jquery.js"></script>
+
+		<!-- vue使用Ajax -->
+		<script src="js/axios.min.js"></script>
+		<!-- 引入饿了么Element组件库 -->
+		<script src="js/element-ui.js"></script>
+		<style type="text/css">
+			.el-input {
+				width: 150px;
+			}
+
+			.demo-input-suffix {
+				margin-bottom: 10px;
+			}
+
+			.el-inp {
+				margin-right: 15px;
+				margin-top: 5px;
+			}
+
+			.demo-table-expand {
+				font-size: 0;
+			}
+
+			.demo-table-expand label {
+				width: 90px;
+				color: #99a9bf;
+			}
+
+			.demo-table-expand .el-form-item {
+				margin-right: 0;
+				margin-bottom: 0;
+				width: 50%;
+			}
+
+			.el-form-red {
+				color: red;
+			}
+
+			.el-form-item {
+				margin-bottom: 8px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<h1 align="center">测试内容：{{testInfo.testName}}</h1>
+			<div style="margin-left: 900px;">
+				<span>测试次数：{{studentTestInfo.testNum}}</span>
+				<span> 剩余时间：{{count}}秒</span>
+				<span>考生id:{{studentTestInfo.id}}</span>
+				<span>考生姓名:张三</span>
+				<el-button type="success" icon="el-icon-upload2" @click="submitExam">提交</el-button>
+			</div>
+			<hr />
+			<el-table :data="question" border :row-key="getRowKeys" :expand-row-keys="expands" style="width: 100%; margin-left: 50px;">
+				<el-table-column type="index" label="题号" width="50">
+				</el-table-column>
+				<el-table-column prop="quest.topic" label="题目" width="1000">
+				</el-table-column>
+				<!-- <el-table-column prop="quest.answer" label="答案" width="150">
+				</el-table-column> -->
+				<el-table-column prop="quest.score" label="题/分值" width="150">
+				</el-table-column>
+				<el-table-column type="expand">
+					<template slot-scope="props">
+						<el-form label-position="left" inline class="demo-table-expand">
+							<!-- 选择题模板 -->
+							<div v-if="props.row.options!=null">
+								<!-- <el-form-item label="题目" class="el-form-red">
+									<span>{{ props.row.options.topic }}</span>
+								</el-form-item><br /> -->
+								<el-form-item class="el-form-red">
+									<span>
+										<el-radio v-model="props.row.daan" border size="medium" label="A"></el-radio>{{ props.row.options.optionA }}
+									</span>
+								</el-form-item>
+								<el-form-item class="el-form-red">
+									<span>
+										<el-radio v-model="props.row.daan" border size="medium" label="B"></el-radio>{{ props.row.options.optionB }}
+									</span>
+								</el-form-item>
+								<el-form-item class="el-form-red">
+									<span>
+										<el-radio v-model="props.row.daan" border size="medium" label="C"></el-radio>{{ props.row.options.optionC }}
+									</span>
+								</el-form-item>
+								<el-form-item class="el-form-red">
+									<span>
+										<el-radio v-model="props.row.daan" border size="medium" label="D"></el-radio>{{ props.row.options.optionD }}
+									</span>
+								</el-form-item>
+							</div>
+							<!-- 判断题模板 
+							<div v-if="props.row.judges!=null">
+								<!-- <el-form-item label="题目" class="el-form-red">
+									<span>{{ props.row.judges.topic }}</span>
+								</el-form-item><br />
+								<el-form-item class="el-form-red">
+									<span>
+										<el-radio v-model="props.row.daan" border size="medium" @change="change(props.row)" label="是">A: 是</el-radio>
+									</span>
+								</el-form-item>
+								<el-form-item class="el-form-red">
+									<span>
+										<el-radio v-model="props.row.daan" border size="medium" @change="change(props.row)" label="否">B: 否</el-radio>
+									</span>
+								</el-form-item>
+							</div>-->
+						</el-form>
+					</template>
+				</el-table-column>
+			</el-table>
+		</div>
+
+	</body>
+	<script type="text/javascript">
+		/* window.onbeforeunload = function() {
+			//  这是用来设定一个时间, 时间到了, 就会执行一个指定的 method。
+			setTimeout(onunloadcancel, 10);
+			return "真的离开?";
+		}
+		window.onunloadcancel = function() {
+			alert("继续考试");
+		} */
+		var vm = new Vue({
+			el: '#app',
+			data: function() {
+				return {
+					getRowKeys(row) {
+						return row.qid;
+					},
+					expands: [],
+					testInfo: [],
+					question: [],
+					studentTestInfo: [],
+					stuid: 1,
+					testId: 5,
+					timer: null,
+					count: 0,
+					testNum: 0
+				}
+
+			},
+			methods: {
+				//获取url中的参数
+				getUrlKey(name) {
+					return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[
+						1].replace(/\+/g, '%20')) || null
+				},
+				// 获取row的key值
+
+				//修改显示
+				// 				change(row) {
+				// 					console.log(row.daan);
+				// 					console.log(row.my);
+				// 					var other = this;
+				// 					var daan = row.daan
+				// 					axios({
+				// 							method: 'put',
+				// 							url: "http://localhost:8040/studentExamInfoQuestion",
+				// 							params: {
+				// 								stuid: other.stuid,
+				// 								examid: other.examid,
+				// 								daan: daan,
+				// 								qid: row.qid
+				// 							}
+				// 						})
+				// 						.then(function(response) {})
+				// 						.catch(function(error) {
+				// 							other.$message({
+				// 								type: 'success',
+				// 								message: '系统异常!'
+				// 							});
+				// 						})
+				// 
+				// 				},
+				//提交考试
+				submitExam() {
+					var other = this;
+					this.$confirm('您将提交本次测试确认将不可取消, 是否继续?', '提示', {
+						confirmButtonText: '确定',
+						cancelButtonText: '取消',
+						type: 'warning',
+						center: true
+					}).then(() => {
+						other.submit();
+					}).catch(() => {
+						this.$message({
+							type: 'info',
+							message: '已取消提交'
+						});
+					});
+				},
+				//提交修改分数
+				submit() {
+					var other = this;
+					console.log(other.question);
+					console.log(other.question[0].daan);
+					var daanList = new Array();
+					var qidList = new Array();
+					for (var i = 0; i < other.question.length; i++) {
+						console.log(other.question[i].daan);
+						daanList[i] = other.question[i].daan;
+						qidList[i] = other.question[i].qid;
+					}
+					console.log(qidList);
+					axios({
+							method: 'put',
+							url: "http://localhost:8040/studentTestInfo",
+							params: {
+								stuid: other.stuid,
+								testid: other.testId,
+								daans: daanList,
+								qids: qidList
+							}
+						})
+						.then(function(response) {
+							other.$message({
+								type: 'success',
+								message: '您的分数为' + response.data
+							});
+						})
+						.catch(function(error) {
+							other.$message({
+								type: 'success',
+								message: '系统异常!'
+							});
+						})
+					clearInterval(this.timer)
+				},
+				setTimer() {
+					var other = this;
+// 					counts=studentTestInfo.spareTime*60*60;
+// 					alert(counts);
+					other.timer = setInterval(() => {
+						if(other.count>0){
+							other.count--;
+						}else{
+							other.submit();
+							//other.load();
+						}
+					}, 1000)
+				},
+				websocket() {
+					//WebSocket服务器地址
+					http: //localhost:8040/updateStudentExamInfo
+						var wsurl = "ws://localhost:8040/webSocketjoin?stuid=1&examid=13";
+					//1. 与服务器建立websocket连接
+					var websocket = new WebSocket(wsurl);
+
+					// 2. 连接成功
+					websocket.onopen = function(event) {
+						console.log("成功与服务器建立连接!!!");
+						console.log(event);
+						websocket.send(stuid = 1);
+						//websocket.send(examid=13);
+					}
+					//3. 接收服务器数据
+					websocket.onmessage = function(event) {
+						console.log("wesocket接收服务器数据event.data=>" + event.data);
+						console.log(event);
+					}
+
+					//4. 服务器发生异常错误 
+					websocket.onerror = function(event) {
+						console.log("WebSocket:服务器发生异常错误 ");
+						console.log(event);
+					};
+					//5.  服务器关闭 
+					websocket.onclose = function(event) {
+						console.log("WebSocket:已关闭");
+						console.log(event);
+					};
+
+				},
+				load(){
+					var other = this;
+			axios.get("http://localhost:8040/studentTestInfo", {
+					params: {
+						stuid: other.stuid,
+						testId: other.testId
+					}
+					
+				})
+				.then(function(response) {
+					other.testInfo = response.data.testInfo
+					console.log(response.data);
+					console.log(other.testInfo);
+					other.studentTestInfo = response.data.studentTestInfo
+					console.log(other.studentTestInfo.testNum);
+					//var num=other.studentTestInfo.testNum;
+					other.count=response.data.studentTestInfo.spareTime;
+					//alert(count);
+					other.question = response.data.question;
+// 						other.timer = setInterval(() => {
+// 							if(this.count>0){
+// 								this.count--;
+// 							}
+// 						}, 1000)
+					if (other.studentTestInfo.testNum< 1) {
+						other.$message({
+							type: 'warning',
+							message: '您的次数已用完'
+						});
+					}else{
+						other.setTimer();
+					}
+					//else if(response.data.studentTestInfo.testNum=0){
+// 							//other.websocket();
+// 							//other.stuTime = response.data.studentTestInfo.spareTime;
+// 							//alert()
+// 							//other.setTimer();
+// 							other.$message({
+// 								type: 'warning',
+// 								message: '测试次数已用完！'
+// 							});
+// 						}
+					for (var i = 0; i < other.question.length; i++) {
+						other.expands.push(other.question[i].qid);
+					}
+				})
+				.catch(function(error) {})
+		}
+		
+			},
+			created: function() {
+				var other = this;
+				//查询该是否第一次进入考试
+				other.load();
+				//this.loadsearch(this.currentPage, this.pageSize)
+			},
+			beforeMount() {
+
+			},
+			watch: {
+				stuTime(val, newval) {}
+			},
+			destroyed: function() {
+				//this.submitExam();
+				if (this.timer) { //如果定时器还在运行 或者直接关闭，不用判断
+					clearInterval(this.timer); //关闭
+				}
+			}
+
+		})
+	</script>
+</html>

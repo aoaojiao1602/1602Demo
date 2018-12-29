@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="css/element-ui.css">
+		<!-- vue语法环境 -->
+		<script src="js/vue.min.js"></script>
+		<script src="js/router.js"></script>
+		<!-- vue使用Ajax -->
+		<script src="js/axios.min.js"></script>
+		<!-- 引入饿了么Element组件库 -->
+		<script src="js/element-ui.js"></script>
+	</head>
+	<body>
+		<div id="app">
+
+			<el-button type="primary" icon="el-icon-edit-outline" @click="submit">提交</el-button>
+		</div>
+	</body>
+	<script type="text/javascript">
+		new Vue({
+			el: '#app',
+			data: function() {
+				return {
+					//学生id
+					stuid: 2,
+					//课程id
+					examid: 16,
+					stuName:'马小帅'
+				}
+			},
+			methods: {
+				getUrlKey(name) {
+					return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[
+						1].replace(/\+/g, '%20')) || null
+				},
+				submit() {
+					var other = this;
+					//验证考试状态
+					axios.get("http://localhost:8040/checkExamInfo", {
+							params: {
+								stuid: other.stuid,
+								examid: other.examid
+							}
+						})
+						.then(function(response) {
+							console.log(response.data);
+							if (response.data.examInfo == null) {
+								other.$message({
+									type: 'success',
+									message: '该课程还没建立考试!'
+								});
+							} else {
+								var startTime = response.data.examInfo.startTime;
+								var endTime = response.data.examInfo.endTime;
+								var s = new Date(Date.parse(startTime.replace(/-/g, "/")));
+								var e = new Date(Date.parse(endTime.replace(/-/g, "/")));
+								var curDate = new Date();
+								console.log(s);
+								console.log(e);
+								console.log(curDate);
+								if (s <= curDate && curDate <= e) {
+									if(response.data.studentExamInfo !=null&&response.data.studentExamInfo.examScore!=null){
+										other.$message({
+											type: 'warning',
+											message: "当前课程考试您已经考过了分数为"+response.data.studentExamInfo.examScore+"!"
+										});
+									}else{
+										other.$confirm('是否立即进入考试, 是否继续?', '提示', {
+											confirmButtonText: '确定',
+											cancelButtonText: '取消',
+											type: 'warning',
+											center: true
+										}).then(() => {
+											window.location.href = "http://localhost:8000/liuwenjin/vueDemo/User_Examinfo.html?stuid=" + other.stuid +
+												"&examid=" + other.examid+"&stuName="+other.stuName;
+										}).catch(() => {
+											other.$message({
+												type: 'info',
+												message: '已取消'
+											});
+										});
+									}
+								} else {
+									other.$message({
+										type: 'warning',
+										message: '当前时间该考试还没有开放!'
+									});
+								}
+								
+							}
+						})
+						.catch(function(error) {})
+
+				}
+
+			}
+		})
+	</script>
+</html>
