@@ -18,4 +18,6 @@ public interface ConsumerService {
 	
 	@RequestMapping("/courses/queryCourses")
 	public Object queryCourses(@RequestParam("courseCreator")int tid);
+	@RequestMapping("/courses/queryhours")
+	public Object querySection(@RequestParam("courseId")int courseId);
 }
