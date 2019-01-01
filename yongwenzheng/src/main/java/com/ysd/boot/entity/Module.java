@@ -3,6 +3,7 @@ package com.ysd.boot.entity;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -16,8 +17,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,6 +54,12 @@ public class Module {
 	@Column(columnDefinition="varchar(50) comment '备注:模块路径'  ")
 	private String moduleUrl;
 	
+	@JsonInclude(Include.NON_NULL)	//如果该属性为NULL则不参与序列化
+	@Transient
+	private List<Module> children;
+	
+	@Transient
+	private Boolean checked;
 	
 	
 	@JsonIgnore

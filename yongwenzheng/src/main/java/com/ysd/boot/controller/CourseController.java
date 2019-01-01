@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,7 @@ import com.ysd.boot.tool.Result;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/course")
 public class CourseController {
@@ -36,9 +37,13 @@ public class CourseController {
 	 */
 	@ApiOperation(value="获取课程推荐信息", notes="添加课程推荐")
 	@PutMapping(value="/addCourse",name="添加课程推荐")
-	public Object addCourse(@RequestParam Integer kechId,@RequestParam Integer navigationId,@RequestParam String access_token) {
+	public Object addCourse(String access_token) {
+		//添加课程推荐信息，查询黄炯给我的一个月内课程的报名人数和课程id
+		//我的设计是每月定时对我的数据库进行更新，一个月更新一次
+		//我通过修改推荐状态，权重，位置进行推荐
+		//为了测试方便前台添加按钮进行我功能测试
 		Result result=new Result();
-		if (courseService.addCourse(kechId, navigationId)>0) {
+		if (courseService.addCourse(1, 0,"1")>0) {
 			result.setState(1);
 			result.setMsg("添加成功");
 			
@@ -99,6 +104,7 @@ public class CourseController {
 	
 	/**
 	 * 通过位置id分页查询班级
+	 * http://localhost:8006/course/queryCourseByPage?page=1&rows=10&id=&access_token=
 	 * @param page
 	 * @param rows
 	 * @param id
@@ -108,7 +114,10 @@ public class CourseController {
 	@ApiOperation(value="获取课程推荐信息", notes="通过位置id分页查询班级")
 	@GetMapping("/queryCourseByPage") 
     public Object queryCourseByPage(@RequestParam Integer page,@RequestParam Integer rows,@RequestParam Integer id,@RequestParam String access_token){ 
-		 Page<Course> pages=courseService.queryCourseByPage(page, rows, id);
+		if (id==null||id.equals("")) {
+			id=0;
+		} 
+		Page<Course> pages=courseService.queryCourseByPage(page, rows, id);
 		   Map<String, Object> map = new HashMap<>();
 	    	map.put("total", pages.getTotalElements());
 	    	map.put("rows",pages.getContent());

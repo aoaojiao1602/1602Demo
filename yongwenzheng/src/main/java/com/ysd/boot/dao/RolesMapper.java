@@ -23,10 +23,7 @@ public interface RolesMapper extends JpaRepository<Roles, Integer>{
 	   @Query(value = "SELECT roles_name FROM roletb WHERE roles_id=?1", nativeQuery = true)
 	   public String getRoleNameByRid(Integer rid);
 	
-	// 条件分页查询
-		public Page<Roles> findByRolesNameLike(String rolesName, Pageable pageable);
-	
-	// 角色添加
+	    // 角色添加
 		@Query(value = "INSERT INTO roletb(roles_name,roles_explan,roles_create_time)VALUES(?1,?2,?3)", nativeQuery = true)
 		@Modifying
 		public int insertRoles(String rolesName, String rolesExplan, Date rolesCreateTime);
@@ -44,8 +41,17 @@ public interface RolesMapper extends JpaRepository<Roles, Integer>{
 			
 		
 		// 角色修改
-		@Query(value = "UPDATE roletb SET roles_name=?1,roles_explan=?2 WHERE roles_id=?3", nativeQuery = true)
+		@Query(value = "UPDATE roletb SET roles_name=?1,roles_explan=?2,roles_last_update_time=?4 WHERE roles_id=?3", nativeQuery = true)
 		@Modifying
-		public int updateRoles(String rolesName, String rolesExplan, Integer rolesId);
+		public int updateRoles(String rolesName, String rolesExplan, Integer rolesId,Date upDate);
 
+		
+		
+		/***=
+		 * 带条件的分页查询
+		 * @param name
+		 * @param pageable
+		 * @return
+		 */
+		public Page<Roles> findByRolesNameContaining(String name,Pageable pageable);
 }

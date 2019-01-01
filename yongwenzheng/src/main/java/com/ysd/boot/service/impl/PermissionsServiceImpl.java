@@ -72,4 +72,27 @@ public class PermissionsServiceImpl implements PermissionsService{
 			
 			return k.size();
 		}
+		
+		
+		
+		
+		/***
+		 * 得到权限树
+		 */
+		public List<Permissions> queryPermissionTree(Integer roleId){
+			
+			
+			List<Integer> pid=permissionMapper.queryByRolesIdGetPermissionsId(roleId);
+			
+			List<Permissions> list=permissionMapper.queryPermissionsGroupBy();
+			
+			for (Permissions permissions : list) {
+				
+				permissions.setChildren(permissionMapper.queryPermissionsByPermissionsModule(permissions.getPermissionModule()));
+				
+				
+			}
+			
+			return list;
+		}
 }

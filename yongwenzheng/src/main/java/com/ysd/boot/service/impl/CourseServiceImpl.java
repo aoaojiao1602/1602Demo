@@ -26,9 +26,9 @@ public class CourseServiceImpl implements CourseService{
 	 * @return
 	 */
 	@Transactional
-	public int addCourse(Integer kechId,Integer navigationId) {
+	public int addCourse(Integer kechId,Integer navigationId,String courseRemark) {
 		
-		return courseMapper.addCourse(kechId, navigationId);
+		return courseMapper.addCourse(kechId, navigationId,courseRemark);
 		
 	}
 	

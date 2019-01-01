@@ -23,5 +23,18 @@ public class PermissionsController {
 			result.setMsg("成功更新 "+k+" 条权限");		
 		return result;		
 	}
+	
+	/**
+	 * 通过角色id得到权限树
+	 * 角色已有的权限呈选中状态
+	 * http://localhost:8006/permissions/queryPermissionTree?roleId=1
+	 * @param roleId
+	 * @return
+	 */
+	@RequestMapping("/queryPermissionTree")
+	public Object queryPermissionTree(Integer roleId) {
+		
+		return permissionsService.queryPermissionTree(roleId);
+	}
 
 }

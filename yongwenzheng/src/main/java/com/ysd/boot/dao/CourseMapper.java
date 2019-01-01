@@ -22,8 +22,8 @@ public interface CourseMapper extends JpaRepository<Course, Integer>,JpaSpecific
 	 * @return
 	 */
 	@Modifying
-	@Query(value = "INSERT  coursetb(kech_id,navigation_id) VALUES(?1,?2)", nativeQuery = true)
-	public int addCourse(@Param("kechId")Integer kechId,@Param("navigationId")Integer navigationId);
+	@Query(value = "INSERT  coursetb(kech_id,navigation_id,nav_remark) VALUES(?1,?2,?3)", nativeQuery = true)
+	public int addCourse(@Param("kechId")Integer kechId,@Param("navigationId")Integer navigationId,@Param("courseRemark")String courseRemark);
 	
 	/**
 	 * 通过id进行删除课程推荐
@@ -57,7 +57,7 @@ public interface CourseMapper extends JpaRepository<Course, Integer>,JpaSpecific
 	 * @param positionId
 	 * @return
 	 */
-	@Query(value = "SELECT * FROM coursetb WHERE positions_id = ?1 " , nativeQuery = true)
+	@Query(value = "SELECT * FROM coursetb WHERE course_status=1 AND  positions_id = ?1 " , nativeQuery = true)
 	public List<Course> getCourseByPositionId(@Param("positionId")Integer positionId);
 	
 }

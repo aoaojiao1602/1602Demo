@@ -31,17 +31,6 @@ public class RolesServiceImpl implements RolesService {
 	 }
 	
 	
-	/**
-	 * 分页条件查询
-	 */
-	@Override
-	public Page<Roles> findByrolesName(String rolesName, Integer page,Integer size) {
-		Sort sort=new Sort(Sort.Direction.DESC,"rolesCreateTime","rolesLastUpdateTime");
-		//Pageable pageable=PageRequest.of(page, size, sort);
-		Pageable pageable=new PageRequest(page, size,sort);
-		return rolesMapper.findByRolesNameLike("%"+rolesName+"%", pageable);
-	}
-	
 	
 	/**
 	 * 添加角色
@@ -59,6 +48,7 @@ public class RolesServiceImpl implements RolesService {
 	 */
 	@Override
 	public String findRolesName(String rolesName) {
+		
 		return rolesMapper.findRolesName(rolesName);
 	}
 	
@@ -69,6 +59,7 @@ public class RolesServiceImpl implements RolesService {
 	 */
 	@Override
 	public int deleteOneRoles(Integer rolesId) {
+		
 		return rolesMapper.deleteOneRoles(rolesId);
 	}
 	
@@ -80,6 +71,19 @@ public class RolesServiceImpl implements RolesService {
 	@Override
 	@Transactional
 	public int updateRoles(String rolesName, String rolesExplan, Integer rolesId) {
-		return rolesMapper.updateRoles(rolesName, rolesExplan, rolesId);
+		
+		return rolesMapper.updateRoles(rolesName, rolesExplan, rolesId,new Date());
+	}
+	
+	
+	/***
+	 * 带条件分页查询
+	 */
+	@Override
+	public Page<Roles> queryRolesPage(Integer page, Integer rows, String name) {
+		// TODO Auto-generated method stub
+		 Pageable pageable = new PageRequest(page-1, rows);
+		 
+		return rolesMapper.findByRolesNameContaining(name, pageable);
 	}
 }
