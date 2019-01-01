@@ -5,9 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.hwg.service.CategoryService;
 
 /**
  * @Description 分类控制器层
@@ -16,27 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class CategoryController {
+	@Autowired
+	private CategoryService cService;
 	
 	/**
 	 * 	查询出所有的分类
 	 * @return
 	 */
 	@GetMapping("category")
-	@CrossOrigin
-	public Object getCategoryAll() {
-		List<String> list=new ArrayList<String>();
-		list.add("1");
-		list.add("2");
-		list.add("3");
-		list.add("4");
-		list.add("5");
-		list.add("6");
-		list.add("7");
-		list.add("8");
-		list.add("9");
-		list.add("10");
-		list.add("11");
-		return list;
+	public Object getCategoryAll(String access_token) {
+		return cService.getCategoryAll(access_token);
 	}
 
 	/**
@@ -57,7 +49,6 @@ public class CategoryController {
 			map.put("going", i);			
 			list.add(map);
 		}
-		System.out.println(list);
 		return list;
 	}
 }
