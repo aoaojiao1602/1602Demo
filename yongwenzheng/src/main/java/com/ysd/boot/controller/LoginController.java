@@ -41,7 +41,7 @@ public class LoginController {
 	 * @return
 	 */	
 	@RequestMapping("/userLogin")
-	public Object userLogin(String usersname,String pwd,String path){
+	public Object userLogin(String usersname,String pwd,String urlpath){
 		System.err.println(usersname);
 		System.err.println(pwd);
 		Map<String, Object> map=new HashMap<String, Object>();
@@ -67,7 +67,7 @@ public class LoginController {
 		map.put("access_token",pojo.getAccess_token());	
 		map.put("refresh_token",pojo.getRefresh_token());
 		map.put("uid", users.getUsersId());
-		map.put("path", path);
+		map.put("path", urlpath);
 		return new Result(map);
 	}
 	
