@@ -40,6 +40,7 @@ import it.sauronsoftware.jave.MultimediaInfo;
  * @Date           2018年12月7日 下午11:57:21  
  * @Email          1119616605@qq.com
  */
+@CrossOrigin
 @RestController
 public class FileController {
 	
