@@ -1,0 +1,222 @@
+#center_user {
+	background-color: #409EFF;
+	height: auto;
+	width: 1333px;
+	margin: auto;
+}
+
+#xinxi {
+	background-color: #00FFFF;
+	height: 200px;
+	width: 1333px;
+	margin: auto;
+}
+
+#tongji {
+	height: auto;
+	width: 1333px;
+	margin: auto;
+}
+
+#ktz {
+	background-color: #6F7180;
+	height: auto;
+	width: 1333px;
+	margin: auto;
+}
+
+#test {
+	background-color: #B3D8FF;
+	height: 420px;
+	width: 1333px;
+	margin: auto;
+}
+
+#test2 {
+	background-color: #C0C4CC;
+	height: 580px;
+	width: 1333px;
+	margin: auto;
+}
+
+#touxiang {
+	height: 100px;
+	width: 100px;
+	border-radius: 50%;
+	border: 1px solid gainsboro;
+	position: absolute;
+	left: 100px;
+	top: 30px;
+}
+
+#guanzhu {
+	position: absolute;
+	height: 15px;
+	width: 30px;
+	left: 115px;
+	top: 140px;
+
+}
+
+#timg {
+	height: 100px;
+	width: 100px;
+	border-radius: 50%;
+}
+
+#nickname {
+	font-size: 30px;
+	color: #8CC5FF;
+	position: absolute;
+	left: 230px;
+	top: 35px;
+}
+
+#zhiye {
+	font-size: 15px;
+	color: #8CC5FF;
+	position: absolute;
+	left: 230px;
+	top: 83px;
+}
+
+#fans {
+	font-size: 15px;
+	color: #8CC5FF;
+	position: absolute;
+	left: 230px;
+	top: 113px;
+
+}
+
+#huifutubiao {
+	position: absolute;
+	right: 480px;
+	top: 57px;
+}
+
+#huifufont {
+	position: absolute;
+	right: 400px;
+	top: 65px;
+}
+
+#huifunum {
+	font-size: 20px;
+	color: #8CC5FF;
+	position: absolute;
+	right: 430px;
+	top: 90px;
+}
+
+#huozantubiao {
+	position: absolute;
+	right: 320px;
+	top: 57px;
+}
+
+#huozanfont {
+	position: absolute;
+	right: 240px;
+	top: 65px;
+}
+
+#huozannum {
+	font-size: 20px;
+	color: #8CC5FF;
+	position: absolute;
+	right: 270px;
+	top: 90px;
+}
+
+#xuefentubiao {
+	position: absolute;
+	right: 160px;
+	top: 57px;
+}
+
+#xuefenfont {
+	position: absolute;
+	right: 80px;
+	top: 65px;
+}
+
+#xuefennum {
+	font-size: 20px;
+	color: #8CC5FF;
+	position: absolute;
+	right: 110px;
+	top: 90px;
+}
+
+a {
+	text-decoration: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+
+#all {
+	width: 950px;
+	padding-bottom: 100px;
+	margin: 0 auto;
+	background-color: #FFFFFF;
+}
+
+#aaa {
+	padding-bottom: 30px;
+	background-color: #EEEEEE;
+}
+
+#bbb {
+	font-size: small;
+	color: #999999;	
+}
