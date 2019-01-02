@@ -2,6 +2,8 @@ package com.xiaozuanfeng.springcloud.services;
 
 import java.util.List;
 
+import org.springframework.cloud.openfeign.FeignClient;
+
 import com.xiaozuanfeng.springcloud.entity.UserInfo;
 
 public interface UserServices {
@@ -14,4 +16,5 @@ public interface UserServices {
 	public List<UserInfo> getMyFans(List<Integer> ilist);
 	public List<UserInfo> getMyfocus(List<Integer> ilist);
 	public int updateById(UserInfo uid);
+	public List<UserInfo> getUserId(Integer uid);
 }

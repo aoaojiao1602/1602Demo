@@ -58,9 +58,10 @@ public class UserInfo {
 	private String jianjie;
 	@Column(columnDefinition = "varchar(20) comment '备注:用户院系'")
 	private String yuanx;
+	@Column(columnDefinition = "int comment '备注:用户id'")
+	private Integer uid;
 	@Transient
 	private String userSpace = "";
-	
 	@Override
 	public String toString() {
 		return "UserInfo [u_uid=" + u_uid + ", ui_headportraitid=" + ui_headportraitid + ", ui_headportrait="
@@ -68,8 +69,10 @@ public class UserInfo {
 				+ ", ui_sex=" + ui_sex + ", ui_birthday=" + ui_birthday + ", ui_phone=" + ui_phone + ", ui_email="
 				+ ui_email + ", ui_truename=" + ui_truename + ", ui_identitycard=" + ui_identitycard + ", Identity="
 				+ Identity + ", industry=" + industry + ", education=" + education + ", jianjie=" + jianjie + ", yuanx="
-				+ yuanx + ", userSpace=" + userSpace + "]";
+				+ yuanx + ", uid=" + uid + ", userSpace=" + userSpace + "]";
 	}
+	
+	
 	
 	
 	
