@@ -32,7 +32,7 @@ public interface StudentExamInfoService {
 	  * 版本: V1.0   
 	 */
 	
-	public int updateStudentExamInfoQuestion(String daan,int examid,int qid,int stuid);
+	public int updateStudentExamInfoQuestion(String daan,int examid,int qid,int stuid,int time);
 	
 	  /** 
 	 * http://localhost:8080/updateStudentExamInfoTime
@@ -42,7 +42,7 @@ public interface StudentExamInfoService {
 	  * 版本: V1.0   
 	 */
 	
-	public int updateStudentExamInfoTime(int stuid,int examid);
+	public int updateStudentExamInfoTime(int stuid,int examid,int time);
 	
 	  /** 
 	 * http://localhost:8080/queryStudentExamInfoTime

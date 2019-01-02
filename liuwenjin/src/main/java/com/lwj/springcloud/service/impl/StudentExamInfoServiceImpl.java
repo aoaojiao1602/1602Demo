@@ -150,8 +150,9 @@ public class StudentExamInfoServiceImpl implements StudentExamInfoService {
 	
 	@Override
 	@Transactional
-	public int updateStudentExamInfoQuestion(String daan,int examid,int qid,int stuid) {
+	public int updateStudentExamInfoQuestion(String daan,int examid,int qid,int stuid,int time) {
 		// TODO Auto-generated method stub
+		sExamInfoRepository.updateStudentExamInfoTime(stuid,examid,time);
 		return sExamInfoRepository.updateStudentExamInfoQuestion(daan,examid,qid,stuid);
 		/**
 		 * updateStudentExamInfoQuestion(这里用一句话描述这个方法的作用)
@@ -169,9 +170,9 @@ public class StudentExamInfoServiceImpl implements StudentExamInfoService {
 	
 	@Override
 	@Transactional
-	public int updateStudentExamInfoTime(int stuid,int examid) {
+	public int updateStudentExamInfoTime(int stuid,int examid,int time) {
 		// TODO Auto-generated method stub
-		return sExamInfoRepository.updateStudentExamInfoTime(stuid,examid);
+		return sExamInfoRepository.updateStudentExamInfoTime(stuid,examid,time);
 		/**
 		 * updateStudentExamInfoTime(这里用一句话描述这个方法的作用)
 		*/
