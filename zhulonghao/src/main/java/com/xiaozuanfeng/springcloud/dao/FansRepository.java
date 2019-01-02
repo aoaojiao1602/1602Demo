@@ -16,8 +16,8 @@ public interface FansRepository extends JpaRepository<Fans, Integer> {
 	/*
 	 * 根据id获取我的粉丝
 	 */
-	@Query(value = "SELECT f_uid FROM fanstb WHERE f_ufid=1 =:uid", nativeQuery = true)
-	List<Integer> getMyFans(@Param("uid") Integer uid);
+	@Query(value = "SELECT f_uid FROM fanstb WHERE f_ufid =?1", nativeQuery = true)
+	List<Integer> getMyFans(Integer uid);
 
 	/**
 	 * 根据id获取我的关注
@@ -25,8 +25,8 @@ public interface FansRepository extends JpaRepository<Fans, Integer> {
 	 * @param uid
 	 * @return
 	 */
-	@Query(value = "SELECT f_ufid FROM fanstb WHERE f_uid =:fid", nativeQuery = true)
-	List<Integer> getMyfocus(@Param("fid") Integer uid);
+	@Query(value = "SELECT f_ufid FROM fanstb WHERE f_uid =?1", nativeQuery = true)
+	List<Integer> getMyfocus(Integer uid);
 
 	/**
 	 * 根据id获取我的粉丝数量

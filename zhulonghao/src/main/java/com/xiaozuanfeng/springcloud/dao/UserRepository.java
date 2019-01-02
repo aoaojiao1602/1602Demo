@@ -49,15 +49,4 @@ public interface UserRepository extends JpaRepository<UserInfo, Integer> {
 	@Modifying
 	@Transactional
 	public int updateById(@Param("uid") UserInfo uid);
-	
-	/**
-	 * 根据uid获取用户信息
-	 * 
-	 * @param uid
-	 * @return
-	 */
-	@Query(value = "SELECT * FROM userinfotb WHERE uid = ?1 ", nativeQuery = true)
-	@Modifying
-	@Transactional
-	public List<UserInfo> getUserId(Integer uid);
 }

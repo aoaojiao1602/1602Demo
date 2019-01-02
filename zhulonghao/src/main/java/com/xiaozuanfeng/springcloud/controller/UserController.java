@@ -26,8 +26,7 @@ public class UserController {
 	@Autowired
 	private UserServices uss;
 	@Autowired
-	private FansServices fss;
-	@Value("${server.port}")
+	private FansServices fss;	@Value("${server.port}")
 	private String serverPort;
 
 	/**
@@ -89,8 +88,8 @@ public class UserController {
 	 * http://localhost:8030/user/postMyfocus?uid=1&fid=9
 	 * 
 	 */
-	@RequestMapping(value = "/postMyfocus", method = RequestMethod.POST)
-	public int postMyfocus(Integer uid, Integer fid) {
+	@RequestMapping(value = "/putMyfocus", method = RequestMethod.PUT)
+	public int putMyfocus(Integer uid, Integer fid) {
 		return fss.postMyfocus(uid, fid);
 	}
 
@@ -109,19 +108,11 @@ public class UserController {
 	 * @return
 	 * 
 	 */
-	@RequestMapping(value = "/updateById")
+	@RequestMapping(value = "/updateById", method = RequestMethod.POST)
 	public int updateById(@RequestBody UserInfo uid) {
 		System.out.println(uid);
 		return uss.updateById(uid);
 	}
 	
-	/**
-	 * http://localhost:8030/user/getUserId?uid=1
-	 * 
-	 */
-	@RequestMapping(value = "/getUserId", method = RequestMethod.GET)
-	public List<UserInfo> getUserId(Integer uid) {
-		return uss.getUserId(uid);
-	}
 
 }
