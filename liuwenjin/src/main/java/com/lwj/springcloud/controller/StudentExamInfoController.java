@@ -63,16 +63,16 @@ public class StudentExamInfoController {
 	@ApiOperation(value="修改考试题库表", notes="修改学生考试题库记录表")
 	@ApiImplicitParam(name = "stuid", value = "学生id", required = true,paramType="Integer")
 	@RequestMapping(value="/studentExamInfoQuestion", method = RequestMethod.PUT)
-	public Object updateStudentExamInfoQuestion(String daan,int examid,int qid,int stuid) {
-		return stuExaService.updateStudentExamInfoQuestion(daan,examid,qid,stuid);
+	public Object updateStudentExamInfoQuestion(String daan,int examid,int qid,int stuid,int time) {
+		return stuExaService.updateStudentExamInfoQuestion(daan,examid,qid,stuid,time);
 	}
-	@ApiOperation(value="修改学生剩余考试时间", notes="修改学生剩余考试时间")
+	/*@ApiOperation(value="修改学生剩余考试时间", notes="修改学生剩余考试时间")
 	@ApiImplicitParam(name = "stuid", value = "学生id", required = true,paramType="Integer")
 	@RequestMapping(value="/updateStudentExamInfo", method = RequestMethod.PUT)
 	public Object updateStudentExamInfoTime(int stuid,int examid) {
 		stuExaService.updateStudentExamInfoTime(stuid,examid);
 		return 	stuExaService.queryStudentExamInfoTime(stuid,examid);
-	}
+	}*/
 	@ApiOperation(value="提交本次考试", notes="生成分数")
 	@ApiImplicitParam(name = "stuid", value = "学生id", required = true,paramType="Integer")
 	@RequestMapping(value="/studentExamInfo", method = RequestMethod.PUT)
