@@ -55,7 +55,7 @@ public interface DiscusscourseMapper extends JpaRepository<Discusscourse, Intege
 	 * @param positionId
 	 * @return
 	 */
-	@Query(value = "SELECT * FROM discusscoursetb WHERE positions_id = ?1 " , nativeQuery = true)
+	@Query(value = "SELECT * FROM discusscoursetb WHERE discuss_status=1 AND positions_id = ?1 " , nativeQuery = true)
 	public List<Discusscourse> getDiscusscourseByPositionId(@Param("positionId")Integer positionId);
 	
 }

@@ -23,7 +23,7 @@ import com.ysd.boot.utils.VideoAudioUtils;
 /**
  * Spring Boot HelloWorld 案例
  */
-
+@CrossOrigin
 @RestController
 @RequestMapping("/hello")
 public class HelloWorldController {

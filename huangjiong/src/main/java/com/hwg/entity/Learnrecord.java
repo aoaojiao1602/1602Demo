@@ -1,5 +1,7 @@
 package com.hwg.entity;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,10 +30,68 @@ public class Learnrecord {
 	private Integer learnCourseTime;
 	@Column(columnDefinition = "varchar(200) NULL comment '备注:学习记录备注'")
 	private String learnRemark;
-	@Column(columnDefinition = "int unsigned NOT NULL comment '备注:学生编号'")
-	private Integer learnStuId;
+	@Column(columnDefinition = "varchar(20) NOT NULL comment '备注:学生编号'")
+	private String learnStuId;
+	@Column(columnDefinition = "Timestamp DEFAULT CURRENT_TIMESTAMP comment '备注:最近修改时间'")
+	private Timestamp updateTime;
 	@Transient
 	private Integer filed1;
 	@Transient
 	private String filed2;
+	public Integer getLrId() {
+		return lrId;
+	}
+	public void setLrId(Integer lrId) {
+		this.lrId = lrId;
+	}
+	public String getLearnCourseId() {
+		return learnCourseId;
+	}
+	public void setLearnCourseId(String learnCourseId) {
+		this.learnCourseId = learnCourseId;
+	}
+	public String getLearnCourseRecord() {
+		return learnCourseRecord;
+	}
+	public void setLearnCourseRecord(String learnCourseRecord) {
+		this.learnCourseRecord = learnCourseRecord;
+	}
+	public Integer getLearnCourseTime() {
+		return learnCourseTime;
+	}
+	public void setLearnCourseTime(Integer learnCourseTime) {
+		this.learnCourseTime = learnCourseTime;
+	}
+	public String getLearnRemark() {
+		return learnRemark;
+	}
+	public void setLearnRemark(String learnRemark) {
+		this.learnRemark = learnRemark;
+	}
+	public String getLearnStuId() {
+		return learnStuId;
+	}
+	public void setLearnStuId(String learnStuId) {
+		this.learnStuId = learnStuId;
+	}
+	public Integer getFiled1() {
+		return filed1;
+	}
+	public void setFiled1(Integer filed1) {
+		this.filed1 = filed1;
+	}
+	public String getFiled2() {
+		return filed2;
+	}
+	public void setFiled2(String filed2) {
+		this.filed2 = filed2;
+	}
+	@Override
+	public String toString() {
+		return "Learnrecord [lrId=" + lrId + ", learnCourseId=" + learnCourseId + ", learnCourseRecord="
+				+ learnCourseRecord + ", learnCourseTime=" + learnCourseTime + ", learnRemark=" + learnRemark
+				+ ", learnStuId=" + learnStuId + ", filed1=" + filed1 + ", filed2=" + filed2 + "]";
+	}
+	
+	
 }

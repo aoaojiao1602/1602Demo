@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>資料設置</title>
+		<script src="js/vue.min.js"></script>
+		<script src="js/element-ui.js"></script>
+		<link rel="stylesheet" href="css/hj_css.css" />
+		<script src="js/commonCss.js"></script>
+		<script src="js/commonJs.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/element-ui.css" />
+		<link rel="stylesheet" type="text/css" href="css/update.css" />
+		<script type="text/javascript" src="js/axios.min.js"></script>
+	</head>
+	<body>
+		
+			<!--导航栏-->
+			<div class="header-menu bg-blue" id="topMenu" style="line-height:0" >//calss里的topPosition 属性和style是用于固定顶部的 不需要固定可以删除
+				<div class="container">
+					<div class="row">
+						<div class="container">
+							<nav class="nav-bar">
+								<div class="nav-header">
+									<span class="nav-toggle" data-toggle="#header-navbar">
+		                        		<i></i>
+		                        		<i></i>
+		                        		<i></i>
+		                    		</span>
+								</div>
+								<div id="header-navbar" class="nav-collapse">
+									<ul class="nav-menu">
+										<li>
+											<span>
+											<a href="index.html" class="logo" style="margin-left: -10px;">
+												<img src="http://localhost:8010/MSLOGO1.PNG" alt="" width="120px" style="height: 50px" >
+											</a>
+										</span>
+										</li>
+										<li class="dropdown-mega-menu">
+											<a>课程</a>
+											<div class="mega-menu" style="width: 39%;">
+												<ul style="overflow: hidden; width: 100%;">
+													<li v-for="(a,index) in category" v-if="index<6" style="width: 200px; float: left;">
+														<a href="#"><img src="http://localhost:8010/img/apple-touch-icon.png" class="manuImg" />{{a}}</a>
+													</li>
+													<li v-else style="width:200px; float: left;">
+														<a href="#"><img src="http://localhost:8010/img/apple-touch-icon.png" class="manuImg" />{{a}}</a>
+													</li>
+												</ul>
+											</div>
+										</li>
+										<li>
+											<a href="coupons_grid.html">2019考研</a>
+										</li>
+										<li>
+											<a href="stores_01.html">学校云</a>
+										</li>
+										<li>
+											<a href="contact_us_01.html">名师专栏</a>
+										</li>
+										<li style=" margin-left: 100px;">
+											<input type="text" class="form-control input-lg search-input" placeholder="搜索感兴趣的课程" required="required" style=" border: none; margin-top:9px; background-color: white; height: 39px; width: 260px;" />
+										</li>
+										<li>
+											<el-button type="success" style=" margin-top: 9px;" icon="el-icon-search"></el-button>
+										</li>
+										<li id="topUser" style="margin-top: 8px; width: 100px; height: 10px; ">
+											<div id="myCenter1" style="width: 100%;" >
+												<el-menu class="el-menu-demo" mode="horizontal" style="border-bottom: none;" active-text-color="#fff">
+													<el-submenu index="2">
+														<template slot="title" >
+															<a href="myCenter.html" style="color: white;">个人中心</a>
+														</template>
+														<div style="width: 20%; margin: 5px auto;">
+															<img src="http://localhost:8010/MSLOGO.png" class="myImage" style="border:  solid 1px rosybrown;">
+														</div>
+														<div style="margin: 0 auto; text-align: center; font-size: 20px;">userName</div>
+														<el-menu-item >
+															<div class="myCourse" style="text-align: center;"><a>计算机</a></div>
+														</el-menu-item>
+														<el-menu-item>
+															<div class="myCourse"  style="text-align: center;"><a>大数据分析</a></div>
+														</el-menu-item>
+														<el-menu-item>
+															<div class="myCourse"  style="text-align: center;"><a>面向对象编程Java</a></div>
+														</el-menu-item>
+														<div class="myButton">
+															<a href="myCenter.html"><span style="color: #FFFFFF;">我的课程</span></a>
+														</div>
+													</el-submenu>
+												</el-menu>
+											</div>
+										</li>
+										<li id="topUser" style="float: left; margin-top:8px; width:120px; ">
+											<div id="myHeadPic1" >
+												<el-menu class="el-menu-demo" mode="horizontal"  style="border-bottom: none;" active-text-color="#fff">
+													<el-submenu>
+														<template slot="title">
+															<a href="myCenter.html"><img src="http://localhost:8010/MSLOGO.png" style="border:  solid 1px rosybrown; width: 100%;" class="myPic"></a>
+														</template>
+														<div style="font-size: 14px; color: #869791; text-align: center; ">"张三"登录中</div>
+														<hr />
+														<el-menu-item>
+															<div class="mySetting">我的认证证书</div>
+														</el-menu-item>
+														<el-menu-item>
+															<div class="mySetting">我的优惠券</div>
+														</el-menu-item>
+														<el-menu-item>
+															<div class="mySetting">设置</div>
+														</el-menu-item>
+														<el-menu-item>
+															<div class="mySetting">退出</div>
+														</el-menu-item>
+													</el-submenu>
+												</el-menu>
+											</div>
+										</li>
+									</ul>
+								</div>
+								
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 窗口顶部结束 -->
+		<div id="aaa">
+			<div id="all">
+				<el-tabs v-model="activeName" id="ktz1" @tab-click.self="handleClick">
+					<el-tab-pane label="资料设置" name="first">
+						<div id="bbb">
+							<span>绝不会以任何形式向第三方透露你的身份信息</span>
+						</div>
+						<span>&nbsp;</span>
+						<span>&nbsp;</span>
+						<div id="app">
+							<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+
+								<el-form-item label="头像" prop="logo">
+									<el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false"
+									 :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+										<img v-if="true" :src="img" class="avatar">
+										<i v-else class="el-icon-plus avatar-uploader-icon"></i>
+									</el-upload>
+								</el-form-item>
+
+								<el-form-item label="昵称" prop="nickname">
+									<el-input v-model="ruleForm.nickname"></el-input>
+								</el-form-item>
+								<el-form-item label="常用邮箱" prop="email">
+									<el-input v-model="ruleForm.email"></el-input>
+									<div class="el-upload__tip">用于接收课程通知与电子证书。</div>
+								</el-form-item>
+								<el-form-item label="手机号" prop="phone">
+									<el-input v-model="ruleForm.phone"></el-input>
+									<div class="el-upload__tip">用于优质内容推荐及活动提醒，该信息不会对外公开</div>
+								</el-form-item>
+								<el-form-item label="真实姓名" prop="name">
+									<el-input v-model="ruleForm.name"></el-input>
+									<div class="el-upload__tip">用于证书上的名称，如不填写，则默认为昵称</div>
+								</el-form-item>
+								<el-form-item label="性别" prop="resource">
+									<el-radio-group v-model="ruleForm.resource">
+										<el-radio label="男"></el-radio>
+										<el-radio label="女"></el-radio>
+										<el-radio label="其他"></el-radio>
+									</el-radio-group>
+								</el-form-item>
+								<el-form-item label="生日">
+									<el-col :span="11">
+										<el-form-item prop="date1">
+											<el-date-picker type="date" placeholder="请输入" v-model="ruleForm.date1" style="width: 100%;"></el-date-picker>
+										</el-form-item>
+									</el-col>
+								</el-form-item>
+								<el-form-item label="身份证" prop="identification">
+									<el-input type="id" v-model="ruleForm.identification"></el-input>
+									<div class="el-upload__tip">请填写你的18位身份证号</div>
+								</el-form-item>
+								<el-form-item label="身份类型" prop="type">
+									<el-radio-group v-model="ruleForm.type">
+										<el-radio id="xs" @change="b" label="学生" name="type"></el-radio>
+										<el-radio id="zz" @change="a" label="在职" name="type"></el-radio>
+										<el-radio id="qt" @change="c" label="其他" name="type"></el-radio>
+									</el-radio-group>
+								</el-form-item>
+								<el-form-item id="id1" v-show="zaizhi" label="行业" prop="region" :required="istrue">
+									<el-select v-model="ruleForm.region" placeholder="请选择行业">
+										<el-option label="互联网" value="互联网"></el-option>
+										<el-option label="教育" value="教育"></el-option>
+										<el-option label="电信通讯" value="电信通讯"></el-option>
+										<el-option label="金融" value="金融"></el-option>
+										<el-option label="法律" value="法律"></el-option>
+										<el-option label="制造业" value="制造业"></el-option>
+										<el-option label="建筑业" value="建筑业"></el-option>
+										<el-option label="房地产" value="房地产"></el-option>
+										<el-option label="医疗服务" value="医疗服务"></el-option>
+										<el-option label="信息传媒" value="信息传媒"></el-option>
+										<el-option label="服务业" value="服务业"></el-option>
+										<el-option label="计算机服务" value="计算机服务"></el-option>
+										<el-option label="服装业" value="服装业"></el-option>
+										<el-option label="文化艺术" value="文化艺术"></el-option>
+										<el-option label="体育运动" value="体育运动"></el-option>
+										<el-option label="政府机关" value="政府机关"></el-option>
+										<el-option label="科学研究" value="科学研究"></el-option>
+										<el-option label="航空航天" value="航空航天"></el-option>
+										<el-option label="旅游业" value="旅游业"></el-option>
+										<el-option label="采矿业" value="采矿业"></el-option>
+										<el-option label="能源" value="能源"></el-option>
+										<el-option label="批发零售" value="批发零售"></el-option>
+										<el-option label="农林牧渔" value="农林牧渔"></el-option>
+										<el-option label="住宿餐饮" value="住宿餐饮"></el-option>
+										<el-option label="邮政快递" value="邮政快递"></el-option>
+										<el-option label="交通运输" value="交通运输"></el-option>
+										<el-option label="美容保健" value="美容保健"></el-option>
+										<el-option label="公益组织" value="公益组织"></el-option>
+										<el-option label="其他" value="其他"></el-option>
+									</el-select>
+								</el-form-item>
+								<el-form-item id="id3" v-show="yuanxi" label="院系" prop="yx">
+									<el-select v-model="ruleForm.yx" placeholder="请选择院系">
+										<el-option label="粮油食品学院" value="粮油食品学院"></el-option>
+										<el-option label="机电工程学院" value="机电工程学院"></el-option>
+										<el-option label="法学院" value="法学院"></el-option>
+										<el-option label="职业技术学院" value="职业技术学院"></el-option>
+										<el-option label="中英国际学院" value="中英国际学院"></el-option>
+										<el-option label="马克思主义学院" value="马克思主义学院"></el-option>
+										<el-option label="体育学院" value="体育学院"></el-option>
+										<el-option label="外语学院" value="外语学院"></el-option>
+										<el-option label="管理学院" value="管理学院"></el-option>
+										<el-option label="设计艺术学院" value="设计艺术学院"></el-option>
+										<el-option label="理学院" value="理学院"></el-option>
+										<el-option label="国际教育学院" value="国际教育学院"></el-option>
+										<el-option label="生物工程学院" value="生物工程学院"></el-option>
+										<el-option label="新闻与传播学院" value="新闻与传播学院"></el-option>
+										<el-option label="经济贸易学院" value="经济贸易学院"></el-option>
+										<el-option label="其他" value="其他"></el-option>
+									</el-select>
+								</el-form-item>
+								<el-form-item id="id2" v-show="xuesheng" label="最高学历" prop="education" :required="sistrue">
+									<el-radio-group v-model="ruleForm.education">
+										<el-radio id="1" label="博士" @change="e" name="education"></el-radio>
+										<el-radio id="2" label="研究生"  @change="e"name="education"></el-radio>
+										<el-radio id="3" label="本科" @change="e" name="education"></el-radio>
+										<el-radio id="4" label="专科" @change="e" name="education"></el-radio>
+										<el-radio id="5" label="高中" @change="d" name="education"></el-radio>
+										<el-radio id="6" label="初中" @change="d" name="education"></el-radio>
+										<el-radio id="7" label="小学" @change="d" name="education"></el-radio>
+										<el-radio id="8" label="其他" @change="d" name="education"></el-radio>
+									</el-radio-group>
+								</el-form-item>
+								<el-form-item label="个人简介" prop="desc">
+									<el-input type="textarea" v-model="ruleForm.desc"></el-input>
+								</el-form-item>
+								<el-form-item>
+									<el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
+								</el-form-item>
+							</el-form>
+						</div>
+					</el-tab-pane>
+					<el-tab-pane label="账号设置" name="second">
+						<div>
+							正在开发，敬请期待！！！
+						</div>
+					</el-tab-pane>
+					<el-tab-pane label="邮件设置" name="third">
+						<div>
+							后续更加精彩！！！
+						</div>
+					</el-tab-pane>
+				</el-tabs>
+			</div>
+		</div>
+	</body>
+</html>
+<script>
+	var Main = {
+		el: '#ktz1',
+		data() {
+			return {
+				urlPre: "http://localhost:8030/user",
+				img: '',
+				activeName: 'first',
+				zaizhi: false,
+				xuesheng: true,
+				yuanxi: true,
+				sistrue: true,		
+				istrue: false,	
+				ruleForm: {
+					nickname: '',
+					name: '',
+					region: '',
+					date1: '',
+					email: '',
+					phone: '',
+					type: '学生',
+					resource: '',
+					desc: '',
+					identification: '',
+					education: '',
+					yx: ''
+				},
+				rules: {
+					nickname: [{
+						required: true,
+						message: '请输入唯一昵称',
+						trigger: 'blur'
+					}, ],
+					identification: [{
+						min: 18,
+						max: 18,
+						message: '必须为18位身份证号',
+						trigger: 'blur'
+					}],
+					region: [{
+						//required: true,
+						message: '请选择行业',
+						trigger: 'change'
+					}]
+				}
+			};
+		},
+		methods: {
+			a(){
+				this.zaizhi=true;
+				this.xuesheng=false;
+				this.yuanxi=false;	
+				this.istrue=true;
+				this.sistrue=false;
+				Vue.delete(this.ruleForm,'education');
+				Vue.delete(this.ruleForm,'yx');
+			},
+			b(){
+				this.zaizhi=false;
+				this.xuesheng=true;	
+				this.yuanxi=true;
+				this.istrue=false;
+				this.sistrue=true;
+				Vue.delete(this.ruleForm,'region');
+			},
+			c(){
+				this.zaizhi=false;
+				this.xuesheng=false;	
+				this.yuanxi=false;
+				this.istrue=false;
+				this.sistrue=false;
+				Vue.delete(this.ruleForm,'education');
+				Vue.delete(this.ruleForm,'region');
+				Vue.delete(this.ruleForm,'yx');
+			},
+			d(){
+				this.yuanxi=false;
+			},
+			e(){
+				this.yuanxi=true;
+			},
+			submitForm: function(formName){
+				var vm = this;
+				axios.post(`${vm.urlPre}/updateById`,{
+					u_uid: 1,
+					ui_phone: vm.ruleForm.phone,
+					ui_email: vm.ruleForm.email,
+					ui_birthday: vm.ruleForm.date1,
+					ui_identitycard: vm.ruleForm.identification,
+					ui_nickname: vm.ruleForm.nickname,
+					ui_sex: vm.ruleForm.resource,
+					ui_truename: vm.ruleForm.name,
+					identity: vm.ruleForm.type,
+					education: vm.ruleForm.education,
+					industry: vm.ruleForm.region,
+					jianjie: vm.ruleForm.desc,
+					yuanx: vm.ruleForm.yx
+				})
+					.then(function(response) {
+						console.log(response);
+						console.log(response.data);
+					})
+					.catch(function(error) {
+						console.log(error);
+					});
+				this.$refs[formName].validate((valid) => {
+					if (valid) {
+						alert('submit!');
+					} else {
+						console.log('error submit!!');
+						alert('error submit!!');
+						return false;
+					}
+				});
+			},
+			resetForm(formName) {
+				this.$refs[formName].resetFields();
+			},
+			handleAvatarSuccess(res, file) {
+				this.imageUrl = URL.createObjectURL(file.raw);
+			},
+			beforeAvatarUpload(file) {
+				const isJPG = file.type === 'image/jpeg';
+				const isLt2M = file.size / 1024 / 1024 < 2;
+
+				if (!isJPG) {
+					this.$message.error('上传头像图片只能是 JPG 格式!');
+				}
+				if (!isLt2M) {
+					this.$message.error('上传头像图片大小不能超过 2MB!');
+				}
+				return isJPG && isLt2M;
+			},
+			handleClick(tab, event) {
+				console.log(tab, event);
+			}
+		},
+			created:function(){
+				var vm = this;
+				axios.get(`${vm.urlPre}/userinfo?uid=1`)
+				.then(function (response) {
+				vm.ruleForm.nickname=response.data.ui_nickname;
+				vm.ruleForm.email=response.data.ui_email;
+				vm.ruleForm.phone=response.data.ui_phone;
+				vm.ruleForm.name=response.data.ui_truename;
+				vm.ruleForm.date1=response.data.ui_birthday;
+				vm.ruleForm.identification=response.data.ui_identitycard;
+				vm.ruleForm.resource=response.data.ui_sex;
+				vm.ruleForm.education=response.data.education;
+				vm.ruleForm.desc=response.data.jianjie;
+				vm.ruleForm.region=response.data.industry;
+				vm.ruleForm.yx=response.data.yuanx;
+				console.log(response);
+				console.log(response.data);
+				})
+				.catch(function (error) {
+				console.log(error);
+				});
+			}
+	}
+	var Ctor = Vue.extend(Main)
+	new Ctor().$mount('#app')
+</script>
+<!--顶部导航 虚拟dom（不固定）-->
+	<script>
+		let topMenu = new Vue({
+			el: '#topMenu',
+			data: {
+				category: []
+			},
+			methods: {
+				//获取所有分类
+				getCategory: function() {
+					let tis = this;
+					axios.get('http://localhost:8010/category').then(function(response) {
+						tis.category = response.data
+					}).catch(function(error) {
+						console.log(error);
+					});
+				}
+			},
+			mounted() {
+				this.getCategory();
+			}
+		})
+	</script>

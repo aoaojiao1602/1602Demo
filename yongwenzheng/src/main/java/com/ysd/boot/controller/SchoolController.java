@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +30,7 @@ import com.ysd.boot.tool.Result;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/school")
 public class SchoolController {
@@ -61,10 +62,20 @@ public class SchoolController {
 	@ApiOperation(value="获取用户角色信息", notes=" 通过用户id得到用户角色信息")
 	@GetMapping("/getRoleByUid")
 	public Object getRoleByUid(@RequestParam Integer uid,@RequestParam String access_token) {
-		//通过用户id得到角色id
-		Integer rid=usersService.getRoleByUid(uid);
-		//通过角色id得到角色信息
-		return rolesService.getRoleByRid(rid);
+		String r="";
+		
+		try {
+			//通过用户id得到角色id
+			Integer rid=usersService.getRoleByUid(uid);
+			//通过角色id得到角色信息
+			r= rolesService.getRoleByRid(rid);
+		} catch (Exception e) {
+			r="无";
+		}
+		
+		return r;
+		
+		
 	}
 	
 	

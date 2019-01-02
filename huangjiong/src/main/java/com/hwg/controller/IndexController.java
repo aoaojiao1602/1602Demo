@@ -30,7 +30,6 @@ public class IndexController {
 			map.put("index", i);
 			list.add(map);
 		}
-		System.out.println(list);
 		return list;
 	}
 	

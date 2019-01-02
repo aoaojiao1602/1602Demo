@@ -100,7 +100,10 @@ public class DiscusscourseController {
 	@ApiOperation(value="获取精彩讨论推荐信息", notes=" 通过位置id进行分页查询")
 	@GetMapping("/queryCourseByPage") 
 	public Object queryDiscusscourseByPage(@RequestParam Integer page,@RequestParam Integer rows,Integer id,@RequestParam String access_token){
-		 Page<Discusscourse> pages=discusscourseService.queryDiscusscourseByPage(page, rows, id);
+		if (id==null||id.equals("")) {
+			id=0;
+		} 
+		Page<Discusscourse> pages=discusscourseService.queryDiscusscourseByPage(page, rows, id);
 		   Map<String, Object> map = new HashMap<>();
 	    	map.put("total", pages.getTotalElements());
 	    	map.put("rows",pages.getContent());

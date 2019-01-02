@@ -2,7 +2,8 @@
 SQLyog 企业版 - MySQL GUI v8.14 
 MySQL - 5.7.20-log : Database - springbootcloudproject
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -16,7 +17,7 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`springbootcloudproject` /*!40100 DEFAUL
 
 USE `springbootcloudproject`;
 
-/*Table structure for table `clazztb` **/
+/*Table structure for table `clazztb` */
 
 DROP TABLE IF EXISTS `clazztb`;
 
@@ -46,7 +47,7 @@ CREATE TABLE `coursetb` (
   `navigation_id` int(11) DEFAULT NULL COMMENT '备注:导航id',
   `positions_id` int(11) DEFAULT '0' COMMENT '备注:位置id',
   PRIMARY KEY (`course_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `coursetb` */
 
@@ -86,7 +87,7 @@ CREATE TABLE `discusscoursetb` (
 
 /*Data for the table `discusscoursetb` */
 
-insert  into `discusscoursetb`(`discusscourse_id`,`discuss_remark`,`discuss_status`,`discuss_weigh`,`kech_id`,`positions_id`,`teacher_id`) values (1,NULL,0,0,1,0,1),(2,NULL,0,0,2,0,2),(3,NULL,0,0,3,0,3);
+insert  into `discusscoursetb`(`discusscourse_id`,`discuss_remark`,`discuss_status`,`discuss_weigh`,`kech_id`,`positions_id`,`teacher_id`) values (1,NULL,1,0,1,0,1),(2,NULL,0,0,2,0,2),(3,NULL,0,0,3,0,3);
 
 /*Table structure for table `module_roles` */
 
@@ -103,6 +104,8 @@ CREATE TABLE `module_roles` (
 
 /*Data for the table `module_roles` */
 
+insert  into `module_roles`(`module_roles_id`,`roles_module_id`) values (1,1),(2,1),(3,1),(3,2),(3,3),(4,1),(5,1),(6,1);
+
 /*Table structure for table `moduletb` */
 
 DROP TABLE IF EXISTS `moduletb`;
@@ -116,9 +119,11 @@ CREATE TABLE `moduletb` (
   `module_weight` int(10) unsigned NOT NULL COMMENT '备注:模块权重',
   `parent_id` int(10) unsigned NOT NULL COMMENT '备注:父id',
   PRIMARY KEY (`module_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 /*Data for the table `moduletb` */
+
+insert  into `moduletb`(`module_id`,`module_create_time`,`module_last_update_time`,`module_name`,`module_url`,`module_weight`,`parent_id`) values (1,'2018-12-31 13:06:18',NULL,'系统设置','1',1,0),(2,'2018-12-31 13:08:57',NULL,'个人中心管理','2',2,0),(3,'2018-12-31 13:09:13',NULL,'推荐管理','3',3,0),(4,'2018-12-31 13:09:38',NULL,'用户管理','4',4,1),(5,'2018-12-31 13:09:51',NULL,'角色管理','5',5,1),(6,'2018-12-31 13:10:04',NULL,'模块管理','6',6,1),(7,'2018-12-31 13:10:22',NULL,'权限管理','7',7,1),(8,'2018-12-31 13:10:39',NULL,'个人中心','8',8,2),(9,'2018-12-31 13:10:57',NULL,'课程推荐管理','9',9,3),(10,'2018-12-31 13:11:15',NULL,'精彩推荐管理','10',10,3);
 
 /*Table structure for table `navigation` */
 
@@ -150,7 +155,7 @@ CREATE TABLE `permissions_roles` (
 
 /*Data for the table `permissions_roles` */
 
-insert  into `permissions_roles`(`roles_permissions_id`,`permissions_roles_id`) values (1,1),(1,2),(2,1),(2,2);
+insert  into `permissions_roles`(`roles_permissions_id`,`permissions_roles_id`) values (1,1),(1,2),(2,1),(3,3),(4,4);
 
 /*Table structure for table `permissiontb` */
 
@@ -167,7 +172,7 @@ CREATE TABLE `permissiontb` (
 
 /*Data for the table `permissiontb` */
 
-insert  into `permissiontb`(`permission_id`,`permission_last_update_time`,`permission_module`,`permission_name`,`permission_value`) values (1,NULL,'订单管理','订单删除','order:deleteOrder'),(2,NULL,'订单管理','订单添加','order:addOrder');
+insert  into `permissiontb`(`permission_id`,`permission_last_update_time`,`permission_module`,`permission_name`,`permission_value`) values (1,NULL,'订单管理','订单删除','order:deleteOrder'),(2,NULL,'订单管理','订单添加','order:addOrder'),(3,NULL,'教师管理','教师权限','teacher'),(4,NULL,'学生管理','学生权限','student');
 
 /*Table structure for table `positiontb` */
 
@@ -195,7 +200,7 @@ CREATE TABLE `professionaltb` (
   PRIMARY KEY (`professional_id`),
   KEY `FK8jimwtr63b1jjn618mrrkdm9h` (`department_id`),
   CONSTRAINT `FK8jimwtr63b1jjn618mrrkdm9h` FOREIGN KEY (`department_id`) REFERENCES `departmenttb` (`department_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 /*Data for the table `professionaltb` */
 
@@ -226,11 +231,11 @@ CREATE TABLE `roletb` (
   `roles_last_update_time` datetime DEFAULT NULL COMMENT '备注:角色最后修改时间',
   `roles_name` varchar(20) NOT NULL COMMENT '备注:角色名称',
   PRIMARY KEY (`roles_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 /*Data for the table `roletb` */
 
-insert  into `roletb`(`roles_id`,`roles_create_time`,`roles_explan`,`roles_last_update_time`,`roles_name`) values (1,'2018-12-18 15:22:18',NULL,NULL,'管理员'),(2,'2018-12-18 23:09:19',NULL,NULL,'经理');
+insert  into `roletb`(`roles_id`,`roles_create_time`,`roles_explan`,`roles_last_update_time`,`roles_name`) values (1,'2018-12-18 15:22:18',NULL,NULL,'管理员'),(2,'2018-12-18 23:09:19',NULL,NULL,'经理'),(3,'2018-12-28 10:21:46',NULL,NULL,'老师'),(4,'2018-12-28 10:21:54',NULL,NULL,'学生'),(5,'2018-12-31 12:05:37','1',NULL,'2'),(6,'2018-12-31 13:01:55','1','2018-12-31 13:01:55','admin'),(7,'2018-12-31 14:33:58','ejfiisnfoiafh',NULL,'要记得那时候');
 
 /*Table structure for table `schooltb` */
 
@@ -240,7 +245,7 @@ CREATE TABLE `schooltb` (
   `school_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '备注:学校id',
   `school_name` varchar(20) DEFAULT NULL COMMENT '备注:学校名称',
   PRIMARY KEY (`school_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `schooltb` */
 
@@ -295,7 +300,7 @@ CREATE TABLE `users_roles` (
 
 /*Data for the table `users_roles` */
 
-insert  into `users_roles`(`users_roles_id`,`roles_users_id`) values (1,1),(1,2);
+insert  into `users_roles`(`users_roles_id`,`roles_users_id`) values (1,1),(1,2),(2,2),(3,3),(4,4);
 
 /*Table structure for table `userstb` */
 
@@ -313,11 +318,11 @@ CREATE TABLE `userstb` (
   `users_password` varchar(50) NOT NULL COMMENT '备注:用户密碼',
   `users_update_time` datetime DEFAULT NULL COMMENT '备注:用户修改時間',
   PRIMARY KEY (`users_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 /*Data for the table `userstb` */
 
-insert  into `userstb`(`users_id`,`users_create_time`,`users_is_lockout`,`users_last_login_ip`,`users_last_login_time`,`users_lock_out_time`,`users_name`,`users_pass_wrong_count`,`users_password`,`users_update_time`) values (1,'2018-12-18 20:29:54',0,NULL,NULL,NULL,'admin',0,'5057b60362214024eb44c58e486919c1',NULL),(2,'2018-12-19 23:47:13',0,NULL,NULL,NULL,'ysd',0,'771447ec8368c43b5787dd46f36dfd23',NULL),(3,'2018-12-19 23:47:39',0,NULL,NULL,NULL,'ywz',0,'5e522e659f102da924c4182321c6a56f',NULL),(4,'2018-12-19 23:48:16',0,NULL,NULL,NULL,'张三',0,'17cf124c5b57f040fc940dd7057e6fb3',NULL),(5,'2018-12-19 23:48:40',0,NULL,NULL,NULL,'李四',0,'191f85a25ed03e02c61a782eaa5d00a2',NULL),(6,'2018-12-19 23:49:02',0,NULL,NULL,NULL,'王五',0,'0d1d8e84b1986277ee1f23c25298589f',NULL);
+insert  into `userstb`(`users_id`,`users_create_time`,`users_is_lockout`,`users_last_login_ip`,`users_last_login_time`,`users_lock_out_time`,`users_name`,`users_pass_wrong_count`,`users_password`,`users_update_time`) values (1,'2018-12-18 20:29:54',0,NULL,NULL,NULL,'admin',0,'5057b60362214024eb44c58e486919c1',NULL),(2,'2018-12-19 23:47:13',0,NULL,NULL,NULL,'ysd',0,'771447ec8368c43b5787dd46f36dfd23',NULL),(3,'2018-12-19 23:47:39',0,NULL,NULL,NULL,'ywz',0,'5e522e659f102da924c4182321c6a56f',NULL),(4,'2018-12-19 23:48:16',0,NULL,NULL,NULL,'张三',0,'17cf124c5b57f040fc940dd7057e6fb3',NULL),(5,'2018-12-19 23:48:40',0,NULL,NULL,NULL,'李四',0,'191f85a25ed03e02c61a782eaa5d00a2',NULL),(6,'2018-12-31 10:25:37',0,NULL,NULL,NULL,'王五',0,'0d1d8e84b1986277ee1f23c25298589f','2018-12-31 10:25:37'),(7,'2018-12-31 10:11:45',0,NULL,NULL,NULL,'1',0,'098e0d900f4411dcb9e3775874411b80',NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

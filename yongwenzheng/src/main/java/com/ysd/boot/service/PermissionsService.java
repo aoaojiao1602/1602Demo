@@ -2,6 +2,8 @@ package com.ysd.boot.service;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
+
 import com.ysd.boot.entity.Permissions;
 
 
@@ -20,5 +22,11 @@ public interface PermissionsService {
 	
 	//更新权限
 	public int updatePermissionsCount();
+			
+	/***
+	 * 得到权限树
+	 */
+	public List<Permissions> queryPermissionTree(Integer roleId);
+	
 	
 }

@@ -2,6 +2,7 @@ package com.ysd.boot.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -93,9 +94,7 @@ public class UsersServiceImpl implements UsersService{
 	@Override
 	@Transactional
 	public int insertUsers(String usersName, String usersPassWord) {
-		Date usersCreateTime=new Date();
-		Date usersLastLoginTime=new Date();
-		return usersMapper.insertUsers(usersName, usersPassWord,usersCreateTime,usersLastLoginTime);
+		return usersMapper.insertUsers(usersName, usersPassWord);
 	}
 	/**
 	 * 添加时根据用户名判断该用户的用户名是否相同
@@ -115,21 +114,22 @@ public class UsersServiceImpl implements UsersService{
 	}
 
 	/**
-	 * 修改
+	 * 修改密码
 	 */
 	@Override
 	@Transactional
 	public int updateUsers(String usersPassWord,Integer usersId) {
-		return usersMapper.updateUsers(usersPassWord, usersId);
+		
+		return usersMapper.updateUsers(usersPassWord, usersId,new Date());
 	}
 	/**
 	 * 重置密码
 	 */
 	@Override
 	@Transactional
-	public int updateUsersPassWord(Integer usersId) {
+	public int updateUsersPassWord(Integer usersId,String userpwd) {
 		
-		return usersMapper.updateUsersPassWord("ywz123",usersId);
+		return usersMapper.updateUsersPassWord(userpwd, usersId);
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class UsersServiceImpl implements UsersService{
 	@Override
 	@Transactional
 	public int updateUsersIsLockout(Integer usersId) {
-		String usersIsLockout="1";
+		Integer usersIsLockout=1;
 		return usersMapper.updateUsersIsLockout(usersIsLockout, usersId);
 	}
 
@@ -148,14 +148,8 @@ public class UsersServiceImpl implements UsersService{
 	@Override
 	@Transactional
 	public int updateUsersLockout(Integer usersId) {
-		String usersIsLockout="0";
+		Integer usersIsLockout=0;
 		return usersMapper.updateUsersLockout(usersIsLockout, usersId);
-	}
-
-	@Override
-	public Users setRoleByUserId(Integer usersId) {
-		// TODO Auto-generated method stub
-		return usersMapper.getOne(usersId);
 	}
 	
 	
@@ -168,5 +162,71 @@ public class UsersServiceImpl implements UsersService{
 		
 		return usersMapper.getOne(usersId);
 	}
+	
+	
+	
+	/****
+                * 查询用户没有的角色
+        * @param id
+        * @return
+      */		
+   public List<Map<String, Object>> selectUsersNotRoles(Integer id){
+	   
+	   return usersMapper.selectUsersNotRoles(id);
+   }
+	 
+   
+   
+     /****
+              * 查询用户拥有的角色
+       * @param id
+       * @return
+     */
+   public List<Map<String, Object>> selectUsersRoles(Integer id){
+	   
+	   return usersMapper.selectUsersRoles(id);
+   }
+   
+   
+   
+   
+   /****
+             *给用户添加角色
+      * @param id
+      * @return
+      */
+   @Transactional
+   public int insertUsersRoles(Integer uid,Integer rid) {
+	   
+	   return usersMapper.insertUsersRoles(uid, rid);
+   }
+
+
+
+
+     /****
+      	*给用户移除角色
+      	* @param id
+      	* @return
+      	*/
+    @Transactional
+    public int deleteUsersRoles(Integer uid) {
+    	
+    	return usersMapper.deleteUsersRoles(uid);
+    }
+
+
+
+    	/***
+    	 * 查询用户拥有角色的个数
+    	 *判断用户，如果拥有两个角色
+    	 *提示用户只能拥有一个角色
+    	 * @param uid
+    	 * @return
+    	 */
+    public int getUserRoleCount(Integer uid) {
+    	
+    	return usersMapper.getUserRoleCount(uid);
+    }
 	
 }

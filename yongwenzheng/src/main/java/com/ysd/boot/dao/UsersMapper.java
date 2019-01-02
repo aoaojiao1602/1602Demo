@@ -2,6 +2,7 @@ package com.ysd.boot.dao;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -30,11 +31,10 @@ public interface UsersMapper extends JpaRepository<Users, Integer>,JpaSpecificat
     @Query(value = "SELECT roles_users_id FROM users_roles WHERE users_roles_id=?1" , nativeQuery = true)
     public List<Integer> queryRoleIdByUserId(Integer uid);
     
- // 添加一个用户对象
- 		@Query(value = "INSERT INTO userstb(users_name,users_password,users_create_time,users_lock_out_time)VALUES(?1,?2,?3,?4,?5,?6)", nativeQuery = true)
+     // 添加一个用户对象
+ 		@Query(value = "INSERT INTO userstb(users_name,users_password)VALUES(?1,?2)", nativeQuery = true)
  		@Modifying
- 		public int insertUsers(String usersName, String usersPassword, 
- 				Date usersCreateTime, Date usersLastLoginTime);
+ 		public int insertUsers(String usersName, String usersPassword);
 
  		// 添加時根据用户名判断用户登录名是否相同
  		@Query(value = "SELECT * FROM userstb WHERE users_name=?1", nativeQuery = true)
@@ -45,10 +45,10 @@ public interface UsersMapper extends JpaRepository<Users, Integer>,JpaSpecificat
  		@Modifying
  		public int deleteUsers(@Param(value = "usersId") Integer id);
 
- 		// 修改
- 		@Query(value = "UPDATE userstb SET users_password=?1 WHERE users_id=?2", nativeQuery = true)
+ 		// 修改密码
+ 		@Query(value = "UPDATE userstb SET users_password=?1,users_update_time=?3 WHERE users_id=?2", nativeQuery = true)
  		@Modifying
- 		public int updateUsers(String usersPassword, Integer usersId);
+ 		public int updateUsers(String usersPassword, Integer usersId,Date upDate);
 
  		// 重置密码
  		@Query(value = "UPDATE userstb SET users_password=?1 WHERE users_id=?2", nativeQuery = true)
@@ -58,12 +58,64 @@ public interface UsersMapper extends JpaRepository<Users, Integer>,JpaSpecificat
  		// 锁定用户
  		@Query(value = "UPDATE userstb SET users_is_lockout=?1 WHERE users_id=?2", nativeQuery = true)
  		@Modifying
- 		public int updateUsersIsLockout(String usersIsLockout, Integer usersId);
+ 		public int updateUsersIsLockout(Integer usersIsLockout, Integer usersId);
 
  		// 解锁用户
  		@Query(value = "UPDATE userstb SET users_is_lockout=?1 WHERE users_id=?2", nativeQuery = true)
  		@Modifying
- 		public int updateUsersLockout(String usersIsLockout, Integer usersId);
+ 		public int updateUsersLockout(Integer usersIsLockout, Integer usersId);
     
     
+ 		 /****
+ 	           * 查询用户没有的角色
+ 	     * @param id
+ 	     * @return
+ 	     */
+ 	    @Modifying 
+ 	    @Query(value ="SELECT roles_id AS id,roles_name AS name FROM roletb WHERE roles_id NOT IN(SELECT roles_users_id FROM  users_roles WHERE users_roles_id=?1)", nativeQuery = true)
+ 	    public List<Map<String, Object>> selectUsersNotRoles(Integer id);
+ 	    
+ 	    
+ 	    /****
+                   * 查询用户拥有的角色
+         * @param id
+         * @return
+         */
+        @Modifying 
+        @Query(value ="SELECT roles_id AS id,roles_name AS name FROM roletb WHERE roles_id IN(SELECT roles_users_id FROM  users_roles WHERE users_roles_id=?1)", nativeQuery = true)
+        public List<Map<String, Object>> selectUsersRoles(Integer id);
+        
+        
+        /****
+                 *给用户添加角色
+         * @param id
+         * @return
+         */
+        @Modifying 
+        @Query(value ="INSERT INTO users_roles (users_roles_id, roles_users_id) VALUES(?1,?2)", nativeQuery = true)
+        public int insertUsersRoles(Integer uid,Integer rid);
+        
+         
+        
+        
+        /****
+                      *给用户移除角色
+           * @param id
+           * @return
+        */
+      @Modifying 
+      @Query(value ="DELETE FROM users_roles WHERE users_roles_id =?1", nativeQuery = true)
+      public int deleteUsersRoles(Integer uid);
+   
+        /***
+                      * 查询用户拥有角色的个数
+                      *判断用户，如果拥有两个角色
+                      *提示用户只能拥有一个角色
+           * @param uid
+           * @return
+       */
+      @Query(value ="SELECT COUNT(*) FROM users_roles WHERE users_roles_id=?1", nativeQuery = true)
+      public int getUserRoleCount(Integer uid);
+        
+ 		
 }

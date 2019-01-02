@@ -3,6 +3,7 @@ package com.ysd.boot.entity;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -16,14 +17,18 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 @Entity
 @Table(name="permissiontb")
 @Getter
@@ -51,6 +56,13 @@ public class Permissions {
 	
 	@Column(columnDefinition="datetime comment '备注:权限最后修改時間'")
 	private Date permissionLastUpdateTime;
+	
+	@JsonInclude(Include.NON_NULL)	//如果该属性为NULL则不参与序列化
+	@Transient
+	private List<Permissions> children;
+	
+	@Transient
+	private Boolean checked;
 	
 	@JsonIgnore
 	@ManyToMany(cascade=javax.persistence.CascadeType.DETACH,fetch=FetchType.EAGER)

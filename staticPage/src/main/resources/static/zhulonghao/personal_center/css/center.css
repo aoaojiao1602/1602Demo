@@ -1,27 +1,29 @@
 #center_user {
 	background-color: #409EFF;
+	position: relative;
 	height: auto;
-	width: 1333px;
+	top: 0px;
+	width: 100%;
 	margin: auto;
 }
 
 #xinxi {
 	background-color: #00FFFF;
 	height: 200px;
-	width: 1333px;
+	width: 100%;
 	margin: auto;
 }
 
 #tongji {
 	height: auto;
-	width: 1333px;
+	width: 100%;
 	margin: auto;
 }
 
 #ktz {
 	background-color: #6F7180;
 	height: auto;
-	width: 1333px;
+	width: 100%;
 	margin: auto;
 }
 
@@ -44,18 +46,17 @@
 	width: 100px;
 	border-radius: 50%;
 	z-index: 200;
-	border: 1px solid gainsboro;
-	position: absolute;
+	position: relative;
 	left: 100px;
 	top: 30px;
 }
 
 #guanzhu {
-	position: absolute;
+	position: relative;
 	height: 15px;
 	width: 30px;
 	left: 115px;
-	top: 140px;
+	top: 45px;
 
 }
 
@@ -68,23 +69,23 @@
 #nickname {
 	font-size: 30px;
 	color: #8CC5FF;
-	position: absolute;
+	position: relative;
 	left: 230px;
-	top: 35px;
+	top: -85px;
 }
 
 #zhiye {
 	font-size: 15px;
 	color: #8CC5FF;
-	position: absolute;
+	position: relative;
 	left: 230px;
-	top: 83px;
+	top: -90px;
 }
 
 #fansorfous {
-	position: absolute;
+	position: relative;
 	left: 230px;
-	top: 113px;
+	top: -89px;
 
 }
 
@@ -148,63 +149,63 @@
 }
 
 #huifutubiao {
-	position: absolute;
-	right: 480px;
-	top: 57px;
+	position: relative;
+	left:62%;
+	top: -200px;
 }
 
 #huifufont {
-	position: absolute;
-	right: 400px;
-	top: 65px;
+	position: relative;
+	left: 66%;
+	top: -272px;
 }
 
 #huifunum {
 	font-size: 20px;
 	color: #8CC5FF;
-	position: absolute;
-	right: 430px;
-	top: 90px;
+	position: relative;
+	left: 68%;
+	top: -275px;
 }
 
 #huozantubiao {
-	position: absolute;
-	right: 320px;
-	top: 57px;
+	position: relative;
+	left: 74%;
+	top: -350px;
 }
 
 #huozanfont {
-	position: absolute;
-	right: 240px;
-	top: 65px;
+	position: relative;
+	left: 78%;
+	top: -424px;
 }
 
 #huozannum {
 	font-size: 20px;
 	color: #8CC5FF;
-	position: absolute;
-	right: 270px;
-	top: 90px;
+	position: relative;
+	left: 80%;
+	top: -428px;
 }
 
 #xuefentubiao {
-	position: absolute;
-	right: 160px;
-	top: 57px;
+	position: relative;
+	left: 86%;
+	top: -507px;
 }
 
 #xuefenfont {
-	position: absolute;
-	right: 80px;
-	top: 65px;
+	position: relative;
+	left: 90%;
+	top: -580px;
 }
 
 #xuefennum {
 	font-size: 20px;
 	color: #8CC5FF;
-	position: absolute;
-	right: 110px;
-	top: 90px;
+	position: relative;
+	left: 92%;
+	top: -585px;
 }
 
 a {

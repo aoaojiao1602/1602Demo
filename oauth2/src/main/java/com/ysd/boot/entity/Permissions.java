@@ -2,7 +2,7 @@ package com.ysd.boot.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -34,6 +34,11 @@ public class Permissions implements Serializable{
 	
 	
 	private Date permissionLastUpdateTime;
+	
+     private List<Permissions> children;
+	
+
+	private Boolean checked;
 	
 	
 }

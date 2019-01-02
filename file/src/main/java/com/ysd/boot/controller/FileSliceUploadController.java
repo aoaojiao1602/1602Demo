@@ -18,7 +18,7 @@ import com.ysd.boot.service.FileService;
 import com.ysd.boot.utils.PropUtil;
 import com.ysd.boot.utils.SliceUtil;
 import com.ysd.boot.utils.VideoAudioUtils;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/file")
 public class FileSliceUploadController {

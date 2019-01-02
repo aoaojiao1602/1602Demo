@@ -13,7 +13,7 @@ public interface CourseService {
 	 * @param course
 	 * @return
 	 */
-	public int addCourse(Integer kechId,Integer navigationId);
+	public int addCourse(Integer kechId,Integer navigationId,String courseRemark);
 	
 	/**
 	 * 通过id进行删除课程推荐
