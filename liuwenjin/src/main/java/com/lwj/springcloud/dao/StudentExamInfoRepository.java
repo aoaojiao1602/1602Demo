@@ -27,7 +27,7 @@ public interface StudentExamInfoRepository extends JpaRepository<StudentExamInfo
 	  * 时间: 2018年12月22日 下午5:22:50  
 	  * 版本: V1.0   
 	 */
-	@Query(value="SELECT * FROM examinfotb e,student_examinfotb se WHERE e.ex_id=se.examinfo_id AND student_id =?1 AND examinfo_id=?2",nativeQuery=true)
+	@Query(value="SELECT * FROM student_examinfotb WHERE student_id =?1 AND examinfo_id=?2",nativeQuery=true)
 	StudentExamInfo indexStudentExamInfo(int stuid, int examid);
 	
 	  /** 
