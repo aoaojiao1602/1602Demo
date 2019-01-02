@@ -27,7 +27,7 @@ public class FileSliceUploadController {
 	private FileService fileService;
 	
 	/**
-	 * C:\Users\Administrator\git\1602Demo\file\src\main\resources\1602Demo\
+	 * D:\1602Demo\file\src\main\resources\1602Demo\
 	 * http://localhost:8080/file/beforeUpload
 	 * 文件上传之前的准备工作
 	 * @param name
@@ -106,7 +106,7 @@ public class FileSliceUploadController {
     	//删除uuid.properties文件
     	PropUtil.deleteFileSlice(fileSlice.getFid());
     	
-    	String classpath ="C:\\Users\\Administrator\\git\\1602Demo\\file\\src\\main\\resources\\db\\";
+    	String classpath ="D:\\1602Demo\\file\\src\\main\\resources\\db\\";
     	
     	FileM fileM=new FileM();
     	String suffix = fileSlice.getName().substring(fileSlice.getName().lastIndexOf("."));//后缀	
