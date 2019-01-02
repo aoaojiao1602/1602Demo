@@ -52,7 +52,7 @@ public class CoursesServiceImpl implements CoursesService {
 
 	@Override
 	public Page<Courses> queryByDynamicSQLPage(CoursesSearch c, Integer page, Integer size) {
-		Sort sort = new Sort(Sort.Direction.ASC, "courseId");
+		Sort sort = new Sort(Sort.Direction.DESC, "courseCreateTime");
 		Pageable pageable = new PageRequest(page, size, sort);
 		return cRepository.findAll(this.getWhereClause(c), pageable);
 	}
@@ -110,6 +110,15 @@ public class CoursesServiceImpl implements CoursesService {
 	@Override
 	public List<Hours> getHoursBycourseCreatorAndcourseId(Integer courseId) {
 		return hRepository.getHoursBycourseCreatorAndcourseId(courseId);
+	}
+
+	
+	/* (non-Javadoc)
+	 * @see com.lhf.service.CoursesService#faBuCourse(java.lang.String, java.lang.Integer)
+	 */
+	@Override
+	public int faBuCourse(String courseState, Integer courseId) {
+		return cRepository.faBuCourse(courseState, courseId);
 	}
 	
 }

@@ -103,5 +103,15 @@ public class CoursesController {
 		}
 		return C;
 	}
+	
+	/**
+	 * 发布课程
+	 * @param courseId
+	 * @return
+	 */
+	@RequestMapping("/faBuCourse")
+	public int faBuCourse(Integer courseId) {
+		return cService.faBuCourse("已发布", courseId);
+	}
 
 }

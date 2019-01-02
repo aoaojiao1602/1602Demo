@@ -33,10 +33,21 @@ public interface CoursesRepository extends JpaRepository<Courses, Integer>,JpaSp
 	@Modifying
 	@Transactional
 	public int postCoursesById(@Param("c") Courses c);
-	//根据ID查老师课程
+	//根据老师ID查课程
 	@Query(value="SELECT * FROM courses WHERE course_creator=?1", nativeQuery = true)
 	@Modifying
 	@Transactional
 	public List<Courses> getCoursesById(Integer courseCreator);
+	
+	/**
+	 * 发布课程
+	 * @param courseState
+	 * @param courseId
+	 * @return
+	 */
+	@Query(value="update Courses c set c.courseState=?1 where c.courseId=?2")
+	@Modifying
+	@Transactional
+	public int faBuCourse(String courseState,Integer courseId);
 	
 }

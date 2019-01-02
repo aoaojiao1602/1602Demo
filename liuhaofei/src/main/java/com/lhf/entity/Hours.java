@@ -21,6 +21,8 @@ public class Hours {
 	private int hourParentId;
 	@Column(columnDefinition="varchar(50) comment '课时名称 ' ")
 	private String hourName;
+	@Column(columnDefinition="int comment '备注:章节排列顺序 ' ")
+	private int hourSort;
 	@Transient
 	private String hour_xxx;
 	public Hours() {
@@ -65,11 +67,18 @@ public class Hours {
 	public void setHour_xxx(String hour_xxx) {
 		this.hour_xxx = hour_xxx;
 	}
+	public int getHourSort() {
+		return hourSort;
+	}
+	public void setHourSort(int hourSort) {
+		this.hourSort = hourSort;
+	}
 	@Override
 	public String toString() {
 		return "Hours [hourId=" + hourId + ", hourCourse=" + hourCourse + ", hourParentId=" + hourParentId
-				+ ", hourName=" + hourName + ", hour_xxx=" + hour_xxx + "]";
+				+ ", hourName=" + hourName + ", hourSort=" + hourSort + ", hour_xxx=" + hour_xxx + "]";
 	}
+	
 	
 	
 

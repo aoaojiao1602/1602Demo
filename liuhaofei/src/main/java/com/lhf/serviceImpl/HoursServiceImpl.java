@@ -81,7 +81,15 @@ public class HoursServiceImpl implements HoursService{
 
 		};
 	}
-
+	
+	/**
+	 * 根据章节ID即父ID查询课时
+	 * @param hourParentId
+	 * @return
+	 */
+	public List<Hours> queryHoursByhourParentId(Integer hourParentId){
+		return hRepository.queryHoursByhourParentId(hourParentId);
+	}
 
 
 	

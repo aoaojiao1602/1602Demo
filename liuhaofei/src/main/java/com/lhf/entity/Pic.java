@@ -3,6 +3,7 @@ package com.lhf.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -10,7 +11,7 @@ import javax.persistence.Table;
 @Table(name="pic")
 public class Pic {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注:图片编号'  ")
 	private int picId;
 	@Column(columnDefinition="varchar(50) comment '备注:所属课程 ' ")

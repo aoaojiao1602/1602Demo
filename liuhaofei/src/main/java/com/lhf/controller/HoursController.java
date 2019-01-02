@@ -1,10 +1,13 @@
 package com.lhf.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,7 +16,7 @@ import com.lhf.entity.CoursewareSearch;
 import com.lhf.entity.Hours;
 import com.lhf.entity.HoursSearch;
 import com.lhf.service.HoursService;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/hours")
 public class HoursController {
@@ -72,12 +75,25 @@ public class HoursController {
 		
 		//章节查询
 		//http://localhost:8050/hours/query?page=1&limit=3
-				@RequestMapping("/query")
-				public Object queryByDyHoursSQLPage(HoursSearch HSearch, Integer page, Integer size,int limit){
-					Page<Hours> sqlPage = hService.queryByDyHoursSQLPage(HSearch, page-1, limit);
-					Map<String, Object> map=new HashMap<String, Object>();
-					map.put("count", sqlPage.getTotalElements());
-					map.put("data", sqlPage.getContent());
-					return map;
-				}
+		@RequestMapping("/query")
+		public Object queryByDyHoursSQLPage(HoursSearch HSearch, Integer page, Integer size,int limit){
+			Page<Hours> sqlPage = hService.queryByDyHoursSQLPage(HSearch, page-1, limit);
+			Map<String, Object> map=new HashMap<String, Object>();
+			map.put("count", sqlPage.getTotalElements());
+			map.put("data", sqlPage.getContent());
+			return map;
+		}		
+		
+		/**
+		 * 根据章节ID即父ID查询课时
+		 * @param hourParentId
+		 * @return
+		 */
+		@RequestMapping("/queryHoursByhourParentId")
+		public List<Hours> queryHoursByhourParentId(Integer hourParentId){
+			return hService.queryHoursByhourParentId(hourParentId);
+		}
+					
+				
+				
 }

@@ -24,4 +24,11 @@ public interface CoursesService {
 	public List<Courses> getCoursesById(Integer courseCreator);
 	//根据老师Id、课程Id查询章节
 	public List<Hours> getHoursBycourseCreatorAndcourseId(Integer courseId);
+	/**
+	 * 发布课程
+	 * @param courseState
+	 * @param courseId
+	 * @return
+	 */
+	public int faBuCourse(String courseState,Integer courseId);
 }

@@ -36,7 +36,7 @@ public class Courses {
 	private Integer courseCreator;
 	@Column(columnDefinition="varchar(10) comment '备注:是否发布'")
 	private String courseState="未发布";
-	@Column(columnDefinition="timestamp comment'备注:创建时间'")
+	@Column(columnDefinition="timestamp DEFAULT CURRENT_TIMESTAMP comment'备注:创建时间'")
 	private Date courseCreateTime;
 	@Column(columnDefinition="timestamp DEFAULT CURRENT_TIMESTAMP comment'备注:编辑时间'")
 	private Date courseEditorTime;

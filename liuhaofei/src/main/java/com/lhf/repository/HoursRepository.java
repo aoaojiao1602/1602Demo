@@ -17,8 +17,8 @@ public interface HoursRepository extends JpaRepository<Hours, Integer>,JpaSpecif
 
 	
 	//添加课时
-		@Query(value = "INSERT INTO hours(hour_course,hour_name,hour_parent_id)VALUES"
-		+"(:#{#h.hourCourse},:#{#h.hourName},:#{#h.hourParentId})",nativeQuery=true)
+		@Query(value = "INSERT INTO hours(hour_course,hour_name,hour_parent_id,hour_sort)VALUES"
+		+"(:#{#h.hourCourse},:#{#h.hourName},:#{#h.hourParentId},:#{#h.hourSort})",nativeQuery=true)
 		@Modifying
 		public int putHours(@Param("h") Hours h);
 		
@@ -35,8 +35,15 @@ public interface HoursRepository extends JpaRepository<Hours, Integer>,JpaSpecif
 		public int postHoursById(@Param("h") Hours h);
 
 		//根据老师Id、课程Id查询章节
-		@Query(value="SELECT * FROM hours h  WHERE  h.hour_course=?1 AND h.hour_parent_id=0", nativeQuery = true)
+		@Query(value="SELECT * FROM hours h  WHERE  h.hour_course=?1 AND h.hour_parent_id=0 ORDER BY hour_sort ASC", nativeQuery = true)
 		public List<Hours> getHoursBycourseCreatorAndcourseId(Integer courseId);
 		
+		/**
+		 * 根据章节ID即父ID查询课时
+		 * @param hourParentId
+		 * @return
+		 */
+		@Query(value="SELECT * FROM hours h  WHERE h.hour_parent_id=?1 ORDER BY hour_sort ASC", nativeQuery = true)
+		public List<Hours> queryHoursByhourParentId(Integer hourParentId);
 
 }
