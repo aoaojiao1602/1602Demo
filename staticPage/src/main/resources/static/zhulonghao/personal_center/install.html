@@ -13,118 +13,120 @@
 		<script type="text/javascript" src="js/axios.min.js"></script>
 	</head>
 	<body>
-		
-			<!--导航栏-->
-			<div class="header-menu bg-blue" id="topMenu" style="line-height:0" >//calss里的topPosition 属性和style是用于固定顶部的 不需要固定可以删除
-				<div class="container">
-					<div class="row">
-						<div class="container">
-							<nav class="nav-bar">
-								<div class="nav-header">
-									<span class="nav-toggle" data-toggle="#header-navbar">
-		                        		<i></i>
-		                        		<i></i>
-		                        		<i></i>
-		                    		</span>
-								</div>
-								<div id="header-navbar" class="nav-collapse">
-									<ul class="nav-menu">
-										<li>
-											<span>
+
+		<!--导航栏-->
+		<div class="header-menu bg-blue" id="topMenu" style="line-height:0">//calss里的topPosition 属性和style是用于固定顶部的 不需要固定可以删除
+			<div class="container">
+				<div class="row">
+					<div class="container">
+						<nav class="nav-bar">
+							<div class="nav-header">
+								<span class="nav-toggle" data-toggle="#header-navbar">
+									<i></i>
+									<i></i>
+									<i></i>
+								</span>
+							</div>
+							<div id="header-navbar" class="nav-collapse">
+								<ul class="nav-menu">
+									<li>
+										<span>
 											<a href="index.html" class="logo" style="margin-left: -10px;">
-												<img src="http://localhost:8010/MSLOGO1.PNG" alt="" width="120px" style="height: 50px" >
+												<img src="http://localhost:8010/MSLOGO1.PNG" alt="" width="120px" style="height: 50px">
 											</a>
 										</span>
-										</li>
-										<li class="dropdown-mega-menu">
-											<a>课程</a>
-											<div class="mega-menu" style="width: 39%;">
-												<ul style="overflow: hidden; width: 100%;">
-													<li v-for="(a,index) in category" v-if="index<6" style="width: 200px; float: left;">
-														<a href="#"><img src="http://localhost:8010/img/apple-touch-icon.png" class="manuImg" />{{a}}</a>
-													</li>
-													<li v-else style="width:200px; float: left;">
-														<a href="#"><img src="http://localhost:8010/img/apple-touch-icon.png" class="manuImg" />{{a}}</a>
-													</li>
-												</ul>
-											</div>
-										</li>
-										<li>
-											<a href="coupons_grid.html">2019考研</a>
-										</li>
-										<li>
-											<a href="stores_01.html">学校云</a>
-										</li>
-										<li>
-											<a href="contact_us_01.html">名师专栏</a>
-										</li>
-										<li style=" margin-left: 100px;">
-											<input type="text" class="form-control input-lg search-input" placeholder="搜索感兴趣的课程" required="required" style=" border: none; margin-top:9px; background-color: white; height: 39px; width: 260px;" />
-										</li>
-										<li>
-											<el-button type="success" style=" margin-top: 9px;" icon="el-icon-search"></el-button>
-										</li>
-										<li id="topUser" style="margin-top: 8px; width: 100px; height: 10px; ">
-											<div id="myCenter1" style="width: 100%;" >
-												<el-menu class="el-menu-demo" mode="horizontal" style="border-bottom: none;" active-text-color="#fff">
-													<el-submenu index="2">
-														<template slot="title" >
-															<a href="myCenter.html" style="color: white;">个人中心</a>
-														</template>
-														<div style="width: 20%; margin: 5px auto;">
-															<img src="http://localhost:8010/MSLOGO.png" class="myImage" style="border:  solid 1px rosybrown;">
-														</div>
-														<div style="margin: 0 auto; text-align: center; font-size: 20px;">userName</div>
-														<el-menu-item >
-															<div class="myCourse" style="text-align: center;"><a>计算机</a></div>
-														</el-menu-item>
-														<el-menu-item>
-															<div class="myCourse"  style="text-align: center;"><a>大数据分析</a></div>
-														</el-menu-item>
-														<el-menu-item>
-															<div class="myCourse"  style="text-align: center;"><a>面向对象编程Java</a></div>
-														</el-menu-item>
-														<div class="myButton">
-															<a href="myCenter.html"><span style="color: #FFFFFF;">我的课程</span></a>
-														</div>
-													</el-submenu>
-												</el-menu>
-											</div>
-										</li>
-										<li id="topUser" style="float: left; margin-top:8px; width:120px; ">
-											<div id="myHeadPic1" >
-												<el-menu class="el-menu-demo" mode="horizontal"  style="border-bottom: none;" active-text-color="#fff">
-													<el-submenu>
-														<template slot="title">
-															<a href="myCenter.html"><img src="http://localhost:8010/MSLOGO.png" style="border:  solid 1px rosybrown; width: 100%;" class="myPic"></a>
-														</template>
-														<div style="font-size: 14px; color: #869791; text-align: center; ">"张三"登录中</div>
-														<hr />
-														<el-menu-item>
-															<div class="mySetting">我的认证证书</div>
-														</el-menu-item>
-														<el-menu-item>
-															<div class="mySetting">我的优惠券</div>
-														</el-menu-item>
-														<el-menu-item>
-															<div class="mySetting">设置</div>
-														</el-menu-item>
-														<el-menu-item>
-															<div class="mySetting">退出</div>
-														</el-menu-item>
-													</el-submenu>
-												</el-menu>
-											</div>
-										</li>
-									</ul>
-								</div>
-								
-							</nav>
-						</div>
+									</li>
+									<li class="dropdown-mega-menu">
+										<a>课程</a>
+										<div class="mega-menu" style="width: 39%;">
+											<ul style="overflow: hidden; width: 100%;">
+												<li v-for="(a,index) in category" v-if="index<6" style="width: 200px; float: left;">
+													<a href="#"><img src="http://localhost:8010/img/apple-touch-icon.png" class="manuImg" />{{a}}</a>
+												</li>
+												<li v-else style="width:200px; float: left;">
+													<a href="#"><img src="http://localhost:8010/img/apple-touch-icon.png" class="manuImg" />{{a}}</a>
+												</li>
+											</ul>
+										</div>
+									</li>
+									<li>
+										<a href="coupons_grid.html">2019考研</a>
+									</li>
+									<li>
+										<a href="stores_01.html">学校云</a>
+									</li>
+									<li>
+										<a href="contact_us_01.html">名师专栏</a>
+									</li>
+									<li style=" margin-left: 100px;">
+										<input type="text" class="form-control input-lg search-input" placeholder="搜索感兴趣的课程" required="required"
+										 style=" border: none; margin-top:9px; background-color: white; height: 39px; width: 260px;" />
+									</li>
+									<li>
+										<el-button type="success" style=" margin-top: 9px;" icon="el-icon-search"></el-button>
+									</li>
+									<li id="topUser" style="margin-top: 8px; width: 100px; height: 10px; ">
+										<div id="myCenter1" style="width: 100%;">
+											<el-menu class="el-menu-demo" mode="horizontal" style="border-bottom: none;" active-text-color="#fff">
+												<el-submenu index="2">
+													<template slot="title">
+														<a href="myCenter.html" style="color: white;">个人中心</a>
+													</template>
+													<div style="width: 20%; margin: 5px auto;">
+														<img src="http://localhost:8010/MSLOGO.png" class="myImage" style="border:  solid 1px rosybrown;">
+													</div>
+													<div style="margin: 0 auto; text-align: center; font-size: 20px;">userName</div>
+													<el-menu-item>
+														<div class="myCourse" style="text-align: center;"><a>计算机</a></div>
+													</el-menu-item>
+													<el-menu-item>
+														<div class="myCourse" style="text-align: center;"><a>大数据分析</a></div>
+													</el-menu-item>
+													<el-menu-item>
+														<div class="myCourse" style="text-align: center;"><a>面向对象编程Java</a></div>
+													</el-menu-item>
+													<div class="myButton">
+														<a href="myCenter.html"><span style="color: #FFFFFF;">我的课程</span></a>
+													</div>
+												</el-submenu>
+											</el-menu>
+										</div>
+									</li>
+									<li id="topUser" style="float: left; margin-top:8px; width:120px; ">
+										<div id="myHeadPic1">
+											<el-menu class="el-menu-demo" mode="horizontal" style="border-bottom: none;" active-text-color="#fff">
+												<el-submenu>
+													<template slot="title">
+														<a href="myCenter.html"><img src="http://localhost:8010/MSLOGO.png" style="border:  solid 1px rosybrown; width: 100%;"
+															 class="myPic"></a>
+													</template>
+													<div style="font-size: 14px; color: #869791; text-align: center; ">"张三"登录中</div>
+													<hr />
+													<el-menu-item>
+														<div class="mySetting">我的认证证书</div>
+													</el-menu-item>
+													<el-menu-item>
+														<div class="mySetting">我的优惠券</div>
+													</el-menu-item>
+													<el-menu-item>
+														<div class="mySetting">设置</div>
+													</el-menu-item>
+													<el-menu-item>
+														<div class="mySetting">退出</div>
+													</el-menu-item>
+												</el-submenu>
+											</el-menu>
+										</div>
+									</li>
+								</ul>
+							</div>
+
+						</nav>
 					</div>
 				</div>
 			</div>
-			<!-- 窗口顶部结束 -->
+		</div>
+		<!-- 窗口顶部结束 -->
 		<div id="aaa">
 			<div id="all">
 				<el-tabs v-model="activeName" id="ktz1" @tab-click.self="handleClick">
@@ -241,7 +243,7 @@
 								<el-form-item id="id2" v-show="xuesheng" label="最高学历" prop="education" :required="sistrue">
 									<el-radio-group v-model="ruleForm.education">
 										<el-radio id="1" label="博士" @change="e" name="education"></el-radio>
-										<el-radio id="2" label="研究生"  @change="e"name="education"></el-radio>
+										<el-radio id="2" label="研究生" @change="e" name="education"></el-radio>
 										<el-radio id="3" label="本科" @change="e" name="education"></el-radio>
 										<el-radio id="4" label="专科" @change="e" name="education"></el-radio>
 										<el-radio id="5" label="高中" @change="d" name="education"></el-radio>
@@ -285,8 +287,8 @@
 				zaizhi: false,
 				xuesheng: true,
 				yuanxi: true,
-				sistrue: true,		
-				istrue: false,	
+				sistrue: true,
+				istrue: false,
 				ruleForm: {
 					nickname: '',
 					name: '',
@@ -322,57 +324,59 @@
 			};
 		},
 		methods: {
-			a(){
-				this.zaizhi=true;
-				this.xuesheng=false;
-				this.yuanxi=false;	
-				this.istrue=true;
-				this.sistrue=false;
-				Vue.delete(this.ruleForm,'education');
-				Vue.delete(this.ruleForm,'yx');
+			a() {
+				this.zaizhi = true;
+				this.xuesheng = false;
+				this.yuanxi = false;
+				this.istrue = true;
+				this.sistrue = false;
+				Vue.delete(this.ruleForm, 'education');
+				Vue.delete(this.ruleForm, 'yx');
 			},
-			b(){
-				this.zaizhi=false;
-				this.xuesheng=true;	
-				this.yuanxi=true;
-				this.istrue=false;
-				this.sistrue=true;
-				Vue.delete(this.ruleForm,'region');
+			b() {
+				this.zaizhi = false;
+				this.xuesheng = true;
+				this.yuanxi = true;
+				this.istrue = false;
+				this.sistrue = true;
+				Vue.delete(this.ruleForm, 'region');
 			},
-			c(){
-				this.zaizhi=false;
-				this.xuesheng=false;	
-				this.yuanxi=false;
-				this.istrue=false;
-				this.sistrue=false;
-				Vue.delete(this.ruleForm,'education');
-				Vue.delete(this.ruleForm,'region');
-				Vue.delete(this.ruleForm,'yx');
+			c() {
+				this.zaizhi = false;
+				this.xuesheng = false;
+				this.yuanxi = false;
+				this.istrue = false;
+				this.sistrue = false;
+				Vue.delete(this.ruleForm, 'education');
+				Vue.delete(this.ruleForm, 'region');
+				Vue.delete(this.ruleForm, 'yx');
 			},
-			d(){
-				this.yuanxi=false;
+			d() {
+				this.yuanxi = false;
 			},
-			e(){
-				this.yuanxi=true;
+			e() {
+				this.yuanxi = true;
 			},
-			submitForm: function(formName){
+			submitForm: function(formName) {
 				var vm = this;
-				axios.post(`${vm.urlPre}/updateById`,{
-					u_uid: 1,
-					ui_phone: vm.ruleForm.phone,
-					ui_email: vm.ruleForm.email,
-					ui_birthday: vm.ruleForm.date1,
-					ui_identitycard: vm.ruleForm.identification,
-					ui_nickname: vm.ruleForm.nickname,
-					ui_sex: vm.ruleForm.resource,
-					ui_truename: vm.ruleForm.name,
-					identity: vm.ruleForm.type,
-					education: vm.ruleForm.education,
-					industry: vm.ruleForm.region,
-					jianjie: vm.ruleForm.desc,
-					yuanx: vm.ruleForm.yx
-				})
+				var uid = localStorage.getItem('uid');
+				axios.post(`${vm.urlPre}/updateById`, {
+						u_uid: uid,
+						ui_phone: vm.ruleForm.puidhone,
+						ui_email: vm.ruleForm.email,
+						ui_birthday: vm.ruleForm.date1,
+						ui_identitycard: vm.ruleForm.identification,
+						ui_nickname: vm.ruleForm.nickname,
+						ui_sex: vm.ruleForm.resource,
+						ui_truename: vm.ruleForm.name,
+						identity: vm.ruleForm.type,
+						education: vm.ruleForm.education,
+						industry: vm.ruleForm.region,
+						jianjie: vm.ruleForm.desc,
+						yuanx: vm.ruleForm.yx
+					})
 					.then(function(response) {
+						alert("修改成功！");
 						console.log(response);
 						console.log(response.data);
 					})
@@ -380,11 +384,9 @@
 						console.log(error);
 					});
 				this.$refs[formName].validate((valid) => {
-					if (valid) {
-						alert('submit!');
-					} else {
+					if (valid) {} else {
 						console.log('error submit!!');
-						alert('error submit!!');
+						alert('請填寫必選項！');
 						return false;
 					}
 				});
@@ -411,52 +413,57 @@
 				console.log(tab, event);
 			}
 		},
-			created:function(){
-				var vm = this;
-				axios.get(`${vm.urlPre}/userinfo?uid=1`)
-				.then(function (response) {
-				vm.ruleForm.nickname=response.data.ui_nickname;
-				vm.ruleForm.email=response.data.ui_email;
-				vm.ruleForm.phone=response.data.ui_phone;
-				vm.ruleForm.name=response.data.ui_truename;
-				vm.ruleForm.date1=response.data.ui_birthday;
-				vm.ruleForm.identification=response.data.ui_identitycard;
-				vm.ruleForm.resource=response.data.ui_sex;
-				vm.ruleForm.education=response.data.education;
-				vm.ruleForm.desc=response.data.jianjie;
-				vm.ruleForm.region=response.data.industry;
-				vm.ruleForm.yx=response.data.yuanx;
-				console.log(response);
-				console.log(response.data);
+		created: function() {
+			var vm = this;
+			var uid = localStorage.getItem('uid');
+			axios.get(`${vm.urlPre}/userinfo`, {
+					params: {
+						uid: uid
+					}
 				})
-				.catch(function (error) {
-				console.log(error);
+				.then(function(response) {
+					vm.ruleForm.nickname = response.data.ui_nickname;
+					vm.ruleForm.email = response.data.ui_email;
+					vm.ruleForm.phone = response.data.ui_phone;
+					vm.ruleForm.name = response.data.ui_truename;
+					vm.ruleForm.date1 = response.data.ui_birthday;
+					vm.ruleForm.identification = response.data.ui_identitycard;
+					vm.ruleForm.resource = response.data.ui_sex;
+					vm.ruleForm.education = response.data.education;
+					vm.ruleForm.desc = response.data.jianjie;
+					vm.ruleForm.region = response.data.industry;
+					vm.ruleForm.yx = response.data.yuanx;
+					console.log(response);
+					console.log(response.data);
+				})
+				.catch(function(error) {
+					console.log(error);
 				});
-			}
+		}
 	}
 	var Ctor = Vue.extend(Main)
 	new Ctor().$mount('#app')
 </script>
 <!--顶部导航 虚拟dom（不固定）-->
-	<script>
-		let topMenu = new Vue({
-			el: '#topMenu',
-			data: {
-				category: []
-			},
-			methods: {
-				//获取所有分类
-				getCategory: function() {
-					let tis = this;
-					axios.get('http://localhost:8010/category').then(function(response) {
-						tis.category = response.data
-					}).catch(function(error) {
-						console.log(error);
-					});
-				}
-			},
-			mounted() {
-				this.getCategory();
+<script>
+	let topMenu = new Vue({
+		el: '#topMenu',
+		data: {
+			category: []
+		},
+		methods: {
+			//获取所有分类
+			getCategory: function() {
+				let tis = this;
+				axios.get('http://localhost:8010/category').then(function(response) {
+					tis.category = response.data
+				}).catch(function(error) {
+					console.log(error);
+				});
 			}
-		})
-	</script>
+		},
+		mounted() {
+			this.getCategory();
+		}
+	})
+</script>

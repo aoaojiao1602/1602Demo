@@ -152,19 +152,36 @@
 									imgname: "",
 								};
 							},
+							methods: {
+								getUrlKey(name) {
+									return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [,
+										""
+									])[1].replace(/\+/g, '%20')) || null
+								},
+								getUserInfo() {
+									var vm = this;
+									var uid = localStorage.getItem('uid');
+									axios.get(`${vm.urlPre}/userinfo`, {
+											params: {
+												uid: uid
+											}
+									}).then(function(response) {
+											vm.imgurl = response.data.ui_headportrait;
+											vm.imgname = response.data.ui_headportraitname;
+											console.log(response);
+											//alert(response.data.ui_nickname)
+											console.log(response.data);
+										})
+										.catch(function(error) {
+											console.log(error);
+										});
+								}
+							},
 							created: function() {
-								var vm = this;
-								axios.get(`${vm.urlPre}/userinfo?uid=2`)
-									.then(function(response) {
-										vm.imgurl = response.data.ui_headportrait;
-										vm.imgname = response.data.ui_headportraitname;
-										console.log(response);
-										//alert(response.data.ui_nickname)
-										console.log(response.data);
-									})
-									.catch(function(error) {
-										console.log(error);
-									});
+								this.getUserInfo();
+								var uid = this.getUrlKey('uid');
+								//alert(uid);
+								window.localStorage.setItem("uid", uid);
 							}
 						});
 					</script>
@@ -191,24 +208,27 @@
 									isorno: 0,
 								}
 							},
-							mounted: function() {
-								var vm = this;
-								axios.get(`${vm.urlPre}/getIsMyfocus?uid=1&fid=8`)
-									.then(function(response) {
-										vm.isorno = response.data;
-										//alert(response.data)
-										console.log(response);
-										//alert(response.data.ui_nickname)
-										console.log(response.data);
-									})
-									.catch(function(error) {
-										console.log(error);
-									});
+							created: function() {
+								this.getIsMyfocus();
 							},
 							methods: {
+								getIsMyfocus() {
+									var vm = this;
+									axios.get(`${vm.urlPre}/getIsMyfocus?uid=1&fid=8`)
+										.then(function(response) {
+											vm.isorno = response.data;
+											//alert(response.data)
+											console.log(response);
+											//alert(response.data.ui_nickname)
+											console.log(response.data);
+										})
+										.catch(function(error) {
+											console.log(error);
+										});
+								},
 								gz: function() {
 									var vm = this;
-									axios.post(`${vm.urlPre}/postMyfocus?uid=1&fid=8`)
+									axios.put(`${vm.urlPre}/putMyfocus?uid=1&fid=8`)
 										.then(function(response) {
 											vm.isorno = 1;
 											console.log(response);
@@ -247,7 +267,12 @@
 							},
 							created: function() {
 								var vm = this;
-								axios.get(`${vm.urlPre}/userinfo?uid=2`)
+								var uid = localStorage.getItem('uid');
+								axios.get(`${vm.urlPre}/userinfo`, {
+											params: {
+												uid: uid
+											}
+									})
 									.then(function(response) {
 										vm.msg = response.data.ui_nickname;
 										console.log(response);
@@ -262,15 +287,42 @@
 					</script>
 				</div>
 				<div id="zhiye">
-					{{zhiye}}&nbsp;|&nbsp;{{zhiyexiangqing}}
+					{{zhiye}}&nbsp;|&nbsp;{{xuexiaao}}--{{yuanxi}}
 					<script type="text/javascript">
 						var app = new Vue({
 							el: '#zhiye',
 							data() {
 								return {
-									zhiye: "学生",
-									zhiyexiangqing: "河南工业-其他"
+									zhiye: "",
+									xuexiaao: "",
+									yuanxi: "",
+									urlPre: "http://localhost:8030/user",
 								};
+							},
+							methods: {
+								getUserInfo() {
+									var vm = this;
+									var uid = localStorage.getItem('uid');
+									axios.get(`${vm.urlPre}/userinfo`, {
+											params: {
+												uid: uid
+											}
+									})
+										.then(function(response) {
+											vm.zhiye = response.data.identity;
+											vm.xuexiaao = response.data.industry;
+											vm.yuanxi = response.data.yuanx;
+											console.log(response);
+											//alert(response.data)
+											console.log(response.data);
+										})
+										.catch(function(error) {
+											console.log(error);
+										});
+								}
+							},
+							created: function() {
+								this.getUserInfo();
 							}
 						});
 					</script>
@@ -317,7 +369,7 @@
 								</div> -->
 				<div id="fansorfous">
 					<el-button type="text" @click="fanstab">粉丝{{mfans}}人</el-button>
-					<el-button type="text" @click="foustab">粉丝{{mfous}}人</el-button>
+					<el-button type="text" @click="foustab">关注{{mfous}}人</el-button>
 					<el-dialog width="820px" :visible.sync="op" style="margin-top: -50px;">
 						<el-tabs style="margin-top: -50px;" v-model="activeName" id="fansdig" @tab-click="handleClick">
 							<el-tab-pane class="fansfans" :label="ss" name="myfans">
@@ -338,9 +390,10 @@
 															fensi: 0,
 															urlPre: "http://localhost:8030/user",
 														};
-													},
+													}/* ,
 													created: function() {
 														var vm = this;
+														
 														axios.get(`${vm.urlPre}/getMyFansCount?uid=l.u_uid`)
 															.then(function(response) {
 																vm.fensi = response.data;
@@ -351,7 +404,7 @@
 															.catch(function(error) {
 																console.log(error);
 															});
-													}
+													} */
 												});
 											</script>
 										</span>
@@ -422,7 +475,12 @@
 							},
 							getfans() {
 								var vm = this;
-								axios.get(`${vm.urlPre}/getMyFans?uid=1`)
+								var uid = localStorage.getItem('uid');
+								axios.get(`${vm.urlPre}/getMyFans`, {
+											params: {
+												uid: uid
+											}
+									})
 									.then(function(response) {
 										vm.fanslist = response.data;
 										console.log(response);
@@ -435,7 +493,12 @@
 							},
 							getfanscount() {
 								var vm = this;
-								axios.get(`${vm.urlPre}/getMyFansCount?uid=1`)
+								var uid = localStorage.getItem('uid');
+								axios.get(`${vm.urlPre}/getMyFansCount`, {
+											params: {
+												uid: uid
+											}
+									})
 									.then(function(response) {
 										vm.mfans = response.data;
 
@@ -448,7 +511,12 @@
 							},
 							getfous() {
 								var vm = this;
-								axios.get(`${vm.urlPre}/getMyfocus?uid=1`)
+								var uid = localStorage.getItem('uid');
+								axios.get(`${vm.urlPre}/getMyfocus`, {
+											params: {
+												uid: uid
+											}
+									})
 									.then(function(response) {
 										vm.fouslist = response.data;
 										console.log(response);
@@ -461,7 +529,12 @@
 							},
 							getfouscount() {
 								var vm = this;
-								axios.get(`${vm.urlPre}/getMyfocusCount?uid=1`)
+								var uid = localStorage.getItem('uid');
+								axios.get(`${vm.urlPre}/getMyfocusCount`, {
+											params: {
+												uid: uid
+											}
+									})
 									.then(function(response) {
 										vm.mfous = response.data;
 										console.log(response);
@@ -481,6 +554,40 @@
 						}
 					});
 				</script>
+				<div id="jianjie">
+					<span>
+						<font size="2" color="#8CC5FF">{{jianjie}}</font>
+						<script type="text/javascript">
+							var app = new Vue({
+								el: '#jianjie',
+								data() {
+									return {
+										urlPre: "http://localhost:8030/user",
+										jianjie: "",
+									};
+								},
+								created: function() {
+									var vm = this;
+									var uid = localStorage.getItem('uid');
+									axios.get(`${vm.urlPre}/userinfo`, {
+											params: {
+												uid: uid
+											}
+									})
+										.then(function(response) {
+											vm.jianjie = response.data.jianjie;
+											console.log(response);
+											//alert(response.data.jianjie)
+											console.log(response.data);
+										})
+										.catch(function(error) {
+											console.log(error);
+										});
+								}
+							});
+						</script>
+					</span>
+				</div>
 				<div id="huifutubiao" title="发帖数、回复数、评论数之和">
 					<font size="10"><i class="el-icon-edit-outline"></i></font>
 				</div>
@@ -502,7 +609,12 @@
 							},
 							created: function() {
 								var vm = this;
-								axios.get(`${vm.urlPre}/getPostbarAndReplyAndCommentCountByuId?uid=1`)
+								var uid = localStorage.getItem('uid');
+								axios.get(`${vm.urlPre}/getPostbarAndReplyAndCommentCountByuId`, {
+											params: {
+												uid: uid
+											}
+									})
 									.then(function(response) {
 										vm.hnum = response.data;
 										console.log(response);
@@ -535,7 +647,12 @@
 							},
 							created: function() {
 								var vm = this;
-								axios.get(`${vm.urlPre}/getPostbarAndReplyAndCommentGoodCountByuId?uid=1`)
+								var uid = localStorage.getItem('uid');
+								axios.get(`${vm.urlPre}/getPostbarAndReplyAndCommentGoodCountByuId`, {
+											params: {
+												uid: uid
+											}
+									})
 									.then(function(response) {
 										vm.hznum = response.data;
 										console.log(response);
@@ -569,7 +686,7 @@
 					</script>
 				</div>
 			</div>
-			<div id="tongji">
+			<div id="tongji" :hidden="ismyself">
 				<el-tabs v-model="activeName" id="ktz1" @tab-click.self="handleClick">
 					<el-tab-pane label="用户管理" name="first">
 						<div id="main1" style="width:500px;height:300px;">
@@ -586,6 +703,7 @@
 						el: '#ktz1',
 						data() {
 							return {
+								isNomyself: false,
 								activeName: 'first'
 							};
 						},

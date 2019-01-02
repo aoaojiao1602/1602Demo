@@ -8,7 +8,7 @@
 }
 
 #xinxi {
-	background-color: #00FFFF;
+	
 	height: 200px;
 	width: 100%;
 	margin: auto;
@@ -88,6 +88,13 @@
 	top: -89px;
 
 }
+#jianjie{
+	position: relative;
+	height: 55px;
+	width: 500px;
+	left: 225px;
+	top: -95px;
+}
 
 .xh {
 	float: left;
@@ -151,13 +158,13 @@
 #huifutubiao {
 	position: relative;
 	left:62%;
-	top: -200px;
+	top: -260px;
 }
 
 #huifufont {
 	position: relative;
 	left: 66%;
-	top: -272px;
+	top: -332px;
 }
 
 #huifunum {
@@ -165,19 +172,19 @@
 	color: #8CC5FF;
 	position: relative;
 	left: 68%;
-	top: -275px;
+	top: -335px;
 }
 
 #huozantubiao {
 	position: relative;
 	left: 74%;
-	top: -350px;
+	top: -410px;
 }
 
 #huozanfont {
 	position: relative;
 	left: 78%;
-	top: -424px;
+	top: -484px;
 }
 
 #huozannum {
@@ -185,19 +192,19 @@
 	color: #8CC5FF;
 	position: relative;
 	left: 80%;
-	top: -428px;
+	top: -488px;
 }
 
 #xuefentubiao {
 	position: relative;
 	left: 86%;
-	top: -507px;
+	top: -567px;
 }
 
 #xuefenfont {
 	position: relative;
 	left: 90%;
-	top: -580px;
+	top: -640px;
 }
 
 #xuefennum {
@@ -205,7 +212,7 @@
 	color: #8CC5FF;
 	position: relative;
 	left: 92%;
-	top: -585px;
+	top: -645px;
 }
 
 a {
