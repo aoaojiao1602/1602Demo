@@ -113,5 +113,26 @@ public class CoursesController {
 	public int faBuCourse(Integer courseId) {
 		return cService.faBuCourse("已发布", courseId);
 	}
+	
+	/**
+	 * 根据课程ID查询课程
+	 * @param courseId
+	 * @return
+	 */
+	@RequestMapping("/findByCourseId")
+	public Courses findByCourseId(int courseId) {
+		return cService.findByCourseId(courseId);
+	}
+	/**
+	 * 根据课程类别查询课程
+	 * @param courseCategory
+	 * @return
+	 */
+	@RequestMapping("/findByCourseCategory")
+	public List<Courses> findByCourseCategory(Integer courseCategory){
+		return cService.findByCourseCategory(courseCategory);
+	}
+	
+	
 
 }

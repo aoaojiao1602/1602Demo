@@ -121,4 +121,21 @@ public class CoursesServiceImpl implements CoursesService {
 		return cRepository.faBuCourse(courseState, courseId);
 	}
 	
+	/**
+	 * 根据课程ID查询课程
+	 * @param courseId
+	 * @return
+	 */
+	public Courses findByCourseId(int courseId) {
+		return cRepository.findByCourseId(courseId);
+	}
+	/**
+	 * 根据课程类别查询课程
+	 * @param courseCategory
+	 * @return
+	 */
+	public List<Courses> findByCourseCategory(Integer courseCategory){
+		return cRepository.findByCourseCategory(courseCategory);
+	}
+	
 }
