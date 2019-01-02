@@ -43,10 +43,10 @@ public class Examinfo {
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注:自动增长主键'")
 	private Integer exId;
 	@JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-	@Column(columnDefinition="date NOT NULL comment '备注:考试开始时间'")
+	@Column(columnDefinition="TIMESTAMP NOT NULL comment '备注:考试开始时间'")
 	private Date startTime;
 	@JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-	@Column(columnDefinition="date NOT NULL comment '备注:考试结束时间'")
+	@Column(columnDefinition="TIMESTAMP NOT NULL comment '备注:考试结束时间'")
 	private Date endTime;
 	@Column(columnDefinition="varchar(100) NOT NULL comment '备注:试卷名'")
 	private String paperName;	
