@@ -30,17 +30,17 @@ public class UserInfo {
 	private Integer u_uid;
 	@Column(columnDefinition = "int comment '备注:用户头像id'")
 	private Integer ui_headportraitid;
-	@Column(columnDefinition = "varchar(50) comment '备注:用户头像url'", nullable = false)
+	@Column(columnDefinition = "varchar(50) comment '备注:用户头像url'")
 	private String ui_headportrait;
 	@Column(columnDefinition = "Varchar(20) comment '备注:用户头像名'")
 	private String ui_headportraitname;
-	@Column(columnDefinition = "varchar(20) unique comment '备注:用户昵称'", nullable = false)
+	@Column(columnDefinition = "varchar(20) unique comment '备注:用户昵称'")
 	private String ui_nickname;
 	@Column(columnDefinition = "varchar(5) comment '备注:性别'")
 	private String ui_sex;
-	@Column(columnDefinition = "datetime comment '备注:出生年用'", nullable = false)
+	@Column(columnDefinition = "datetime comment '备注:出生年用'")
 	private Date ui_birthday;
-	@Column(columnDefinition = "varchar(11) unique comment '备注:手机号'", nullable = false)
+	@Column(columnDefinition = "varchar(11) unique comment '备注:手机号'")
 	private String ui_phone;
 	@Column(columnDefinition = "varchar(50) comment '备注:邮箱'")
 	private String ui_email;
@@ -48,6 +48,16 @@ public class UserInfo {
 	private String ui_truename;
 	@Column(columnDefinition = "varchar(18) unique comment '备注:用户身份证'")
 	private String ui_identitycard;
+	@Column(columnDefinition = "varchar(50) comment '备注:用户身份类型'")
+	private String Identity;
+	@Column(columnDefinition = "varchar(50) comment '备注:用户行业'")
+	private String industry;
+	@Column(columnDefinition = "varchar(50) comment '备注:用户最高学历'")
+	private String education;
+	@Column(columnDefinition = "varchar(300) comment '备注:用户个人简介'")
+	private String jianjie;
+	@Column(columnDefinition = "varchar(20) comment '备注:用户院系'")
+	private String yuanx;
 	@Transient
 	private String userSpace = "";
 	
@@ -56,9 +66,16 @@ public class UserInfo {
 		return "UserInfo [u_uid=" + u_uid + ", ui_headportraitid=" + ui_headportraitid + ", ui_headportrait="
 				+ ui_headportrait + ", ui_headportraitname=" + ui_headportraitname + ", ui_nickname=" + ui_nickname
 				+ ", ui_sex=" + ui_sex + ", ui_birthday=" + ui_birthday + ", ui_phone=" + ui_phone + ", ui_email="
-				+ ui_email + ", ui_truename=" + ui_truename + ", ui_identitycard=" + ui_identitycard + ", userSpace="
-				+ userSpace + "]";
+				+ ui_email + ", ui_truename=" + ui_truename + ", ui_identitycard=" + ui_identitycard + ", Identity="
+				+ Identity + ", industry=" + industry + ", education=" + education + ", jianjie=" + jianjie + ", yuanx="
+				+ yuanx + ", userSpace=" + userSpace + "]";
 	}
+	
+	
+	
+	
+	
+	
 	
 	
 

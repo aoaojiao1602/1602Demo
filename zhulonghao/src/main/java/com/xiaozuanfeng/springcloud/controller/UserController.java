@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,7 @@ import com.xiaozuanfeng.springcloud.services.UserServices;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/user")
@@ -99,6 +101,18 @@ public class UserController {
 	@RequestMapping(value = "/deleteMyfocus", method = RequestMethod.DELETE)
 	public int deleteMyfocus(Integer uid, Integer fid) {
 		return fss.deleteMyfocus(uid, fid);
+	}
+
+	/**
+	 * http://localhost:8030/user/updateById?=1
+	 * 
+	 * @return
+	 * 
+	 */
+	@RequestMapping(value = "/updateById")
+	public int updateById(@RequestBody UserInfo uid) {
+		System.out.println(uid);
+		return uss.updateById(uid);
 	}
 
 }
