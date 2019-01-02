@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>智慧教学平台 | 课程管理</title>
+		<link rel="stylesheet" type="text/css" href="css/element-ui.css" />
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue-router.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/element-ui.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<el-container>
+				<el-header>
+					<div class="box-card" :style="{color:color1}">
+						<i class="el-icon-tickets" style="margin-right:5px"></i>
+						课程管理
+					</div>
+					<el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect"
+					 :active-text-color="color1">
+						<el-menu-item index="1">处理中心</el-menu-item>
+						<el-submenu index="2">
+							<template slot="title">我的工作台</template>
+							<el-menu-item index="2-1">选项1</el-menu-item>
+							<el-menu-item index="2-2">选项2</el-menu-item>
+							<el-menu-item index="2-3">选项3</el-menu-item>
+							<el-submenu index="2-4">
+								<template slot="title">选项4</template>
+								<el-menu-item index="2-4-1">选项1</el-menu-item>
+								<el-menu-item index="2-4-2">选项2</el-menu-item>
+								<el-menu-item index="2-4-3">选项3</el-menu-item>
+							</el-submenu>
+						</el-submenu>
+						<el-menu-item index="3">消息中心</el-menu-item>
+						<el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
+						<!-- <el-submenu>
+							<template slot="title">色彩</template>
+							<el-color-picker v-model="color1"></el-color-picker>
+						</el-submenu> -->
+						<el-menu-item index="5">
+							<el-color-picker @change="tse" @buttonStyle="updateColor" v-model="color1"></el-color-picker>
+						</el-menu-item>
+					</el-menu>
+				</el-header>
+				<el-container>
+					<el-aside :width="asidew">
+						<el-menu default-active="1-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse"
+						 router='true' :active-text-color="color1">
+							<el-menu-item index="cos" @click="lor">
+								<i class="el-icon-setting"></i>
+								<span slot="title">{{zy}}</span>
+							</el-menu-item>
+							<el-submenu index="1">
+								<template slot="title">
+									<i class="el-icon-location"></i>
+									<span>导航一</span>
+								</template>
+								<el-menu-item index="1-1" @click="mykc">我的课程</el-menu-item>
+								<el-menu-item index="1-2" @click="mya">其他</el-menu-item>
+							</el-submenu>
+							<el-menu-item index="2" @click="mytest">
+								<i class="el-icon-menu"></i>
+								<span slot="title">考试测试</span>
+							</el-menu-item>
+							<el-menu-item index="3" @click="url='666'">
+								<i class="el-icon-document"></i>
+								<span slot="title">评分管理</span>
+							</el-menu-item>
+							<el-menu-item index="4" @click="url='999'">
+								<i class="el-icon-setting"></i>
+								<span slot="title">公告管理</span>
+							</el-menu-item>
+						</el-menu>
+					</el-aside>
+					<el-container>
+						<el-main>
+							<!-- <router-view></router-view> -->
+							<iframe :src="url" id="iframe"></iframe>
+							<el-dialog title="新增课程" :visible.sync="dialogFormVisible" :before-close="closeForm" :close-on-click-modal="false">
+								<el-form :model="form" status-icon :rules="rules" ref="form">
+									<el-form-item label="课程名称" :label-width="formLabelWidth" prop="name">
+										<el-input v-model="form.name" placeholder="请输入内容" autocomplete="off"></el-input>
+									</el-form-item>
+									<el-form-item label="课程类别" :label-width="formLabelWidth" prop="region">
+										<el-select v-model="form.region" placeholder="请选择课程类别">
+											<el-option label="法学" value="1"></el-option>
+											<el-option label="医学" value="2"></el-option>
+										</el-select>
+									</el-form-item>
+									<el-form-item label="课程说明" :label-width="formLabelWidth" prop="desc">
+										<el-input type="textarea" :autosize="{ minRows: 2}" v-model="form.desc">
+										</el-input>
+									</el-form-item>
+								</el-form>
+								<div slot="footer" class="dialog-footer">
+									<el-button @click="resetForm('form')">取 消</el-button>
+									<el-button type="primary" :style="{backgroundColor:color1,borderColor:color1}" @click="submitForm('form')">确
+										定</el-button>
+								</div>
+							</el-dialog>
+
+						</el-main>
+						<!-- <el-footer height="50px">© 智慧教学平台 | 课程管理</el-footer> -->
+					</el-container>
+				</el-container>
+			</el-container>
+		</div>
+
+	</body>
+	<style>
+		/*浏览器滚动条样式*/
+
+/* width */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: rgb(255, 255, 255);
+    border-radius: 8px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(201, 201, 202);
+    border-radius: 8px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	cursor: pointer;
+    background: rgb(162, 162, 163);
+}
+		body{
+			margin: 0;
+		}
+		.el-header{
+			padding: 0;
+		}
+		.box-card {
+			height: 60px;
+			width: 200px;
+			font-size: 18px;
+			/* text-align: center; */
+			margin-left:25px;
+			line-height: 60px;
+			/* background-color:#23262E; */
+			color: #409EFF;
+			cursor: pointer;
+			border-bottom: 1px solid #e6e6e6;
+		}
+			
+		.el-footer {
+			background-color: #eee;
+			line-height: 50px;
+			font-size: 12px;
+			font-weight: 400;
+		}
+		.el-menu-demo{
+			margin-left: 200px;
+			margin-top: -61px;
+		}
+		.el-menu-vertical-demo{
+			height:550px;
+			position: absolute;
+			left: 10px;
+		}
+		.el-aside {
+			height: 590px;
+			/* background-color: #393D49 !important */
+			overflow-x: hidden;
+			/* border: solid 1px red; */
+		}
+		
+		.el-main {
+			/* background-color: #E9EEF3; */
+			/* color: #333;
+			text-align: center;
+			line-height: 160px; */
+			padding-left: 0;
+			padding-top: 0;
+		}
+
+		#app>.el-container {
+			/* background-color:#545c64; */
+			padding: 0 50px;
+		}
+		.el-color-picker{
+			margin-left: 30px;
+		}
+		
+	</style>
+	<template id="a">
+		<div>
+			6666666666666666666666
+		</div>
+	</template>
+	<template id="b">
+		<div>
+			888888888888888888888888
+		</div>
+	</template>
+</html>
+<script type="text/javascript">
+	var routes = [{
+			path: "/1-1",
+			component: {
+				template: "#c"
+			}
+		},
+		{
+			path: "/1-2",
+			component: {
+				template: "#d"
+			}
+		},
+	];
+	// 定义路由组件
+	var router = new VueRouter({
+		// mode: 'history',
+		routes
+	});
+	// 定义路由
+	var vm = new Vue({
+		el: '#app',
+		router,
+		data() {
+			return {
+				activeIndex: '1',
+				activeIndex2: '1',
+				isCollapse: false,
+				asidew: '180px',
+				zy: "折叠",
+				color1: '#409EFF',
+				url: "html/mykc.html",
+				dialogFormVisible: false,
+				form: {
+					name: '',
+					region: '',
+					desc: ''
+				},
+				formLabelWidth: '120px',
+				rules: {
+					name: [{
+							required: true,
+							message: '请输入课程名称',
+							trigger: 'blur'
+						},
+						{
+							min: 2,
+							max: 10,
+							message: '长度在 2 到 10 个字符',
+							trigger: 'blur'
+						}
+					],
+					region: [{
+						required: true,
+						message: '请选择课程类别',
+						trigger: 'change'
+					}],
+					desc: [{
+						required: true,
+						message: '请填写课程说明',
+						trigger: 'blur'
+					}]
+				}
+			};
+		},
+		methods: {
+			handleSelect(key, keyPath) {
+				console.log(key, keyPath);
+			},
+			handleOpen(key, keyPath) {
+				console.log(key, keyPath);
+			},
+			handleClose(key, keyPath) {
+				console.log(key, keyPath);
+			},
+			lor: function() {
+				console.log(this.isCollapse);
+				console.log(this.asidew);
+				if (this.isCollapse) {
+					this.isCollapse = false;
+					this.asidew = '180px';
+					this.zy = '折叠';
+				} else {
+					this.isCollapse = true;
+					this.asidew = '45px';
+					this.zy = '展开';
+				}
+			},
+			tse: function() {
+				console.log(444);
+				var iframe = window.parent.document.getElementById("iframe");
+				iframe.src = iframe.src;
+				// iframe.contentWindow.location.reload(true);
+			},
+			updateColor(data) {
+				console.log(data);
+				data = {
+					color: color1,
+					borderColor: color1
+				};
+			},
+			submitForm(formName) {
+				var _this = this;
+				this.$refs[formName].validate((valid) => {
+					if (valid) {
+						axios.post('http://localhost:8050/courses/putCourses', {
+								courseName: _this.form.name,
+								courseCategory: _this.form.region,
+								courseRemark: _this.form.desc
+							})
+							.then(function(response) {
+								console.log(response);
+								_this.$refs[formName].resetFields();
+								_this.dialogFormVisible = false;
+								_this.success();
+							})
+							.catch(function(error) {
+								console.log(error);
+								_this.success2();
+							});
+					} else {
+						console.log('error submit!!');
+						return false;
+					}
+				});
+			},
+			closeForm(done) {
+				this.$refs['form'].resetFields();
+				done();
+			},
+			resetForm(formName) {
+				this.$refs[formName].resetFields();
+				this.dialogFormVisible = false;
+			},
+			success() {
+				this.$message({
+					showClose: true,
+					message: '恭喜你，这是一条成功消息',
+					type: 'success'
+				});
+			},
+			success2() {
+				this.$message({
+					showClose: true,
+					message: '错了哦，这是一条错误消息',
+					type: 'error'
+				});
+			},
+			mykc: function() {
+				this.url = "html/mykc.html";
+			},
+			mytest: function() {
+				window.location.href="http://localhost:8000/liuwenjin/vueDemo/index.html?tid=1";
+			},
+			mya: function() {
+				this.url = "html/mya.html";
+			},
+			myc: function() {
+				this.url = "html/myc.html";
+			}
+		}
+	})
+</script>
+<style>
+	.el-menu-vertical-demo:not(.el-menu--collapse) {
+		width: 200px;
+		min-height: 400px;
+	}
+
+	iframe {
+		width: 100%;
+		height: 570px;
+		border: none;
+		padding-top: 1px;
+		/* overflow-x: hidden; */
+		/* overflow-y: hidden; */
+	}
+</style>

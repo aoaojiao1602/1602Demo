@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>智慧教学平台 | 课程管理 | 我的课程</title>
+		<link rel="stylesheet" type="text/css" href="../css/element-ui.css" />
+		<script src="../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/element-ui.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<div id="tools">
+				<el-button :style="buttonStyle" plain icon="el-icon-plus" @click="dialogFormVisible = true"></el-button>
+				<el-button :style="buttonStyle" plain icon="el-icon-loading" @click="refresh"></el-button>
+				<el-button :style="buttonStyle" plain icon="el-icon-delete"></el-button>
+				<el-button :style="buttonStyle" plain icon="el-icon-upload" @click="sendUp">上传</el-button>
+				<el-select :style="buttonStyle3" @change="datepk" class="yanse" v-model="input3" clearable placeholder="请选择">
+					<el-option :style="buttonStyle2" v-for="item in options" :key="item.value" :label="item.label" :value="item.value"
+					 :disabled="item.disabled"></el-option>
+				</el-select>
+				<el-date-picker @focus="datepk" :readonly="only" :style="buttonStyle" v-model="input1" type="datetimerange"
+				 value-format="yyyy-MM-dd HH:mm:ss" :range-separator="range_s" :start-placeholder="start_p" :end-placeholder="end_p"
+				 align="center"></el-date-picker>
+				<el-input :style.parent="{borderColor:color}" v-model="input2" prefix-icon="el-icon-search" clearable placeholder="请输入内容"></el-input>
+				<el-button :style="buttonStyle" plain icon="el-icon-search" @click="refresh(currentPage,pageSize)"></el-button>
+			</div>
+			<template>
+				<el-table :data="tableData" border ref="tableData" style="width: 100%" cell-style="padding:4px">
+					<el-table-column fixed type="index" label="序号" width="50">
+					</el-table-column>
+					<el-table-column prop="courseId" align='center' label="课程ID" width="70">
+					</el-table-column>
+					<el-table-column prop="courseName" label="课程名称" :show-overflow-tooltip=true width="120">
+					</el-table-column>
+					<el-table-column prop="courseRemark" label="课程说明" :show-overflow-tooltip=true width="120">
+					</el-table-column>
+					<el-table-column prop="courseCreateTime" label="创建时间" width="170">
+					</el-table-column>
+					<el-table-column prop="courseEditorTime" label="修改时间" width="170">
+					</el-table-column>
+					<el-table-column prop="courseState" label="课程状态" width="100" :filters="[{ text: '未发布', value: '未发布' }, { text: '已发布', value: '已发布' }]"
+					 :filter-method="filterTag">
+						<!-- <template slot-scope="scope">
+							<el-tag :type="scope.row.courseState === '已发布' ? 'primary' : 'success'" disable-transitions>{{scope.row.courseState}}</el-tag>
+						</template> -->
+						<template slot-scope="scope">
+							<el-popover v-if="scope.row.courseState=='未发布'" trigger="hover" placement="right" width="50px">
+								<el-button size="mini" @click="faBuCourse(scope.row)">发布</el-button>
+								<div slot="reference" class="name-wrapper">
+									<el-tag style="cursor:pointer" :type="scope.row.courseState === '已发布' ? 'primary' : 'success'"
+									 disable-transitions>{{scope.row.courseState}}</el-tag>
+								</div>
+							</el-popover>
+							<el-tag v-else style="cursor:pointer" :type="scope.row.courseState === '已发布' ? 'primary' : 'success'"
+							 disable-transitions>{{scope.row.courseState}}</el-tag>
+						</template>
+					</el-table-column>
+					<el-table-column fixed="right" label="操作" min-width="150">
+						<template slot-scope="scope">
+							<el-button :style="buttonStyle2" @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+							<el-button :style="buttonStyle2" type="text" size="small">编辑</el-button>
+							<el-button :style="buttonStyle2" @click="handleDelete(scope.row)" type="text" size="small">删除</el-button>
+						</template>
+					</el-table-column>
+				</el-table>
+			</template>
+			<div class="block">
+				<el-pagination @size-change="handleSizeChange" ref="pagination" @current-change="handleCurrentChange" :current-page="currentPage"
+				 :page-sizes="[10, 20, 30, 40]" :page-size="pageSize=10" layout="total, sizes, prev, pager, next, jumper" :total="total">
+				</el-pagination>
+			</div>
+			<el-dialog title="新增课程" :visible.sync="dialogFormVisible" :before-close="closeForm" :modal="false" :fullscreen="true"
+			 :close-on-click-modal="false">
+				<el-form :model="form" status-icon :rules="rules" ref="form">
+					<el-form-item label="课程名称" :label-width="formLabelWidth" prop="name">
+						<el-input v-model="form.name" placeholder="请输入内容" autocomplete="off"></el-input>
+					</el-form-item>
+					<el-form-item label="课程类别" :label-width="formLabelWidth" prop="region">
+						<el-select v-model="form.region" placeholder="请选择课程类别">
+							<el-option label="法学" value="1"></el-option>
+							<el-option label="医学" value="2"></el-option>
+						</el-select>
+					</el-form-item>
+					<el-form-item label="课程说明" :label-width="formLabelWidth" prop="desc">
+						<el-input type="textarea" :autosize="{ minRows: 2}" v-model="form.desc">
+						</el-input>
+					</el-form-item>
+				</el-form>
+				<div slot="footer" class="dialog-footer">
+					<el-button @click="resetForm('form')">取 消</el-button>
+					<el-button type="primary" :style="{backgroundColor:color,borderColor:color}" @click="submitForm('form')">确
+						定</el-button>
+				</div>
+			</el-dialog>
+
+		</div>
+	</body>
+</html>
+<style type="text/css">
+	/*浏览器滚动条样式*/
+
+	/* width */
+	::-webkit-scrollbar {
+		width: 6px;
+		height: 4px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: rgb(255, 255, 255);
+		border-radius: 8px;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: rgb(201, 201, 202);
+		border-radius: 8px;
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		cursor: pointer;
+		background: rgb(162, 162, 163);
+	}
+
+	#tools {
+		margin-bottom: 10px;
+	}
+
+	#tools>.el-input {
+		width: 170px;
+	}
+
+	#tools>.el-select {
+		width: 120px;
+	}
+
+	.el-date-picker {
+		width: 300px;
+	}
+
+	.el-button.is-plain {
+		padding: 12px 18px;
+	}
+
+	.el-button.is-plain+.el-button.is-plain {
+		margin-left: 1px
+	}
+
+	.el-pager>li[class="number"],
+	.el-pager>li[class="active"] {
+		font-weight: 500;
+	}
+</style>
+<script type="text/javascript">
+	var vm2 = new Vue({
+		el: '#app',
+		data() {
+			const item = {
+				date: '2016-05-03',
+				name: '王小虎',
+				province: '上海',
+				city: '普陀区',
+				address: '上海市普陀区金沙江路 1518 弄',
+				zip: 200333
+			};
+			return {
+				input1: '',
+				input2: '',
+				input3: '',
+				only: true,
+				start_p: '先选择检索的时间类型',
+				range_s: '',
+				end_p: '',
+				color: parent.vm.color1,
+				currentPage: 1,
+				pageSize: 10,
+				total: 100,
+				tableData: [], //Array(10).fill(item),
+				options: [{
+					value: 1,
+					label: '创建时间'
+				}, {
+					value: 2,
+					label: '修改时间',
+					disabled: true
+				}],
+				dialogFormVisible: false,
+				form: {
+					name: '',
+					region: '',
+					date1: '',
+					date2: '',
+					delivery: false,
+					type: [],
+					resource: '',
+					desc: ''
+				},
+				formLabelWidth: '120px',
+				rules: {
+					name: [{
+							required: true,
+							message: '请输入课程名称',
+							trigger: 'blur'
+						},
+						{
+							min: 2,
+							max: 10,
+							message: '长度在 2 到 10 个字符',
+							trigger: 'blur'
+						}
+					],
+					region: [{
+						required: true,
+						message: '请选择课程类别',
+						trigger: 'change'
+					}],
+					desc: [{
+						required: true,
+						message: '请填写课程说明',
+						trigger: 'blur'
+					}]
+				},
+				buttonStyle: {
+					color: parent.vm.color1,
+					borderColor: parent.vm.color1
+				},
+				buttonStyle2: {
+					color: parent.vm.color1
+				},
+				buttonStyle3: {
+					borderColor: parent.vm.color1,
+					borderStyle: "solid",
+					borderWidth: "1px",
+					borderRadius: "5px"
+				}
+			};
+		},
+		created: function() {
+			this.refresh(this.currentPage, this.pageSize);
+		},
+		methods: {
+			handleClick(row) {
+				console.log(row);
+				location.href = "myzj.html?courseId=" + row.courseId+"&courseName="+encodeURI(encodeURI(row.courseName));
+			},
+			handleDelete(row) {
+				var _this = this;
+				this.$confirm('此操作将永久删除该条数据, 是否继续?', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning',
+					modal: false,
+					closeOnClickModal: false
+				}).then(() => {
+					axios({
+							method: 'post',
+							url: 'http://localhost:8050/courses/deleteCourses',
+							params: {
+								courseId: row.courseId
+							}
+						})
+						.then(function(response) {
+							if (response.data > 0) {
+								_this.success();
+								_this.handleCurrentChange(_this.total==1?1:_this.total % 10 == 1 ? _this.currentPage - 1 : _this.currentPage);
+							} else {
+								_this.success2();
+							}
+						})
+						.catch(function(error) {
+							console.log(error);
+						});
+				}).catch(() => {
+					this.$message({
+						type: 'info',
+						message: '已取消'
+					});
+				});
+			},
+			faBuCourse(row) {
+				var _this = this;
+				axios({
+						method: 'post',
+						url: 'http://localhost:8050/courses/faBuCourse',
+						params: {
+							courseId: row.courseId
+						}
+					})
+					.then(function(response) {
+						if (response.data > 0) {
+							_this.success();
+							_this.handleCurrentChange(_this.currentPage);
+						} else {
+							_this.success2();
+						}
+					})
+					.catch(function(error) {
+						console.log(error);
+					});
+			},
+			handleSizeChange(val) {
+				console.log(`每页 ${val} 条`);
+				this.pageSize = val;
+				this.refresh(this.currentPage, val);
+			},
+			handleCurrentChange(val) {
+				console.log(`当前页: ${val}`);
+				this.currentPage = val;
+				this.refresh(val, this.pageSize);
+			},
+			refresh(page, limit) {
+				var _this = this;
+				axios({
+						method: 'post',
+						url: 'http://localhost:8050/courses/query',
+						params: {
+							page: page,
+							limit: limit,
+							startCreateTime: _this.input1[0],
+							endCreateTime: _this.input1[1],
+							courseName: _this.input2
+						}
+					})
+					.then(function(response) {
+						var _data = response.data;
+						console.log(_data);
+						_this.total = _data.count;
+						_this.tableData = _data.data;
+					})
+					.catch(function(error) {
+						console.log(error);
+					});
+			},
+			submitForm(formName) {
+				var _this = this;
+				this.$refs[formName].validate((valid) => {
+					if (valid) {
+						axios.post('http://localhost:8050/courses/putCourses', {
+								courseName: _this.form.name,
+								courseCategory: _this.form.region,
+								courseRemark: _this.form.desc
+							})
+							.then(function(response) {
+								console.log(response);
+								_this.$refs[formName].resetFields();
+								_this.dialogFormVisible = false;
+								_this.success();
+								//_this.refresh(_this.currentPage, _this.pageSize);
+								_this.handleCurrentChange(1);
+							})
+							.catch(function(error) {
+								console.log(error);
+								//_this.success2();
+							});
+					} else {
+						console.log('error submit!!');
+						return false;
+					}
+				});
+			},
+			closeForm(done) {
+				this.$refs['form'].resetFields();
+				done();
+			},
+			resetForm(formName) {
+				this.$refs[formName].resetFields();
+				this.dialogFormVisible = false;
+			},
+			success() {
+				this.$message({
+					showClose: true,
+					message: '恭喜你，这是一条成功消息',
+					type: 'success'
+				});
+			},
+			success2() {
+				this.$message({
+					showClose: true,
+					message: '错了哦，这是一条错误消息',
+					type: 'error'
+				});
+			},
+			success3() {
+				this.$message({
+					showClose: true,
+					message: '请先选择检索的时间类型',
+					type: 'warning'
+				});
+			},
+			datepk() {
+				if (this.input3 == '') {
+					this.only = true;
+					this.input1 = '';
+					this.start_p = '先选择检索的时间类型';
+					this.range_s = '';
+					this.end_p = '';
+				} else {
+					console.log(this.input3);
+					this.only = false;
+					this.start_p = '起始时间';
+					this.range_s = '~';
+					this.end_p = '终止时间';
+				}
+			},
+			filterTag(value, row) {
+				return row.courseState === value;
+			},
+			sendUp: function() {
+				this.$emit('buttonStyle', this.buttonStyle);
+			}
+		}
+	})
+	vm2.$emit("sendUp");
+</script>
+<style>
+	.yanse input {
+		border: none;
+		height: 38px;
+	}
+
+	.yanse {
+		height: 38px;
+	}
+</style>

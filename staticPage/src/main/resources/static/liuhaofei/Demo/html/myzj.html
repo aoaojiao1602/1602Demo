@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>智慧教学平台 | 课程管理 | 章节课时</title>
+		<link rel="stylesheet" type="text/css" href="../css/element-ui.css" />
+		<script src="../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/element-ui.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<div id="tools">
+				<el-button icon="el-icon-back" size="small" @click="back">返回</el-button>
+				<el-button icon="el-icon-plus" size="small" @click="dialogFormVisible = true"></el-button>
+			</div>
+			<template>
+				<div :style="{color:color}" style="margin-top: 5px;text-align: center;font-size: 18px;">{{courseName}}</div>
+				<el-table :data="tableData.filter(data => !search || data.hourName.toLowerCase().includes(search.toLowerCase()))"
+				 ref="tableData" style="width: 100%">
+					<el-table-column fixed type="index" label="序号" width="60">
+					</el-table-column>
+					<el-table-column prop="hourName" label="章节名称" align="center" width="300">
+					</el-table-column>
+					<el-table-column prop="hourSort" label="章节序列" width="170" :formatter="formatter">
+					</el-table-column>
+					<el-table-column prop="province" label="排列顺序" align="center" width="150">
+						<template slot-scope="scope">
+							<el-row v-if="tableData.length==1">
+								<el-button icon="el-icon-arrow-up" circle disabled size="small"></el-button>
+								<el-button icon="el-icon-arrow-down" circle disabled size="small"></el-button>
+							</el-row>
+							<el-row v-else-if="scope.row.hourSort==1">
+								<el-button icon="el-icon-arrow-up" circle disabled size="small"></el-button>
+								<el-button icon="el-icon-arrow-down" circle size="small"></el-button>
+							</el-row>
+							<el-row v-else-if="scope.row.hourSort==tableData.length">
+								<el-button icon="el-icon-arrow-up" circle size="small"></el-button>
+								<el-button icon="el-icon-arrow-down" circle disabled size="small"></el-button>
+							</el-row>
+							<el-row v-else>
+								<el-button icon="el-icon-arrow-up" circle size="small"></el-button>
+								<el-button icon="el-icon-arrow-down" circle size="small"></el-button>
+							</el-row>
+						</template>
+					</el-table-column>
+					<el-table-column fixed="right" align="right" min-width="150" width="250">
+						<template slot="header" slot-scope="scope">
+							<el-input v-model="search" size="small" placeholder="输入关键字搜索">
+							</el-input>
+						</template>
+						<template slot-scope="scope">
+							<el-button :style="{color:color}" @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+							<el-button :style="{color:color}" type="text" size="small">编辑</el-button>
+							<el-button :style="{color:color}" type="text" size="small">删除</el-button>
+						</template>
+					</el-table-column>
+				</el-table>
+			</template>
+			<el-dialog title="添加章节" :visible.sync="dialogFormVisible" :before-close="closeForm" :modal="false"
+			 :close-on-click-modal="false">
+				<el-form :model="form" status-icon :rules="rules" ref="form">
+					<el-form-item label="章节名称" :label-width="formLabelWidth" prop="name">
+						<el-input v-model="form.name" placeholder="请输入内容" autocomplete="off"></el-input>
+					</el-form-item>
+				</el-form>
+				<div slot="footer" class="dialog-footer">
+					<el-button @click="resetForm('form')">取 消</el-button>
+					<el-button type="primary" :style="{backgroundColor:color,borderColor:color}" @click="submitForm('form')">确
+						定</el-button>
+				</div>
+			</el-dialog>
+			<el-dialog title="添加课时" :visible.sync="dialogFormVisible2" :before-close="closeForm" :modal="false"
+			:close-on-click-modal="false">
+				<el-form :model="form" status-icon :rules="rules" ref="form">
+					<el-form-item label="课时名称" :label-width="formLabelWidth" prop="name2">
+						<el-input v-model="form.name2" placeholder="请输入内容" autocomplete="off"></el-input>
+					</el-form-item>
+				</el-form>
+				<div slot="footer" class="dialog-footer">
+					<el-button @click="resetForm('form')">取 消</el-button>
+					<el-button type="primary" :style="{backgroundColor:color,borderColor:color}" @click="submitForm2('form')">确
+						定</el-button>
+				</div>
+			</el-dialog>
+			<el-dialog center :title="title" :visible.sync="dialogTableVisible" :modal="false" :fullscreen="true" :close-on-click-modal="false">
+				<span slot="title" :style="{color:color}" class="dialog-title">{{title}}</span>
+				<div style="margin-bottom: 5px;margin-top: -50px;">
+					<el-button icon="el-icon-plus" size="small" @click="dialogFormVisible2 = true"></el-button>
+				</div>
+				<el-table border :data="gridData" ref="gridData" style="width: 100%">
+					<el-table-column fixed type="index" label="序号" width="60">
+					</el-table-column>
+					<el-table-column prop="hourName" label="课时名称" width="200"></el-table-column>
+					<el-table-column prop="address" label="课件" align="center"></el-table-column>
+					<el-table-column fixed="right" label="操作" align="center" min-width="150">
+						<template slot-scope="scope">
+							<el-button :style="{color:color}" @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+							<el-button :style="{color:color}" type="text" size="small">编辑</el-button>
+							<el-button :style="{color:color}" type="text" size="small">删除</el-button>
+						</template>
+					</el-table-column>
+				</el-table>
+			</el-dialog>
+		</div>
+	</body>
+</html>
+<style type="text/css">
+	/*浏览器滚动条样式*/
+
+	/* width */
+	::-webkit-scrollbar {
+		width: 6px;
+		height: 4px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: rgb(255, 255, 255);
+		border-radius: 8px;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: rgb(201, 201, 202);
+		border-radius: 8px;
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		cursor: pointer;
+		background: rgb(162, 162, 163);
+	}
+
+	#tools {
+		margin-bottom: -28px;
+	}
+
+	#tools>.el-input {
+		width: 170px;
+	}
+
+	#tools>.el-select {
+		width: 120px;
+	}
+
+	.el-date-picker {
+		width: 300px;
+	}
+
+	#tools>.el-button {
+		/* padding: 12px 18px; */
+	}
+
+	#tools>.el-button+.el-button {
+		/* margin-left: 1px */
+	}
+
+	.el-pager>li[class="number"],
+	.el-pager>li[class="active"] {
+		font-weight: 500;
+	}
+</style>
+<script type="text/javascript">
+	var vm2 = new Vue({
+		el: '#app',
+		data() {
+			const item = {
+				date: '2016-05-03',
+				name: '王小虎',
+				province: '上海',
+				city: '普陀区',
+				address: '上海市普陀区金沙江路 1518 弄',
+				zip: 200333
+			};
+			return {
+				input1: '',
+				input2: '',
+				input3: '',
+				color: parent.vm.color1,
+				tableData: [],
+				gridData: [],
+				title: '',
+				courseId: 0,
+				courseName: '',
+				hourParentId:0,
+				hourSort: 0,
+				search: '',
+				dialogFormVisible: false,
+				dialogFormVisible2:false,
+				dialogTableVisible: false,
+				form: {
+					name: '',
+					name2: '',
+					region: '',
+					date1: '',
+					date2: '',
+					delivery: false,
+					type: [],
+					resource: '',
+					desc: ''
+				},
+				formLabelWidth: '120px',
+				rules: {
+					name: [{
+							required: true,
+							message: '请输入章节名称',
+							trigger: 'blur'
+						},
+						{
+							min: 3,
+							max: 20,
+							message: '长度在 3 到 20 个字符',
+							trigger: 'blur'
+						}
+					],
+					name2: [{
+							required: true,
+							message: '请输入课时名称',
+							trigger: 'blur'
+						},
+						{
+							min: 3,
+							max: 20,
+							message: '长度在 3 到 20 个字符',
+							trigger: 'blur'
+						}
+					]
+				}
+			};
+		},
+		created: function() {
+			var _this = this;
+			location.href.replace(/[?&]courseId=([^&#]+)/ig, function(a, b) {
+				_this.courseId = b;
+			});
+			location.href.replace(/[?&]courseName=([^&#]+)/ig, function(a, b) {
+				_this.courseName = decodeURI(unescape(b));
+			});
+			this.refresh();
+		},
+		methods: {
+			handleClick(row) {
+				console.log(row);
+				this.dialogTableVisible = true;
+				this.title = row.hourName;
+				this.hourParentId=row.hourId;
+				this.refresh2();
+			},
+			back() {
+				history.back();
+			},
+			refresh() {
+				var _this = this;
+				axios({
+						method: 'post',
+						url: 'http://localhost:8050/courses/queryhours',
+						params: {
+							courseId: _this.courseId
+						}
+					})
+					.then(function(response) {
+						var _data = response.data;
+						_this.tableData = _data;
+					})
+					.catch(function(error) {
+						console.log(error);
+					});
+			},
+			refresh2() {
+				var _this = this;
+				axios({
+						method: 'post',
+						url: 'http://localhost:8050/hours/queryHoursByhourParentId',
+						params: {
+							hourParentId: _this.hourParentId
+						}
+					})
+					.then(function(response) {
+						var _data = response.data;
+						_this.gridData = _data;
+					})
+					.catch(function(error) {
+						console.log(error);
+					});
+			},
+			submitForm(formName) {
+				this.hourSort = this.tableData.length == 0 ? 1 : this.tableData.length + 1;
+				var _this = this;
+				this.$refs[formName].validate((valid) => {
+					if (valid) {
+						axios({
+								method: 'post',
+								url: 'http://localhost:8050/hours/puthours',
+								params: {
+									hourName: _this.form.name,
+									hourCourse: _this.courseId,
+									hourParentId: 0,
+									hourSort: _this.hourSort
+								}
+							})
+							.then(function(response) {
+								console.log(response);
+								_this.$refs[formName].resetFields();
+								_this.dialogFormVisible = false;
+								_this.success();
+								_this.refresh();
+							})
+							.catch(function(error) {
+								console.log(error);
+								//_this.success2();
+							});
+					} else {
+						console.log('error submit!!');
+						return false;
+					}
+				});
+			},
+			submitForm2(formName) {
+				this.hourSort =this.gridData.length + 1;
+				var _this = this;
+				this.$refs[formName].validate((valid) => {
+					if (valid) {
+						axios({
+								method: 'post',
+								url: 'http://localhost:8050/hours/puthours',
+								params: {
+									hourName: _this.form.name2,
+									hourCourse: _this.courseId,
+									hourParentId: _this.hourParentId,
+									hourSort: _this.hourSort
+								}
+							})
+							.then(function(response) {
+								console.log(response);
+								_this.$refs[formName].resetFields();
+								_this.dialogFormVisible2 = false;
+								_this.success();
+								_this.refresh2();
+							})
+							.catch(function(error) {
+								console.log(error);
+								//_this.success2();
+							});
+					} else {
+						console.log('error submit!!');
+						return false;
+					}
+				});
+			},
+			closeForm(done) {
+				this.$refs['form'].resetFields();
+				done();
+			},
+			resetForm(formName) {
+				this.$refs[formName].resetFields();
+				this.dialogFormVisible = false;
+				this.dialogFormVisible2 = false;
+			},
+			success() {
+				this.$message({
+					showClose: true,
+					message: '恭喜你，这是一条成功消息',
+					type: 'success'
+				});
+			},
+			success2() {
+				this.$message({
+					showClose: true,
+					message: '错了哦，这是一条错误消息',
+					type: 'error'
+				});
+			},
+			formatter(row, column) {
+				return "第" + row.hourSort + "章";
+			}
+		}
+	})
+</script>
