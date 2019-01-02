@@ -2,6 +2,8 @@ package com.xiaozuanfeng.springcloud.dao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -36,4 +38,15 @@ public interface UserRepository extends JpaRepository<UserInfo, Integer> {
 	 */
 	@Query(value = "SELECT * FROM userinfotb WHERE u_uid IN(?1)", nativeQuery = true)
 	List<UserInfo> getMyfocus(List<Integer> ilist);
+	/**
+	 * 根据id修改个人资料
+	 * @param uid
+	 * 
+	 * @param uid
+	 * @return
+	 */
+	@Query(value = "UPDATE userinfotb SET ui_headportraitid=:#{#uid.ui_headportraitid},ui_nickname=:#{#uid.ui_nickname},ui_phone=:#{#uid.ui_phone},ui_truename=:#{#uid.ui_truename},ui_sex=:#{#uid.ui_sex},ui_birthday=:#{#uid.ui_birthday},ui_identitycard=:#{#uid.ui_identitycard},identity=:#{#uid.identity},education=:#{#uid.education},industry=:#{#uid.industry},jianjie=:#{#uid.jianjie},yuanx=:#{#uid.yuanx}  WHERE u_uid=:#{#uid.u_uid} ",nativeQuery = true)
+	@Modifying
+	@Transactional
+	public int updateById(@Param("uid") UserInfo uid);
 }
