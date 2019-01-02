@@ -58,9 +58,9 @@ public interface StudentExamInfoRepository extends JpaRepository<StudentExamInfo
 	  * 时间: 2018年12月23日 下午7:02:52  
 	  * 版本: V1.0   
 	 */
-	@Query(value="UPDATE student_examinfotb SET TIME=TIME-1 WHERE student_id =?1 AND examinfo_id=?2",nativeQuery=true)
+	@Query(value="UPDATE student_examinfotb SET TIME=?3 WHERE student_id =?1 AND examinfo_id=?2",nativeQuery=true)
 	@Modifying
-	int updateStudentExamInfoTime(int stuid,int examid);
+	int updateStudentExamInfoTime(int stuid,int examid,int time);
 	
 	  /** 
 	 * http://localhost:8080/queryStudentExamInfoTime
@@ -79,7 +79,7 @@ public interface StudentExamInfoRepository extends JpaRepository<StudentExamInfo
 	  * 时间: 2018年12月24日 下午2:17:04  
 	  * 版本: V1.0   
 	 */
-	@Query(value="UPDATE student_examinfotb SET exam_score=?3 WHERE student_id =?1 AND examinfo_id=?2",nativeQuery=true)
+	@Query(value="UPDATE student_examinfotb SET exam_score=?3,time=0 WHERE student_id =?1 AND examinfo_id=?2",nativeQuery=true)
 	@Modifying
 	int updateStudentExamInfoScore(int stuid, int examid, int score);
 	
