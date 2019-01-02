@@ -10,7 +10,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/zhulonghaodb?useUnicode=true&characterEncoding=utf8
     username: root
-    password: null
+    password: admin
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQL5Dialect

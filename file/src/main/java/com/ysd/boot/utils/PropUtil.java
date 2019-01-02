@@ -28,7 +28,7 @@ import com.ysd.boot.entity.FileSlice;
 public class PropUtil {
 	
 	//文件上传准备文件,属性值;属性是文件名称.文件大小[.文件最后修改时间]=值是文件的uuid唯一标志存盘存储文件名称
-	private static final String FILEPREFIX = "C:\\Users\\Administrator\\git\\1602Demo";//文件目录
+	private static final String FILEPREFIX = "D:\\1602Demo";//文件目录
 	private static final String FILEPATH = "fileslice.properties";
 	private static  ObjectMapper objectMapper = new ObjectMapper();//Jackson
 	

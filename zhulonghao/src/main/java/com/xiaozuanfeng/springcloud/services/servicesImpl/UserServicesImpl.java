@@ -23,7 +23,13 @@ public class UserServicesImpl implements UserServices {
 	public List<UserInfo> getMyFans(List<Integer> ilist) {
 		return udao.getMyFans(ilist);
 	}
-	public List<UserInfo> getMyfocus(List<Integer> ilist){
+
+	public List<UserInfo> getMyfocus(List<Integer> ilist) {
 		return udao.getMyfocus(ilist);
+	}
+
+	@Override
+	public int updateById(UserInfo uid) {
+		return udao.updateById(uid);
 	}
 }
