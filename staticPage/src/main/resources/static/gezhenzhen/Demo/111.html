@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/element-ui.css" />
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/element-ui.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<div style="width: 200px; height: 100px; background: red;">
+		 <input  type="button" name="Submit" value="提交"  onclick="javascript:onTopClick();" />
+		 
+	</div>
+	<div id="abc" style="width: 300px; height: 200px; margin-top: 1200px; background: #0000FF;">跳转到的位置</div>
+	<script>
+		  function onTopClick() {
+         window.location.hash = "#abc";
+       }
+	</script>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>讨论区</title>
+		<link rel="stylesheet" type="text/css" href="css/element-ui.css" />
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/element-ui.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<style>
+		#font1{
+			font-size: 13px
+		}
+		#big{
+			border: 1px solid white,
+			height: auto,
+			width: 1000px
+		}
+		
+	</style>
+	<body>
+		<!-- #ECF5FF -->
+		<!-- 问小仙女页面如何存储数据，另一个页面如何取值
+		当选择另一个东西的时候如何让另一个隐藏 
+		当前时间的问题
+		-->
+
+
+		<div id="big" style="border: 1px solid white; width: 1000px; height: auto;">
+			<div id="header" style="border: 1px solid #ECF5FF; height: 200px; width: 1000px;">
+				<h3 style="margin-left: 5px;">讨论区</h3>
+				<el-select v-model="value" placeholder="请选择" style="margin-left: 870px; margin-top: -43px; display: block;">
+					<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+					</el-option>
+				</el-select>
+				<span id="font1">欢迎大家来到讨论区！本讨论区供各位同学就课程问题进行讨论、交流、学习。请同学认真阅读下面的【讨论区使用规则】，然后在进行相关的发表，谢谢！</span>
+				<a href="fabiao.html" style="text-decoration: none;">
+					<el-button type="success" style="margin-top: 70px; margin-left: 5px; display: block;">发起主题</el-button>
+				</a>
+			</div>
+			<div id="main" style="border: 1px solid #ECF5FF; height: 700px; width: 1000px;">
+				<h4 style="margin-top: 30px; margin-left: 5px; display: block;">子模块</h4>
+				<div id="module" style="margin-top: 50px; display: block;">
+					<div id="img" style="background-image: url(img/捕获.PNG); width: 34.2px; height: 35px; margin-bottom: -65px; margin-left: 20px; display: block;">
+					</div>
+					<a href="teacher.html" style="margin-top: 30px; margin-left: 70px; display: block; text-decoration: none;">老师答疑区</a>
+					<div id="teacher" style="margin-left: 700px; margin-top: -20px; display: block;">
+						<div id="new1" :projectTitle="projectTitle" style="  height: 20px; width: 100px;">
+							<a href="colligation.html" style="text-decoration: none; color: #81a263;">{{projectTitle}} </a>
+							<!-- <span style="margin-top: 10px; margin-left: 30px; display:  block;">{{11111}}</span> -->
+						</div>
+					</div>
+					<div style="margin-left: 70px; display: block; font-size: 12px; color: #8C939D; ">发表关于作业、测试、课件内容希望能够得到老师回答的疑问。</div>
+				</div>
+				<div id="img1" style="background-image: url(img/捕获1.PNG); width: 34.2px; height: 35px; margin-top: 20px; margin-left: 15px; display: block;">
+				</div>
+				<a href="student.html" style="margin-top:-30px; margin-left: 70px; display: block; text-decoration: none;">课堂交流区</a>
+				<div id="clazz" style="margin-left: 700px; margin-top: -20px; display: block;">
+					<div id="clazz" :projectTitle="projectTitle" style=" height: 20px; width: auto;">
+						<a href="colligation.html" style="text-decoration: none; color: #81a263;">{{projectTitle}} </a>
+					</div>
+				</div>`
+				<div style="margin-left: 70px; margin-top: -20px; display: block; font-size: 12px; color: #8C939D; ">这里呈现的是在课件中作为教学内容的讨论</div>
+				<div id="img3" style="background-image: url(img/捕获1.PNG); width: 34.2px; height: 35px; margin-top: 20px; margin-left: 15px; display: block;">
+				</div>
+				<a href="colligation.html" style="margin-top: -35px; margin-left: 70px; display: block; text-decoration: none;">综合讨论区</a>
+				<div id="zong" style="margin-left: 700px; margin-top: -20px; display: block;">
+					<div id="he" :projectTitle="projectTitle" style=" height: 20px; width: 100px;">
+						<a href="colligation.html" style="text-decoration: none; color: #81a263;">{{projectTitle}} </a>
+					</div>
+				</div>
+				<div style="margin-left: 70px; display: block; font-size: 12px; color: #8C939D; ">发表任何想与大家分享的经验及想法！关于本课程、学习、工作、生活等一般性话题</div>
+				<h4 style="margin-top: 30px; margin-left: 5px; display: block;">我关注的主题</h4>
+				<div id="mine">
+					<template>
+						<el-form ref="form">
+							<el-form-item>
+								<div v-for="s in projectTitles" style="margin-left: 15px; display: block;">
+									<a style="text-decoration: none; color: #000000;">{{s.projectTitle}}</a>
+									<span style="margin-top: -10px; margin-left: 50px; display: block; color: #2DACD1;">发表于{{s.projectCreatetime}}</span>
+									<div style="margin-top: -40px; margin-left: 600px;">
+										浏览：<span id="liu">{{s.through.length}}</span></div>
+									<div style="margin-top: -40px; margin-left: 700px; display: block;">
+										回复：<span id="reply">{{s.projectReply.length}}</span></div>
+									<div style="margin-top: -40px; margin-left: 800px; display: block; ">
+										投票：<span id="tou">{{s.projectCount.length}}</span></div>
+								</div>
+							</el-form-item>
+							<el-form-item>
+								<div id="span1" style="border: 1px solid white;">
+									<a href="student.html"></a>
+								</div>
+							</el-form-item>
+						</el-form>
+					</template>
+				</div>
+			</div>
+
+			<div id="foot" style="border: 1px solid #ECF5FF; height: 1000px; width: 1000px;">
+				<h4 style="margin-top: 30px; margin-left: 5px; display: block;">全部主题</h4>
+				<div id="last" style="margin-left: 550px; margin-top: -40px;">
+					<el-row>
+						<el-button size="small" @click="axios5(currentPage,pageSize)">最新发表</el-button>
+						<el-button size="small">最后回复</el-button>
+						<el-button size="small">回复数</el-button>
+						<el-button size="small">投票数</el-button>
+					</el-row>
+					<template>
+						<el-form>
+							<el-form-item>
+								<div v-for="item in projectTitles" style="margin-left: -550px; margin-top: 10px; display: block;">
+									<p @click="aaa(item)" style="text-decoration: none; margin-top: -20px; color: #000000;">{{item.projectTitle}}</p>
+									<span style="margin-top: -5px; margin-left: 50px; display: block; color: #2DACD1;">发表于{{item.projectCreatetime}}</span>
+									<span v-show="1!=1">{{item.id}}</span>
+									<div style="margin-top: -40px; margin-left: 600px;">
+										浏览：<span id="liu">{{item.through.length}}</span></div>
+									<div style="margin-top: -40px; margin-left: 700px; display: block;">
+										回复：<span id="reply">{{item.projectReply.length}}</span></div>
+									<div style="margin-top: -40px; margin-left: 800px; display: block; ">
+										投票：<span id="tou">{{item.projectCount.length}}</span></div>
+								</div>
+							</el-form-item>
+						</el-form>
+					</template>
+					<div class="block" style="margin-left: -500px; display: block;">
+						<el-pagination @size-change="handleSizeChange" ref="pagination" @current-change="handleCurrentChange"
+						 :current-page="currentPage" :page-sizes="[10, 20, 30, 40]" :page-size="pageSize=10" layout="total, sizes, prev, pager, next, jumper"
+						 :total="total">
+						</el-pagination>
+					</div>
+				</div>
+
+			</div>
+	</body>
+	<script>
+		new Vue({
+			el: '#header',
+			data: {
+				options: [{
+					value: '选项1',
+					label: '全部讨论区'
+				}, {
+					value: '选项2',
+					label: '老师答疑区'
+				}, {
+					value: '选项3',
+					label: '课堂交流区'
+				}, {
+					value: '选项5',
+					label: '综合讨论区'
+				}],
+				value: ''
+			}
+		})
+	</script>
+
+	<script>
+		new Vue({
+			el: '#new1',
+			data: {
+				projectTitle: '',
+				projectCreatetime: ''
+			},
+			mounted: function() {
+				this.$nextTick(function() {
+					this.axios1();
+				})
+			},
+			methods: {
+				axios1: function() {
+					var vm = this;
+					axios({
+							url: 'http://localhost:8021/project/getProject',
+							params: {
+								projectModule: 1
+							}
+						})
+						.then(function(response) {
+							vm.projectTitle = response.data.projectTitle;
+							//alert(vm.projectTitle)
+							console.log(response);
+							console.log(response.data.projectTitle);
+
+						})
+						.catch(function(error) {
+							console.log(error);
+						});
+				}
+			},
+		})
+	</script>
+	<script>
+		new Vue({
+			el: '#clazz',
+			data: {
+				projectTitle: ''
+			},
+			mounted: function() {
+				this.$nextTick(function() {
+					this.axios2();
+				})
+			},
+			methods: {
+				axios2: function() {
+					var vm = this;
+					// 发起一个POST请求
+					axios({
+							url: 'http://localhost:8021/project/getProject',
+							params: {
+								projectModule: 2
+							}
+						})
+						.then(function(response) {
+							vm.projectTitle = response.data.projectTitle;
+							console.log(response);
+							console.log(response.data.projectTitle);
+						})
+						.catch(function(error) {
+							console.log(error);
+						});
+				}
+			},
+		})
+	</script>
+	<script>
+		new Vue({
+			el: '#he',
+			data: {
+				projectTitle: ''
+			},
+			mounted: function() {
+				this.$nextTick(function() {
+					this.axios3();
+				})
+			},
+			methods: {
+				axios3: function() {
+					var vm = this;
+					axios({
+							url: 'http://localhost:8021/project/getProject',
+							params: {
+								projectModule: 3
+							}
+						})
+						.then(function(response) {
+							vm.projectTitle = response.data.projectTitle;
+							console.log(response);
+							console.log(response.data.projectTitle);
+						})
+						.catch(function(error) {
+							console.log(error);
+						});
+				}
+			},
+		})
+	</script>
+	<script>
+		new Vue({
+			el: '#mine',
+			data: {
+				projectTitles: ''
+			},
+			mounted: function() {
+				this.$nextTick(function() {
+					this.axios4();
+				})
+			},
+			methods: {
+				axios4: function() {
+					var vm = this;
+					axios({
+							url: 'http://localhost:8021/project/getProjectStatePage',
+							params: {
+								projectState: 0,
+								uId: 3
+							}
+						})
+						.then(function(response) {
+							var vms = this;
+							vm.projectTitles = response.data;
+							console.log(response);
+							console.log(response.data + "6666666666");
+							console.log(vm.projectTitles)
+						})
+						.catch(function(error) {
+							console.log(error);
+						});
+				}
+			},
+		})
+	</script>
+	<script>
+		new Vue({
+			el: '#foot',
+			data: {
+				projectTitles: [],
+				currentPage: 1,
+				pageSize: 10,
+				total: 100
+			},
+			created: function() {
+				this.axios5(this.currentPage, this.pageSize);
+			},
+			methods: {
+				handleClick(row) {
+					console.log(row);
+				},
+				handleSizeChange(val) {
+					console.log(`每页 ${val} 条`);
+					this.pageSize = val;
+					this.axios5(this.currentPage, val);
+				},
+				handleCurrentChange(val) {
+					console.log(`当前页: ${val}`);
+					this.currentPage = val;
+					this.axios5(val, this.pageSize);
+				},
+				axios5(page, limit) {
+					var vm = this;
+					axios({
+							method: 'post',
+							url: 'http://localhost:8021/project/getProjectPage',
+							params: {
+								page: page,
+								rows: limit
+							}
+						})
+						.then(function(response) {
+							console.log(response.data);
+							vm.total = response.data.total;
+							vm.projectTitles = response.data.rows;
+							//vm.projectTitles.id=response.data.rows.projectId;
+							console.log(response);
+							console.log(response.data);
+							console.log(vm.projectTitles);
+
+						})
+						.catch(function(error) {
+							console.log(error);
+						});
+				},
+				aaa: function(item) {
+					alert(item.id)
+					console.log(item.id + "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+					window.localStorage.setItem("id", item.id);
+					window.localStorage.setItem("title", item.projectTitle);
+					window.localStorage.setItem("content", item.projectContent);
+					window.localStorage.setItem("projectCreatetime",item.projectCreatetime);
+					console.log(item.projectTitle);
+					window.location.href = "projectDetails.html";
+				}
+
+			},
+		})
+	</script>
+</html>

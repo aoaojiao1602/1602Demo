@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>老师答疑区</title>
+		<script src="js/vue.min.js"></script>
+		<script src="js/element-ui.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/element-ui.css" />
+		<link rel="stylesheet" type="text/css" href="css/center.css" />
+		<script src="js/echarts.js"></script>
+		<script src="js/axios.min.js"></script>
+	</head>
+	<body>
+		<div id="big" style="border: 1px solid red; height: auto; width: 1000px">
+			<div id="header" style="border: 1px solid #F5F7FA; height: 80px; width: 1000px;">
+				<a href="discuss.html" style="margin-left: 10px; margin-top: 40px; display: block; font-size: 14px; text-decoration: none;">讨论区&nbsp;&nbsp;&nbsp;&nbsp;></a>
+				<span style="margin-left: 90px; margin-top: -17px; display: block; font-size: 14px; color: #551a8b">综合讨论区</span>
+				<el-select v-model="value" placeholder="请选择" style="margin-left: 870px; margin-top: -25px; display: block;">
+					<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+					</el-option>
+				</el-select>
+			</div>
+			<div id="main" style=" border: 1px solid #F5F7FA; height: 150px; width: 1000px;">
+				<span style="margin-left: 10px; margin-top: 25px; display: block;">综合讨论区</span>
+				<span style="margin-left: 10px; margin-top: 5px; display: block; font-size: 12px;">发表任何想与大家分享的经验及想法！关于本课程、学习、工作、生活等一般性话题。</span>
+				<a href="ZFB.html" style="text-decoration: none;">
+					<el-button type="success" src="zhuti.html" style="margin-top: 20px; margin-left: 5px; display: block;">发起主题</el-button>
+				</a>
+			</div>
+			<div id="foot" style=" height: 1000px; width: 1000px;">
+				<div id="foot1" style="height: 60px; width: 300px;">
+					<h4 style="margin-top: 30px; margin-left: 10px; display: block;">全部主题</h4>
+					<el-select v-model="value" placeholder="请选择" style="margin-top: -53px; margin-left: 80px; display: block;">
+						<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
+				</div>
+				<div id="foot2" style="height: 60px; width: 400px; margin-left: 600px; margin-top: -40px;">
+					<el-row>
+						<el-button size="small" @click="axios5(currentPage,pageSize)">最新发表</el-button>
+						<el-button size="small">最后回复</el-button>
+						<el-button size="small">回复数</el-button>
+						<el-button size="small">投票数</el-button>
+					</el-row>
+					<template>
+						<el-form>
+							<el-form-item>
+								<div v-for="item in projectTitles" style="margin-left: -550px; margin-top: 10px; display: block;">
+									<p @click="aaa(item)" style="text-decoration: none; margin-top: -20px; color: #000000;">{{item.projectTitle}}</p>
+									<span style="margin-top: -5px; margin-left: 50px; display: block; color: #2DACD1;">发表于{{item.projectCreatetime}}</span>
+									<div style="margin-top: -40px; margin-left: 600px;">
+										浏览：<span id="liu">{{item.through.length}}</span></div>
+									<div style="margin-top: -40px; margin-left: 700px; display: block;">
+										回复：<span id="reply">{{item.projectReply.length}}</span></div>
+									<div style="margin-top: -40px; margin-left: 800px; display: block; ">
+										投票：<span id="tou">{{item.projectCount.length}}</span></div>
+								</div>
+							</el-form-item>
+						</el-form>
+					</template>
+					<div class="block" style="margin-left: -500px; display: block;">
+						<el-pagination @size-change="handleSizeChange" ref="pagination" @current-change="handleCurrentChange"
+						 :current-page="currentPage" :page-sizes="[10, 20, 30, 40]" :page-size="pageSize=10" layout="total, sizes, prev, pager, next, jumper"
+						 :total="total">
+						</el-pagination>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el: '#header',
+			data: {
+				options: [{
+					value: '选项1',
+					label: '全部讨论区'
+				}, {
+					value: '选项2',
+					label: '老师答疑区'
+				}, {
+					value: '选项3',
+					label: '课堂交流区'
+				}, {
+					value: '选项5',
+					label: '综合讨论区'
+				}],
+				value: '老师答疑区'
+			}
+		})
+		new Vue({
+			el: '#main',
+			data: {
+
+			}
+		})
+		new Vue({
+			el: '#foot1',
+			data: {
+				options: [{
+					value: '选项1',
+					label: '全部讨论区'
+				}, {
+					value: '选项2',
+					label: '老师答疑区'
+				}, {
+					value: '选项3',
+					label: '课堂交流区'
+				}, {
+					value: '选项5',
+					label: '综合讨论区'
+				}],
+				value: ''
+			}
+		})
+		new Vue({
+			el: '#foot2',
+			data: {
+				projectTitles: [],
+				currentPage: 1,
+				pageSize: 10,
+				total: 100
+			},
+			created: function() {
+				this.axios5(this.currentPage, this.pageSize);
+			},
+			methods: {
+				handleClick(row) {
+					console.log(row);
+				},
+				handleSizeChange(val) {
+					console.log(`每页 ${val} 条`);
+					this.pageSize = val;
+					this.axios5(this.currentPage, val);
+				},
+				handleCurrentChange(val) {
+					console.log(`当前页: ${val}`);
+					this.currentPage = val;
+					this.axios5(val, this.pageSize);
+				},
+				axios5(page, limit) {
+					var vm = this;
+					axios({
+							method: 'post',
+							url: 'http://localhost:8021/project/getProjectPage',
+							params: {
+								page: page,
+								rows: limit,
+								projectCreatetime: 1999
+							}
+						})
+						.then(function(response) {
+							console.log(response.data);
+							vm.total = response.data.total;
+							vm.projectTitles = response.data.rows;
+							console.log(response);
+							console.log(response.data);
+							console.log(vm.projectTitles);
+
+						})
+						.catch(function(error) {
+							console.log(error);
+						});
+				},
+				
+			},
+		})
+	</script>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>帖子详情</title>
+		<link rel="stylesheet" href="wwwww/css/layui.css" media="all">
+		<script src="wwwww/js/layui/layui.all.js" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="css/element-ui.css" />
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/element-ui.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<!-- #f8f8f8 -->
+		<div id="big" style="border:  1px solid #f8f8f8; height: auto;" width: 1000px;">
+			<div id="header">
+				<a href="discuss.html" style="margin-left: 10px; margin-top: 40px; display: block; font-size: 14px; text-decoration: none;">讨论区&nbsp;&nbsp;&nbsp;&nbsp;></a>
+				<span style="margin-left: 90px; margin-top: -20px; display: block; font-size: 14px; color: #551a8b">主题详情</span>
+			</div>
+			<div id="main" style=" background: #f8f8f8; margin-left: 20px;border: 1px solid #f8f8f8;  width: 1000px; height:300px">
+				<h3 style="margin-left: 20px; margin-top: 20px; display: block;">学习</h3>
+				<span style="margin-left: 50px; margin-top: 10px; display: block; font-size:14px">如何学习</span>
+				<p style="margin-left: 70px; margin-top: 10px; display: block; font-size:13px">发表于：2018-10-10 23:02:33</p>
+				<el-row>
+					<el-button style="margin-left: 300px; margin-top: 60px; display: block;">关注</el-button>
+				</el-row>
+			</div>
+			<div id="foot" style="border: 1px solid #f8f8f8; height: 450px; width: 1000px; margin-left: -30px;">
+				<form class="layui-input-block">
+					<div class="layui-input-block" style="margin-top: 15px;  display: block;">
+						<textarea name="projectContent" lay-verify="article_desc" class="layui-textarea" id="LAY_demo1" style="display: none">  </textarea>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-input-block" style="margin-top: 30px; display: block;">
+							<button class="layui-btn" lay-submit lay-filter="formDemo">发表回复</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</body>
+
+	<script>
+		/* var id = window.localStorage.getItem("id");
+		var title = window.localStorage.getItem("title");
+		var content = window.localStorage.getItem("content");
+		alert(title);
+		alert(content);
+		alert(id); */
+	</script>
+	<script>
+		new Vue({
+			el: '#main',
+			data: {
+				title: "",
+				context: "",
+				projectCreatetime:""
+			},
+			created: function() {
+				//var id = window.localStorage.getItem("id");
+				var title = window.localStorage.getItem("title");
+				var content = window.localStorage.getItem("content");
+				var projectCreatetime=window.localStorage.getItem("projectCreatetime");
+				/* alert(title);
+				alert(content);
+				alert(projectCreatetime); */
+			},
+
+		})
+	</script>
+	<script>
+		//window.localStorage.setItem("id",item.id);
+		layui.use(['layer', 'form', 'layedit'], function() {
+			var form = layui.form;
+			var layedit = layui.layedit,
+				$ = layui.jquery;
+			//构建一个默认的编辑器
+			var index = layedit.build('LAY_demo1');
+			//编辑器外部操作
+			var active = {
+				content: function() {
+					alert(layedit.getContent(index)); //获取编辑器内容
+				}
+			};
+		});
+	</script>
+</html>
