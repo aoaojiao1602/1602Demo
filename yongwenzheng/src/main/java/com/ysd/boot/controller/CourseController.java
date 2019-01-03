@@ -1,6 +1,7 @@
 package com.ysd.boot.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ysd.boot.entity.Course;
 import com.ysd.boot.service.CourseService;
+import com.ysd.boot.service.HJCourseService;
 import com.ysd.boot.tool.Result;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -29,6 +31,9 @@ public class CourseController {
 	
 	@Autowired
 	private CourseService courseService;
+	
+	@Autowired
+	private HJCourseService hjCourseService;
 	
 	/***
 	 * 添加课程推荐
@@ -43,14 +48,22 @@ public class CourseController {
 		//我通过修改推荐状态，权重，位置进行推荐
 		//为了测试方便前台添加按钮进行我功能测试
 		Result result=new Result();
-		if (courseService.addCourse(1, 0,"1")>0) {
+		int a=0;
+		List<Map<String, Object>> list=hjCourseService.getLearnrecordByUpdateTime();
+		 for (Map<String, Object> map : list) {
+				
+				System.err.println(map.get("number"));
+				
+				Integer kid=Integer.parseInt((String) map.get("learn_course_id"));
+				System.err.println(kid);
+				a+=courseService.addCourse(kid, 0,map.get("number")+"人");
+				
+			}
+		
 			result.setState(1);
-			result.setMsg("添加成功");
+			result.setMsg("成功添加 "+a+" 条数据");
 			
-		} else {
-			result.setState(0);
-			result.setMsg("添加失败");
-		}
+		
 		return result;
 	}
 	
