@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hwg.service.CategoryService;
+import com.hwg.service.YwzService;
 
 /**
  * @Description 分类控制器层
@@ -20,7 +20,7 @@ import com.hwg.service.CategoryService;
 @RestController
 public class CategoryController {
 	@Autowired
-	private CategoryService cService;
+	private YwzService cService;
 	
 	/**
 	 * 	查询出所有的分类

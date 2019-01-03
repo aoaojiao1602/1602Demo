@@ -1,13 +1,15 @@
 package com.hwg.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.hwg.service.YwzService;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -22,15 +24,19 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/course")
 public class CourseController {
 	
+	@Autowired
+	private YwzService cService;
+	
+	
 	/**
 	 * 	查询推荐课程（根据位置）
 	 * @return
 	 */
-	@GetMapping()
+	@GetMapping("/getCourseTj")
 	@ApiOperation("查询推荐课程（根据位置）")
 	@ApiImplicitParam(value="推荐位置",name="position")
 	public Object getCourseTj(String position) {
-		List<Map<String, Object>> list=new ArrayList<>();
+	/*	List<Map<String, Object>> list=new ArrayList<>();
 		
 		for (int i = 1; i<=8; i++) {
 			Map<String, Object> map=new HashMap<String,Object>();
@@ -39,12 +45,14 @@ public class CourseController {
 			map.put("zj", "进行至一周");
 			map.put("gs", "讲述ms传奇的人生经历 助你走上人生巅峰早日能与太阳肩并肩");
 			list.add(map);
+		}*/
+		List<Map<String, Object>> list=(List<Map<String, Object>>) cService.gettjCourse(position, "");
+		for (Map<String, Object> map : list) {
+			//调用查询课程方法
 		}
-		return list;
+		//System.out.println(cService.gettjCourse(position, "").getClass());
+		return cService.gettjCourse(position, "");
 	}
-	
-	
-	
 	
 	
 	/**

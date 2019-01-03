@@ -13,5 +13,13 @@ public interface CourseService {
 	 * @return
 	 */
 	public Object getCourseByCategoryId(Integer cId,String access_token);
+	
+	/**
+	 * 根据课程id查询课程 
+	 * @param id
+	 * @param access_token
+	 * @return
+	 */
+	public Object getCourseById(Integer id,String access_token);
 
 }

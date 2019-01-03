@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hwg.entity.Coursecomment;
-import com.hwg.service.CategoryService;
+import com.hwg.service.YwzService;
 import com.hwg.serviceImpl.CoursecommentServiceImpl;
 import com.hwg.utils.ExcelCreate;
 import com.hwg.utils.POIUtils;
@@ -38,7 +38,7 @@ public class CourseCommentController {
 	
 	//分类接口
 	@Autowired
-	private CategoryService caService;
+	private YwzService caService;
 
 
 	@ApiOperation("条件查询课程评论")
