@@ -69,5 +69,8 @@ public class PicServiceImpl implements PicService{
 	public int postPic(Pic p) {		
 		return pRepository.postPic(p);
 	}
-	
+	@Override
+	public List<Pic> getPicBycourseId(Integer courseId) {
+		return pRepository.getPicBycourseId(courseId);
+	}
 }

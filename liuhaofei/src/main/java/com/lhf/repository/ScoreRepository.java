@@ -1,6 +1,8 @@
 package com.lhf.repository;
 
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -27,5 +29,7 @@ public interface ScoreRepository extends JpaRepository<Score, Integer>,JpaSpecif
 	@Modifying
 	@Transactional
 	public int postScoreById(@Param("s") Score s);
-
+	//根据课程Id查询评分标准
+	@Query(value="SELECT * FROM score WHERE score_course=?1 ", nativeQuery = true)
+	public List<Score> getScoreBycourseId(Integer courseId);
 }

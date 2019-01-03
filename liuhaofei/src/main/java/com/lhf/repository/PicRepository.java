@@ -1,5 +1,7 @@
 package com.lhf.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -23,4 +25,7 @@ public interface PicRepository extends JpaRepository<Pic, Integer> ,JpaSpecifica
 	@Modifying
 	@Transactional
 	public int postPic(@Param("p") Pic p); 
+	//根据课程Id查询图片
+	@Query(value="SELECT * FROM pic WHERE pic_course=?1 ", nativeQuery = true)
+	public List<Pic> getPicBycourseId(Integer courseId);
 }

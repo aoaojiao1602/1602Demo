@@ -1,4 +1,6 @@
 package com.lhf.repository;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -25,4 +27,7 @@ public interface NoticeRepository extends JpaRepository<Notice, Integer> ,JpaSpe
 	@Modifying
 	@Transactional
 	public int postNotice(@Param("n") Notice n);
+	//根据课程Id查询公告
+	@Query(value="SELECT * FROM notice WHERE notice_course=?1 ", nativeQuery = true)
+	public List<Notice> getNoticeBycourseId(Integer courseId);
 }
