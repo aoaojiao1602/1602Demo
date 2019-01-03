@@ -52,4 +52,19 @@ public class StudentTestInfoController {
 		//Map<String, Object>  map=stuExaService.indexStudentExamInfo(stuid,examid);
 		return score;
 	}
+	/**
+	 * 查询课程的考试
+	 * http://localhost:8080/queryTest
+	  * 作者: 大娃   
+	  * 邮件: 1558936588@qq.com  
+	  * 时间: 2019年1月3日 上午11:28:41  
+	  * 版本: V1.0
+	 */
+/*	@ApiOperation(value="获取本次试卷信息", notes="获取试卷信息")
+	@ApiImplicitParam(name = "stuid", value = "学生id", required = true,paramType="Integer")*/
+	@RequestMapping(value="/stuCheckTest", method = RequestMethod.GET)
+	public Object stuCheckTest(int sectionid,int stuid) {
+		Map<String, Object>  map=stService.stuCheckTest(sectionid,stuid);
+		return map;
+	}
 }
