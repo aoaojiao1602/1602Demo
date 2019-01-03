@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="css/videoplayer.css" />
+		<!--模板首页工共js、css文件引用-->
+		<script src="js/commonJs.js"></script>
+		<script src="js/videoplayer.min.js"></script>
+	</head>
+	<body>
+		<div class="mod-yivideo-warp" style="width: 100%;" id="mod_player"></div>
+	</body>
+	
+	
+	<script type="text/javascript">
+		$.get("http://localhost:8010/learnrecord",{
+			 kcId:1
+			,xsId:1
+			,zj:1
+		},function(res){
+			let isKj=true;
+			if(res.learnCourseTime==0){
+	      		isKj=false;
+	      	}
+			var videoplayer=videoPlayer('mod_player',{
+	            continuousPlay:true,
+	            autoPlay:false,//是否自动播放
+	            canfast:isKj,//是否可以快进
+	            width: '100%',
+	           	virtualFullScreen:false,//是否虚拟全屏
+	            setSource:function(canplayTypes){
+	
+	                // if(canplayType == 'mp4'){
+	                //     return 'http://play.ergeyy.com/vedios/stream/xiaopingguo.m3u8'
+	                // }
+	                console.log(canplayTypes);
+	                http://play.ergeyy.com/vedios/3_39_1534778334001_1.mp4
+	                if (canplayTypes.indexOf('mp4') >= 0) {
+	                    return 'http://127.0.0.1:8020/videoplayer-master/img/test1.mp4'
+	                }
+	                return 'http://127.0.0.1:8020/videoplayer-master/img/test1.mp4';
+	            },
+	            nextSource:function(canplayType){
+				
+	            },
+	            success:function(video,node,videoObj){
+	            	videoplayer.setCurrentTime(res.learnCourseTime);
+	               // videoObj.fullScreen();
+	               	videoObj.timeupdate(function(currentTime){
+	                    //关闭网页监听事件
+					   	window.onbeforeunload = function(){
+						    $.ajax({
+		                    	type:'PUT',
+		                    	url:'http://localhost:8010/learnrecord',
+		                    	data:{
+		                    	learnCourseId:1
+								,learnCourseRecord:1
+								,learnCourseTime:currentTime+1
+								,learnRemark:'ok'
+								,learnStuId:1
+		                    	},
+		                    	success:function(res){
+		                    		console.log(res)	 
+		                    	}
+	                    	})
+						}
+	                }); 
+	            }
+	        });	
+		})
+        
+        
+
+	
+	</script>
+</html>

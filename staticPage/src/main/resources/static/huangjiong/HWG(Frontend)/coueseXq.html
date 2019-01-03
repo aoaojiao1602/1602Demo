@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>课程详情</title>
+		<link rel="stylesheet" href="css/hj_css.css" type="text/css" />
+		<link rel="stylesheet" href="css/element-ui.css" />
+		<script src="js/commonCss.js"></script>
+		<script src="js/commonJs.js"></script>
+		<script src="js/vue.min.js"></script>
+		<script src="js/axios.min.js"></script>
+		<script src="js/element-ui.js"></script>
+	</head>
+	<body id="body" class="wide-layout preloader-active">
+
+     
+
+
+    <!--[if lt IE 9]>
+        <p class="browserupgrade alert-error">
+        	You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
+        </p>
+    <![endif]-->
+
+    <noscript>
+        <div class="noscript alert-error">
+            For full functionality of this site it is necessary to enable JavaScript. Here are the <a href="http://www.enable-javascript.com/" target="_blank">
+		 instructions how to enable JavaScript in your web browser</a>.
+        </div>
+    </noscript>
+
+    <!-- ––––––––––––––––––––––––––––––––––––––––– -->
+    <!-- PRELOADER                                 -->
+    <!-- ––––––––––––––––––––––––––––––––––––––––– -->
+    <!-- Preloader -->
+    <div id="preloader" class="preloader">
+        <div class="loader-cube">
+            <div class="loader-cube__item1 loader-cube__item"></div>
+            <div class="loader-cube__item2 loader-cube__item"></div>
+            <div class="loader-cube__item4 loader-cube__item"></div>
+            <div class="loader-cube__item3 loader-cube__item"></div>
+        </div>
+    </div>
+    <!-- End Preloader -->
+    <!-- ––––––––––––––––––––––––––––––––––––––––– -->
+    <!-- WRAPPER                                   -->
+    <!-- ––––––––––––––––––––––––––––––––––––––––– -->
+    <div id="pageWrapper"  class="page-wrapper">
+        <!-- –––––––––––––––[ HEADER ]––––––––––––––– -->
+        <header id="mainHeader" class="main-header">
+
+            <!-- 头部 -->
+            <div class="top-bar bg-gray" id="top" style="border:  solid red;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4 is-hidden-sm-down">
+                            <ul class="nav-top nav-top-left list-inline t-left">
+                                <li><a href="terms_conditions.html"><i class="fa fa-question-circle"></i>Discounts Guide</a>
+                                </li>
+                                <li><a href="faq.html"><i class="fa fa-support"></i>Customer Assistance</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-12 col-md-8">
+                            <ul class="nav-top nav-top-right list-inline t-xs-center t-md-right">
+                                <li>
+                                    <a href="#"><i class="fa fa-flag-usa"></i>English <i class="fa fa-caret-down"></i></a>
+                                    <ul>
+                                        <li><a href="#"><i class="fa fa-flag-usa"></i>English</a>
+                                        </li>
+                                        <li><a href="#"><i class="fa fa-flag-fra"></i>France</a>
+                                        </li>
+                                        <li><a href="#"><i class="fa fa-flag-ger"></i>Germany</a>
+                                        </li>
+                                        <li><a href="#"><i class="fa fa-flag-rus"></i>Russia</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-usd"></i>USD <i class="fa fa-caret-down"></i></a>
+                                    <ul>
+                                        <li><a href="#">USD - US Dollar</a>
+                                        </li>
+                                        <li><a href="#">EUR - Euro</a>
+                                        </li>
+                                        <li><a href="#">CNY - Chinese Yuan</a>
+                                        </li>
+                                        <li><a href="#">RUB - Russian Ruble</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a href="signin.html"><i class="fa fa-lock"></i>Sign In</a>
+                                </li>
+                                <li><a href="signup.html"><i class="fa fa-user"></i>Sign Up</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End 头部 -->
+
+        </header>
+        <!-- –––––––––––––––[ HEADER ]––––––––––––––– -->
+
+        <!-- –––––––––––––––[ PAGE CONTENT ]––––––––––––––– -->
+
+            	<!-- Page Container -->
+                    <div class="row row-rl-10 row-tb-20" style="width: 100%;  margin-left: 20px; float: left;">
+                        <div  style="width: 15%; margin-top: 3%; float: left; " >
+                            <!-- Blog Sidebar -->
+                            <aside class="sidebar blog-sidebar">
+                                <div class="row row-tb-5 iframeRadius" style="border:solid 1px #C0C4CC ; border-radius:15px;">
+                                        <!-- Recent Posts -->
+                                     	<div>
+                                          	<div class="divIframe" id="if1" @click="openUrl('courseVideo.html','if1')"  >
+                                          		<a><h3 style="padding-top: 10px;">学习</h3></a>
+                                          	</div>
+                                          	<div class="divIframe" id="if2" @click="submit()"  >
+                                          		<a><h3 style="padding-top: 10px;">考试</h3></a>
+                                          	</div>
+                                          	<div class="divIframe" id="if3" @click="openUrl('index.html','if3')" >
+                                          		<a><h3 style="padding-top: 10px;">ssss</h3></a>
+                                          	</div>
+                                          	<div class="divIframe" >
+                                          		<a><h3 style="padding-top: 10px;">ssss</h3></a>
+                                          	</div>
+                                          	<div class="divIframe" >
+                                          		<a><h3 style="padding-top: 10px;">ssss</h3></a>
+                                          	</div>
+                                          	<div class="divIframe" >
+                                          		<a><h3 style="padding-top: 10px;">ssss</h3></a>
+                                          	</div>
+					                        <div class="divIframe">
+                                          		<a><h3 style="padding-top: 10px;">ssss</h3></a>
+                                          	</div>                	
+                                        </div>
+                                        <!-- End Recent Posts -->
+                                </div>
+                            </aside>
+                            <!-- End Blog Sidebar -->
+                        </div>
+                        <div style=" float: left; width: 81%; margin-left: 30px; margin-top: 3%;">
+                           <iframe :src="ifUrl" id="iframepage"   width="100%"  ></iframe>
+                        </div>
+                    </div>
+   	
+   	</div>
+</body>
+
+
+<script>
+	let ifm=document.getElementById("iframepage")
+	let pageWrapperHg=document.getElementById("top").clientHeight
+	ifm.height=document.body.scrollHeight-(pageWrapperHg+50)
+</script>
+
+
+<script>
+	
+	
+	new Vue({
+		el:'#pageWrapper',
+		data:{
+			ifUrl:'',
+			topId:'',
+			stuid: 6,
+			//课程id
+			examid: 1,
+			stuName:'马小帅'
+		},
+		methods:{
+			openUrl:function(thisurl,thisId){
+				this.ifUrl=thisurl
+				document.getElementById(thisId).setAttribute('style','background-color: #2ED87B;')
+				if(this.topId!=''&&this.topId!=null){
+					document.getElementById(this.topId).setAttribute('style','background-color: white;')
+				}
+				this.topId=thisId;
+			},
+			submit() {
+					var other = this;
+					//验证考试状态
+					axios.get("http://localhost:8040/checkExamInfo", {
+							params: {
+								stuid: other.stuid,
+								examid: other.examid
+							}
+						})
+						.then(function(response) {
+							console.log(response.data);
+							if (response.data.examInfo == null) {
+								other.$message({
+									type: 'success',
+									message: '该课程还没建立考试!'
+								});
+							} else {
+								var startTime = response.data.examInfo.startTime;
+								var endTime = response.data.examInfo.endTime;
+								var s = new Date(Date.parse(startTime.replace(/-/g, "/")));
+								var e = new Date(Date.parse(endTime.replace(/-/g, "/")));
+								var curDate = new Date();
+								console.log(s);
+								console.log(e);
+								console.log(curDate);
+								if (s <= curDate && curDate <= e) {
+									if(response.data.studentExamInfo !=null&&response.data.studentExamInfo.examScore!=null){
+										other.$message({
+											type: 'warning',
+											message: "当前课程考试您已经考过了分数为"+response.data.studentExamInfo.examScore+"!"
+										});
+									}else{
+										other.$confirm('是否立即进入考试, 是否继续?', '提示', {
+											confirmButtonText: '确定',
+											cancelButtonText: '取消',
+											type: 'warning',
+											center: true
+										}).then(() => {
+											window.location.href = "http://localhost:8000/liuwenjin/vueDemo/User_Examinfo.html?stuid=" + other.stuid +
+												"&examid=" + other.examid+"&stuName="+other.stuName;
+										}).catch(() => {
+											other.$message({
+												type: 'info',
+												message: '已取消'
+											});
+										});
+									}
+								} else {
+									other.$message({
+										type: 'warning',
+										message: '当前时间该考试还没有开放!'
+									});
+								}
+								
+							}
+						})
+						.catch(function(error) {})
+
+				}
+		}
+		
+	})
+	
+</script>
+</html>

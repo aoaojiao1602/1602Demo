@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="no-js">
+	<!--no-js 检测当前浏览器是否支持css3、h5 并且使浏览器支持h5新标签。。-->
+
+	<head>
+		<meta charset="utf-8" />
+		<title>河南工业大学IT教育</title>
+	</head>
+	<!--自定义css文件-->
+	<link rel="stylesheet" href="css/hj_css.css" type="text/css" />
+	<link rel="stylesheet" href="css/element-ui.css" />
+	<!--模板首页工共js、css文件引用-->
+	<script src="js/commonCss.js"></script>
+	<script src="js/commonJs.js"></script>
+
+	<script src="js/vue.min.js"></script>
+	<script src="js/axios.min.js"></script>
+	<script src="js/element-ui.js"></script>
+
+	<body id="body" class="wide-layout preloader-active">
+		<noscript>
+        <div class="noscript alert-error">
+			要实现本站点的全部功能，必须启用JavaScript。这里是<a href="http://www.enable-javascript.com/" target="_blank">如何在web浏览器中启用JavaScript的说明</a>
+        </div>
+    </noscript>
+
+		<!-- 预加载器-->
+		<div id="preloader" class="preloader">
+			<div class="loader-cube">
+				<div class="loader-cube__item1 loader-cube__item"></div>
+				<div class="loader-cube__item2 loader-cube__item"></div>
+				<div class="loader-cube__item4 loader-cube__item"></div>
+				<div class="loader-cube__item3 loader-cube__item"></div>
+			</div>
+		</div>
+		<!-- 预加载器结束 -->
+
+		<!--包装器-->
+		<div id="pageWrapper" class="page-wrapper" style="position:  relative;">
+			<!-- –––––––––––––––[ 首部 ]––––––––––––––– -->
+			<header id="mainHeader" class="main-header">
+				<!-- 搜索框下部导航 -->
+				<div class="header-menu bg-blue" id="topMenu" style="line-height:0">
+					<div class="container">
+						<div class="row">
+							<div class="container">
+								<nav class="nav-bar">
+									<div class="nav-header">
+										<span class="nav-toggle" data-toggle="#header-navbar">
+			                        		<i></i>
+			                        		<i></i>
+			                        		<i></i>
+			                    		</span>
+									</div>
+									<div id="header-navbar" class="nav-collapse">
+										<ul class="nav-menu">
+											<li>
+												<span>
+												<a href="index.html" class="logo" style="margin-left: -10px;">
+													<img src="http://localhost:8010/MSLOGO1.PNG" alt="" width="120px" style="height: 50px" >
+												</a>
+											</span>
+											</li>
+											<li class="dropdown-mega-menu">
+												<a>课程</a>
+												<div class="mega-menu" style="width: 39%;">
+													<ul style="overflow: hidden; width: 100%;">
+														<li v-for="(a,index) in category" v-if="index<6" style="width: 200px; float: left;">
+															<a href="#"><img src="assets/images/favicon/apple-touch-icon.png" class="manuImg" />{{a}}</a>
+														</li>
+														<li v-else style="width:200px; float: left;">
+															<a href="#"><img src="assets/images/favicon/apple-touch-icon.png" class="manuImg" />{{a}}</a>
+														</li>
+													</ul>
+												</div>
+											</li>
+											<li>
+												<a href="coupons_grid.html">2019考研</a>
+											</li>
+											<li>
+												<a href="stores_01.html">学校云</a>
+											</li>
+											<li>
+												<a href="contact_us_01.html">名师专栏</a>
+											</li>
+											<li style=" margin-left: 150px;">
+												<input type="text" class="form-control input-lg search-input" placeholder="搜索感兴趣的课程" required="required" style=" border: none; margin-top: 8.5px; background-color: white; height: 39px;" />
+											</li>
+											<li>
+												<el-button type="success" style=" margin-top: 8px;" icon="el-icon-search"></el-button>
+											</li>
+										</ul>
+									</div>
+									<div class="nav-menu nav-menu-fixed">
+										<li class="dropdown-mega-menu">
+											<a href="#">更多课程频道</a>
+											<div class="mega-menu">
+												<div>
+													<div>
+														<ul>
+															<li>
+																<a href="deals_grid.html">大学先修课</a>
+															</li>
+															<li>
+																<a href="deals_grid_sidebar.html">职业教育课</a>
+															</li>
+															<li>
+																<a href="deals_list.html">教师系列MOOC</a>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</li>
+									</div>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</div>
+			</header>
+			<!-- –––––––––––––––[ 首部结束 ]––––––––––––––– -->
+
+			<!-- –––––––––––––––[ 页面内容]––––––––––––––– -->
+			<main id="mainContent" class="main-content" style="position: relative;">
+				<div class="page-container ptb-10">
+					<div class="container">
+						<div class="row row-rl-10 row-tb-20">
+							<div class="page-content col-xs-12 col-md-8">
+
+								<section class="section deals-area">
+
+									<!-- Page Control -->
+									<header class="page-control panel ptb-15 prl-20 pos-r mb-30">
+
+									
+
+										<!--课程分类-->
+										<div id="menu" class="right-10" style="background: #f7f7f7; height: 200px; margin-top: 10px; padding: 5px 5px; font-size: 16px;">
+											
+										<!-- Breadcrumb 面包屑 -->
+										<div id="breadcrumb">
+											
+											<span id="">
+												<a href="">首页</a>
+											</span>
+												<span id="">
+												><a href="">全部课程</a>
+											</span>
+												<span id="">
+												> {{ cname }}
+											</span>
+										</div>
+										<!-- Breadcrumb 面包屑结束 -->
+											
+											<div style="width: 90%; margin: 0 auto;">
+												<ul>
+													<li class="category-li">
+														<a href="#">
+															<i class="el-icon-menu"></i>
+															<span >全部</span>
+														</a>
+													</li>
+												</ul>
+												<ul v-for="(a,index) in category">
+													<li class="category-li">
+														<a   @click="atest(index)">
+															<i class="el-icon-star-on"></i>
+															<span :id="index">  {{a}}</span>
+														</a>
+													</li>
+												</ul>
+												<ul>
+													<li class="category-li">
+														<a href="#">
+															<el-dropdown id="dropdown" style="font-size: 16px; color:#29ad6a;">
+																<span class="el-dropdown-link">
+																	<i class="el-icon-more"></i>
+																	更多<i class="el-icon-arrow-down el-icon--right"></i>
+																</span>
+																<el-dropdown-menu slot="dropdown">
+																	<el-dropdown-item>大学先修课<i class="el-icon-arrow-right el-icon--right"></i></el-dropdown-item>
+																	<el-dropdown-item>职业教育课<i class="el-icon-arrow-right el-icon--right"></i></el-dropdown-item>
+																	<el-dropdown-item>教师系列MOOC<i class="el-icon-arrow-right el-icon--right"></i></el-dropdown-item>
+																</el-dropdown-menu>
+															</el-dropdown>
+														</a>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<!--课程分类结束-->
+									</header>
+									
+									<!-- 课程列表 -->
+									<div class="row row-tb-20">
+										<div class="col-xs-12">
+											<div class="deal-single panel" id="courseDetails">
+												<div class="row row-rl-0 row-sm-cell" id="c_details" v-for="(c,index) in course">
+													<div class="col-sm-4">
+														<img :src="c.url" style="width: 100%;" />
+													</div>
+													<div class="col-sm-7">
+														<div class="pt-20 pl-20 pr-15">
+															<div class="pr-md-10">
+																<div class="rating mb-10">
+																	<h3><a href="deal_single.html">{{c.name}}</a></h3>
+																</div>
+
+																<ul class="deal-meta list-inline mb-10 color-mid">
+																	<!--<li>学校名称</li>-->
+																	<li class="c_detail">{{c.teacher}}</li>
+																</ul>
+																<p class="text-muted mb-20 c_detail">{{c.desc}}</p>
+															</div>
+															<div class="deal-price pos-r mb-15">
+																<ul class="deal-meta list-inline mb-10 color-mid">
+																	<li><i class="el-icon-date"></i> {{c.member}}人参加</li>
+																	<li style="color:#29ad6a;"><i class="el-icon-time"></i> 进行至第{{c.going}}周</li>
+																</ul>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- 课程列表结束 -->
+
+									<!-- Page Pagination -->
+									<div class="page-pagination text-center mt-30 p-10 panel">
+										<nav>
+											<!-- Page Pagination -->
+											<ul class="page-pagination">
+												<li>
+													<a class="page-numbers previous" href="#">Previous</a>
+												</li>
+												<li>
+													<a href="#" class="page-numbers">1</a>
+												</li>
+												<li><span class="page-numbers current">2</span>
+												</li>
+												<li>
+													<a href="#" class="page-numbers">3</a>
+												</li>
+												<li>
+													<a href="#" class="page-numbers">4</a>
+												</li>
+												<li><span class="page-numbers dots">...</span>
+												</li>
+												<li>
+													<a href="#" class="page-numbers">20</a>
+												</li>
+												<li>
+													<a href="#" class="page-numbers next">Next</a>
+												</li>
+											</ul>
+											<!-- End Page Pagination -->
+										</nav>
+									</div>
+									<!-- End Page Pagination -->
+
+								</section>
+
+							</div>
+							<div class="page-sidebar col-md-4 col-xs-12">
+
+								<!-- Blog Sidebar -->
+								<aside class="sidebar blog-sidebar">
+									<div class="row row-tb-10">
+										<div class="col-xs-12">
+											<!-- Latest Deals Widegt -->
+										</div>
+										
+										<!--开始-->
+										<div class="col-xs-12">
+											<!-- Best Rated Deals -->
+											<div class="widget best-rated-deals panel pt-20 prl-20" id="hotCourse">
+												<h3 class="widget-title h-title">本周课程热度排行</h3>
+												<div class="widget-body ptb-30">
+													<div class="media"  v-for="(c,index) in course" v-if="index==0">
+														<a href="#">
+															<div class="media-left">
+																	<img class="media-object" src="http://localhost:8010/MSLOGO1.PNG" alt="Thumb" width="80">
+															</div>
+															<div class="media-body">
+																<h6 class="mb-5">
+	                   												{{c}}
+	              												</h6>
+																<br />
+																<span class="color-muted">999人参加</span>
+															</div>
+														</a>
+													</div>
+													<div class="media" v-for="(c,index) in course" v-if="index>0">
+														<a href=""><h6 style="font-weight: 500;"  class="searchSelect">{{ index+1 }}. {{c}}</h6></a>
+													</div>
+												</div>
+											</div>
+											<!-- Best Rated Deals -->
+										</div>
+										<div class="col-xs-12">
+											<!-- Subscribe Widget -->
+											<div class="widget subscribe-widget panel pt-20 prl-20">
+												<h3 class="widget-title h-title">Subscribe to mail</h3>
+												<div class="widget-content ptb-30">
+
+													<p class="color-mid mb-20">Get our Daily email newsletter with Special Services, Updates, Offers and more!</p>
+													<form method="post" action="#">
+														<div class="input-group">
+															<input type="email" class="form-control" placeholder="Your Email Address" required="required">
+															<span class="input-group-btn">
+		        	<button class="btn" type="submit">Sign Up</button>
+		    	</span>
+														</div>
+													</form>
+
+												</div>
+											</div>
+											<!-- End Subscribe Widget -->
+										</div>
+										<div class="col-xs-12">
+											<!-- Trending Stores -->
+											<div class="widget trend-store-widget panel pt-20 prl-20">
+												<h3 class="widget-title h-title">Trending Stores</h3>
+												<div class="widget-body ptb-30">
+
+													<div class="trend-store-item media">
+														<div class="post-thumb media-left">
+															<a href="#">
+																<img class="media-object pr-10" width="90" src="assets/images/brands/brand_01.jpg" alt="">
+															</a>
+														</div>
+														<div class="media-body">
+															<h5 class="mb-5">
+                    <a href="store_single_01.html">Amazon</a>
+                    <span class="rating">
+                        <span class="rating-stars" data-rating="4">
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </span>
+                    </span>
+                </h5>
+															<p class="color-mid">Upto 70% Rewards Lorem ipsum dolor sit amet.</p>
+														</div>
+													</div>
+
+													<div class="trend-store-item media">
+														<div class="post-thumb media-left">
+															<a href="#">
+																<img class="media-object pr-10" width="90" src="assets/images/brands/brand_02.jpg" alt="">
+															</a>
+														</div>
+														<div class="media-body">
+															<h5 class="mb-5">
+                    <a href="store_single_01.html">Ashford</a>
+                    <span class="rating">
+                        <span class="rating-stars" data-rating="4">
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </span>
+                    </span>
+                </h5>
+															<p class="color-mid">Upto 70% Rewards Lorem ipsum dolor sit amet.</p>
+														</div>
+													</div>
+
+													<div class="trend-store-item media">
+														<div class="post-thumb media-left">
+															<a href="#">
+																<img class="media-object pr-10" width="90" src="assets/images/brands/brand_03.jpg" alt="">
+															</a>
+														</div>
+														<div class="media-body">
+															<h5 class="mb-5">
+                    <a href="store_single_01.html">DELL</a>
+                    <span class="rating">
+                        <span class="rating-stars" data-rating="4">
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </span>
+                    </span>
+                </h5>
+															<p class="color-mid">Upto 70% Rewards Lorem ipsum dolor sit amet.</p>
+														</div>
+													</div>
+
+												</div>
+											</div>
+											<!-- End Trending Stores -->
+										</div>
+										<div class="col-xs-12">
+											<!-- Instagram Widget -->
+											<div class="widget instagram-widget panel pt-20 prl-20">
+												<h3 class="widget-title h-title">Instagram</h3>
+												<div class="widget-body ptb-30">
+
+													<div class="row row-tb-5 row-rl-5">
+
+														<div class="instagram-widget__item col-xs-4">
+															<img src="assets/images/instagram/instagram_01.jpg" alt="">
+														</div>
+
+														<div class="instagram-widget__item col-xs-4">
+															<img src="assets/images/instagram/instagram_02.jpg" alt="">
+														</div>
+
+														<div class="instagram-widget__item col-xs-4">
+															<img src="assets/images/instagram/instagram_03.jpg" alt="">
+														</div>
+
+														<div class="instagram-widget__item col-xs-4">
+															<img src="assets/images/instagram/instagram_04.jpg" alt="">
+														</div>
+
+														<div class="instagram-widget__item col-xs-4">
+															<img src="assets/images/instagram/instagram_05.jpg" alt="">
+														</div>
+
+														<div class="instagram-widget__item col-xs-4">
+															<img src="assets/images/instagram/instagram_06.jpg" alt="">
+														</div>
+
+													</div>
+												</div>
+											</div>
+											<!-- End Instagram Widget -->
+										</div>
+										<div class="col-xs-12">
+
+											<!-- Instagram Widget -->
+											<div class="widget subscribe-widget panel pt-20 prl-20">
+												<h3 class="widget-title h-title">Latest tweets</h3>
+												<div class="widget-body ptb-20">
+
+													<ul class="twitter-list">
+														<li class="twitter-list__item">
+															<p>
+																<i class="twitter-icon fa fa-twitter"></i>
+																<a href="#">@masum_rana :</a>
+																<span class="tweet-text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.</span>
+															</p>
+														</li>
+														<li class="twitter-list__item">
+															<p>
+																<i class="twitter-icon fa fa-twitter"></i>
+																<a href="#">@masum_rana :</a>
+																<span class="tweet-text">Recusandae sed, aperiam earum sapiente rem neque officiis quaerat.</span>
+															</p>
+														</li>
+														<li class="twitter-list__item">
+															<p>
+																<i class="twitter-icon fa fa-twitter"></i>
+																<a href="#">@masum_rana :</a>
+																<span class="tweet-text">Sed quaerat, error harum sunt, sapiente voluptas temporibus porro quam, magnam dolores recusandae.</span>
+															</p>
+														</li>
+														<li class="twitter-list__item">
+															<p>
+																<i class="twitter-icon fa fa-twitter"></i>
+																<a href="#">@masum_rana :</a>
+																<span class="tweet-text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.</span>
+															</p>
+														</li>
+													</ul>
+
+												</div>
+											</div>
+											<!-- End Instagram Widget -->
+										</div>
+										<div class="col-xs-12">
+											<!-- Latest Reviews -->
+											<div class="widget posted-reviews-widget panel pt-20 prl-20">
+												<h3 class="widget-title h-title">Recent Reviews</h3>
+												<div class="widget-body ptb-30">
+													<!-- Review -->
+													<div class="review media">
+														<div class="media-left pr-10">
+															<a href="#">
+																<img class="media-object img-circle" src="assets/images/avatars/avatar_01.jpg" alt="Thumb" width="80">
+															</a>
+														</div>
+														<div class="media-body">
+															<h5 class="mb-5">
+                    <a href="#">John Doe</a>
+                    <span class="rating">
+                        <span class="rating-stars" data-rating="3">
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </span>
+                    </span>
+                </h5>
+															<p class="color-mid">Vivamus sem massa, cursus at mollis eu, euismod id risus. Ve...</p>
+														</div>
+													</div>
+													<!-- End Review -->
+													<!-- Review -->
+													<div class="review media">
+														<div class="media-left pr-10">
+															<a href="#">
+																<img class="media-object img-circle" src="assets/images/avatars/avatar_02.jpg" alt="Thumb" width="80">
+															</a>
+														</div>
+														<div class="media-body">
+															<h5 class="mb-5">
+                    <a href="#">John Doe</a>
+                    <span class="rating">
+                        <span class="rating-stars" data-rating="3">
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </span>
+                    </span>
+                </h5>
+															<p class="color-mid">Nullam porttitor porta augue vel iaculis. Pellentesque a pre...</p>
+														</div>
+													</div>
+													<!-- End Review -->
+													<!-- Review -->
+													<div class="review media">
+														<div class="media-left pr-10">
+															<a href="#">
+																<img class="media-object img-circle" src="assets/images/avatars/avatar_03.jpg" alt="Thumb" width="80">
+															</a>
+														</div>
+														<div class="media-body">
+															<h5 class="mb-5">
+                    <a href="#">John Doe</a>
+                    <span class="rating">
+                        <span class="rating-stars" data-rating="3">
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </span>
+                    </span>
+                </h5>
+															<p class="color-mid">Ut consequat eget nulla eu ultrices. Curabitur ac pellentesq...</p>
+														</div>
+													</div>
+													<!-- End Review -->
+													<!-- Review -->
+													<div class="review media">
+														<div class="media-left pr-10">
+															<a href="#">
+																<img class="media-object img-circle" src="assets/images/avatars/avatar_04.jpg" alt="Thumb" width="80">
+															</a>
+														</div>
+														<div class="media-body">
+															<h5 class="mb-5">
+                    <a href="#">John Doe</a>
+                    <span class="rating">
+                        <span class="rating-stars" data-rating="3">
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </span>
+                    </span>
+                </h5>
+															<p class="color-mid">Duis eu lectus dictum, placerat quam sed, ornare urna....</p>
+														</div>
+													</div>
+													<!-- End Review -->
+												</div>
+											</div>
+											<!-- End Latest Reviews -->
+										</div>
+										<div class="col-xs-12">
+											<!-- Contact Us Widget -->
+											<div class="widget contact-us-widget panel pt-20 prl-20">
+												<h3 class="widget-title h-title">Got any questions?</h3>
+												<div class="widget-body ptb-30">
+													<p class="mb-20 color-mid">If you are having any questions, please feel free to ask.</p>
+													<a href="contact_us_01.html" class="btn btn-block"><i class="mr-10 font-15 fa fa-envelope-o"></i>Drop Us a Line</a>
+												</div>
+											</div>
+											<!-- End Contact Us Widget -->
+										</div>
+									</div>
+								</aside>
+								<!-- End Blog Sidebar -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+
+	</body>
+	<!-- 分类菜单dom-->
+	<script>
+		let is=true;
+		let menu = new Vue({
+			el: '#menu',
+			data: {
+				category: []
+				,cname:''
+				,is2:00//存放上一次选中的分类
+			},
+			methods: {
+				//获取所有分类
+				getCategory: function() {
+					let tis = this;
+					// 为给定 ID 的 user 创建请求
+					axios.get('http://localhost:8010/category').then(function(response) {
+						tis.category = response.data
+					}).catch(function(error) {
+						console.log(error);
+					});
+				}
+				,atest:function(i){//点击时调用
+				document.getElementById(this.is2).setAttribute('style','background-color: white;')
+				this.cname=document.getElementById(i).innerHTML;
+				document.getElementById(i).setAttribute('style','background-color: red;')
+				this.is2=i
+				}
+			},
+			mounted() {
+				this.getCategory();
+			},
+			updated(){
+				if(is==true){
+					this.cname=document.getElementById("3").innerHTML;
+					document.getElementById("3").setAttribute('style','background-color: red;')
+					this.is2=3
+						is=false
+					}
+				
+			 }
+		})
+	</script>
+	<!--顶部导航 虚拟dom-->
+	<script>
+		let topMenu = new Vue({
+			el: '#topMenu',
+			data: {
+				category: [],
+				classA: 'display: none;',
+				classB: 'display: block',
+				topgd: 1 //用于判断滚动条位置
+
+			},
+			methods: {
+				//监听滚动条
+				handleScroll: function() {
+					var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+					this.topgd = scrollTop
+				},
+				//获取所有分类
+				getCategory: function() {
+					let tis = this;
+					axios.get('http://localhost:8010/category').then(function(response) {
+						tis.category = response.data
+					}).catch(function(error) {
+						console.log(error);
+					});
+				}
+			},
+			mounted() {
+				this.getCategory();
+				window.addEventListener('scroll', this.handleScroll) //添加滚动条监听事件
+			}
+		})
+	</script>
+
+	<style>
+		.category-li {
+			width: 20%;
+			float: left;
+			line-height: 50px;
+		}
+		
+		#c_details {
+			margin: 10px;
+			cursor: pointer;
+		}
+		
+		#c_details:hover {
+			background: #f5f5f5;
+		}
+		
+		#c_details img {
+			transition: all 0.6s;
+		}
+		
+		#c_details img:hover {
+			transform: scale(1.1);
+		}
+		
+		.c_detail:hover {
+			color: #29ad6a;
+		}
+	</style>
+	
+	<script>
+		var courseDetails = new Vue({
+			el: '#courseDetails',
+			data: {
+				course: []
+			},
+			methods: {
+				getCourse: function() {
+					var tis = this;
+					axios.get('http://localhost:8010/getCourseDetails').then(function(response) {
+						tis.course = response.data
+						console.log(tis.course.name)
+						console.log(response.data)
+					}).catch(function(error) {
+						console.log(error);
+					});
+				}
+			},
+			mounted() {
+				this.getCourse();
+				
+			}
+			
+		})
+		
+	</script>
+	
+	
+	<!--课程js代码-->	
+	<script>
+		let hotCourse = new Vue({
+			el: '#hotCourse',
+			data: {
+				course: []
+			},
+			methods: {
+				getCourse: function() {
+					var tis = this;
+					axios.get('http://localhost:8010/learnrecord/getHotCourse').then(function(response) {
+						tis.course = response.data
+					}).catch(function(error) {
+						console.log(error);
+					});
+				}
+			},
+			mounted() {
+				this.getCourse();
+			}
+			
+		})
+		
+		
+	</script>
+
+</html>

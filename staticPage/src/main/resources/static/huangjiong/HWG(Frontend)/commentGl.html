@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="css/element-ui.css" />
+		<!--模板首页工共js、css文件引用-->
+		<script src="js/commonJs.js"></script>
+		<script src="js/vue.min.js"></script>
+		<script src="js/axios.min.js"></script>
+		<script src="js/element-ui.js"></script>
+	</head>
+	<body>
+		<!--数据表格-->
+		<div id="datagrid">
+			<!--时间框-->
+			<div class="block">
+			    <span class="demonstration">时间范围</span>
+			    <el-date-picker
+			      v-model="value6"
+			      type="daterange"
+			      range-separator="至"
+			      value-format="yyyy-MM-dd"
+			      format="yyyy-MM-dd"
+			     >
+			    </el-date-picker>
+			    
+			   <!--导出按钮-->
+				<el-button type="primary" icon="el-icon-edit" title="导出数据"></el-button>
+			</div>
+			
+			
+
+			<!--表格-->
+			<el-table :data="data" style="width: 100%">
+		      <el-table-column
+		        prop="commentCourseId"
+		        label="课程编号"
+		        width="130">
+		      </el-table-column>
+		      <el-table-column
+		        prop="commentStuId"
+		        label="学生编号"
+		        width="130">
+		      </el-table-column>
+		      <el-table-column
+		        prop="commentContent"
+		        label="评价内容"
+		        width="200">
+		      </el-table-column>
+		      <el-table-column
+		        prop="commentContent"
+		        label="星级"
+		        width="180">
+		      </el-table-column>
+		       <el-table-column
+		        prop="commentLike"
+		        label="被点赞数"
+		        width="180">
+		      </el-table-column>
+		      <el-table-column
+		        prop="commentTime"
+		        label="日期"
+		        width="180">
+		      </el-table-column>
+		    </el-table>
+		</div>		
+	</body>
+	
+	<!--数据表格-->
+	<script>
+		new Vue({
+			el: '#datagrid',
+			data: {
+				data:[],
+				value6: [],
+			},
+			methods:{
+
+			},
+			mounted() {
+				this.timeDefaultShow = new Date();
+ 				this.timeDefaultShow.setMonth(new Date().getMonth() - 1);
+				let tis = this;
+				axios.get('http://localhost:8010/comment').then(function(res) {
+				tis.data=res.data;
+				});
+				axios.get('http://localhost:8010/common/getDate?day=30').then(function(res) {
+				tis.value6.push(res.data);
+				}).then(function(){
+					axios.get('http://localhost:8010/common/getDate?day=0').then(function(res) {
+						tis.value6.push(res.data);
+					});
+					
+				});
+				
+			}
+		})
+	</script>
+</html>
