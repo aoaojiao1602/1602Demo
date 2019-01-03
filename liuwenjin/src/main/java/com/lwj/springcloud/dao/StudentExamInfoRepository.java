@@ -85,4 +85,14 @@ public interface StudentExamInfoRepository extends JpaRepository<StudentExamInfo
 	
 	@Query(value="SELECT * FROM student_examinfotb se WHERE student_id =?1 AND examinfo_id=?2",nativeQuery=true)
 	StudentExamInfo queryStudentExamInfo(int stuid, int examid);
+	
+	  /** 
+	 * http://localhost:8080/queryStudentExaminfoByStuid
+	  * 作者: 大娃   
+	  * 邮件: 1558936588@qq.com  
+	  * 时间: 2019年1月3日 下午10:20:53  
+	  * 版本: V1.0   
+	 */
+	@Query("FROM StudentExamInfo se WHERE se.examScore IS NOT NULL AND se.studentId=?1")
+	List<StudentExamInfo> queryStudentExaminfoByStuid(int stuid);
 }
