@@ -14,4 +14,5 @@ public interface UserServices {
 	public List<UserInfo> getMyFans(List<Integer> ilist);
 	public List<UserInfo> getMyfocus(List<Integer> ilist);
 	public int updateById(UserInfo uid);
+	public List<UserInfo> getUserId(Integer uid);
 }

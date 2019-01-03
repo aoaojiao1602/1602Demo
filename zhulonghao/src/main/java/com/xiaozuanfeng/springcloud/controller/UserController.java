@@ -113,6 +113,13 @@ public class UserController {
 		System.out.println(uid);
 		return uss.updateById(uid);
 	}
-	
+	/**
+	 * http://localhost:8030/user/getUserId?uid=1
+	 * 毛毛用
+	 */
+	@RequestMapping(value = "/getUserId", method = RequestMethod.GET)
+	public List<UserInfo> getUserId(Integer uid) {
+		return uss.getUserId(uid);
+	}
 
 }
