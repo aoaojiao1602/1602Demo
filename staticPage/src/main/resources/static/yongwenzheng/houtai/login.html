@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>MOBAN</title>
+		<link href="css/style.css" rel='stylesheet' type='text/css' />
+		<script src="js/vue.min.js"></script>
+		<script src="js/axios.min.js"></script>
+		<script src="js/element-ui.js" type="text/javascript" charset="utf-8"></script>
+		<script type="application/x-javascript">
+			addEventListener("load", function() {
+				setTimeout(hideURLbar, 0);
+			}, false);
+
+			function hideURLbar() {
+				window.scrollTo(0, 1);
+			}
+		</script>
+		</script>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700,800'
+		 rel='stylesheet' type='text/css'>
+	</head>
+	<body>
+		<h1>智慧教学平台</h1>
+		<div class="app-location" id="login">
+			<div class="line"><span></span></div>
+			<div class="location"><img src="images/location.png" class="img-responsive" alt="" /></div>
+			<form>
+				<input type="text" placeholder="请输入用户名" v-model="usersname">
+				<input type="password" placeholder="请输入密码" v-model="pwd">
+				<div class="button"><input type="button" @click="userlogin" value="登录"></div>
+				<div class="clear"></div>
+			</form>		
+
+		</div>
+		
+		
+		
+
+		<script>
+			var vm = new Vue({
+				el: "#login",
+				data: function() {
+					return {
+						urlPre: "http://localhost:8006/login",
+						usersname: '',
+						pwd: '',
+						urlpath:''
+					}
+				},
+				created() {
+					let tis=this;
+					location.href.replace(/[?&]urlpath=([^&#]+)/ig, function(a, b) {
+						tis.urlpath = b;
+					});
+				},
+				methods: {
+					// 1. 执行post请求参数放url
+					userlogin() {
+						var vm = this;
+						axios({
+								method: 'post',
+								url: vm.urlPre + '/userLogin',
+								params: {
+									usersname: vm.usersname,
+									pwd: vm.pwd,
+									urlpath:vm.urlpath
+								}
+							})
+							.then(function(response) {
+								if (response.data.state == 0) {
+									/* vm.$message({
+          message: response.data.msg,
+          type: 'success'
+        }); */
+				
+				 alert(response.data.msg)
+				      
+								} else {
+									var access_token = response.data.data.access_token;
+									var refresh_token = response.data.data.refresh_token;
+									var uid = response.data.data.uid;
+									var lj = response.data.data.path;
+									var rid=response.data.data.rid;
+									axios({
+											method: 'get',
+											url: 'http://localhost:8006/school/getRoleByUid',
+											params: {
+												uid: uid,
+												access_token: access_token
+											}
+										})
+										.then(function(response) {
+											 if (response.data == "管理员") {
+											 	 window.localStorage.setItem("access_token",access_token);
+											 	 window.localStorage.setItem("uid",uid);
+											 	 window.localStorage.setItem("refresh_token",refresh_token);
+											 	 window.localStorage.setItem("rid",rid);
+											 	 
+												window.location.href = "main.html";
+											} else if (response.data == "老师") {
+												window.location.href = lj+"?access_token=" + access_token + "&uid=" + uid + "&refresh_token=" +
+													refresh_token;
+											} else if (response.data == "学生") {
+												window.location.href = lj+"?access_token=" + access_token + "&uid=" + uid + "&refresh_token=" +
+													refresh_token;
+											} else {
+												window.location.href = lj+"?access_token=" + access_token + "&uid=" + uid + "&refresh_token=" +
+													refresh_token;
+
+											}
+											
+										})
+
+
+
+								}
+							})
+							.catch(function(error) {
+								console.log(error);
+
+
+
+							})
+					}
+				}
+			})
+		</script>
+
+	</body>
+</html>

@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+
+			<script src="js/vue.min.js"></script>
+			<script src="js/axios.min.js"></script>
+		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+			
+		<style>
+			.iinpu{
+				width:180px;
+			}
+			 .tabelrole{
+				 margin-left:30px;
+				 width:440px;
+				 height: 440px;
+			/* 	 border: #0000FF 1px solid; */
+			 }
+            
+		</style>
+	</head>
+	<body>
+		<div id="app">
+		<template>
+ 
+  <div class="block">
+	  <el-form :inline="true" ref="form" :model="form" label-width="80px">
+	 <el-form-item label="用户名:">
+		 <el-input  class="iinpu"  size="mini" v-model="userNamepage" placeholder="请输入内容"></el-input>
+	</el-form-item>
+	
+	<el-form-item label="起止时间:">
+		
+		<el-date-picker
+      v-model="start"
+      align="right"
+	  size="mini"
+       type="date"
+	  value-format="yyyy-MM-dd HH:mm:ss"
+      placeholder="选择日期"
+      :picker-options="pickerOptions1">
+    </el-date-picker> -
+	<el-date-picker
+      v-model="end"
+      align="right"
+	  size="mini"
+      type="date"
+	  value-format="yyyy-MM-dd HH:mm:ss"
+      placeholder="选择日期"
+      :picker-options="pickerOptions1">
+    </el-date-picker>
+	
+	</el-form-item><br/>
+	 <el-form-item label="是否锁定:">
+ <el-select v-model="userIsLockoutpage" size="mini" placeholder="请选择">
+    <el-option
+	
+      v-for="item in options"
+	 
+      :key="item.value"
+      :label="item.label"
+      :value="item.value"
+	  >
+    </el-option> </el-select>
+	</el-form-item>
+	 <el-form-item>
+    <el-button type="primary" size="mini" plain icon="el-icon-search" @click="userlistpage">查询</el-button>
+ </el-form-item>
+ <el-form-item>
+  <el-button type="primary" size="mini" @click="dialogFormVisible = true" icon="el-icon-plus" plain>新增用戶</el-button>
+  </el-form-item>
+  <el-form-item>
+  <el-button type="primary" size="mini" plain>上传<i class="el-icon-upload el-icon--right"></i></el-button>
+ </el-form-item>
+  </el-form>
+    <div id="tabl">
+		<el-table :data="tableData" size="mini" border="true" :default-sort = "{prop: 'date', order: 'descending'}"  highlight-current-row @current-change="handleCurrentChange" style="width: 100%" max-height="400">
+			  <el-table-column type="selection" align="center" width="55"></el-table-column> 
+			  <el-table-column type="index" width="50" label="行号"></el-table-column>
+			<el-table-column prop="usersName" align="center" sortable label="用户名" width="100">
+			</el-table-column>
+			<el-table-column prop="usersId"  align="center"  sortable label="用户id" width="100">
+			</el-table-column>
+		<el-table-column prop="usersIsLockout" align="center"  :formatter="formartShow" label="是否锁定" width="100">
+		</el-table-column>
+		<el-table-column prop="usersCreateTime" align="center"  sortable label="用户创建时间" width="160">
+		</el-table-column>
+		<el-table-column prop="usersLastLoginTime" align="center"  sortable label="最近登录时间" width="160">
+		</el-table-column>
+		<el-table-column prop="usersUpdateTime" align="center"  sortable label="最近修改时间" width="160">
+		</el-table-column>
+		<el-table-column prop="usersLastLoginIp" align="center"  label="最后登录的ip地址" width="160">
+		</el-table-column>
+		<el-table-column  label="设置" align="center" width="180" fixed="right">
+				<template slot-scope="scope">
+			<el-button  @click="updaterole(scope.row)"
+				type="text"
+				size="small">
+				设置角色
+			</el-button>
+			<el-button @click="chongzhimima(scope.row)"
+				type="text"
+				size="small">
+				重置密码
+			</el-button>
+			</template>
+		</el-table-column>
+		<el-table-column  label="操作" align="center" fixed="right" width="120">
+				<template slot-scope="scope">
+			<el-button @click="suoding(scope.row)"
+				type="text"
+				size="small">
+				锁定
+			</el-button>
+			<el-button type="text" @click="jiesuo(scope.row)" size="small">解锁</el-button>
+			</template>
+		</el-table-column>
+		<el-table-column  align="center" fixed="right" label="">
+			<template slot-scope="scope">
+        <el-button @click="deleteRow(scope.row)"
+          type="text"
+          size="small">
+          移除
+        </el-button>
+		<!-- <el-button type="text" size="small"  @click.native.prevent="updateuser(scope.row)">编辑</el-button> -->
+      </template>
+		</el-table-column>
+		
+		</el-table>
+	</div>
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="pages"
+      :page-sizes="[10, 20, 30, 40]"
+      :page-size="rows"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
+    </el-pagination>
+  </div>
+  </template>
+  <!-- 新增用户 -->
+<el-dialog title="新增用户"  :visible.sync="dialogFormVisible">
+  <el-form status-icon :rules="adduserrules" :model="adduserrulesfrom" ref="adduserrulesfrom" >
+    <el-form-item  prop="addusername" class="" label="用户名"  :label-width="formLabelWidth">
+      <el-input v-model="adduserrulesfrom.addusername" placeholder="请输入用户名" style="width: 180px;" autocomplete="off"></el-input>
+    </el-form-item>
+	<el-form-item  prop="adduserpwd" label="密码" :label-width="formLabelWidth">
+	<el-input v-model="adduserrulesfrom.adduserpwd" type="password" style="width: 180px;"  autocomplete="off"></el-input>
+	</el-form-item>
+	<el-form-item prop="addusercheckpass" label="确认密码"  :label-width="formLabelWidth">
+	<el-input v-model="adduserrulesfrom.addusercheckpass" type="password" style="width: 180px;" autocomplete="off"></el-input>
+	</el-form-item>
+    <el-form-item label="是否锁定"  :label-width="formLabelWidth">
+      <el-select prop="addusersuoding" v-model="adduserrulesfrom.addusersuoding" placeholder="请选择">
+        <el-option label="是" value="1"></el-option>
+        <el-option label="否" value="0"></el-option>
+      </el-select>
+    </el-form-item>
+  </el-form>
+  <div slot="footer" class="dialog-footer">
+    <el-button  @click="resetForm('adduserrulesfrom')">重置</el-button>
+    <el-button type="primary" @click="addusersubmitForm('adduserrulesfrom')">确 定</el-button>
+  </div>
+</el-dialog>
+<!-- 角色设置 -->
+<el-dialog  :visible.sync="dialogTablerole" width="500">
+	<div class="tabelrole">
+  <div style="display: inline-block;">
+	  <div><el-button type="text">当前用户不存在的角色</el-button></div>
+  <el-table border="true"  height="250" :data="rolegridData" size="mini" style="width:160px;display: inline-block;" >
+  
+    <el-table-column property="name" label="角色名称" width="100"></el-table-column>
+    
+  </el-table>
+</div>
+<div  style="padding-top: 150px;padding-left: 20px;display: inline-block;">
+				<div>
+					<el-button size="mini" @click="">>></el-button>
+                </div>
+              <div style="padding-top: 10px;">
+					<el-button size="mini" type="primary" @click=""><<</el-button>
+				</div> 
+			</div>
+<div style="display: inline-block; margin-right: 30px;float: right;">
+	<div><el-button type="text">当前用户的角色</el-button></div>
+  <el-table :data="rolegridData2" height="250" border="true" size="mini" style="width:160px;">
+   
+    <el-table-column property="name" label="角色名称" width="100"></el-table-column>
+    
+  </el-table>
+</div>
+</div>
+</el-dialog>
+
+	
+</div>
+	</body>
+
+	<script>
+	         var access_token = window.localStorage.getItem("access_token"); //获取登录页面中暂时存储的数据
+			var userIds = window.localStorage.getItem("uid"); //
+			var refresh_token = window.localStorage.getItem("refresh_token");
+			var rid = window.localStorage.getItem("rid"); //
+		new Vue({
+			el: '#app',
+			data:function() {
+				
+     
+      var validatePass2 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+        } else if (value !== this.adduserrulesfrom.adduserpwd) {
+          callback(new Error('两次输入密码不一致!'));
+        } else {
+          return callback();
+        }
+      };
+			return {
+				urlPre: "http://localhost:8006/user/",
+
+				 rolegridData: '',
+				 rolegridData2: '',
+				pages: 1,
+				rows:10,
+				total:'',
+				tableData:'',
+		    currentRow: null,
+				
+				userNamepage: '',
+				 pickerOptions1: {
+          disabledDate(time) {
+            return time.getTime() > Date.now();
+          },
+          shortcuts: [{
+            text: '今天',
+            onClick(picker) {
+              picker.$emit('pick', new Date());
+            }
+          }, {
+            text: '昨天',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit('pick', date);
+            }
+          }, {
+            text: '一周前',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', date);
+            }
+          }]
+        },
+        start: '',
+        end: '',
+				
+		  userIsLockoutpage:'',
+		  
+		  options: [{
+          value: '1',
+          label: '是'
+        }, {
+          value: '0',
+          label: '否'
+        }],
+		dialogFormVisible: false,
+		updateuserdialogFormVisible:false,
+		dialogTablerole:false,
+		dialogTablenorole:false,
+		dialogTableyesrole:false,
+		formLabelWidth: '120px',
+        value: '',
+		
+       form: {
+          name: '',
+          region: '',
+          date1: '',
+          date2: '',
+          delivery: false,
+          type: [],
+          resource: '',
+          desc: ''
+        },
+		adduserrulesfrom: {
+          addusername: '',
+          adduserpwd: '',
+          addusercheckpass: '',
+		  addusersuoding:''
+        },
+        adduserrules: {
+			addusername: [
+			{required: true, min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+			],
+			adduserpwd: [
+            {required: true, message: '请再次输入密码', trigger: 'blur' }
+          ],
+            addusercheckpass: [
+            {required: true, validator: validatePass2, trigger: 'blur' }
+          ]
+          
+        }
+        
+			}; 
+			},
+			created:function(){
+				/* this.$options.methods.userlistpage(); */
+				this.userlistpage();
+			},
+			methods: {
+				rolelistpage(row){
+					console.log(row);
+					var _this=this;
+					axios({
+						method: 'post',
+						url: 'http://localhost:8006/user/selectUsersNotRoles',
+						params: {
+					    access_token:access_token,
+						id:row.usersId
+						}
+					})
+					.then(function (response) {
+						_this.rolegridData=response.data;
+						
+						console.log(response.data);
+						})
+						.catch(function (error) {
+						console.log(error);
+						});
+						axios({
+							method: 'post',
+							url: 'http://localhost:8006/user/selectUsersRoles',
+							params: {
+							access_token:access_token,	
+							id:row.usersId
+							}
+						})
+						.then(function (response) {
+							_this.rolegridData2=response.data;
+							
+							console.log(response.data);
+							})
+							.catch(function (error) {
+							console.log(error);
+							});
+					
+				},
+				  errormess() {
+        this.$alert('开始时间不能晚于结束时间', '错误', {
+			 confirmButtonText: '确定',
+             center: true,
+		     type:"error"
+        });
+      },
+				userlistpage(){
+					var _this=this;
+					var beginDate = _this.start;
+				   var endDate = _this.end;
+				if(beginDate > endDate && endDate != null && beginDate != null && endDate != "" && beginDate != "") {
+					_this.errormess();
+					
+					return;
+				}
+
+					axios({
+						method: 'get',
+						url: _this.urlPre+'queryAllByPage',
+						params: {
+						access_token:access_token,	
+						page: _this.pages,
+						rows:_this.rows,
+						userName:_this.userName,
+						userIsLockout:_this.userIsLockoutpage,
+						startUserCreateTime:beginDate,
+						endUserCreateTime:endDate
+						
+						}
+					})
+					.then(function (response) {
+						_this.tableData=response.data.rows;
+						_this.total=response.data.total
+						console.log(response);
+						console.log(response.data);
+						})
+						.catch(function (error) {
+						console.log(error);
+						});
+					
+					
+				},
+				 addusersubmitForm(formName) {
+					 var _this=this;
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+						axios({
+							method: 'put',
+							url: _this.urlPre+'insertUsers',
+							params: {
+							access_token:access_token,
+							usersName: _this.adduserrulesfrom.addusername,
+							usersPassWord:_this.adduserrulesfrom.adduserpwd
+							
+							
+							}
+						})
+						.then(function (response) {
+						alert("添加成功");
+						_this.dialogFormVisible=false;
+							})
+							.catch(function (error) {
+							console.log(error);
+							});
+            
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+	  resetForm(formName) {
+        this.$refs[formName].resetFields();
+      },
+			chongzhimima(row){
+					var _this=this;
+					_this.$confirm('此操作将对该用户进行重置密码, 是否继续?', '提示', {
+							confirmButtonText: '确定',
+							cancelButtonText: '取消',
+							type: 'warning'
+						}).then(() => {
+					axios({
+						method: 'post',
+						url: _this.urlPre+'updateUsersPassWord',
+						params: {
+						access_token:access_token,
+						usersId: row.usersId
+						}
+					})
+					.then(function (response) {
+						_this.userlistpage();
+					_this.$message({
+						type: 'success',
+						message: response.data.message
+					});
+				
+						})
+						.catch(function (error) {
+						console.log(error);
+						});
+						
+						}).catch(() => {
+							_this.$message({
+								type: 'info',
+								message: '已取消锁定'
+							});          
+						});
+			},
+			suoding(row){
+				var _this=this;
+				_this.$confirm('此操作将锁定该用户, 是否继续?', '提示', {
+						confirmButtonText: '确定',
+						cancelButtonText: '取消',
+						type: 'warning'
+					}).then(() => {
+				axios({
+					method: 'post',
+					url: _this.urlPre+'updateUsersIsLockout',
+					params: {
+					access_token:access_token,
+					userId: row.usersId
+					}
+				})
+				.then(function (response) {
+					_this.userlistpage();
+				_this.$message({
+					type: 'success',
+					message: response.data.message
+				});
+			
+					})
+					.catch(function (error) {
+					console.log(error);
+					});
+					
+					}).catch(() => {
+						_this.$message({
+							type: 'info',
+							message: '已取消锁定'
+						});          
+					});
+			},
+			jiesuo(row){
+					var _this=this;
+					_this.$confirm('此操作将解锁该用户, 是否继续?', '提示', {
+							confirmButtonText: '确定',
+							cancelButtonText: '取消',
+							type: 'warning'
+						}).then(() => {
+					axios({
+						method: 'post',
+						url: _this.urlPre+'updateUsersLockout',
+						params: {
+						access_token:access_token,
+						usersId: row.usersId
+						}
+					})
+					.then(function (response) {
+						_this.userlistpage();
+					_this.$message({
+						type: 'success',
+						message: response.data.message
+					});
+				
+						})
+						.catch(function (error) {
+						console.log(error);
+						});
+						
+						}).catch(() => {
+							_this.$message({
+								type: 'info',
+								message: '已取消解锁'
+							});          
+						});
+			},
+	  deleteRow(row){
+			var _this=this;
+		  _this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+			axios({
+				method: 'delete',
+				url: _this.urlPre+'deleteUsers',
+				params: {
+				access_token:access_token,
+				usersId: row.usersId
+				}
+			})
+			.then(function (response) {
+			_this.$message({
+				type: 'success',
+				message: response.data.message
+			});
+			_this.userlistpage();
+				})
+				.catch(function (error) {
+				console.log(error);
+				});
+         
+        }).catch(() => {
+          _this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+	  },
+	  updateuser(row){
+		  
+		  updateuserdialogFormVisible:true
+		  /* return updateuserfrom: {
+                 name: row.name,
+                 pwd: '',
+                 unpass: '',
+		         region:''
+        } */
+	  },
+				
+				 setCurrent(row) {
+        this.$refs.singleTable.setCurrentRow(row);
+      }, handleCurrentChange(val) {
+        this.currentRow = val; 
+		
+      },
+			handleSizeChange(val) {
+				this.rows = val;
+				this.userlistpage();
+				console.log(`每页 ${val} 条`);
+			},
+			handleCurrentChange(val) {
+				this.pages = val;
+				this.userlistpage();
+				console.log(`当前页: ${val}`);
+			},
+			formartShow(row, column, cellValue, index){
+				if(cellValue == 1) {
+					return "是";
+				} else {
+					return "否";
+				}
+			},
+			updaterole(row){
+				this.dialogTablerole=true;
+				this.dialogTablenorole=true,
+				this.dialogTableyesrole=true,
+				
+				this.rolelistpage(row);
+			}
+			
+			
+			}
+			})
+	</script>
+	<script>
+		
+	
+		
+	
+	</script>
+</html>
