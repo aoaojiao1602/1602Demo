@@ -1,14 +1,22 @@
 package com.lwj.springcloud.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -81,9 +89,33 @@ public class ExaminfoServiceImpl implements ExaminfoService {
 	public Page<Examinfo> indexExaminfoPage(Entitysearch search) {
 		// TODO Auto-generated method stub
 		Pageable pageable = new PageRequest(search.getPage() - 1, search.getRows());
-		return eRepository.findAll(pageable);
+		return eRepository.findAll(this.getWhereClause(search),pageable);
 	}
-
+	private Specification<Examinfo> getWhereClause(final Entitysearch entitysearch) {
+		// TODO Auto-generated method stub
+		 return new Specification<Examinfo>() {
+			 @Override
+			 public Predicate toPredicate(Root<Examinfo> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+				 Predicate predicate = cb.conjunction();//动态SQL表达式
+				 List<Expression<Boolean>> exList = predicate.getExpressions();//动态SQL表达式集合
+				 if (entitysearch.getName()!= null&&!entitysearch.getName().equals("")) {
+					 if( entitysearch.getName() != null && !"".equals(entitysearch.getName()) ){
+						 exList.add(cb.like(root.get("paperName").as(String.class), "%"+entitysearch.getName()+"%"));
+					 }
+				}
+				 if( entitysearch.getStartTime() != null ){
+					 exList.add(cb.greaterThanOrEqualTo(root.<Date>get("createTime"), entitysearch.getStartTime()));//大于等于起始日期
+				 }
+				 if( entitysearch.getEndTime() != null ){ 
+					 exList.add(cb.lessThanOrEqualTo(root.<Date>get("createTime"), entitysearch.getEndTime()));//小于等于截止日期
+				 }
+				 if( entitysearch.getIsLockout() != null ){ 
+					 exList.add(cb.equal(root.<Integer>get("kId"), entitysearch.getIsLockout()));//小于等于截止日期
+				 }
+				 return predicate;
+				 }
+			 };
+		 }
 	
 	/* (非 Javadoc) 
 	 * <p>Title: queryQuestionTypeCount</p> 

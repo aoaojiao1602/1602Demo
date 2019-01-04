@@ -125,7 +125,7 @@ public interface ExaminfoRepository extends JpaRepository<Examinfo, Integer>,Jpa
 	  * 时间: 2019年1月4日 下午8:11:50  
 	  * 版本: V1.0   
 	 */
-	@Query(" from Examinfo where kId=?1 ")
+	@Query(value=" SELECT * FROM examinfotb WHERE k_id=?1 AND YEAR(end_time)!=YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR))",nativeQuery=true)
 	List<Examinfo> queryCoursesByid(int cid);
 	
 	

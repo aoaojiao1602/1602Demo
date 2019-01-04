@@ -374,7 +374,9 @@
 														type: 'success',
 														message: '添加成功!'
 													});
-													//other.$refs['form'].resetFields();
+													other.$refs['form'].resetFields();
+													other.data1 = [];
+													other.delivery = false;
 												}
 												other.search();
 												other.dialogformVisible = false;
@@ -428,10 +430,11 @@
 							params: {
 								page: page,
 								rows: size,
-								name: this.input1,
+								name: other.input1,
 								//tx: this.value,
-								startTime: this.date1[0],
-								endTime: this.date1[1]
+								isLockout: other.value,
+								startTime: other.date1[0],
+								endTime: other.date1[1]
 							}
 						})
 						.then(function(response) {
