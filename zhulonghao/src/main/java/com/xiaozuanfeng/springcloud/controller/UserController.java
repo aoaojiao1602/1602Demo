@@ -85,7 +85,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/getIsMyfocus", method = RequestMethod.GET)
 	public Integer getIsMyfocus(Integer uid, Integer fid) {
-		return fss.getIsMyfocus(uid, fid);
+		return fss.getIsMyfocus(fid, uid);
 	}
 
 	/**
@@ -105,8 +105,8 @@ public class UserController {
 	public int putMyfocus(Integer f_uid, Integer f_ufid) {
 		System.err.println(f_ufid);
 		Fans fans = new Fans();
-		fans.setF_ufid(f_uid);
-		fans.setF_uid(f_ufid);
+		fans.setF_ufid(f_ufid);
+		fans.setF_uid(f_uid);
 		/*
 		 * System.err.println(fans); System.err.println(f_uid+""+f_ufid);
 		 */
@@ -120,7 +120,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/deleteMyfocus", method = RequestMethod.DELETE)
 	public int deleteMyfocus(Integer uid, Integer fid) {
-		return fss.deleteMyfocus(uid, fid);
+		return fss.deleteMyfocus(fid, uid);
 	}
 
 	/**
