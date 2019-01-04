@@ -63,10 +63,10 @@ public interface FansRepository extends JpaRepository<Fans, Integer> {
 	 * @param fid
 	 * @return
 	 */
-	@Query(value = "INSERT INTO fanstb ( f_ufid,f_uid)VALUES(?1,?2)", nativeQuery = true)
+	@Query(value = "INSERT INTO fanstb ( f_ufid,f_uid)VALUES(:#{#fans.f_uid},:#{#fans.f_ufid})", nativeQuery = true)
 	@Modifying
 	@Transactional
-	public int postMyfocus(Integer uid, Integer fid);
+	public int postMyfocus(@Param("fans")Fans fans);
 
 	/**
 	 * 根据用户id和关注id取消关注

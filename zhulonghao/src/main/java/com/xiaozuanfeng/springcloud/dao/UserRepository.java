@@ -45,19 +45,8 @@ public interface UserRepository extends JpaRepository<UserInfo, Integer> {
 	 * @param uid
 	 * @return
 	 */
-	@Query(value = "UPDATE userinfotb SET ui_nickname=:#{#uid.ui_nickname},ui_phone=:#{#uid.ui_phone},ui_truename=:#{#uid.ui_truename},ui_sex=:#{#uid.ui_sex},ui_birthday=:#{#uid.ui_birthday},ui_identitycard=:#{#uid.ui_identitycard},identity=:#{#uid.identity},education=:#{#uid.education},industry=:#{#uid.industry},jianjie=:#{#uid.jianjie},yuanx=:#{#uid.yuanx}  WHERE u_uid=:#{#uid.u_uid} ",nativeQuery = true)
+	@Query(value = "UPDATE userinfotb SET ui_headportraitid=:#{#uid.ui_headportraitid},ui_nickname=:#{#uid.ui_nickname},ui_phone=:#{#uid.ui_phone},ui_truename=:#{#uid.ui_truename},ui_sex=:#{#uid.ui_sex},ui_birthday=:#{#uid.ui_birthday},ui_identitycard=:#{#uid.ui_identitycard},identity=:#{#uid.identity},education=:#{#uid.education},industry=:#{#uid.industry},jianjie=:#{#uid.jianjie},yuanx=:#{#uid.yuanx}  WHERE u_uid=:#{#uid.u_uid} ",nativeQuery = true)
 	@Modifying
 	@Transactional
 	public int updateById(@Param("uid") UserInfo uid);
-	
-	/**
-	 * 根据uid获取用户信息
-	 * 
-	 * @param uid
-	 * @return
-	 */
-	@Query(value = "SELECT * FROM userinfotb WHERE uid = ?1 ", nativeQuery = true)
-	@Modifying
-	@Transactional
-	public List<UserInfo> getUserId(Integer uid);
 }

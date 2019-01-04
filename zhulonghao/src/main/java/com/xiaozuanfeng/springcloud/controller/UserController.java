@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xiaozuanfeng.springcloud.entity.Fans;
@@ -26,7 +27,8 @@ public class UserController {
 	@Autowired
 	private UserServices uss;
 	@Autowired
-	private FansServices fss;	@Value("${server.port}")
+	private FansServices fss;
+	@Value("${server.port}")
 	private String serverPort;
 
 	/**
@@ -44,7 +46,11 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/getMyFans", method = RequestMethod.GET)
 	public List<UserInfo> getMyFans(Integer uid) {
-		return uss.getMyFans(fss.getMyFans(uid));
+		//System.err.println(fss.getMyFans(uid));
+		if (fss.getMyFans(uid) != null) {
+			return uss.getMyFans(fss.getMyFans(uid));
+		}
+		return null;
 	}
 
 	/**
@@ -54,7 +60,11 @@ public class UserController {
 
 	@RequestMapping(value = "/getMyfocus", method = RequestMethod.GET)
 	public List<UserInfo> getMyfocus(Integer uid) {
-		return uss.getMyfocus(fss.getMyfocus(uid));
+		//System.err.println(fss.getMyfocus(uid));
+		if (fss.getMyfocus(uid) != null) {
+			return uss.getMyfocus(fss.getMyfocus(uid));
+		}
+		return null;
 	}
 
 	/**
@@ -85,12 +95,19 @@ public class UserController {
 	}
 
 	/**
-	 * http://localhost:8030/user/postMyfocus?uid=1&fid=9
+	 * http://localhost:8030/user/putMyfocus?f_uid=1&f_ufid=9
 	 * 
 	 */
-	@RequestMapping(value = "/putMyfocus", method = RequestMethod.PUT)
-	public int putMyfocus(Integer uid, Integer fid) {
-		return fss.postMyfocus(uid, fid);
+	@RequestMapping(value = "/putMyfocus",method = RequestMethod.PUT)
+	public int putMyfocus(Integer f_uid,Integer f_ufid) {
+	System.err.println(f_ufid);
+		Fans fans=new Fans();
+		fans.setF_ufid(f_uid);
+		fans.setF_uid(f_ufid);
+		/*System.err.println(fans);
+		System.err.println(f_uid+""+f_ufid);*/
+		return fss.postMyfocus(fans);
+		
 	}
 
 	/**
@@ -112,14 +129,6 @@ public class UserController {
 	public int updateById(@RequestBody UserInfo uid) {
 		System.out.println(uid);
 		return uss.updateById(uid);
-	}
-	/**
-	 * http://localhost:8030/user/getUserId?uid=1
-	 * 毛毛用
-	 */
-	@RequestMapping(value = "/getUserId", method = RequestMethod.GET)
-	public List<UserInfo> getUserId(Integer uid) {
-		return uss.getUserId(uid);
 	}
 
 }

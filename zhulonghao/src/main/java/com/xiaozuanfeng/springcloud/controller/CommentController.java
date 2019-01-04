@@ -20,11 +20,11 @@ public class CommentController {
  * @return
  */
 	@RequestMapping(value = "/getPostbarAndReplyAndCommentCountByuId", method = RequestMethod.GET)
-	public int getPostbarAndReplyAndCommentCountByuId(Integer uId) {
-		return css.getPostbarAndReplyAndCommentCountByuId(uId);
+	public int getPostbarAndReplyAndCommentCountByuId(Integer uid) {
+		return css.getPostbarAndReplyAndCommentCountByuId(uid);
 	}
 	@RequestMapping(value = "/getPostbarAndReplyAndCommentGoodCountByuId", method = RequestMethod.GET)
-	public int getPostbarAndReplyAndCommentGoodCountByuId(Integer uId) {
-		return css.getPostbarAndReplyAndCommentGoodCountByuId(uId);
+	public int getPostbarAndReplyAndCommentGoodCountByuId(Integer uid) {
+		return css.getPostbarAndReplyAndCommentGoodCountByuId(uid);
 	}
 }

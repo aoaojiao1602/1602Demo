@@ -18,7 +18,7 @@ public interface FansServices {
 
 	Integer getIsMyfocus(Integer uid, Integer fid);
 	
-	public int postMyfocus(Integer uid, Integer fid);
+	public int postMyfocus(Fans fans);
 
 	public int deleteMyfocus(Integer uid, Integer fid);
 }
