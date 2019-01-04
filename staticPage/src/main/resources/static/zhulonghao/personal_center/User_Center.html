@@ -167,19 +167,20 @@
 							created: function() {
 								this.getUserInfo();
 								var uid = this.getUrlKey('uid');
-								/*var loginid = localStorage.getItem('loginid');
-								alert(uid)
-								alert(loginid)
-								if (uid == loginid) {
-									//alert(true);
-									vm.url = install.html;
-								} else {
-									//alert(false);
-									vm.url = null;
-								} */
-								//alert(uid);
 								window.localStorage.setItem("uid", uid);
 								window.localStorage.setItem("loginid", 6);
+							},
+							mounted: function() {
+								var vm = this;
+								var uid = localStorage.getItem('uid');
+								var loginid = localStorage.getItem('loginid');
+								//alert(uid);
+								//alert(loginid);
+								if (uid == loginid) {
+									vm.url = 'install.html';
+								} else {
+									vm.url = '#';
+								}
 							}
 						});
 					</script>
@@ -675,13 +676,11 @@
 			</div>
 			<div id="tongji" :hidden="isNomyself">
 				<el-tabs v-model="activeName" id="ktz1" @tab-click.self="handleClick">
-					<el-tab-pane label="用户管理" name="first">
+					<el-tab-pane label="--课程--" name="first">
 						<div id="main1" style="width: 500px; height: 300px;"></div>
 					</el-tab-pane>
-					<el-tab-pane label="配置管理" name="second">
-						<div id="tp" style="width: 600px; height: 300px; background-image: url(img/15-目标.png);">
-
-						</div>
+					<el-tab-pane label="--成绩--" name="second">
+						<div id="main2" style="width: 500px; height: 300px;"></div>
 					</el-tab-pane>
 				</el-tabs>
 				<script type="text/javascript">
@@ -739,10 +738,10 @@
 							//alert(uid);
 							//alert(loginid)
 							if (uid == loginid) {
-							vm.isNomyself = false;
-						} else {
-							vm.isNomyself = hidden;
-						}
+								vm.isNomyself = false;
+							} else {
+								vm.isNomyself = hidden;
+							}
 							axios.get(`${vm.urlPre}/queryStudentExaminfoByStuid`, {
 									params: {
 										stuid: uid
@@ -758,7 +757,7 @@
 									console.log(error);
 								});
 						}
-						
+
 
 					});
 				</script>
@@ -772,9 +771,9 @@
 					</el-tab-pane>
 					<el-tab-pane label="讨论" name="second">
 						<div v-for="l in fanlist">
-							<span v-text="l.name"></span> <span v-text="l.img"></span>
+							<span v-text="l.name"></span>
+							<span v-text="l.img"></span>
 						</div>
-					</el-tab-pane>
 				</el-tabs>
 				<script type="text/javascript">
 					var app = new Vue({
@@ -782,8 +781,8 @@
 						data() {
 							return {
 								classA: 'position: relative;top:100px;width: 100%;margin: auto;',
-								classB:'position: relative;top:10px;width: 100%;margin: auto;',
-								myself:true,
+								classB: 'position: relative;top:10px;width: 100%;margin: auto;',
+								myself: true,
 								fouslist: [{
 									name: "aaaa",
 									img: "img"
@@ -828,6 +827,7 @@
 			</div>
 		</span>
 		<script src="js/kechengtongji.js"></script>
+		<script src="js/chengji.js"></script>
 
 		<!-- scrolling=no(取消iframe滚动条) onLoad事件调用iFrameHeight方法解决iframe自适应高度问题 -->
 		<iframe src="buttom.html" id="iframepage" scrolling=no width="100%" onLoad="iFrameHeight()" style="margin-top: 30px; margin-bottom: -7px;"></iframe>
