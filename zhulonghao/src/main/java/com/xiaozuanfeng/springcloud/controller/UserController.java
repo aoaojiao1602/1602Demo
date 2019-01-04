@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.xiaozuanfeng.springcloud.entity.Fans;
 import com.xiaozuanfeng.springcloud.entity.UserInfo;
 import com.xiaozuanfeng.springcloud.services.FansServices;
+import com.xiaozuanfeng.springcloud.services.StudentExamInfoServices;
 import com.xiaozuanfeng.springcloud.services.UserServices;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -28,6 +29,8 @@ public class UserController {
 	private UserServices uss;
 	@Autowired
 	private FansServices fss;
+	@Autowired
+	private StudentExamInfoServices ses;
 	@Value("${server.port}")
 	private String serverPort;
 
@@ -46,7 +49,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/getMyFans", method = RequestMethod.GET)
 	public List<UserInfo> getMyFans(Integer uid) {
-		//System.err.println(fss.getMyFans(uid));
+		// System.err.println(fss.getMyFans(uid));
 		if (fss.getMyFans(uid) != null) {
 			return uss.getMyFans(fss.getMyFans(uid));
 		}
@@ -60,7 +63,7 @@ public class UserController {
 
 	@RequestMapping(value = "/getMyfocus", method = RequestMethod.GET)
 	public List<UserInfo> getMyfocus(Integer uid) {
-		//System.err.println(fss.getMyfocus(uid));
+		// System.err.println(fss.getMyfocus(uid));
 		if (fss.getMyfocus(uid) != null) {
 			return uss.getMyfocus(fss.getMyfocus(uid));
 		}
@@ -98,16 +101,17 @@ public class UserController {
 	 * http://localhost:8030/user/putMyfocus?f_uid=1&f_ufid=9
 	 * 
 	 */
-	@RequestMapping(value = "/putMyfocus",method = RequestMethod.PUT)
-	public int putMyfocus(Integer f_uid,Integer f_ufid) {
-	System.err.println(f_ufid);
-		Fans fans=new Fans();
+	@RequestMapping(value = "/putMyfocus", method = RequestMethod.PUT)
+	public int putMyfocus(Integer f_uid, Integer f_ufid) {
+		System.err.println(f_ufid);
+		Fans fans = new Fans();
 		fans.setF_ufid(f_uid);
 		fans.setF_uid(f_ufid);
-		/*System.err.println(fans);
-		System.err.println(f_uid+""+f_ufid);*/
+		/*
+		 * System.err.println(fans); System.err.println(f_uid+""+f_ufid);
+		 */
 		return fss.postMyfocus(fans);
-		
+
 	}
 
 	/**
@@ -131,4 +135,13 @@ public class UserController {
 		return uss.updateById(uid);
 	}
 
+	/**
+	 * http://localhost:8030/user/queryStudentExaminfoByStuid?stuid=6
+	 * @param stuid
+	 * @return
+	 */
+	@RequestMapping(value = "/queryStudentExaminfoByStuid", method = RequestMethod.GET)
+	public Object queryStudentExaminfoByStuid(int stuid) {
+		return ses.queryStudentExaminfoByStuid(stuid);
+	}
 }
