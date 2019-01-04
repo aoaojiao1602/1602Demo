@@ -394,8 +394,8 @@
 										<a href="user_update.html"> <img class="ftimg" :src="l.ui_headportrait+'/'+l.ui_headportraitname" />
 										</a>
 										<div class="fname" v-text="l.ui_nickname"></div>
-										<span class="fxinxi" v-text="l.identity">&nbsp;|</span> 
-										<span class="fxinxi" v-text="l.industry" ></span> <span id="ffans" class="fxinxi">粉丝{{fensi}}人
+										<span class="fxinxi" v-text="l.identity">&nbsp;|</span>
+										<span class="fxinxi" v-text="l.industry"></span> <span id="ffans" class="fxinxi">粉丝{{fensi}}人
 										</span> <span class="fguanzhu" v-if="1==3">
 											<el-button type="primary" size="small " icon="el-icon-circle-plus-outline">相互关注
 										</span> <span class="qfguanzhu" v-else> 相互关注 </span>
@@ -420,7 +420,7 @@
 										<a href="user_update.html"> <img class="ftimg" :src="l.ui_headportrait+'/'+l.ui_headportraitname" />
 										</a>
 										<div class="fname" v-text="l.ui_nickname"></div>
-										<span class="fxinxi" v-text="l.identity">&nbsp;|</span> 
+										<span class="fxinxi" v-text="l.identity">&nbsp;|</span>
 										<span class="fxinxi" v-text="l.industry"></span> <span class="fxinxi">粉丝0人</span>
 										<span class="fguanzhu" v-if="1==3">
 											<el-button type="primary" size="small " icon="el-icon-circle-plus-outline">关注
@@ -713,7 +713,7 @@
 					});
 				</script>
 			</div>
-			<div id="chengji">
+			<div id="chengji" :hidden="isNomyself">
 				<el-table :data="chengji" height="250" border style="width: 100%">
 					<el-table-column prop="examinfo.paperName" label="考试名称" width="180">
 					</el-table-column>
@@ -728,12 +728,17 @@
 						data() {
 							return {
 								urlPre: "http://localhost:8030/user",
+								isNomyself: "",
 								chengji: []
 							}
 						},
 						created: function() {
 							var vm = this;
 							var uid = localStorage.getItem('uid');
+							var loginid = localStorage.getItem('loginid');
+							//alert(uid);
+							//alert(loginid)
+
 							axios.get(`${vm.urlPre}/queryStudentExaminfoByStuid`, {
 									params: {
 										stuid: uid
@@ -749,11 +754,17 @@
 									console.log(error);
 								});
 						}
+						if (uid == loginid) {
+							vm.isNomyself = false;
+						} else {
+							vm.isNomyself = hidden;
+							vm.chengji = [];
+						}
 
 					});
 				</script>
 			</div>
-			<div id="ktz">
+			<div id="ktz" :style="myself?classA:classB">
 				<el-tabs v-model="activeName" id="ktz" type="card" @tab-click.self="handleClick">
 					<el-tab-pane label="课程" name="first">
 						<div class="xh" v-for="l in fouslist">
@@ -771,6 +782,9 @@
 						el: '#ktz',
 						data() {
 							return {
+								classA: 'position: relative;top: -59px;width: 100%;margin: auto;',
+								classB:'position: relative;top: -80px;width: 100%;margin: auto;',
+								myself:true,
 								fouslist: [{
 									name: "aaaa",
 									img: "img"
@@ -793,6 +807,17 @@
 								}],
 								activeName: 'first',
 							};
+						},
+						created: function() {
+							var vm = this;
+							var uid = localStorage.getItem('uid');
+							var loginid = localStorage.getItem('loginid');
+							if (uid == loginid) {
+								vm.myself = false;
+							} else {
+								vm.myself = true;
+								vm.chengji = [];
+							}
 						},
 						methods: {
 							handleClick(tab, event) {
