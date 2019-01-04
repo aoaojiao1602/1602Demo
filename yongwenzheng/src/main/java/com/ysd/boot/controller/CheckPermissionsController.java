@@ -65,6 +65,7 @@ public class CheckPermissionsController {
 	
 	/**
 	 *通过权限id得到权限
+	 *http://localhost:8006/che/queryPermissionByPermissionId?permissionId=1,2
 	 * @param permissionId
 	 * @return
 	 */

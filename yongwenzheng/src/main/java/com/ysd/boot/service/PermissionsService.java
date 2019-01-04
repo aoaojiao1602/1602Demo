@@ -28,5 +28,14 @@ public interface PermissionsService {
 	 */
 	public List<Permissions> queryPermissionTree(Integer roleId);
 	
+	 /***
+		 *给角色id添加权限
+	 */
+	public int insertRolesPermissionsByRoleId(Integer roleId,List<Integer> permissionsId);
+	
+	/***
+	 *通过角色id删除权限菜单
+	 */
+	public int deleteRolesPermissionsByRoleId(Integer id);
 	
 }

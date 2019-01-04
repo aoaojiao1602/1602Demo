@@ -99,15 +99,24 @@
 											 	 
 												window.location.href = "main.html";
 											} else if (response.data == "老师") {
-												window.location.href = lj+"?access_token=" + access_token + "&uid=" + uid + "&refresh_token=" +
+												if(lj.includes("?")){
+													window.location.href = lj+"&access_token=" + access_token + "&uid=" + uid + "&refresh_token=" +
 													refresh_token;
+												}else{
+													window.location.href = lj+"?access_token=" + access_token + "&uid=" + uid + "&refresh_token=" +
+													refresh_token;
+												}
+												
 											} else if (response.data == "学生") {
-												window.location.href = lj+"?access_token=" + access_token + "&uid=" + uid + "&refresh_token=" +
+												if(lj.includes("?")){
+													window.location.href = lj+"&access_token=" + access_token + "&uid=" + uid + "&refresh_token=" +
 													refresh_token;
+												}else{
+													window.location.href = lj+"?access_token=" + access_token + "&uid=" + uid + "&refresh_token=" +
+													refresh_token;
+												}
 											} else {
-												window.location.href = lj+"?access_token=" + access_token + "&uid=" + uid + "&refresh_token=" +
-													refresh_token;
-
+												window.location.href = "login.html";
 											}
 											
 										})

@@ -21,6 +21,7 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.AllArgsConstructor;
@@ -41,6 +42,8 @@ public class Permissions {
 	@Id	//实体类的主键
  	@GeneratedValue(strategy=GenerationType.IDENTITY)	//自动增长列
  	@OrderBy	//数据加载顺序
+ 	
+ 	@JsonProperty("id")
  	@Column(columnDefinition="int unsigned NOT NULL comment '备注:权限自动增长主键'  ")
 	private Integer permissionId;
 	
@@ -51,6 +54,7 @@ public class Permissions {
 	@Column(columnDefinition="varchar(50) comment '备注:权限模型'  ")
 	private String permissionModule;
 	
+	@JsonProperty("label")
 	@Column(columnDefinition="varchar(50) comment '备注:权限名称'  ")
 	private String permissionName;
 	
@@ -63,6 +67,11 @@ public class Permissions {
 	
 	@Transient
 	private Boolean checked;
+	
+	@Transient
+	private Boolean disabled;
+	
+	
 	
 	@JsonIgnore
 	@ManyToMany(cascade=javax.persistence.CascadeType.DETACH,fetch=FetchType.EAGER)

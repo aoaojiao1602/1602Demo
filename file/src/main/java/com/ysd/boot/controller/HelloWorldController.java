@@ -42,7 +42,7 @@ public class HelloWorldController {
 		String originalFilename = myfile.getOriginalFilename();//得到上传文件的名称		
 		String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));//后缀	
     	String fileName =UUID.randomUUID().toString().replaceAll("-", "")+suffix;
-    	String classpath ="D:\\1602Demo\\file\\src\\main\\resources\\db\\";
+    	String classpath ="D:\\1602Demo\\file\\src\\main\\resources\\static\\";
     	
 		try {
 			OutputStream output = new FileOutputStream(new File(classpath+fileName));
