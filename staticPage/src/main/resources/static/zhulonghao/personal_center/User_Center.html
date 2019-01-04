@@ -136,7 +136,7 @@
 									urlPre: "http://localhost:8030/user",
 									imgurl: "",
 									imgname: "",
-									url:"install.html",
+									url: "install.html",
 								};
 							},
 							methods: {
@@ -165,7 +165,7 @@
 								}
 							},
 							created: function() {
-								 this.getUserInfo();
+								this.getUserInfo();
 								var uid = this.getUrlKey('uid');
 								/*var loginid = localStorage.getItem('loginid');
 								alert(uid)
@@ -179,7 +179,7 @@
 								} */
 								//alert(uid);
 								window.localStorage.setItem("uid", uid);
-								window.localStorage.setItem("loginid", 1);
+								window.localStorage.setItem("loginid", 6);
 							}
 						});
 					</script>
@@ -237,7 +237,7 @@
 									var vm = this;
 									var uid = localStorage.getItem('uid');
 									var loginid = localStorage.getItem('loginid');
-									axios.put(`${vm.urlPre}/putMyfocus?f_uid=`+uid+`&f_ufid=`+loginid)
+									axios.put(`${vm.urlPre}/putMyfocus?f_uid=` + uid + `&f_ufid=` + loginid)
 										.then(function(response) {
 											vm.isorno = 1;
 											console.log(response);
@@ -394,36 +394,22 @@
 										<a href="user_update.html"> <img class="ftimg" :src="l.ui_headportrait+'/'+l.ui_headportraitname" />
 										</a>
 										<div class="fname" v-text="l.ui_nickname"></div>
-										<span class="fxinxi">{{shenfen}}&nbsp;|</span> <span class="fxinxi">{{xuexiao}}</span> <span id="ffans" class="fxinxi">粉丝{{fensi}}人
-											<script type="text/javascript">
-												var app = new Vue({
-													el: '#ffans',
-													data() {
-														return {
-															fensi: 0,
-															urlPre: "http://localhost:8030/user",
-														};
-													}
-													/* ,
-																										created: function() {
-																											var vm = this;
-																											
-																											axios.get(`${vm.urlPre}/getMyFansCount?uid=l.u_uid`)
-																												.then(function(response) {
-																													vm.fensi = response.data;
-																													console.log(response);
-																													alert(response.data)
-																													console.log(response.data);
-																												})
-																												.catch(function(error) {
-																													console.log(error);
-																												});
-																										} */
-												});
-											</script>
+										<span class="fxinxi" v-text="l.identity">&nbsp;|</span> 
+										<span class="fxinxi" v-text="l.industry" ></span> <span id="ffans" class="fxinxi">粉丝{{fensi}}人
 										</span> <span class="fguanzhu" v-if="1==3">
 											<el-button type="primary" size="small " icon="el-icon-circle-plus-outline">相互关注
 										</span> <span class="qfguanzhu" v-else> 相互关注 </span>
+										<script type="text/javascript">
+											var app = new Vue({
+												el: '#ffans',
+												data() {
+													return {
+														fensi: 0,
+														urlPre: "http://localhost:8030/user",
+													};
+												}
+											});
+										</script>
 									</div>
 								</div>
 
@@ -434,7 +420,8 @@
 										<a href="user_update.html"> <img class="ftimg" :src="l.ui_headportrait+'/'+l.ui_headportraitname" />
 										</a>
 										<div class="fname" v-text="l.ui_nickname"></div>
-										<span class="fxinxi">{{shenfen}}&nbsp;|</span> <span class="fxinxi">{{xuexiao}}</span> <span class="fxinxi">粉丝0人</span>
+										<span class="fxinxi" v-text="l.identity">&nbsp;|</span> 
+										<span class="fxinxi" v-text="l.industry"></span> <span class="fxinxi">粉丝0人</span>
 										<span class="fguanzhu" v-if="1==3">
 											<el-button type="primary" size="small " icon="el-icon-circle-plus-outline">关注
 										</span> <span class="qfguanzhu" v-else> 已关注 </span>
@@ -455,8 +442,6 @@
 								activeName: '',
 								fanslist: [],
 								fouslist: [],
-								shenfen: "学生",
-								xuexiao: "河南工业大学",
 								ss: "我的粉丝",
 								sa: "我的关注",
 								urlPre: "http://localhost:8030/user",
@@ -725,6 +710,46 @@
 								console.log(tab, event);
 							}
 						}
+					});
+				</script>
+			</div>
+			<div id="chengji">
+				<el-table :data="chengji" height="250" border style="width: 100%">
+					<el-table-column prop="examinfo.paperName" label="考试名称" width="180">
+					</el-table-column>
+					<el-table-column prop="examinfo.examType" label="考试方式" width="180">
+					</el-table-column>
+					<el-table-column prop="examScore" label="考试分数">
+					</el-table-column>
+				</el-table>
+				<script type="text/javascript">
+					var app = new Vue({
+						el: '#chengji',
+						data() {
+							return {
+								urlPre: "http://localhost:8030/user",
+								chengji: []
+							}
+						},
+						created: function() {
+							var vm = this;
+							var uid = localStorage.getItem('uid');
+							axios.get(`${vm.urlPre}/queryStudentExaminfoByStuid`, {
+									params: {
+										stuid: uid
+									}
+								})
+								.then(function(response) {
+									vm.chengji = response.data;
+									console.log(response);
+									//alert(response.data)
+									console.log(response.data);
+								})
+								.catch(function(error) {
+									console.log(error);
+								});
+						}
+
 					});
 				</script>
 			</div>

@@ -16,26 +16,30 @@
 
 #tongji {
 	height: auto;
-	width: 100%;
-	margin: auto;
+	width: 45%;
+	overflow: auto;	
 }
-
+#chengji{
+	position: relative;
+	top: -310px;
+	left: 700px;
+	height: 150px;
+	width: 45%;
+}
 #ktz {
-	background-color: #6F7180;
-	height: auto;
+	position: relative;
+	top: -80px;
 	width: 100%;
 	margin: auto;
 }
 
 #test {
-	background-color: #B3D8FF;
 	height: 420px;
 	width: 1333px;
 	margin: auto;
 }
 
 #test2 {
-	background-color: #C0C4CC;
 	height: 580px;
 	width: 1333px;
 	margin: auto;
