@@ -108,6 +108,26 @@ public interface ExaminfoRepository extends JpaRepository<Examinfo, Integer>,Jpa
 	@Query("from Question q where qId=?1 ")
 	Question queryQuestionDaan(int i);
 	
+	  /** 
+	 * http://localhost:8080/queryQuestionAll
+	  * 作者: 大娃   
+	  * 邮件: 1558936588@qq.com  
+	  * 时间: 2019年1月4日 下午7:40:49  
+	  * 版本: V1.0   
+	 */
+	@Query(" from Question ")
+	List<Question> queryQuestionAll();
+	
+	  /** 
+	 * http://localhost:8080/queryCoursesByid
+	  * 作者: 大娃   
+	  * 邮件: 1558936588@qq.com  
+	  * 时间: 2019年1月4日 下午8:11:50  
+	  * 版本: V1.0   
+	 */
+	@Query(" from Examinfo where kId=?1 ")
+	List<Examinfo> queryCoursesByid(int cid);
+	
 	
 	
 	

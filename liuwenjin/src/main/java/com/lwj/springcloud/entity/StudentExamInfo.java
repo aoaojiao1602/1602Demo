@@ -33,7 +33,6 @@ public class StudentExamInfo {
 	private Integer id;
 	@Column(columnDefinition="int comment '备注:学生id'")
 	private Integer studentId;
-	@JsonIgnore
 	@ManyToOne(targetEntity = Examinfo.class)
 	@JoinColumn(name="examinfoId")
 	private Examinfo examinfo;

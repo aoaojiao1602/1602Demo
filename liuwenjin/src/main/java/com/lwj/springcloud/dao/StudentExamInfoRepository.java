@@ -37,7 +37,7 @@ public interface StudentExamInfoRepository extends JpaRepository<StudentExamInfo
 	  * 时间: 2018年12月22日 下午6:04:59  
 	  * 版本: V1.0   
 	 */
-	@Query("SELECT e FROM Examinfo e WHERE e.exId=?1")
+	@Query("SELECT e FROM Examinfo e WHERE e.kId=?1")
 	Examinfo queryExaminfo(int examid);
 	
 	  /** 

@@ -77,20 +77,20 @@
 				</el-pagination>
 			</div>
 			<el-dialog title="添加考试" width="70%" :visible.sync="dialogformVisible" top="15px" :before-close="closeDialog ">
-				<el-form ref="form" :model="form" label-width="80px">
-					<el-form-item label="考试名称">
+				<el-form ref="form" :model="form" label-width="80px" :rules="rules">
+					<el-form-item label="考试名称" prop="paperName">
 						<el-input v-model="form.paperName"></el-input>
 					</el-form-item>
-					<el-form-item label="考试内容">
-						<el-select v-model="form.kId" placeholder="请选择课程">
+					<el-form-item label="考试内容" prop="kid">
+						<el-select v-model="form.kid" placeholder="请选择课程">
 							<el-option v-for="item in course" :key="item.courseId" :label="item.courseName" :value="item.courseId">
 							</el-option>
 						</el-select>
 					</el-form-item>
-					<el-form-item label="考试时间">
+					<el-form-item label="考试时间" prop="startTime">
 						<el-col :span="11">
-							<el-date-picker v-model="data1" type="datetimerange" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" range-separator="至" start-placeholder="开始日期"
-							 end-placeholder="结束日期">
+							<el-date-picker v-model="data1" type="datetimerange" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"
+							 range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
 							</el-date-picker>
 						</el-col>
 						<el-col class="line" :span="2">-</el-col>
@@ -100,61 +100,61 @@
 					</el-form-item>
 					<el-form-item>
 						<el-input-group>
-							选择题<el-input-number v-model="form.optionNum" @change="handleChange" :min="1" :max="20" label="选择题数量"></el-input-number>
-							判断题<el-input-number v-model="form.judgeNum" @change="handleChange" :min="1" :max="10" label="描述文字"></el-input-number>
-							填空题<el-input-number v-model="form.fillblankNum" @change="handleChange" :min="1" :max="20" label="描述文字"></el-input-number>
+							选择题<el-input-number v-model="form.optionNum" @change="handleChange" :min="1" :max="optionNum" label="选择题数量"></el-input-number>
+							判断题<el-input-number v-model="form.judgeNum" @change="handleChange" :min="1" :max="judgeNum" label="描述文字"></el-input-number>
+							<!-- 填空题<el-input-number v-model="form.fillblankNum" @change="handleChange" :min="1" :max="20" label="描述文字"></el-input-number> -->
 							</el-checkbox-group>
 					</el-form-item>
-					<el-form-item label="持续时间">
+					<el-form-item label="考试时间" v-if="isshow" prop="cxTime">
 						<el-input v-model="form.cxTime"></el-input>
 					</el-form-item>
 					<el-form-item>
-						<el-button type="primary" @click="onSubmit">立即创建</el-button>
+						<el-button type="primary" @click="onSubmit('form')">立即创建</el-button>
 						<el-button>取消</el-button>
 					</el-form-item>
 				</el-form>
 
 			</el-dialog>
-			
-			<el-dialog title="修改考试" width="70%"  :visible.sync="dialogform1Visible" top="15px" :before-close="closeDialog ">
-							<el-form ref="form1" :model="form1" label-width="80px">
-								<el-form-item label="考试名称">
-									<el-input v-model="form1.paperName"></el-input>
-								</el-form-item>
-								<el-form-item label="考试内容">
-									<el-select v-model="form1.kid" placeholder="请选择课程">
-										<el-option v-for="item in course" :key="item.courseId" :label="item.courseName" :value="item.courseId">
-										</el-option>
-									</el-select>
-								</el-form-item>
-								<el-form-item label="考试时间">
-									<el-col :span="11">
-										<el-date-picker v-model="data1" type="datetimerange" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" range-separator="至" start-placeholder="开始日期"
-										 end-placeholder="结束日期">
-										</el-date-picker>
-									</el-col>
-									<el-col class="line" :span="2">-</el-col>
-								</el-form-item>
-								<el-form-item label="统一考试">
-									<el-switch v-model="delivery" disabled="true"></el-switch>
-								</el-form-item>
-								<el-form-item>
-									<el-input-group>
-										选择题<el-input-number v-model="form1.optionNum" @change="handleChange" :min="1" :max="20" label="选择题数量"></el-input-number>
-										判断题<el-input-number v-model="form1.judgeNum" @change="handleChange" :min="1" :max="10" label="描述文字"></el-input-number>
-										填空题<el-input-number v-model="form1.fillblankNum" @change="handleChange" :min="1" :max="20" label="描述文字"></el-input-number>
-										</el-checkbox-group>
-								</el-form-item>
-								<el-form-item label="持续时间">
-									<el-input v-model="form1.cxTime"></el-input>
-								</el-form-item>
-								<el-form-item>
-									<el-button type="primary" @click="update">修改</el-button>
-									<el-button>取消</el-button>
-								</el-form-item>
-							</el-form>
-			
-						</el-dialog>
+
+			<el-dialog title="修改考试" width="70%" :visible.sync="dialogform1Visible" top="15px" :before-close="closeDialog1">
+				<el-form ref="form1" :model="form1" label-width="80px" :rules="rules">
+					<el-form-item label="考试名称" prop="paperName">
+						<el-input v-model="form1.paperName"></el-input>
+					</el-form-item>
+					<el-form-item label="考试内容" prop="kid">
+						<el-select v-model="form1.kid" placeholder="请选择课程">
+							<el-option v-for="item in course" :key="item.courseId" :label="item.courseName" :value="item.courseId">
+							</el-option>
+						</el-select>
+					</el-form-item>
+					<el-form-item label="考试时间" prop="startTime">
+						<el-col :span="11">
+							<el-date-picker v-model="data1" type="datetimerange" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"
+							 range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+							</el-date-picker>
+						</el-col>
+						<el-col class="line" :span="2">-</el-col>
+					</el-form-item>
+					<el-form-item label="统一考试">
+						<el-switch v-model="delivery" disabled="true"></el-switch>
+					</el-form-item>
+					<el-form-item>
+						<el-input-group>
+							选择题<el-input-number v-model="form1.optionNum" @change="handleChange" :min="1" :max="optionNum" label="选择题数量"></el-input-number>
+							判断题<el-input-number v-model="form1.judgeNum" @change="handleChange" :min="1" :max="judgeNum" label="描述文字"></el-input-number>
+							<!-- 填空题<el-input-number v-model="form1.fillblankNum" @change="handleChange" :min="1" :max="20" label="描述文字"></el-input-number> -->
+							</el-checkbox-group>
+					</el-form-item>
+					<el-form-item label="持续时间" prop="cxTime">
+						<el-input v-model="form1.cxTime"></el-input>
+					</el-form-item>
+					<el-form-item>
+						<el-button type="primary" @click="update('form1')">修改</el-button>
+						<el-button>取消</el-button>
+					</el-form-item>
+				</el-form>
+
+			</el-dialog>
 		</div>
 	</body>
 	<script type="text/javascript">
@@ -171,18 +171,21 @@
 					tableData: [],
 					course: [],
 					dialogformVisible: false,
-					data1: '',
+					data1: [],
 					delivery: false,
+					isshow: true,
+					optionNum: null,
+					judgeNum: null,
 					form: {
 						startTime: null,
 						endTime: null,
 						paperName: '',
 						cxTime: null,
 						teacherId: 1,
-						optionNum: 3,
+						optionNum: 10,
 						judgeNum: 10,
 						fillblankNum: 1,
-						examScore: 100,
+						examScore: 0,
 						kid: null,
 						examType: '自主',
 					},
@@ -200,110 +203,207 @@
 						kid: null,
 						examType: '自主',
 						exId: null
+					},
+					rules: {
+						paperName: [{
+								required: true,
+								message: '请输入考试名称',
+								trigger: 'blur'
+							},
+							{
+								min: 2,
+								max: 10,
+								message: '长度在 2 到 10 个字符',
+								trigger: 'blur'
+							}
+						],
+						kid: [{
+							required: true,
+							message: '请选择考试内容',
+							trigger: 'change'
+						}],
+						startTime: [{
+							required: true,
+							message: '请选择考试开始时间与结束时间',
+							trigger: 'change'
+						}],
+						cxTime: [{
+							required: true,
+							message: '请输入考试时间',
+							trigger: 'blur'
+						}]
 					}
 				}
 			},
 			methods: {
-				updatexs(rows){
+				updatexs(rows) {
 					console.log(rows);
 					var other = this;
-					other.form1=rows;
-					other.dialogform1Visible=true
+					other.form1 = rows;
+					other.data1[0] = rows.startTime;
+					other.data1[1] = rows.endTime;
+					if (rows.examType == "自主") {
+						other.delivery = false;
+					} else {
+						other.delivery = true;
+					}
+					other.dialogform1Visible = true
 				},
-				update(){
+				update(myform) {
 					var other = this;
-					axios({
-							method: 'put',
-							url: "http://localhost:8040/examinfo",
-							data: this.form1
-						})
-						.then(function(response) {
-							var th = this;
-							if (response.data>0 ) {
-								other.$message({
-									type: 'success',
-									message: '修改成功!'
-								});
-							}
-							other.search();
-							other.dialogform1Visible = false;
-						})
-						.catch(function(error) {
+					other.$refs[myform].validate((valid) => {
+						if (valid) {
+							axios({
+									method: 'put',
+									url: "http://localhost:8040/examinfo",
+									data: this.form1
+								})
+								.then(function(response) {
+									var th = this;
+									if (response.data > 0) {
+										other.$message({
+											type: 'success',
+											message: '修改成功!'
+										});
+									}
+									other.search();
+									other.dialogform1Visible = false;
+								})
+								.catch(function(error) {
+									other.$message({
+										type: 'warning',
+										message: '系统异常!'
+									});
+								})
+						} else {
 							other.$message({
-								type: 'success',
-								message: '系统异常!'
+								type: 'warning',
+								message: '表单不完整!'
 							});
-						})
-					
+							return false;
+						}
+					})
 				},
 				deletequestion(row) {
 					var other = this;
-					this.$confirm('此操作将永久删除该题库, 是否继续?', '提示', {
-						confirmButtonText: '确定',
-						cancelButtonText: '取消',
-						type: 'warning',
-						center: true
-					}).then(() => {
-						var th = this;
-						axios({
-								method: 'delete',
-								url: "http://localhost:8040/examinfo",
-								params: {
-									exId: row.exId
-								}
-							})
-							.then(function(response) {
-								console.log(response);
-								th.$message({
-									type: 'success',
-									message: '删除成功!'
-								});
-								other.search();
-							})
-							.catch(function(error) {
-								th.$message({
-									type: 'success',
-									message: '系统异常!'
-								});
-							})
-					}).catch(() => {
-						this.$message({
-							type: 'info',
-							message: '已取消删除'
+					var startTime = row.startTime;
+					var endTime = row.endTime;
+					var s = new Date(Date.parse(startTime.replace(/-/g, "/")));
+					var e = new Date(Date.parse(endTime.replace(/-/g, "/")));
+					var curDate = new Date();
+					console.log(s);
+					console.log(e);
+					console.log(curDate);
+					if (curDate<s) {
+						this.$confirm('此操作将永久删除该考试, 是否继续?', '提示', {
+							confirmButtonText: '确定',
+							cancelButtonText: '取消',
+							type: 'warning',
+							center: true
+						}).then(() => {
+							var th = this;
+							axios({
+									method: 'delete',
+									url: "http://localhost:8040/examinfo",
+									params: {
+										exId: row.exId
+									}
+								})
+								.then(function(response) {
+									console.log(response);
+									th.$message({
+										type: 'success',
+										message: '删除成功!'
+									});
+									other.search();
+								})
+								.catch(function(error) {
+									th.$message({
+										type: 'warning',
+										message: '系统异常!'
+									});
+								})
+						}).catch(() => {
+							this.$message({
+								type: 'info',
+								message: '已取消删除'
+							});
 						});
-					});
-					console.log(row.qid);
+					}else{
+						other.$message({
+							type: 'warning',
+							message: '考试以开始不能删除！'
+						});
+					}
 				},
 				handleChange(value) {
 					console.log(value);
 				},
-				onSubmit() {
+				onSubmit(myform) {
+					console.log(myform);
 					var other = this;
-					axios({
-							method: 'post',
-							url: "http://localhost:8040/examinfo",
-							data: this.form
-						})
-						.then(function(response) {
-							var th = this;
-							if (response.data != null) {
-								other.$message({
-									type: 'success',
-									message: '添加成功!'
-								});
-								//other.$refs['form'].resetFields();
+					other.$refs[myform].validate((valid) => {
+						if (valid) {
+							var s = new Date(Date.parse(other.form.startTime.replace(/-/g, "/")));
+							var e = new Date(Date.parse(other.form.endTime.replace(/-/g, "/")));
+							if (other.form.examType != '自主') {
+								other.form.cxTime = parseInt((e - s) / 3600000);
 							}
-							other.search();
-							other.dialogformVisible = false;
-						})
-						.catch(function(error) {
+							other.form.examScore = (other.form.optionNum + other.form.judgeNum) * 5
+							axios.get("http://localhost:8040/queryCoursesByid", {
+									params: {
+										cid: other.form.kid,
+									}
+								})
+								.then(function(response) {
+									if(response.data>0){
+										other.$message({
+											type: 'warning',
+											message: '该课程在一年内已经建立考试!'
+										});
+									}else{
+										axios({
+												method: 'post',
+												url: "http://localhost:8040/examinfo",
+												data: other.form
+											})
+											.then(function(response) {
+												var th = this;
+												if (response.data != null) {
+													other.$message({
+														type: 'success',
+														message: '添加成功!'
+													});
+													//other.$refs['form'].resetFields();
+												}
+												other.search();
+												other.dialogformVisible = false;
+											})
+											.catch(function(error) {
+												other.$message({
+													type: 'warning',
+													message: '系统异常!'
+												});
+											})
+									}
+								})
+								.catch(function(error) {});
+						} else {
 							other.$message({
-								type: 'success',
-								message: '系统异常!'
+								type: 'warning',
+								message: '表单不完整!'
 							});
-						})
+							return false;
+						}
+					})
 				},
 				closeDialog(done) {
+					this.$refs['form'].resetFields();
+					done();
+				},
+				closeDialog1(done) {
+					this.data1 = [];
+					this.delivery = false;
 					done();
 				},
 				//改变每页多少条
@@ -348,18 +448,25 @@
 			created: function() {
 				var other = this;
 				this.loadsearch(this.currentPage, this.pageSize);
-				var tid=window.localStorage.getItem("tid");
-				other.form.teacherId=tid;
-				other.form1.teacherId=tid;
+				var tid = window.localStorage.getItem("tid");
+				other.form.teacherId = tid;
+				other.form1.teacherId = tid;
 				axios.get("http://localhost:8040/queryCourses", {
-							params: {
-								tid:tid,
-							}
-						})
-					.then(function(response) {
-						other.course=response.data;
+						params: {
+							tid: tid,
+						}
 					})
-					.catch(function(error) {}) 
+					.then(function(response) {
+						other.course = response.data;
+					})
+					.catch(function(error) {});
+				axios.get("http://localhost:8040/queryQuestionTypeCount", {})
+					.then(function(response) {
+						other.optionNum=response.data.optionNum;
+						other.judgeNum=response.data.judgeNum;
+					})
+					.catch(function(error) {})
+
 			},
 			watch: {
 				data1(val, newval) {
@@ -371,8 +478,10 @@
 					console.log(newval);
 					if (!newval) {
 						this.form.examType = '统一'
+						this.isshow = false;
 					} else {
-						this.form.examType = '自主'
+						this.form.examType = '自主';
+						this.isshow = true;
 					}
 					console.log(this.form.examType);
 				}

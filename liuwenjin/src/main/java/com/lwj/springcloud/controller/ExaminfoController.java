@@ -1,6 +1,7 @@
 package com.lwj.springcloud.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +62,18 @@ public class ExaminfoController {
 	@RequestMapping(value="/examinfo", method = RequestMethod.PUT)
 	public Object updateExaminfo(@RequestBody Examinfo examinfo) {
 		return eService.updateExaminfo(examinfo);
+	}
+	@ApiOperation(value="查询题型数量", notes="查询题型数量")
+	@RequestMapping(value="/queryQuestionTypeCount", method = RequestMethod.GET)
+	public Object queryQuestionTypeCount() {
+		return eService.queryQuestionTypeCount();
+	}
+	@ApiOperation(value="查询该课程有没有考试", notes="查询考试")
+	@ApiImplicitParam(name = "cid", value = "考试id", required = true,paramType="Intger")
+	@RequestMapping(value="/queryCoursesByid", method = RequestMethod.GET)
+	public Object queryCoursesByid(int cid) {
+		List<Examinfo> examinfos=eService.queryCoursesByid(cid);
+		System.err.println(examinfos);
+		return examinfos.size();
 	}
 }
