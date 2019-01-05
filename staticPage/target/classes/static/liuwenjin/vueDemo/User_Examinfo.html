@@ -55,13 +55,18 @@
 	<body>
 		<div id="app">
 			<h1 align="center">考试内容：{{examinfo.paperName}}</h1>
-			<div style="margin-left: 900px;">
+			<span>
+				<el-button type="primary" icon="el-icon-circle-plus" @click="qp" v-if="isqp">{{msg}}</el-button>
+				<el-button type="info" icon="el-icon-remove" @click="tc" v-if="isqp1">{{msg}}</el-button>
+			</span>
+			<span style="margin-left: 700px;">
+				<span>考试类型：{{examinfo.examType}}考试</span>
 				<span>考试时长：{{examinfo.cxTime}}小时</span>
 				<span> 剩余时间：{{stuTime}}秒</span>
 				<span>考生id:{{studentExamInfo.id}}</span>
 				<span>考生姓名:{{stuName}}</span>
 				<el-button type="success" icon="el-icon-upload2" :disabled="disabled" @click="submitExam">提交</el-button>
-			</div>
+			</span>
 			<hr />
 			<el-table :data="question" border :row-key="getRowKeys" :expand-row-keys="expands" style="width: 100%; margin-left: 50px;">
 				<el-table-column type="index" label="题号" width="50">
@@ -125,14 +130,37 @@
 
 	</body>
 	<script type="text/javascript">
-		/* window.onbeforeunload = function() {
-			//  这是用来设定一个时间, 时间到了, 就会执行一个指定的 method。
-			setTimeout(onunloadcancel, 10);
-			return "真的离开?";
+		var thisPage = false;
+		window.onbeforeunload = function checkLeave(e) {
+			var evt = e ? e : (window.event ? window.event : null); //此方法为了在firefox中的兼容
+			if (!thisPage) evt.returnValue = '离开会使编写的内容丢失。';
+			///vm.submit();
 		}
-		window.onunloadcancel = function() {
-			alert("继续考试");
-		} */
+
+		document.onkeydown = function(event) {
+			if ((event.keyCode == 112) || //屏蔽 F1
+				(event.keyCode == 113) || //屏蔽 F2
+				(event.keyCode == 114) || //屏蔽 F3
+				(event.keyCode == 115) || //屏蔽 F4
+				(event.keyCode == 116) || //屏蔽 F5
+				(event.keyCode == 117) || //屏蔽 F6
+				(event.keyCode == 118) || //屏蔽 F7
+				(event.keyCode == 119) || //屏蔽 F8
+				(event.keyCode == 120) || //屏蔽 F9
+				(event.keyCode == 121) || //屏蔽 F10
+				(event.keyCode == 122) || //屏蔽 F11
+				//(event.keyCode == 123) || //屏蔽 F12
+				(event.keyCode == 27)
+			) //屏蔽 F12
+			{
+				return false;
+			}
+		}
+		window.onhelp = function() {
+			return false;
+		}
+
+
 		var vm = new Vue({
 			el: '#app',
 			data: function() {
@@ -150,47 +178,96 @@
 					examid: null,
 					timer: null,
 					stuTime: 0,
-					disabled: false
+					disabled: false,
+					isqp: true,
+					isqp1: false,
+					msg: '全屏'
 				}
 
 			},
 			methods: {
+				qp() {
+					var other = this;
+					other.isqp = false;
+					other.isqp1 = true;
+					other.msg = "正常"
+					if (document.documentElement.RequestFullScreen) {
+						document.documentElement.RequestFullScreen();
+					}
+					//兼容火狐
+					console.log(document.documentElement.mozRequestFullScreen)
+					if (document.documentElement.mozRequestFullScreen) {
+						document.documentElement.mozRequestFullScreen();
+					}
+					//兼容谷歌等可以webkitRequestFullScreen也可以webkitRequestFullscreen
+					if (document.documentElement.webkitRequestFullScreen) {
+						document.documentElement.webkitRequestFullScreen();
+					}
+					//兼容IE,只能写msRequestFullscreen
+					if (document.documentElement.msRequestFullscreen) {
+						document.documentElement.msRequestFullscreen();
+					}
+				},
+				tc() {
+					var other = this;
+					other.isqp1 = false;
+					other.isqp = true;
+					other.msg = "全屏"
+					if (document.exitFullScreen) {
+						document.exitFullscreen()
+					}
+					//     		//兼容火狐
+					//     		console.log(document.mozExitFullScreen)
+					if (document.mozCancelFullScreen) {
+						document.mozCancelFullScreen()
+					}
+					//     		//兼容谷歌等
+					if (document.webkitExitFullscreen) {
+						document.webkitExitFullscreen()
+					}
+					//     		//兼容IE
+					if (document.msExitFullscreen) {
+						document.msExitFullscreen()
+					}
+				},
 				//获取url中的参数
 				getUrlKey(name) {
 					return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[
 						1].replace(/\+/g, '%20')) || null
 				},
 				// 获取row的key值
-				
-								//修改显示
+
+				//修改显示
 				change(row) {
 					console.log(row.daan);
 					console.log(row.my);
 					var other = this;
 					var daan = row.daan
 					axios({
-							method: 'put',
-							url: "http://localhost:8040/studentExamInfoQuestion",
+							method: 'post',
+							url: "http://localhost:8041/exam-update",
+							/* method: 'put',
+							url: "http://localhost:8040/studentExamInfoQuestion", */
 							params: {
 								stuid: other.stuid,
 								examid: other.examid,
 								daan: daan,
-								qid: row.qid
+								qid: row.qid,
+								time: other.stuTime
 							}
 						})
-						.then(function(response) {})
+						.then(function(response) {
+
+						})
 						.catch(function(error) {
-							other.$message({
-								type: 'success',
-								message: '系统异常!'
-							});
+
 						})
 
 				},
 				//提交考试
 				submitExam() {
 					var other = this;
-					other.disabled=true;
+					other.disabled = true;
 					this.$confirm('您将提交本次考试确认将不可取消, 是否继续?', '提示', {
 						confirmButtonText: '确定',
 						cancelButtonText: '取消',
@@ -245,7 +322,17 @@
 				setTimer() {
 					var other = this;
 					other.timer = setInterval(() => {
-						axios({
+						if (other.stuTime < 1) {
+							other.$message({
+								type: 'warning',
+								message: '考试结束'
+							});
+							other.submit();
+						} else {
+							other.stuTime--;
+
+						}
+						/* axios({
 								method: 'put',
 								url: "http://localhost:8040/updateStudentExamInfo",
 								params: {
@@ -270,7 +357,7 @@
 									type: 'success',
 									message: '系统异常!'
 								});
-							})
+							}) */
 					}, 1000)
 
 				},
@@ -286,7 +373,7 @@
 					websocket.onopen = function(event) {
 						console.log("成功与服务器建立连接!!!");
 						console.log(event);
-						websocket.send(stuid=1);
+						websocket.send(stuid = 1);
 						//websocket.send(examid=13);
 					}
 					//3. 接收服务器数据
@@ -310,13 +397,16 @@
 			},
 			created: function() {
 				var other = this;
-				var stuid= this.getUrlKey('stuid');
-				var examid=this.getUrlKey('examid');
-				var stuName=this.getUrlKey('stuName');
-				other.stuid=stuid;
-				other.examid=examid;
-				other.stuName=stuName;
-				//查询该是否第一次进入考试
+				var stuid = this.getUrlKey('stuid');
+				var examid = this.getUrlKey('examid');
+				var stuName = this.getUrlKey('stuName');
+				other.stuid = stuid;
+				other.examid = examid;
+				other.stuName = stuName;
+				/* //查询该是否第一次进入考试
+				var s = new Date(Date.parse(startTime.replace(/-/g, "/")));
+				var e = new Date(Date.parse(endTime.replace(/-/g, "/")));
+				var curDate = new Date(); */
 				axios.get("http://localhost:8040/studentExamInfo", {
 						params: {
 							stuid: other.stuid,
@@ -337,8 +427,8 @@
 							other.submit();
 						} else {
 							//other.websocket();
-							 other.stuTime = response.data.studentExamInfo.time;
-							other.setTimer(); 
+							other.stuTime = response.data.studentExamInfo.time;
+							other.setTimer();
 
 						}
 						for (var i = 0; i < other.question.length; i++) {
@@ -352,8 +442,7 @@
 
 			},
 			watch: {
-				stuTime(val, newval) {
-				}
+				stuTime(val, newval) {}
 			},
 			destroyed: function() {
 				//this.submitExam();

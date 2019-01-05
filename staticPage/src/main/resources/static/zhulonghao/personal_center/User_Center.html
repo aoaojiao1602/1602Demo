@@ -128,7 +128,61 @@
 				<div id="touxiang">
 					<a title="编辑图片" :href="url"> <img alt="编辑图片" id="timg" :src="imgurl+'/'+imgname" />
 					</a>
-					<el-button type="text" size="medium">课程管理</el-button>
+					<script type="text/javascript">
+						var app = new Vue({
+							el: '#touxiang',
+							data() {
+								return {
+									urlPre: "http://localhost:8030/user",
+									imgurl: "",
+									imgname: "",
+									url: "install.html",
+								};
+							},
+							methods: {
+								getUrlKey(name) {
+									return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [,
+										""
+									])[1].replace(/\+/g, '%20')) || null
+								},
+								getUserInfo() {
+									var vm = this;
+									var uid = localStorage.getItem('uid');
+									axios.get(`${vm.urlPre}/userinfo`, {
+											params: {
+												uid: uid
+											}
+										}).then(function(response) {
+											vm.imgurl = response.data.ui_headportrait;
+											vm.imgname = response.data.ui_headportraitname;
+											console.log(response);
+											//alert(response.data.ui_nickname)
+											console.log(response.data);
+										})
+										.catch(function(error) {
+											console.log(error);
+										});
+								}
+							},
+							created: function() {
+								this.getUserInfo();
+								var uid = this.getUrlKey('uid');
+								/*var loginid = localStorage.getItem('loginid');
+								alert(uid)
+								alert(loginid)
+								if (uid == loginid) {
+									//alert(true);
+									vm.url = install.html;
+								} else {
+									//alert(false);
+									vm.url = null;
+								} */
+								//alert(uid);
+								window.localStorage.setItem("uid", uid);
+								window.localStorage.setItem("loginid", 6);
+							}
+						});
+					</script>
 				</div>
 				<div id="guanzhu">
 					<span v-if=ismyself> </span> <span v-else-if="isorno==0">
@@ -136,31 +190,226 @@
 					</span> <span v-else>
 						<el-button type="info" size="small " @click="qgz">{{nofans}}</el-button>
 					</span>
+					<script type="text/javascript">
+						var app = new Vue({
+							el: '#guanzhu',
+							data() {
+								return {
+									urlPre: "http://localhost:8030/user",
+									fans: "关注",
+									nofans: "已关注",
+									ismyself: false,
+									isorno: 0,
+								}
+							},
+							created: function() {
+								this.getIsMyfocus();
+							},
+							methods: {
+								getIsMyfocus() {
+									var vm = this;
+									var uid = localStorage.getItem('uid');
+									var loginid = localStorage.getItem('loginid');
+									if (uid == loginid) {
+										//alert(true);
+										vm.ismyself = true;
+									} else {
+										//alert(false);
+										vm.ismyself = false;
+									}
+									axios.get(`${vm.urlPre}/getIsMyfocus`, {
+											params: {
+												uid: loginid,
+												fid: uid
+											}
+										}).then(function(response) {
+											vm.isorno = response.data;
+											//alert(response.data)
+											console.log(response);
+											//alert(response.data.ui_nickname)
+											console.log(response.data);
+										})
+										.catch(function(error) {
+											console.log(error);
+										});
+								},
+								gz: function() {
+									var vm = this;
+									var uid = localStorage.getItem('uid');
+									var loginid = localStorage.getItem('loginid');
+									axios.put(`${vm.urlPre}/putMyfocus?f_uid=` + uid + `&f_ufid=` + loginid)
+										.then(function(response) {
+											vm.isorno = 1;
+											console.log(response);
+											console.log(response.data);
+										})
+										.catch(function(error) {
+											console.log(error);
+										});
+								},
+								qgz: function() {
+									var vm = this;
+									var uid = localStorage.getItem('uid');
+									var loginid = localStorage.getItem('loginid');
+									axios.delete(`${vm.urlPre}/deleteMyfocus`, {
+											params: {
+												uid: loginid,
+												fid: uid
+											}
+										})
+										.then(function(response) {
+											vm.isorno = 0;
+											console.log(response);
+											console.log(response.data);
+										})
+										.catch(function(error) {
+											console.log(error);
+										});
+								}
+							}
+						});
+					</script>
 				</div>
 				<div id="nickname">
 					{{msg}}
+					<script type="text/javascript">
+						var app = new Vue({
+							el: '#nickname',
+							data() {
+								return {
+									urlPre: "http://localhost:8030/user",
+									msg: "",
+								};
+							},
+							created: function() {
+								var vm = this;
+								var uid = localStorage.getItem('uid');
+								axios.get(`${vm.urlPre}/userinfo`, {
+										params: {
+											uid: uid
+										}
+									})
+									.then(function(response) {
+										vm.msg = response.data.ui_nickname;
+										console.log(response);
+										//alert(response.data.ui_nickname)
+										console.log(response.data);
+									})
+									.catch(function(error) {
+										console.log(error);
+									});
+							}
+						});
+					</script>
 				</div>
 				<div id="zhiye">
 					{{zhiye}}&nbsp;|&nbsp;{{xuexiaao}}--{{yuanxi}}
-
+					<script type="text/javascript">
+						var app = new Vue({
+							el: '#zhiye',
+							data() {
+								return {
+									zhiye: "",
+									xuexiaao: "",
+									yuanxi: "",
+									urlPre: "http://localhost:8030/user",
+								};
+							},
+							methods: {
+								getUserInfo() {
+									var vm = this;
+									var uid = localStorage.getItem('uid');
+									axios.get(`${vm.urlPre}/userinfo`, {
+											params: {
+												uid: uid
+											}
+										})
+										.then(function(response) {
+											vm.zhiye = response.data.identity;
+											vm.xuexiaao = response.data.industry;
+											vm.yuanxi = response.data.yuanx;
+											console.log(response);
+											//alert(response.data)
+											console.log(response.data);
+										})
+										.catch(function(error) {
+											console.log(error);
+										});
+								}
+							},
+							created: function() {
+								this.getUserInfo();
+							}
+						});
+					</script>
 				</div>
+				<!-- <div id="fans">
+									<a href="#" style="color: #8CC5FF;"><span id="myfans">关注{{mfans}}人</span></a>&nbsp;|
+									<a href="#" style="color: #8CC5FF;"><span id="myfous">粉丝{{mfous}}人</span></a>
+									<script type="text/javascript">
+										var app = new Vue({
+											el: '#fans',
+											data() {
+												return {
+													urlPre: "http://localhost:8030/user",
+													mfans: 0,
+													mfous: 0,
+												};
+											},
+											created: function() {
+												var vm = this;
+												axios.get(`${vm.urlPre}/getMyFansCount?uid=1`)
+													.then(function(response) {
+														vm.mfous = response.data;
+														console.log(response);
+														console.log(response.data);
+													})
+													.catch(function(error) {
+														console.log(error);
+													});
+											},
+											mounted: function() {
+												var vm = this;
+												axios.get(`${vm.urlPre}/getMyfocusCount?uid=1`)
+													.then(function(response) {
+														vm.mfans = response.data;
+														console.log(response);
+														console.log(response.data);
+													})
+													.catch(function(error) {
+														console.log(error);
+													});
+											}
+										});
+									</script>
+								</div> -->
 				<div id="fansorfous">
 					<el-button type="text" @click="fanstab">粉丝{{mfans}}人</el-button>
 					<el-button type="text" @click="foustab">关注{{mfous}}人</el-button>
 					<el-dialog width="820px" :visible.sync="op" style="margin-top: -50px;">
-						<el-tabs style="margin-top: -50px;" v-model="activeName2" id="fansdig" @tab-click="handleClick">
+						<el-tabs style="margin-top: -50px;" v-model="activeName" id="fansdig" @tab-click="handleClick">
 							<el-tab-pane class="fansfans" :label="ss" name="myfans">
 								<div class="daxiao">
 									<div class="xh" v-for="l in fanslist">
-										<a href="#" @click="aaa(l)"> <img class="ftimg" :src="l.ui_headportrait+'/'+l.ui_headportraitname" />
+										<a href="user_update.html"> <img class="ftimg" :src="l.ui_headportrait+'/'+l.ui_headportraitname" />
 										</a>
 										<div class="fname" v-text="l.ui_nickname"></div>
-										<span v-show="1!=1" >{{l.u_uid}}</span>
 										<span class="fxinxi" v-text="l.identity">&nbsp;|</span>
 										<span class="fxinxi" v-text="l.industry"></span> <span id="ffans" class="fxinxi">粉丝{{fensi}}人
 										</span> <span class="fguanzhu" v-if="1==3">
 											<el-button type="primary" size="small " icon="el-icon-circle-plus-outline">相互关注
 										</span> <span class="qfguanzhu" v-else> 相互关注 </span>
+										<script type="text/javascript">
+											var app = new Vue({
+												el: '#ffans',
+												data() {
+													return {
+														fensi: 0,
+														urlPre: "http://localhost:8030/user",
+													};
+												}
+											});
+										</script>
 									</div>
 								</div>
 
@@ -168,11 +417,10 @@
 							<el-tab-pane class="fansfans" :label="sa" name="myfous">
 								<div class="daxiao">
 									<div class="xh" v-for="l in fouslist">
-										<a href="#" @click="aaa(l)" > <img class="ftimg" :src="l.ui_headportrait+'/'+l.ui_headportraitname" />
+										<a href="user_update.html"> <img class="ftimg" :src="l.ui_headportrait+'/'+l.ui_headportraitname" />
 										</a>
 										<div class="fname" v-text="l.ui_nickname"></div>
 										<span class="fxinxi" v-text="l.identity">&nbsp;|</span>
-										<span v-show="1!=1" >{{l.u_uid}}</span>
 										<span class="fxinxi" v-text="l.industry"></span> <span class="fxinxi">粉丝0人</span>
 										<span class="fguanzhu" v-if="1==3">
 											<el-button type="primary" size="small " icon="el-icon-circle-plus-outline">关注
@@ -183,9 +431,150 @@
 						</el-tabs>
 					</el-dialog>
 				</div>
+				<script type="text/javascript">
+					var app = new Vue({
+						el: '#fansorfous',
+						data() {
+							return {
+								mfans: 0,
+								mfous: 0,
+								op: false,
+								activeName: '',
+								fanslist: [],
+								fouslist: [],
+								ss: "我的粉丝",
+								sa: "我的关注",
+								urlPre: "http://localhost:8030/user",
+							};
+						},
+						methods: {
+							fanstab() {
+								var vm = this;
+								vm.op = true;
+								vm.activeName = "myfans";
+
+							},
+							foustab() {
+								var vm = this;
+								vm.op = true;
+								vm.activeName = "myfous";
+							},
+							handleClick(tab, event) {
+								console.log(tab, event);
+							},
+							getfans() {
+								var vm = this;
+								var uid = localStorage.getItem('uid');
+								axios.get(`${vm.urlPre}/getMyFans`, {
+										params: {
+											uid: uid
+										}
+									})
+									.then(function(response) {
+										vm.fanslist = response.data;
+										console.log(response);
+										//alert(response.data)
+										console.log(response.data);
+									})
+									.catch(function(error) {
+										console.log(error);
+									});
+							},
+							getfanscount() {
+								var vm = this;
+								var uid = localStorage.getItem('uid');
+								axios.get(`${vm.urlPre}/getMyFansCount`, {
+										params: {
+											uid: uid
+										}
+									})
+									.then(function(response) {
+										vm.mfans = response.data;
+
+										console.log(response);
+										console.log(response.data);
+									})
+									.catch(function(error) {
+										console.log(error);
+									});
+							},
+							getfous() {
+								var vm = this;
+								var uid = localStorage.getItem('uid');
+								axios.get(`${vm.urlPre}/getMyfocus`, {
+										params: {
+											uid: uid
+										}
+									})
+									.then(function(response) {
+										vm.fouslist = response.data;
+										console.log(response);
+										//alert(response.data)
+										console.log(response.data);
+									})
+									.catch(function(error) {
+										console.log(error);
+									});
+							},
+							getfouscount() {
+								var vm = this;
+								var uid = localStorage.getItem('uid');
+								axios.get(`${vm.urlPre}/getMyfocusCount`, {
+										params: {
+											uid: uid
+										}
+									})
+									.then(function(response) {
+										vm.mfous = response.data;
+										console.log(response);
+										console.log(response.data);
+									})
+									.catch(function(error) {
+										console.log(error);
+									});
+							}
+
+						},
+						created: function() {
+							this.getfans();
+							this.getfous();
+							this.getfanscount();
+							this.getfouscount();
+						}
+					});
+				</script>
 				<div id="jianjie">
 					<span>
 						<font size="2" color="#8CC5FF">{{jianjie}}</font>
+						<script type="text/javascript">
+							var app = new Vue({
+								el: '#jianjie',
+								data() {
+									return {
+										urlPre: "http://localhost:8030/user",
+										jianjie: "",
+									};
+								},
+								created: function() {
+									var vm = this;
+									var uid = localStorage.getItem('uid');
+									axios.get(`${vm.urlPre}/userinfo`, {
+											params: {
+												uid: uid
+											}
+										})
+										.then(function(response) {
+											vm.jianjie = response.data.jianjie;
+											console.log(response);
+											//alert(response.data.jianjie)
+											console.log(response.data);
+										})
+										.catch(function(error) {
+											console.log(error);
+										});
+								}
+							});
+						</script>
 					</span>
 				</div>
 				<div id="huifutubiao" title="发帖数、回复数、评论数之和">
@@ -196,6 +585,35 @@
 				</div>
 				<div id="huifunum" title="发帖数、回复数、评论数之和">
 					{{hnum}}
+					<script type="text/javascript">
+						var app = new Vue({
+							el: '#huifunum',
+							data() {
+								return {
+									urlPre: "http://localhost:8030/postbar",
+									hnum: 0,
+								};
+							},
+							created: function() {
+								var vm = this;
+								var uid = localStorage.getItem('uid');
+								axios.get(`${vm.urlPre}/getPostbarAndReplyAndCommentCountByuId`, {
+										params: {
+											uid: uid
+										}
+									})
+									.then(function(response) {
+										vm.hnum = response.data;
+										console.log(response);
+										//alert(response.data)
+										console.log(response.data);
+									})
+									.catch(function(error) {
+										console.log(error);
+									});
+							}
+						});
+					</script>
 				</div>
 				<div id="huozantubiao" title="获得赞数之和">
 					<font size="10"><i class="el-icon-view"></i></font>
@@ -205,6 +623,35 @@
 				</div>
 				<div id="huozannum" title="获得赞数之和">
 					{{hznum}}
+					<script type="text/javascript">
+						var app = new Vue({
+							el: '#huozannum',
+							data() {
+								return {
+									urlPre: "http://localhost:8030/postbar",
+									hznum: 0,
+								};
+							},
+							created: function() {
+								var vm = this;
+								var uid = localStorage.getItem('uid');
+								axios.get(`${vm.urlPre}/getPostbarAndReplyAndCommentGoodCountByuId`, {
+										params: {
+											uid: uid
+										}
+									})
+									.then(function(response) {
+										vm.hznum = response.data;
+										console.log(response);
+										//alert(response.data)
+										console.log(response.data);
+									})
+									.catch(function(error) {
+										console.log(error);
+									});
+							}
+						});
+					</script>
 				</div>
 				<div id="xuefentubiao" title="累计学习学分">
 					<font size="15"><i class="el-icon-time"></i></font>
@@ -214,335 +661,39 @@
 				</div>
 				<div id="xuefennum" title="累计学习学分">
 					{{xnum}}
+					<script type="text/javascript">
+						var app = new Vue({
+							el: '#xuefennum',
+							data() {
+								return {
+									xnum: 76,
+								};
+							}
+						});
+					</script>
 				</div>
 			</div>
 			<div id="tongji" :hidden="isNomyself">
-				<el-tabs v-model="activeName3" id="ktz1" @tab-click.self="handleClick">
-					<el-tab-pane label="--课程--" name="first">
+				<el-tabs v-model="activeName" id="ktz1" @tab-click.self="handleClick">
+					<el-tab-pane label="用户管理" name="first">
 						<div id="main1" style="width: 500px; height: 300px;"></div>
 					</el-tab-pane>
-					<el-tab-pane label="--成绩--" name="second">
-						<div id="main2" style="width: 500px; height: 300px;"></div>
-					</el-tab-pane>
-				</el-tabs>
-			</div>
-			<div id="chengji" :hidden="isNomyself">
-			<template>
-					<el-table :data="chengji" height="250" border style="width: 100%">
-						<el-table-column prop="examinfo.endTime" label="截至日期" width="150">
-						</el-table-column>
-						<el-table-column label="考试信息">
-							<el-table-column prop="examinfo.paperName" label="考试名称" width="120">
-							</el-table-column>
-							<el-table-column prop="examinfo.examType" label="考试方式">
-							</el-table-column>
-							<el-table-column prop="examScore" label="考试分数">
-							</el-table-column>
-							</el-table-column>
-						</el-table-column>
-					</el-table>
-				</template>
-				<!-- <el-table :data="chengji" height="250" border style="width: 100%">
-					<el-table-column prop="examinfo.paperName" label="考试名称" width="180">
-					</el-table-column>
-					<el-table-column prop="examinfo.examType" label="考试方式" width="180">
-					</el-table-column>
-					<el-table-column prop="examScore" label="考试分数">
-					</el-table-column>
-				</el-table> -->
-			</div>
-			<div id="ktz" :style="myself?classA:classB">
-				<el-tabs v-model="activeName1" id="ktz" type="card" @tab-click.self="handleClick">
-					<el-tab-pane label="课程" name="first">
-						<div class="xh" v-for="l in fouslist">
-							<span v-text="l.name"></span> <span v-text="l.img"></span>
-						</div>
-					</el-tab-pane>
-					<el-tab-pane label="讨论" name="second">
-						<div v-for="l in fanlist">
-							<span v-text="l.name"></span>
-							<span v-text="l.img"></span>
-						</div>
-				</el-tabs>
-			</div>
-			<script type="text/javascript">
-				var app = new Vue({
-					el: '#center_user',
-					data() {
-						return {
-							urlPre: "http://localhost:8030/user",
-							urlPre1: "http://localhost:8030/postbar",
-							imgurl: "",
-							imgname: "",
-							url: "install.html",
-							isNomyself: true,
-							ismyself: false,
-							activeName1: 'first',
-							activeName2: '',
-							activeName3: 'first',
-							fans: "关注",
-							nofans: "已关注",
-							isorno: 0,
-							msg: "",
-							zhiye: "",
-							xuexiaao: "",
-							yuanxi: "",
-							jianjie: "",
-							mfans: 0,
-							mfous: 0,
-							op: false,
-							fanslist: [],
-							fouslist: [],
-							ss: "我的粉丝",
-							sa: "我的关注",
-							hnum: 0,
-							hznum: 0,
-							fensi:0,
-							xnum: 76,
-							activeName: 'first',
-							chengji: [],
-							classA: 'position: relative;top:100px;width: 100%;margin: auto;',
-							classB: 'position: relative;top:10px;width: 100%;margin: auto;',
-							myself: true,
-							fouslist: [{
-								name: "aaaa",
-								img: "img"
-							}, {
-								name: "aaaa",
-								img: "img"
-							}, {
-								name: "aaaa",
-								img: "img"
-							}],
-							fanlist: [{
-								name: "aaaa",
-								img: "img"
-							}, {
-								name: "aaaa",
-								img: "img"
-							}, {
-								name: "aaaa",
-								img: "img"
-							}],
-						};
-					},
-					methods: {
-						handleClick(tab, event) {
-							console.log(tab, event);
-						},
-						getUrlKey(name) {
-							return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [,
-								""
-							])[1].replace(/\+/g, '%20')) || null
-						},
-						getUserInfo() {
-							var vm = this;
-							var uid = localStorage.getItem('uid');
-							axios.get(`${vm.urlPre}/userinfo`, {
-									params: {
-										uid: uid
-									}
-								}).then(function(response) {
-									vm.imgurl = response.data.ui_headportrait;
-									vm.imgname = response.data.ui_headportraitname;
-									vm.msg = response.data.ui_nickname;
-									vm.zhiye = response.data.identity;
-									vm.xuexiaao = response.data.industry;
-									vm.yuanxi = response.data.yuanx;
-									vm.jianjie = response.data.jianjie;
-									console.log(response);
-									//alert(response.data.ui_nickname)
-									console.log(response.data);
-								})
-								.catch(function(error) {
-									console.log(error);
-								});
-						},
-						getIsMyfocus() {
-							var vm = this;
-							var uid = localStorage.getItem('uid');
-							var loginid = localStorage.getItem('loginid');
-							if (uid == loginid) {
-								//alert(true);
-								vm.ismyself = true;
-							} else {
-								//alert(false);
-								vm.ismyself = false;
-							}
-							axios.get(`${vm.urlPre}/getIsMyfocus`, {
-									params: {
-										uid: loginid,
-										fid: uid
-									}
-								}).then(function(response) {
-									vm.isorno = response.data;
-									//alert(response.data)
-									console.log(response);
-									//alert(response.data.ui_nickname)
-									console.log(response.data);
-								})
-								.catch(function(error) {
-									console.log(error);
-								});
-						},
-						gz: function() {
-							var vm = this;
-							var uid = localStorage.getItem('uid');
-							var loginid = localStorage.getItem('loginid');
-							axios.put(`${vm.urlPre}/putMyfocus?f_uid=` + uid + `&f_ufid=` + loginid)
-								.then(function(response) {
-									vm.isorno = 1;
-									console.log(response);
-									console.log(response.data);
-								})
-								.catch(function(error) {
-									console.log(error);
-								});
-						},
-						qgz: function() {
-							var vm = this;
-							var uid = localStorage.getItem('uid');
-							var loginid = localStorage.getItem('loginid');
-							axios.delete(`${vm.urlPre}/deleteMyfocus`, {
-									params: {
-										uid: loginid,
-										fid: uid
-									}
-								})
-								.then(function(response) {
-									vm.isorno = 0;
-									console.log(response);
-									console.log(response.data);
-								})
-								.catch(function(error) {
-									console.log(error);
-								});
-						},
-						aaa: function(l) {
-							//localStorage.clear();
-							window.localStorage.setItem("uid", l.u_uid);
-							var uid = localStorage.getItem('uid');
-							alert(uid);
-							window.location.href = "User_Center.html?uid="+uid;
-						},
-						fanstab() {
-							var vm = this;
-							vm.op = true;
-							vm.activeName2 = "myfans";
-						},
-						foustab() {
-							var vm = this;
-							vm.op = true;
-							vm.activeName2 = "myfous";
-						},
-						getfans() {
-							var vm = this;
-							var uid = localStorage.getItem('uid');
-							axios.get(`${vm.urlPre}/getMyFans`, {
-									params: {
-										uid: uid
-									}
-								})
-								.then(function(response) {
-									vm.fanslist = response.data;
-									console.log(response);
-									//alert(response.data)
-									console.log(response.data);
-								})
-								.catch(function(error) {
-									console.log(error);
-								});
-						},
-						getfanscount() {
-							var vm = this;
-							var uid = localStorage.getItem('uid');
-							axios.get(`${vm.urlPre}/getMyFansCount`, {
-									params: {
-										uid: uid
-									}
-								})
-								.then(function(response) {
-									vm.mfans = response.data;
+					<el-tab-pane label="配置管理" name="second">
+						<div id="tp" style="width: 600px; height: 300px; background-image: url(img/15-目标.png);">
 
-									console.log(response);
-									console.log(response.data);
-								})
-								.catch(function(error) {
-									console.log(error);
-								});
+						</div>
+					</el-tab-pane>
+				</el-tabs>
+				<script type="text/javascript">
+					var app = new Vue({
+						el: '#tongji',
+						data() {
+							return {
+								isNomyself: true,
+								activeName: 'first'
+							};
 						},
-						getfous() {
-							var vm = this;
-							var uid = localStorage.getItem('uid');
-							axios.get(`${vm.urlPre}/getMyfocus`, {
-									params: {
-										uid: uid
-									}
-								})
-								.then(function(response) {
-									vm.fouslist = response.data;
-									console.log(response);
-									//alert(response.data)
-									console.log(response.data);
-								})
-								.catch(function(error) {
-									console.log(error);
-								});
-						},
-						getfouscount() {
-							var vm = this;
-							var uid = localStorage.getItem('uid');
-							axios.get(`${vm.urlPre}/getMyfocusCount`, {
-									params: {
-										uid: uid
-									}
-								})
-								.then(function(response) {
-									vm.mfous = response.data;
-									console.log(response);
-									console.log(response.data);
-								})
-								.catch(function(error) {
-									console.log(error);
-								});
-						},
-						getPostbar() {
-							var vm = this;
-							var uid = localStorage.getItem('uid');
-							axios.get(`${vm.urlPre1}/getPostbarAndReplyAndCommentCountByuId`, {
-									params: {
-										uid: uid
-									}
-								})
-								.then(function(response) {
-									vm.hnum = response.data;
-									console.log(response);
-									//alert(response.data)
-									console.log(response.data);
-								})
-								.catch(function(error) {
-									console.log(error);
-								});
-						},
-						getPostbarAndReply() {
-							var vm = this;
-							var uid = localStorage.getItem('uid');
-							axios.get(`${vm.urlPre1}/getPostbarAndReplyAndCommentGoodCountByuId`, {
-									params: {
-										uid: uid
-									}
-								})
-								.then(function(response) {
-									vm.hznum = response.data;
-									console.log(response);
-									//alert(response.data)
-									console.log(response.data);
-								})
-								.catch(function(error) {
-									console.log(error);
-								});
-						},
-						queryStudent() {
+						created: function() {
 							var vm = this;
 							var uid = localStorage.getItem('uid');
 							var loginid = localStorage.getItem('loginid');
@@ -553,6 +704,45 @@
 							} else {
 								vm.isNomyself = hidden;
 							}
+						},
+						methods: {
+							handleClick(tab, event) {
+								console.log(tab, event);
+							}
+						}
+					});
+				</script>
+			</div>
+			<div id="chengji" :hidden="isNomyself">
+				<el-table :data="chengji" height="250" border style="width: 100%">
+					<el-table-column prop="examinfo.paperName" label="考试名称" width="180">
+					</el-table-column>
+					<el-table-column prop="examinfo.examType" label="考试方式" width="180">
+					</el-table-column>
+					<el-table-column prop="examScore" label="考试分数">
+					</el-table-column>
+				</el-table>
+				<script type="text/javascript">
+					var app = new Vue({
+						el: '#chengji',
+						data() {
+							return {
+								urlPre: "http://localhost:8030/user",
+								isNomyself: "",
+								chengji: []
+							}
+						},
+						created: function() {
+							var vm = this;
+							var uid = localStorage.getItem('uid');
+							var loginid = localStorage.getItem('loginid');
+							//alert(uid);
+							//alert(loginid)
+							if (uid == loginid) {
+							vm.isNomyself = false;
+						} else {
+							vm.isNomyself = hidden;
+						}
 							axios.get(`${vm.urlPre}/queryStudentExaminfoByStuid`, {
 									params: {
 										stuid: uid
@@ -567,8 +757,57 @@
 								.catch(function(error) {
 									console.log(error);
 								});
+						}
+						
+
+					});
+				</script>
+			</div>
+			<div id="ktz" :style="myself?classA:classB">
+				<el-tabs v-model="activeName" id="ktz" type="card" @tab-click.self="handleClick">
+					<el-tab-pane label="课程" name="first">
+						<div class="xh" v-for="l in fouslist">
+							<span v-text="l.name"></span> <span v-text="l.img"></span>
+						</div>
+					</el-tab-pane>
+					<el-tab-pane label="讨论" name="second">
+						<div v-for="l in fanlist">
+							<span v-text="l.name"></span> <span v-text="l.img"></span>
+						</div>
+					</el-tab-pane>
+				</el-tabs>
+				<script type="text/javascript">
+					var app = new Vue({
+						el: '#ktz',
+						data() {
+							return {
+								classA: 'position: relative;top:100px;width: 100%;margin: auto;',
+								classB:'position: relative;top:10px;width: 100%;margin: auto;',
+								myself:true,
+								fouslist: [{
+									name: "aaaa",
+									img: "img"
+								}, {
+									name: "aaaa",
+									img: "img"
+								}, {
+									name: "aaaa",
+									img: "img"
+								}],
+								fanlist: [{
+									name: "aaaa",
+									img: "img"
+								}, {
+									name: "aaaa",
+									img: "img"
+								}, {
+									name: "aaaa",
+									img: "img"
+								}],
+								activeName: 'first',
+							};
 						},
-						tongjixiash() {
+						created: function() {
 							var vm = this;
 							var uid = localStorage.getItem('uid');
 							var loginid = localStorage.getItem('loginid');
@@ -578,51 +817,17 @@
 								vm.myself = true;
 								vm.chengji = [];
 							}
+						},
+						methods: {
+							handleClick(tab, event) {
+								console.log(tab, event);
+							}
 						}
-					},
-					created: function() {
-						var vm = this;
-						var uid = this.getUrlKey('uid');
-						window.localStorage.setItem("uid", uid);
-						this.getUserInfo();
-						this.getIsMyfocus();
-						this.getfans();
-						this.getfous();
-						this.getfanscount();
-						this.getfouscount();
-						this.getPostbar();
-						this.getPostbarAndReply();
-						this.queryStudent();
-						this.tongjixiash();
-						window.localStorage.setItem("loginid", 1);
-						var uid1 = localStorage.getItem('uid');
-						var loginid = localStorage.getItem('loginid');
-						if (uid1 == loginid) {
-							vm.isNomyself = false;
-							vm.ismyself = true;
-						} else {
-							vm.isNomyself = hidden;
-							vm.ismyself = false;
-						}
-						
-					},
-					mounted: function() {
-						var vm = this;
-						var uid = localStorage.getItem('uid');
-						var loginid = localStorage.getItem('loginid');
-						//alert(uid);
-						//alert(loginid);
-						if (uid == loginid) {
-							vm.url = 'install.html';
-						} else {
-							vm.url = '#';
-						}
-					}
-				});
-			</script>
+					});
+				</script>
+			</div>
 		</span>
 		<script src="js/kechengtongji.js"></script>
-		<script src="js/chengji.js"></script>
 
 		<!-- scrolling=no(取消iframe滚动条) onLoad事件调用iFrameHeight方法解决iframe自适应高度问题 -->
 		<iframe src="buttom.html" id="iframepage" scrolling=no width="100%" onLoad="iFrameHeight()" style="margin-top: 30px; margin-bottom: -7px;"></iframe>

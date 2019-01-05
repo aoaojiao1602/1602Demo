@@ -59,13 +59,12 @@
 				<el-button type="primary" icon="el-icon-circle-plus" @click="qp" v-if="isqp">{{msg}}</el-button>
 				<el-button type="info" icon="el-icon-remove" @click="tc" v-if="isqp1">{{msg}}</el-button>
 			</span>
-			<span style="margin-left: 610px;">
-				<span class="el-form-red">考试类型：{{examinfo.examType}}考试</span>
-				<span class="el-form-red">考试时长：{{examinfo.cxTime}}小时</span>
-				<span class="el-form-red">总分：{{examinfo.examScore}} </span>
-				<span class="el-form-red"> 剩余时间：{{stuTime}}秒</span>
-				<span class="el-form-red">考生id:{{studentExamInfo.id}}</span>
-				<span class="el-form-red">考生姓名:{{stuName}}</span>
+			<span style="margin-left: 700px;">
+				<span>考试类型：{{examinfo.examType}}考试</span>
+				<span>考试时长：{{examinfo.cxTime}}小时</span>
+				<span> 剩余时间：{{stuTime}}秒</span>
+				<span>考生id:{{studentExamInfo.id}}</span>
+				<span>考生姓名:{{stuName}}</span>
 				<el-button type="success" icon="el-icon-upload2" :disabled="disabled" @click="submitExam">提交</el-button>
 			</span>
 			<hr />
@@ -86,22 +85,22 @@
 								<!-- <el-form-item label="题目" class="el-form-red">
 									<span>{{ props.row.options.topic }}</span>
 								</el-form-item><br /> -->
-								<el-form-item >
+								<el-form-item class="el-form-red">
 									<span>
 										<el-radio v-model="props.row.daan" border size="medium" @change="change(props.row)" label="A"></el-radio>{{ props.row.options.optionA }}
 									</span>
 								</el-form-item>
-								<el-form-item >
+								<el-form-item class="el-form-red">
 									<span>
 										<el-radio v-model="props.row.daan" border size="medium" @change="change(props.row)" label="B"></el-radio>{{ props.row.options.optionB }}
 									</span>
 								</el-form-item>
-								<el-form-item >
+								<el-form-item class="el-form-red">
 									<span>
 										<el-radio v-model="props.row.daan" border size="medium" @change="change(props.row)" label="C"></el-radio>{{ props.row.options.optionC }}
 									</span>
 								</el-form-item>
-								<el-form-item >
+								<el-form-item class="el-form-red">
 									<span>
 										<el-radio v-model="props.row.daan" border size="medium" @change="change(props.row)" label="D"></el-radio>{{ props.row.options.optionD }}
 									</span>
@@ -150,7 +149,7 @@
 				(event.keyCode == 120) || //屏蔽 F9
 				(event.keyCode == 121) || //屏蔽 F10
 				(event.keyCode == 122) || //屏蔽 F11
-				(event.keyCode == 123) || //屏蔽 F12
+				//(event.keyCode == 123) || //屏蔽 F12
 				(event.keyCode == 27)
 			) //屏蔽 F12
 			{
@@ -404,6 +403,10 @@
 				other.stuid = stuid;
 				other.examid = examid;
 				other.stuName = stuName;
+				/* //查询该是否第一次进入考试
+				var s = new Date(Date.parse(startTime.replace(/-/g, "/")));
+				var e = new Date(Date.parse(endTime.replace(/-/g, "/")));
+				var curDate = new Date(); */
 				axios.get("http://localhost:8040/studentExamInfo", {
 						params: {
 							stuid: other.stuid,
@@ -416,10 +419,6 @@
 						console.log(other.examinfo);
 						other.studentExamInfo = response.data.studentExamInfo
 						other.question = response.data.question;
-						 //查询该是否第一次进入考试
-						var s = new Date(Date.parse(response.data.examinfo.startTime.replace(/-/g, "/")));
-						var e = new Date(Date.parse(response.data.examinfo.endTime.replace(/-/g, "/")));
-						var curDate = new Date(); 
 						if (response.data.studentExamInfo.time < 0) {
 							other.$message({
 								type: 'warning',
@@ -427,17 +426,8 @@
 							});
 							other.submit();
 						} else {
-							var type=response.data.examinfo.examType;
-							console.log(type);
-							if(type=="自主"){
-								other.stuTime = response.data.studentExamInfo.time;
-							}else{
-								other.stuTime = parseInt((e-curDate)/1000);
-							}
-							/* if(response.data.examinfo.examType).equals("自主")){
-								console.log(999);
-								other.stuTime = response.data.studentExamInfo.time;
-							} */
+							//other.websocket();
+							other.stuTime = response.data.studentExamInfo.time;
 							other.setTimer();
 
 						}

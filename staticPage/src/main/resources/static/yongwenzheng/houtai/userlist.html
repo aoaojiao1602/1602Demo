@@ -19,7 +19,7 @@
 				 margin-left:30px;
 				 width:440px;
 				 height: 440px;
-			
+			/* 	 border: #0000FF 1px solid; */
 			 }
             
 		</style>
@@ -72,16 +72,15 @@
     <el-button type="primary" size="mini" plain icon="el-icon-search" @click="userlistpage">查询</el-button>
  </el-form-item>
  <el-form-item>
-  <el-button type="primary" size="mini" @click="adduserdislog" icon="el-icon-plus" plain>新增用戶</el-button>
+  <el-button type="primary" size="mini" @click="dialogFormVisible = true" icon="el-icon-plus" plain>新增用戶</el-button>
   </el-form-item>
-  
+  <el-form-item>
+  <el-button type="primary" size="mini" plain>上传<i class="el-icon-upload el-icon--right"></i></el-button>
+ </el-form-item>
   </el-form>
     <div id="tabl">
-		<el-table :data="tableData" size="mini" border="true"
-		 :default-sort = "{prop: 'date', order: 'descending'}"
-			highlight-current-row @current-change="handleCurrentChange" 
-			style="width: 100%" max-height="400">
-			 <!-- <el-table-column type="selection" align="center" width="55"></el-table-column> --> 
+		<el-table :data="tableData" size="mini" border="true" :default-sort = "{prop: 'date', order: 'descending'}"  highlight-current-row @current-change="handleCurrentChange" style="width: 100%" max-height="400">
+			  <el-table-column type="selection" align="center" width="55"></el-table-column> 
 			  <el-table-column type="index" width="50" label="行号"></el-table-column>
 			<el-table-column prop="usersName" align="center" sortable label="用户名" width="100">
 			</el-table-column>
@@ -136,7 +135,7 @@
 	</div>
     <el-pagination
       @size-change="handleSizeChange"
-      @current-change="handleCurrentChang"
+      @current-change="handleCurrentChange"
       :current-page="pages"
       :page-sizes="[10, 20, 30, 40]"
       :page-size="rows"
@@ -157,7 +156,7 @@
 	<el-form-item prop="addusercheckpass" label="确认密码"  :label-width="formLabelWidth">
 	<el-input v-model="adduserrulesfrom.addusercheckpass" type="password" style="width: 180px;" autocomplete="off"></el-input>
 	</el-form-item>
-  
+    
   </el-form>
   <div slot="footer" class="dialog-footer">
     <el-button  @click="resetForm('adduserrulesfrom')">重置</el-button>
@@ -169,22 +168,18 @@
 	<div class="tabelrole">
   <div style="display: inline-block;">
 	  <div><el-button type="text">当前用户不存在的角色</el-button></div>
-  <el-table border="true"  height="250" :data="rolegridData"
-	 highlight-current-row @current-change="handleroleChange"
-	 size="mini" style="width:160px;display: inline-block;" >
- 
+  <el-table border="true"  height="250" :data="rolegridData" size="mini" style="width:160px;display: inline-block;" >
   
-  	 @current-change="handleCurrentChange" 
     <el-table-column property="name" label="角色名称" width="100"></el-table-column>
     
   </el-table>
 </div>
 <div  style="padding-top: 150px;padding-left: 20px;display: inline-block;">
 				<div>
-					<el-button size="mini" @click="adduserrole">添加</el-button>
+					<el-button size="mini" @click="">>></el-button>
                 </div>
               <div style="padding-top: 10px;">
-					<el-button size="mini" type="primary" @click="deluserrole">删除</el-button>
+					<el-button size="mini" type="primary" @click=""><<</el-button>
 				</div> 
 			</div>
 <div style="display: inline-block; margin-right: 30px;float: right;">
@@ -203,7 +198,7 @@
 	</body>
 
 	<script>
-	    var access_token = window.localStorage.getItem("access_token"); //获取登录页面中暂时存储的数据
+	         var access_token = window.localStorage.getItem("access_token"); //获取登录页面中暂时存储的数据
 			var userIds = window.localStorage.getItem("uid"); //
 			var refresh_token = window.localStorage.getItem("refresh_token");
 			var rid = window.localStorage.getItem("rid"); //
@@ -260,8 +255,7 @@
         },
         start: '',
         end: '',
-				userrolerow:'',
-				roleuserid:'',
+				
 		  userIsLockoutpage:'',
 		  
 		  options: [{
@@ -292,8 +286,9 @@
 		adduserrulesfrom: {
           addusername: '',
           adduserpwd: '',
-          addusercheckpass: ''
-		       },
+          addusercheckpass: '',
+		  addusersuoding:''
+        },
         adduserrules: {
 			addusername: [
 			{required: true, min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
@@ -405,16 +400,15 @@
 							access_token:access_token,
 							usersName: _this.adduserrulesfrom.addusername,
 							usersPassWord:_this.adduserrulesfrom.adduserpwd
-								}
+							
+							
+							}
 						})
 						.then(function (response) {
-							_this.$message({
-								type: 'success',
-								message: response.data.message
-							});
-							_this.userlistpage();
-						/* alert("添加成功"); */
+						alert("添加成功");
 						_this.dialogFormVisible=false;
+						
+						_this.userlistpage();
 							})
 							.catch(function (error) {
 							console.log(error);
@@ -445,7 +439,9 @@
 						}
 					})
 					.then(function (response) {
+						
 						_this.userlistpage();
+						
 					_this.$message({
 						type: 'success',
 						message: response.data.message
@@ -479,7 +475,9 @@
 					}
 				})
 				.then(function (response) {
+					
 					_this.userlistpage();
+					
 				_this.$message({
 					type: 'success',
 					message: response.data.message
@@ -513,7 +511,9 @@
 						}
 					})
 					.then(function (response) {
+						
 						_this.userlistpage();
+						
 					_this.$message({
 						type: 'success',
 						message: response.data.message
@@ -547,6 +547,9 @@
 				}
 			})
 			.then(function (response) {
+				
+				
+				
 			_this.$message({
 				type: 'success',
 				message: response.data.message
@@ -564,73 +567,16 @@
           });          
         });
 	  },
-		adduserrole(row){
-			
-			var _this=this;
-			if(_this.roleuserid==''){
-				alert('请选择角色');
-				return;
-			}
-			axios({
-				method: 'post',
-				url: _this.urlPre+'insertUsersRoles',
-				params: {
-				access_token:access_token,
-				uid:_this.userrolerow.usersId,
-				rid:_this.roleuserid
-				}
-			})
-			.then(function (response) {
-				_this.$message({
-					type: 'success',
-					message: response.data.message
-				});
-			/* alert(response.data.message); */
-			console.log(_this.userrolerow);
-			_this.rolelistpage(_this.userrolerow);
-				})
-				.catch(function (error) {
-					alert(error.data.message);
-
-				console.log(error);
-				});
-
-		},
-		deluserrole(){
-			
-			var _this=this;
-		_this.$confirm('此操作将删除该用户的角色, 是否继续?', '提示', {
-				confirmButtonText: '确定',
-				cancelButtonText: '取消',
-				type: 'warning'
-			}).then(() => {
-		axios({
-			method: 'post',
-			url: _this.urlPre+'deleteUsersRoles',
-			params: {
-			access_token:access_token,
-			uid:_this.userrolerow.usersId
-			}
-		})
-		.then(function (response) {
-		_this.$message({
-			type: 'success',
-			message: response.data.message
-		});
-		_this.rolelistpage(_this.userrolerow);
-			})
-			.catch(function (error) {
-			console.log(error);
-			});
-			
-			}).catch(() => {
-				_this.$message({
-					type: 'info',
-					message: '已取消删除'
-				});          
-			});
-		},
-	 
+	  updateuser(row){
+		  
+		  updateuserdialogFormVisible:true
+		  /* return updateuserfrom: {
+                 name: row.name,
+                 pwd: '',
+                 unpass: '',
+		         region:''
+        } */
+	  },
 				
 				 setCurrent(row) {
         this.$refs.singleTable.setCurrentRow(row);
@@ -643,14 +589,11 @@
 				this.userlistpage();
 				console.log(`每页 ${val} 条`);
 			},
-			handleCurrentChang(val) {
+			handleCurrentChange(val) {
 				this.pages = val;
 				this.userlistpage();
 				console.log(`当前页: ${val}`);
-			},handleroleChange(row){
-				this.roleuserid=row.id;
-				console.log("角色"+row.id);
-         },
+			},
 			formartShow(row, column, cellValue, index){
 				if(cellValue == 1) {
 					return "是";
@@ -659,25 +602,12 @@
 				}
 			},
 			updaterole(row){
-				console.log(row.usersId);
-				this.userrolerow=row;
 				this.dialogTablerole=true;
-				this.dialogTablenorole=true;
-				this.dialogTableyesrole=true;
+				this.dialogTablenorole=true,
+				this.dialogTableyesrole=true,
 				
 				this.rolelistpage(row);
-			},
-			adduserdislog(){
-				var adduserrulesfrom=this.adduserrulesfrom;
-				this.dialogFormVisible = true;
-			
-
-       adduserrulesfrom.addusername='';
-       			adduserrulesfrom.adduserpwd='';
-       			adduserrulesfrom.addusercheckpass='';
-       		
 			}
-		
 			
 			
 			}

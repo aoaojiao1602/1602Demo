@@ -14,21 +14,17 @@
 		<script src="js/axios.min.js"></script>
 		<!-- 引入饿了么Element组件库 -->
 		<script src="js/element-ui.js"></script>
-		<style type="text/css">
-			.el-collapse-item{
-				
-			}
-			
-		</style>
+
 	</head>
 	<body>
 		<div id="app">
-			<el-collapse v-model="activeName" accordion >
-				<div  @click="duang(item.hourId)" v-for="(item,index) in section">
-					<el-collapse-item  :title="'第'+(index+1)+'章:  '+item.hourName" :name="index">
+			<el-collapse v-model="activeName" accordion>
+				<div @click="duang(item.hourId)" v-for="(item,index) in section">
+					<el-collapse-item  :title="'第'+(index+1)+'章:  '+item.hourName" @change="duang" :name="index">
 					<div style="margin-left: 60px;">
+						
 						<span>测试名称：{{sectionTest.testName}}</span>
-						<span v-if="isshow"><el-button type="primary" icon="el-icon-edit-outline" @click="submitTest()">开始测试</el-button></span>
+						<span v-if="isshow"><el-button type="primary" icon="el-icon-edit-outline" @click="submitTest()">测试</el-button></span>
 						<div>测试时间：{{sectionTest.spareTime}}</div>
 						<div>测试总分：{{sectionTest.testScore}}</div>
 						<div>测试次数：{{sectionTest.testNum}}</div>
@@ -45,28 +41,6 @@
 		</div>
 	</body>
 	<script>
-		document.onkeydown = function(event) {
-			if ((event.keyCode == 112) || //屏蔽 F1
-				(event.keyCode == 113) || //屏蔽 F2
-				(event.keyCode == 114) || //屏蔽 F3
-				(event.keyCode == 115) || //屏蔽 F4
-				(event.keyCode == 116) || //屏蔽 F5
-				(event.keyCode == 117) || //屏蔽 F6
-				(event.keyCode == 118) || //屏蔽 F7
-				(event.keyCode == 119) || //屏蔽 F8
-				(event.keyCode == 120) || //屏蔽 F9
-				(event.keyCode == 121) || //屏蔽 F10
-				(event.keyCode == 122) || //屏蔽 F11
-				(event.keyCode == 123) || //屏蔽 F12
-				(event.keyCode == 27)
-			) //屏蔽 F12
-			{
-				return false;
-			}
-		}
-		window.onhelp = function() {
-			return false;
-		}
 		var Main = {
 			data() {
 				return {
@@ -103,27 +77,8 @@
 			methods: {
 				submitTest(){
 					var other=this;
-					if(other.stuText.testNum<1){
-						this.$message({
-							type: 'info',
-							message: '您的次数已用完'
-						});
-					}else{
-						other.$confirm('会否进入本次测试?', '提示', {
-							confirmButtonText: '确定',
-							cancelButtonText: '取消',
-							type: 'warning',
-							center: true
-						}).then(() => {
-							window.location.href = "http://localhost:8000/liuwenjin/vueDemo/User_Testinfo.html?stuid=" + other.stuid +
-								"&testId=" + other.sectionTest.testId+"&stuName="+other.stuName;
-						}).catch(() => {
-							this.$message({
-								type: 'info',
-								message: '已取消提交'
-							});
-						});
-					}
+					window.location.href = "http://localhost:8000/liuwenjin/vueDemo/User_Testinfo.html?stuid=" + other.stuid +
+						"&testId=" + other.sectionTest.testId+"&stuName="+other.stuName;
 				},
 				duang(hourId){
 					var other=this;
