@@ -1,16 +1,14 @@
 package com.gzz.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gzz.entity.Project;
+import com.gzz.entity.ProjectCount;
 import com.gzz.service.ProjectCountService;
 
 @RestController
@@ -54,29 +52,5 @@ public class ProjectCountController {
 		
 		return map;
 	}
-	
-	
-	/**
-	 * 按照投票数进行查询
-	 * http://localhost:8021/projectCount/getProjectCount
-	 * @param page页数
-	 * @param rows一页显示多少条
-	 * @return
-	 */
-	/*@RequestMapping("/getProjectCount")
-	public Object getProjectCount(Integer page,Integer rows) {
-		System.out.println("page====>" + page);
-		System.out.println("rows====>" + rows);
-		Page<Project> page2 = null;
-		page2 = service.getProjectCount(page-1, rows);
-		System.out.println(page2+">>>>>>>>>>>>");
-		Long total = page2.getTotalElements();
-		List<Project> rows2 = page2.getContent();
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("total", total);
-		map.put("rows", rows2);
-		System.out.println(rows2);
-		return map;
-	}*/
 
 }

@@ -6,11 +6,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gzz.entity.Postbar;
-import com.gzz.entity.PostbarReply;
 import com.gzz.service.PostbarCommentGoodService;
 import com.gzz.service.PostbarCommentService;
 import com.gzz.service.PostbarGoodService;
@@ -18,6 +18,8 @@ import com.gzz.service.PostbarReplyGoodService;
 import com.gzz.service.PostbarReplyService;
 import com.gzz.service.PostbarService;
 
+
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/postbar")
 public class PostbarController {
@@ -46,6 +48,7 @@ public class PostbarController {
 	 */
 	@RequestMapping("/putPostbar")
 	public Object putPostbar(Integer uId, String postbarTitle,String postbarContent) {
+		System.out.println(postbarTitle+">>>"+postbarContent);
 		int a = postbarService.putPostbar(1, postbarTitle, postbarContent);
 		Map<String, Object> map = new HashMap<>();
 		if(a>0) {
@@ -184,12 +187,12 @@ public class PostbarController {
 	 * @return
 	 */
 	@RequestMapping("/getPostbarPage")
-	public Object getPostbarPage(String postbarCreateTime,Integer page,Integer rows){
+	public Object getPostbarPage(Integer page,Integer rows){
 		if(page==0) {
 			page=1;
 		}
 		
-		Page<Postbar> pages = postbarService.findAll(postbarCreateTime,page-1,rows);
+		Page<Postbar> pages = postbarService.findAll(page-1,rows);
 		Long total = pages.getTotalElements();
 		List<Postbar> list = pages.getContent();
 		Map<String, Object> map = new HashMap<>();

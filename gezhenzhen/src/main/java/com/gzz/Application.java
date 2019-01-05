@@ -3,10 +3,12 @@ package com.gzz;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 //@EnableJpaRepositories(basePackages = "com.gzz.repository")	// Spring Jpa 启用注解
 //@EntityScan(basePackages = "com.gzz.entity")
+@EnableFeignClients
 @SpringBootApplication
 public class Application {
 	public static void main(String[] args) {
