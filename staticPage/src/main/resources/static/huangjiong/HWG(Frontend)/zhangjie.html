@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>课程章节</title>
+		<link rel="stylesheet" href="css/hj_css.css" type="text/css" />
+		<link rel="stylesheet" href="css/element-ui.css" />
+		<script src="js/commonCss.js"></script>
+		<script src="js/commonJs.js"></script>
+		<script src="js/vue.min.js"></script>
+		<script src="js/axios.min.js"></script>
+		<script src="js/element-ui.js"></script>
+	</head>
+	<body >
+		<div id="app">
+			<el-collapse v-model="activeNames" accordion @change="getKeshi(a.hourId)" v-for="(a,index) in zhangjie">
+			  <el-collapse-item   :title="a.hourName" >
+			  	
+			  	<h6  @click="xuexi(b.hourCourse,b.hourId)"  v-for="(b,index) in keshi">
+			  		<i class="el-icon-circle-check" style="margin-left: 30px; margin-top:15px; color:darkturquoise;" v-if="b.isxx==true"></i>
+			  		<i class="el-icon-circle-close" style="margin-left: 30px;  margin-top:15px; color:#CCCCCC" v-else></i>
+			  		<a style="  margin-left: 5px;">{{ b.hourName }}</a>
+			  	</h6>
+			  </el-collapse-item>
+			</el-collapse>
+		</div>
+	</body>
+</html>
+<script>
+	
+		let app=new Vue({
+			 el:'#app'
+			,data:{
+				 activeNames:1,
+				 zhangjie:[],
+				 keshi:[]
+	
+			}
+			,methods: {
+		     	handleChange(val) {
+			        console.log(val);
+			    },
+			    getZhangjie:function(){
+			    	let tis=this;
+			    	axios.get('http://localhost:8010/course/getZhangjie',{
+							params: {
+								  cid:Hwg.getUrlKey("cid")
+							}
+						}).then(function(response) {
+							tis.zhangjie = response.data
+						}).catch(function(error) {
+							console.log(error);
+					});
+			   },
+			   getKeshi:function(id){
+			   		let tis=this;
+			   		axios.get('http://localhost:8010/course/getKeshi',{
+							params: {
+								  zj:id,
+								  cid:Hwg.getUrlKey("cid"),
+								  uid:Hwg.getUserId()
+							}
+						}).then(function(response) {
+							tis.keshi = response.data
+						}).catch(function(error) {
+							console.log(error);
+					});
+			   },
+			   xuexi:function(cid,zj){
+			   	window.location.href="courseVideo.html?cid="+cid+"&zj="+zj
+			   }
+		    },
+		    mounted(){
+		    	if(Hwg.getUrlKey("cid")==null||Hwg.getUrlKey("cid")==''||Hwg.getUrlKey("cid")=="null"){
+		    		window.top.location.href="index.html"
+		    	}
+		    	this.getZhangjie();
+		    }
+		})
+	</script>
+	
+<style>
+	
+	.el-collapse-item__header{
+		font-size: 18px;
+		margin-left: 20px;
+	}
+</style>

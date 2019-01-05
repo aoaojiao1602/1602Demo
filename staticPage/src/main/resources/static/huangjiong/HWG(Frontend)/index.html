@@ -57,7 +57,7 @@
 											<li>
 												<span>
 												<a href="index.html" class="logo" style="margin-left: -10px;">
-													<img src="http://localhost:8010/MSLOGO1.PNG" alt="" width="120px" style="height: 50px" >
+													<img src="http://localhost:8010/MSLOGO1.png" alt="" width="120px" style="height: 50px" >
 												</a>
 											</span>
 											</li>
@@ -104,18 +104,12 @@
 															<div style="width: 20%; margin: 5px auto;">
 																<img src="http://localhost:8010/MSLOGO.png" class="myImage" style="border:  solid 1px rosybrown;">
 															</div>
-															<div style="margin: 0 auto; text-align: center; font-size: 20px;">userName</div>
-															<el-menu-item >
-																<div class="myCourse" style="text-align: center;"><a>计算机</a></div>
-															</el-menu-item>
-															<el-menu-item>
-																<div class="myCourse"  style="text-align: center;"><a>大数据分析</a></div>
-															</el-menu-item>
-															<el-menu-item>
-																<div class="myCourse"  style="text-align: center;"><a>面向对象编程Java</a></div>
+															<div style="margin: 0 auto; text-align: center; font-size: 20px;">{{user.ui_truename}}</div>
+															<el-menu-item v-for="(i, index) in userCourse" v-if="index<3" >
+																<div class="myCourse" style="text-align: center;"><a>{{i.courseName }}</a></div>
 															</el-menu-item>
 															<div class="myButton">
-																<a href="myCenter.html"><span style="color: #FFFFFF;">我的课程</span></a>
+																<a href="myCenter.html"><span style="color: #FFFFFF;">我的课程…</a>
 															</div>
 														</el-submenu>
 													</el-menu>
@@ -128,7 +122,7 @@
 															<template slot="title">
 																<a href="myCenter.html"><img src="http://localhost:8010/MSLOGO.png" style="border:  solid 1px rosybrown; width: 100%;" class="myPic"></a>
 															</template>
-															<div style="font-size: 14px; color: #869791; text-align: center; ">“{{user[0].ui_truename}}” 登录中</div>
+															<div style="font-size: 14px; color: #869791; text-align: center; ">“{{user.ui_truename}}” 登录中</div>
 															<hr />
 															<el-menu-item>
 																<div class="mySetting">我的认证证书</div>
@@ -166,7 +160,7 @@
 							<!--logo-->
 							<div class="brand col-md-3 t-xs-center t-md-left valign-middle">
 								<a href="index.html" class="logo">
-									<img src="http://localhost:8010/MSLOGO.PNG" alt="" width="250" style="height: 60px;">
+									<img src="http://localhost:8010/LOGOysd.png" alt="" width="180" style="height: 60px;">
 								</a>
 							</div>
 							<!--logo结束-->
@@ -205,22 +199,16 @@
 												<el-submenu index="2">
 													<template slot="title">
 														<a href="myCenter.html">个人中心</a>
-													</template>S
+													</template>
 													<div style="width: 20%; margin: 5px auto;">
 														<img src="http://localhost:8010/MSLOGO.png" class="myImage" style="border:  solid 1px rosybrown;">
 													</div>
-													<div style="margin: 0 auto; text-align: center; font-size: 20px;">{{user[0].ui_truename}}</div>
-													<el-menu-item >
-														<div class="myCourse" style="text-align: center;"><a>计算机</a></div>
-													</el-menu-item>
-													<el-menu-item>
-														<div class="myCourse"  style="text-align: center;"><a>大数据分析</a></div>
-													</el-menu-item>
-													<el-menu-item>
-														<div class="myCourse"  style="text-align: center;"><a>面向对象编程Java</a></div>
-													</el-menu-item>
-													<div class="myButton">
-														<a href="myCenter.html"><span style="color: #FFFFFF;">我的课程</a>
+													<div style="margin: 0 auto; text-align: center; font-size: 20px;">{{user.ui_truename}}</div>
+													<el-menu-item v-for="(i, index) in userCourse" v-if="index<3" >
+																<div class="myCourse" style="text-align: center;"><a>{{i.courseName }}</a></div>
+															</el-menu-item>
+															<div class="myButton">
+																<a href="myCenter.html"><span style="color: #FFFFFF;">我的课程…</a>
 													</div>
 												</el-submenu>
 											</el-menu>
@@ -231,7 +219,7 @@
 													<template slot="title">
 														<a href="myCenter.html"><img src="http://localhost:8010/MSLOGO.png" style=" width: 100%;border:  solid 1px rosybrown;" class="myPic"></a>
 													</template>
-													<div style="font-size: 14px; color: #869791; text-align: center; ">“{{user[0].ui_truename}}” 登录中</div>
+													<div style="font-size: 14px; color: #869791; text-align: center; ">“{{user.ui_truename}}” 登录中</div>
 													<hr />
 													<el-menu-item>
 														<div class="mySetting">我的认证证书</div>
@@ -277,7 +265,7 @@
 										<a href="index.html">首页</a>
 									</li>
 									<li >
-										<a href="courseList.html?kId=0" target="_blank">课程</a>
+										<a href="courseList.html?kid=0" target="_blank">课程</a>
 									</li>
 									<li>
 										<a >2019考研</a>
@@ -377,7 +365,7 @@
 								<el-carousel indicator-position="outside" id="kctj" style=" height: 350px; width: 100%;">
 									<el-carousel-item style=" height: 320px; background-color: #E9EBEE;">
 										<div v-for="(a,index) in dt" v-if="index<4" style=" float: left; width: 260px; margin-left: 20px;">
-											<a @click="alert(a.courseId)">
+											<a @click="openCourse(a.courseId)">
 												<div class="coupon-single panel t-center a_img">
 													<div class="ribbon-wrapper is-hidden-xs-down">
 														<div class="ribbon">新课</div>
@@ -396,7 +384,7 @@
 																	<li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>{{ a.num}}</li>
 																</ul>
 																<div class="color-muted" style="text-align: left;">
-																		如何坐在太阳身边畅谈人生？
+																		{{ a.courseRemark	}}
 																</div>
 															</div>
 														</div>
@@ -407,7 +395,7 @@
 									</el-carousel-item>
 									<el-carousel-item style=" height: 320px;  background-color: #E9EBEE;">
 										<div v-for="(a,index) in dt" v-if="index>3" style=" float: left; width: 260px; margin-left: 20px;">
-											<a>
+											<a @click="openCourse(a.courseId)">
 												<div class="coupon-single panel t-center a_img">
 													<div class="ribbon-wrapper is-hidden-xs-down">
 														<div class="ribbon">新课</div>
@@ -426,7 +414,7 @@
 																	<li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>666</li>
 																</ul>
 																<div class="color-muted" style="text-align: left;">
-																	如何坐在太阳身边畅谈人生？
+																	{{ a.courseRemark	}}
 																</div>
 															</div>
 														</div>
@@ -570,7 +558,8 @@
 		        text: '',
 		        nowIndex: -1,
 		        result: [],//存储查询出的数据
-		        user:[]
+		        user:[],
+		        userCourse:[]
 			},
 			methods: {
 				//监听滚动条
@@ -601,10 +590,6 @@
 		            }
 		            return;
 		          }
-		          if (ev.keyCode == 13) {
-		            window.open('https://www.baidu.com/s?wd=' + this.inputText, '_blank');
-		            this.inputText = '';
-		          }
 		          this.text = this.inputText;
 		         axios.get('http://localhost:8010/learnrecord/getLearnrecordByStuId', {
 		            params: {
@@ -634,16 +619,30 @@
 		          }
 		        },
 		        getLogin:function(){
-		        	window.location.href="http://127.0.0.1:8020/前台/login/index.html?urlpath="+location
+		        	window.location.href="http://localhost:8000/yongwenzheng/houtai/login.html?urlpath="+location
 		        },
 		        outLogin:function(){
-					outUser('http://127.0.0.1:8020/HWG(Frontend)/index.html');        	
-		        }
+					outUser(base);
+		        },
+		        hrefKcList:function(thiskdId){//跳转查询课程列表
+					window.open("courseList.html?kid="+thiskdId);   
+				},
+				getCoursexx:function(){
+					let tis=this;
+					axios.get('http://localhost:8010/learnrecord/getLearnrecordBysid',{
+						params: {
+							  stuId:Hwg.getUserId()
+						}
+					}).then(function(response) {
+						tis.userCourse = response.data
+					}).catch(function(error) {
+						console.log(error);
+					});
+				}
 			},
 			mounted() {
 				let tis=this;
 				tis.getCategory();//获取所有分类
-				alert(Hwg.getUserId())
 				if(Hwg.getUserId()!=null&&Hwg.getUserId()!='null'&&Hwg.getUserId()!=''){
 					axios.get('http://localhost:8010/common/queryUser',{
 						params: {
@@ -654,6 +653,7 @@
 					}).catch(function(error) {
 						console.log(error);
 					});
+					tis.getCoursexx();//获取用户课程信息
 				}
 				window.addEventListener('scroll', tis.handleScroll) //添加滚动条监听事件
 			}
@@ -666,6 +666,11 @@
 			el: '#kctj',
 			data: {
 				dt: []
+			},
+			methods:{
+				openCourse:function(id){
+					window.open("courseGs.html?cid="+id)
+				}
 			},
 			mounted() {
 				let tis = this;
@@ -723,15 +728,28 @@
 		new Vue({
 			el:'#grzx',
 			data:{
-				user:[]
+				user:[],
+				userCourse:[]
 			},
 			methods:{
 				getLogin:function(){
 		        	window.location.href="http://127.0.0.1:8020/前台/login/index.html?urlpath="+location
 		        },
 		        outLogin:function(){
-					outUser('http://127.0.0.1:8020/HWG(Frontend)/index.html');        	
-		        }
+					outUser(base);        	
+		        },
+		        getCoursexx:function(){
+					let tis=this;
+					axios.get('http://localhost:8010/learnrecord/getLearnrecordBysid',{
+						params: {
+							  stuId:Hwg.getUserId()
+						}
+					}).then(function(response) {
+						tis.userCourse = response.data
+					}).catch(function(error) {
+						console.log(error);
+					});
+				}
 			},
 			mounted() {
 				let tis=this;
@@ -745,6 +763,7 @@
 					}).catch(function(error) {
 						console.log(error);
 					});
+					tis.getCoursexx();
 				}
 			}
 			
@@ -774,10 +793,6 @@
 	              this.inputText = this.result[this.nowIndex];
 	            }
 	            return;
-	          }
-	          if (ev.keyCode == 13) {
-	            window.open('https://www.baidu.com/s?wd=' + this.inputText, '_blank');
-	            this.inputText = '';
 	          }
 	          this.text = this.inputText;
 	         axios.get('http://localhost:8010/learnrecord/getLearnrecordByStuId', {

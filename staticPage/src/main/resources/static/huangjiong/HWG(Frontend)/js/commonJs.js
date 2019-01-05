@@ -3,7 +3,7 @@ document.write('<script src="assets/js/jquery-1.12.3.min.js"></script>');
 document.write('<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>');
 document.write('<script type="text/javascript" src="assets/js/main.js"></script>');
 
-
+let base=location.protocol+"//"+location.host+location.pathname;
 
 //HWG公用js方法
 const Hwg = {
@@ -34,6 +34,7 @@ const Hwg = {
 	}
 	
 }
+
 //页面加载调用
 
 	if(Hwg.getToken()==null||Hwg.getToken()=='null'||Hwg.getToken==''){
@@ -52,6 +53,5 @@ const Hwg = {
 		window.sessionStorage.removeItem("token");
 		window.sessionStorage.removeItem("uId")
 		window.sessionStorage.removeItem("outToken")
-		
 		window.location.href=url
 	}

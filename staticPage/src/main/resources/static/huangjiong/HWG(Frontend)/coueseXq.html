@@ -13,14 +13,6 @@
 	</head>
 	<body id="body" class="wide-layout preloader-active">
 
-     
-
-
-    <!--[if lt IE 9]>
-        <p class="browserupgrade alert-error">
-        	You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
-        </p>
-    <![endif]-->
 
     <noscript>
         <div class="noscript alert-error">
@@ -50,19 +42,14 @@
         <header id="mainHeader" class="main-header">
 
             <!-- 头部 -->
-            <div class="top-bar bg-gray" id="top" style="border:  solid red;">
-                <div class="container">
+            <div class="top-bar bg-gray" id="top" >
+            	<a style="float: left; padding-left: 10px; width: 15%;"> <img src="http://localhost:8010/LOGOysd.png" style="width: 30%;"></a>
+
+                <div class="container" >
                     <div class="row">
-                        <div class="col-sm-12 col-md-4 is-hidden-sm-down">
-                            <ul class="nav-top nav-top-left list-inline t-left">
-                                <li><a href="terms_conditions.html"><i class="fa fa-question-circle"></i>Discounts Guide</a>
-                                </li>
-                                <li><a href="faq.html"><i class="fa fa-support"></i>Customer Assistance</a>
-                                </li>
-                            </ul>
-                        </div>
                         <div class="col-sm-12 col-md-8">
                             <ul class="nav-top nav-top-right list-inline t-xs-center t-md-right">
+                            	
                                 <li>
                                     <a href="#"><i class="fa fa-flag-usa"></i>English <i class="fa fa-caret-down"></i></a>
                                     <ul>
@@ -113,20 +100,23 @@
                                 <div class="row row-tb-5 iframeRadius" style="border:solid 1px #C0C4CC ; border-radius:15px;">
                                         <!-- Recent Posts -->
                                      	<div>
-                                          	<div class="divIframe" id="if1" @click="openUrl('courseVideo.html','if1')"  >
-                                          		<a><h3 style="padding-top: 10px;">学习</h3></a>
+                                     		<div >
+                                          		<a><img src="http://localhost:8010/img/deal_01.jpg" style="height: 120px; width: 100%;" alt="计算机基础" /></a>
+                                          	</div>
+                                          	<div class="divIframe" id="if1" @click="openUrl('index.html','if1')"  >
+                                          		<a><h3 style="padding-top: 10px;">公告</h3></a>
                                           	</div>
                                           	<div class="divIframe" id="if2" @click="submit()"  >
                                           		<a><h3 style="padding-top: 10px;">考试</h3></a>
                                           	</div>
-                                          	<div class="divIframe" id="if3" @click="openUrl('index.html','if3')" >
-                                          		<a><h3 style="padding-top: 10px;">ssss</h3></a>
+                                          	<div class="divIframe" id="if3" @click="openUrl('zhangjie.html','if3')" >
+                                          		<a><h3 style="padding-top: 10px;">课件章节</h3></a>
                                           	</div>
                                           	<div class="divIframe" >
-                                          		<a><h3 style="padding-top: 10px;">ssss</h3></a>
+                                          		<a><h3 style="padding-top: 10px;">讨论区</h3></a>
                                           	</div>
                                           	<div class="divIframe" >
-                                          		<a><h3 style="padding-top: 10px;">ssss</h3></a>
+                                          		<a><h3 style="padding-top: 10px;">测试与作业</h3></a>
                                           	</div>
                                           	<div class="divIframe" >
                                           		<a><h3 style="padding-top: 10px;">ssss</h3></a>
@@ -163,15 +153,15 @@
 		el:'#pageWrapper',
 		data:{
 			ifUrl:'',
-			topId:'',
-			stuid: 1,
+			topId:'',//上一次点击的id
+			stuid: Hwg.getUserId(),
 			//课程id
-			examid: 18,
+			examid: Hwg.getUrlKey("cid"),
 			stuName:'马小帅'
 		},
 		methods:{
 			openUrl:function(thisurl,thisId){
-				this.ifUrl=thisurl
+				this.ifUrl=thisurl+'?cid='+Hwg.getUrlKey("cid")
 				document.getElementById(thisId).setAttribute('style','background-color: #2ED87B;')
 				if(this.topId!=''&&this.topId!=null){
 					document.getElementById(this.topId).setAttribute('style','background-color: white;')
