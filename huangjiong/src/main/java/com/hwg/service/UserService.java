@@ -16,6 +16,6 @@ public interface UserService {
 	 * 查询出用户信息
 	 * @return
 	 */
-	@RequestMapping("user/getUserId")
+	@RequestMapping("user/userinfo")
 	public Object queryUser (@RequestParam("uid")Integer uid);
 }

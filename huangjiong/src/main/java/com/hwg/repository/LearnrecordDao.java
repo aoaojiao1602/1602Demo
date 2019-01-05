@@ -22,8 +22,8 @@ public interface LearnrecordDao extends JpaRepository<Learnrecord, Integer>{
 		 * @param 
 		 * @return
 		 */
-		@Query(value="select * from learnrecordtb where learn_course_id=:kcId and learn_stu_id=:xsId ",nativeQuery=true)
-		public List<Learnrecord> findlearnrecord(@Param("kcId")String kcId,@Param("xsId")String xsId);
+		@Query(value="select * from learnrecordtb where learn_course_id=:kcId and learn_stu_id=:xsId and learn_course_record=:zj",nativeQuery=true)
+		public Learnrecord findlearnrecord(@Param("kcId")String kcId,@Param("xsId")String xsId, @Param("zj")String zj);
 		
 		/**
 		 * 	修改
@@ -44,5 +44,15 @@ public interface LearnrecordDao extends JpaRepository<Learnrecord, Integer>{
 		 * @return
 		 */
 		public List<Learnrecord> findLearnrecordByLearnStuId(String stuId);
+		
+		
+		/**
+		 * 查询指定课程的学习记录
+		 * @return
+		 */
+		@Query(value="SELECT COUNT(*) AS 'num' FROM learnrecordtb WHERE learn_course_id=?1 GROUP BY learn_course_id ",nativeQuery=true)
+		public Map<String, Object> findLearnrecordByLearnCourseId(String cid);
+		
+
 
 }

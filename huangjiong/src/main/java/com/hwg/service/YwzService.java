@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -29,7 +28,16 @@ public interface YwzService {
 	 * @param access_token
 	 * @return
 	 */
-	@GetMapping("course/getCourseByPositionId")
+	@RequestMapping("course/getCourseByPositionId")
 	public Object gettjCourse(@RequestParam("positionId")String position, @RequestParam("access_token") String access_token);
-
+	
+	
+	/**
+	 * 	通过位置查询精彩讨论
+	 * @param position
+	 * @param access_token
+	 * @return
+	 */
+	@RequestMapping("discusscourse/getDiscusscourseByPositionId")
+	public Object getjctl(@RequestParam("positionId")Integer position, @RequestParam("access_token") String access_token);
 }

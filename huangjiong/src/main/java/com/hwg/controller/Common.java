@@ -1,5 +1,8 @@
 package com.hwg.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,13 +38,12 @@ public class Common {
 	}
 	
 	/**
-	 *    根据id查询用户信息
+	 *   根据id查询用户信息
 	 * @param uid
 	 * @return
 	 */
 	@GetMapping("/queryUser")
 	public Object queryUser(Integer uid) {
-		System.err.println(1111);
 		return uService.queryUser(uid);
 	}
 }
