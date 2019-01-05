@@ -24,7 +24,7 @@ public class SliceUtil {
 	public static FileSlice writeSlice(FileSlice slice,byte[] sliceData) {
 		String fileName = slice.getName();//原始文件名称
 		String fileSuffix  = fileName.substring(fileName.lastIndexOf("."));//获取文件后缀名称		
-		String classpath ="D:\\1602Demo\\file\\src\\main\\resources\\db\\";	
+		String classpath ="D:\\1602Demo\\file\\src\\main\\resources\\static\\";	
 		String fileNameEnd = classpath+slice.getFid()+fileSuffix;
 		System.out.println("******分片写入"+slice.getFid()+fileSuffix+"断点"+slice.getPoint()+"文件的数据大小"+sliceData.length);//1048576 字节= 1M = 1024 * 1024 字节
 //		File fileEnd = new File(fileNameEnd);

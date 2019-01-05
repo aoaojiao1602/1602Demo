@@ -92,5 +92,9 @@ public class NoticeServiceImpl implements NoticeService{
 		};
 	
 	}
+	@Override
+	public List<Notice> getNoticeBycourseId(Integer courseId) {
+		return nRepository.getNoticeBycourseId(courseId);
+	}
 
 }

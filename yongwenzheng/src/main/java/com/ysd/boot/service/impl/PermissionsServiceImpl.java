@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -84,15 +86,58 @@ public class PermissionsServiceImpl implements PermissionsService{
 			
 			List<Integer> pid=permissionMapper.queryByRolesIdGetPermissionsId(roleId);
 			
-			List<Permissions> list=permissionMapper.queryPermissionsGroupBy();
+			List<Permissions> list=permissionMapper.queryPermissionsRoot();
 			
 			for (Permissions permissions : list) {
+				permissions.setDisabled(true);
 				
-				permissions.setChildren(permissionMapper.queryPermissionsByPermissionsModule(permissions.getPermissionModule()));
+				List<Permissions> child=permissionMapper.queryPermissionsChild(permissions.getPermissionModule());
+				 for (Permissions permissions2 : child) {
+					 System.err.println(pid);
+					 System.err.println(permissions2.getPermissionId());
+					 
+					 if (pid.contains(permissions2.getPermissionId())) {
+						 permissions2.setChecked(true);
+						
+						}
+				}
+				
+				permissions.setChildren(child);
 				
 				
 			}
 			
 			return list;
+		}
+		
+		
+		
+		 /***
+		 *给角色id添加权限
+	 */
+		@Transactional
+	public int insertRolesPermissionsByRoleId(Integer roleId,List<Integer> permissionsId) {
+			int a;
+			if (permissionsId.size()>0) {
+				for (Integer integer : permissionsId) {
+					permissionMapper.insertRolesPermissionsByRoleId(roleId, integer);
+				}
+				a=1;
+			}else {
+				a=0;
+			}
+			
+			return a;
+		
+		
+	}
+		
+		/***
+		 *通过角色id删除权限菜单
+		 */
+		@Transactional
+		public int deleteRolesPermissionsByRoleId(Integer id) {
+			
+			return permissionMapper.deleteRolesPermissionsByRoleId(id);
 		}
 }

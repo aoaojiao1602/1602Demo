@@ -106,7 +106,7 @@ public class FileSliceUploadController {
     	//删除uuid.properties文件
     	PropUtil.deleteFileSlice(fileSlice.getFid());
     	
-    	String classpath ="D:\\1602Demo\\file\\src\\main\\resources\\db\\";
+    	String classpath ="D:\\1602Demo\\file\\src\\main\\resources\\static\\";
     	
     	FileM fileM=new FileM();
     	String suffix = fileSlice.getName().substring(fileSlice.getName().lastIndexOf("."));//后缀	

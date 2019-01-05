@@ -117,4 +117,32 @@ public class StudentTestInfoServiceImpl implements StudentTestInfoService {
 		}
 		
 	}
+
+	
+	/* (非 Javadoc) 
+	 * <p>Title: stuCheckTest</p> 
+	 * <p>Description: </p> 
+	 * @param sectionid
+	 * @param stuid
+	 * @return 
+	 * @see com.lwj.springcloud.service.StudentTestInfoService#stuCheckTest(int, int) 
+	*/
+	
+	@Override
+	public Map<String, Object> stuCheckTest(int sectionid, int stuid) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		TestInfo testInfo=sTestInfoRepository.queryTestInfobysection_id(sectionid);
+		map.put("testInfo",testInfo);
+		if (testInfo!=null) {
+			map.put("studentTestInfo",sTestInfoRepository.queryStudentTestInfoBySectionidByStuid(testInfo.getTestId(),stuid));
+		}else {
+			map.put("studentTestInfo",new StudentTestInfo());
+		}
+		return map;
+		/**
+		 * stuCheckTest(这里用一句话描述这个方法的作用)
+		*/
+		
+	}
 }

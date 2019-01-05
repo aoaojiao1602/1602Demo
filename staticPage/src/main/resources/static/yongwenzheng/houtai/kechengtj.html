@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		 <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> 
+		<!-- vue语法环境 -->
+		 <script src="https://unpkg.com/vue/dist/vue.min.js"></script> 
+		<!-- vue使用Ajax -->
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<!-- 引入饿了么Element组件库 -->
+		<script src="https://unpkg.com/element-ui/lib/index.js"></script> 
+		
+		<style>
+			.iinpu{
+				width:180px;
+			}
+			 .tabelrole{
+				 margin-left:30px;
+				 width:440px;
+				 height: 440px;
+			/* 	 border: #0000FF 1px solid; */
+			 }
+            
+		</style>
+	</head>
+	<body>
+		<div id="app">
+		<template>
+ 
+  <div class="block">
+	  <el-form :inline="true" ref="form" :model="form" label-width="80px">
+	
+ <el-form-item>
+  <el-button type="primary" size="mini" @click="addtj" icon="el-icon-plus" plain>新增</el-button>
+  </el-form-item>
+ 
+  </el-form>
+    <div id="tabl">
+		<el-table :data="tableData" size="mini" border="true" :default-sort = "{prop: 'date', order: 'descending'}"  highlight-current-row @current-change="handleCurrentChange" style="width: 100%" max-height="400">
+			  <el-table-column type="selection" align="center" width="55"></el-table-column> 
+			  <el-table-column type="index" width="50" label="行号"></el-table-column>
+			<el-table-column prop="courseId" align="center"  label="课程推荐id" width="100">
+			</el-table-column>
+	 	
+		<el-table-column prop="kechId" align="center"  sortable label="课程id" width="100">
+		</el-table-column>
+		<el-table-column prop="courseWeigh" align="center"  sortable label="课程权重" width="100">
+		</el-table-column>
+		<el-table-column prop="navRemark" align="center"  sortable label="报名人数 " width="160">
+		</el-table-column>
+		<el-table-column prop="positionsId" align="center"  label="推荐位置" width="160">
+		</el-table-column> 
+		<el-table-column  label="" align="center" width="180" fixed="right">
+				<template slot-scope="scope">
+					<el-button  @click="updaterole(scope.row)"
+				type="text"
+				size="small">
+				设置角色
+			</el-button>
+		 <el-button @click.native.prevent="deleteRow(scope.row)"
+          type="text"
+          size="small">
+          移除
+        </el-button>
+			</template>
+		</el-table-column>
+		<el-table-column  align="center" fixed="right" label="">
+			<template slot-scope="scope">
+       
+		
+      </template>
+		</el-table-column>
+		
+		</el-table>
+	</div>
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="page"
+      :page-sizes="[10, 20, 30, 40]"
+      :page-size="rows"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
+    </el-pagination>
+  </div>
+  </template>
+<!-- 角色设置 -->
+<el-dialog  :visible.sync="dialogTablerole" width="500">
+	<div class="tabelrole">
+  <div style="display: inline-block;">
+	  <div><el-button type="text">当前用户不存在的角色</el-button></div>
+  <el-table border="true"  height="250" :data="rolegridData" size="mini" style="width:160px;display: inline-block;" >
+  
+    <el-table-column property="roleName" label="角色名称" width="100"></el-table-column>
+    
+  </el-table>
+</div>
+
+</div>
+</el-dialog>
+
+	
+</div>
+	</body>
+
+	<script>
+		new Vue({
+			el: '#app',
+			data:function() {
+				
+     
+    
+			return {
+				 rolegridData: '',
+				 rolegridData2: '',
+				page: 1,
+				rows:10,
+				total:'',
+				tableData:'',
+		    currentRow: null,
+				
+				userNamepage: '',
+				 pickerOptions1: {
+          disabledDate(time) {
+            return time.getTime() > Date.now();
+          },
+          shortcuts: [{
+            text: '今天',
+            onClick(picker) {
+              picker.$emit('pick', new Date());
+            }
+          }, {
+            text: '昨天',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit('pick', date);
+            }
+          }, {
+            text: '一周前',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', date);
+            }
+          }]
+        },
+        start: '',
+        end: '',
+				
+		  userIsLockoutpage:'',
+		  
+		  options: [{
+          value: '1',
+          label: '是'
+        }, {
+          value: '0',
+          label: '否'
+        }],
+		dialogFormVisible: false,
+		updateuserdialogFormVisible:false,
+		dialogTablerole:false,
+		dialogTablenorole:false,
+		dialogTableyesrole:false,
+		formLabelWidth: '120px',
+        value: '',
+		
+       form: {
+          name: '',
+          region: '',
+          date1: '',
+          date2: '',
+          delivery: false,
+          type: [],
+          resource: '',
+          desc: ''
+        },
+		adduserrulesfrom: {
+          addusername: '',
+          adduserpwd: '',
+          addusercheckpass: '',
+		  addusersuoding:''
+        },
+        adduserrules: {
+			addusername: [
+			{required: true, min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+			],
+			adduserpwd: [
+            {required: true, message: '请再次输入密码', trigger: 'blur' }
+          ]
+          
+        }
+        
+			}; 
+			},
+			created:function(){
+				/* this.$options.methods.userlistpage(); */
+				this.userlistpage();
+			},
+			methods: {
+				addtj(){
+					axios({
+						method: 'put',
+						url: 'http://localhost:8006/course/addCourse',
+						params: {
+							access_token:1
+						}
+						
+					})
+					.then(function (response) {
+						
+						alert(response.data.msg);
+						console.log(response.data);
+						})
+						.catch(function (error) {
+						console.log(error);
+						});
+				},
+				  
+				userlistpage(){
+					var _this=this;
+					axios({
+						method: 'get',
+						url: 'http://localhost:8006/course/queryCourseByPage',
+						params: {
+						page: _this.page,
+						rows:_this.rows,
+					id:'',
+					access_token:1
+						
+						} 
+					})
+					.then(function (response) {
+						_this.tableData=response.data.rows;
+						_this.total=response.data.total
+						console.log(response);
+						console.log(response.data);
+						})
+						.catch(function (error) {
+						console.log(error);
+						});
+					
+					
+				},
+	  deleteRow(row){
+		  this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+			
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+	  },
+	  updaterole(row){
+				this.dialogTablerole=true;
+				this.dialogTablenorole=true,
+				this.dialogTableyesrole=true,
+				
+				this.rolelistpage(row);
+			},
+	  
+	  
+				
+				 setCurrent(row) {
+        this.$refs.singleTable.setCurrentRow(row);
+      }, handleCurrentChange(val) {
+        this.currentRow = val; 
+		
+      },
+			handleSizeChange(val) {
+				this.rows = val;
+				this.userlistpage();
+				console.log(`每页 ${val} 条`);
+			},
+			handleCurrentChange(val) {
+				this.page = val;
+				this.userlistpage();
+				console.log(`当前页: ${val}`);
+			},
+			formartShow(row, column, cellValue, index){
+				if(cellValue == 1) {
+					return "是";
+				} else {
+					return "否";
+				}
+			}
+			
+			
+			}
+			})
+	</script>
+	<script>
+		
+	
+		
+	
+	</script>
+</html>

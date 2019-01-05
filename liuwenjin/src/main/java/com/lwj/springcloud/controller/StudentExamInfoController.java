@@ -90,4 +90,21 @@ public class StudentExamInfoController {
 		//计算出分数
 		return stuExaService.checkExamInfo(stuid,examid);
 	}
+	@ApiOperation(value="学生课程集合", notes="当前学生课程集合")
+	@ApiImplicitParam(name = "stuid", value = "学生id", required = true,paramType="Integer")
+	@RequestMapping(value="/queryStudentExaminfoByStuid", method = RequestMethod.GET)
+	/**
+	 * 服务  根据学生id 查询当前课程分数集合
+	 * http://localhost:8080/queryStudentExaminfoByStuid
+	  * 作者: 大娃   
+	  * 邮件: 1558936588@qq.com  
+	  * 时间: 2019年1月3日 下午10:19:22  
+	  * 版本: V1.0
+	  * 
+	  * 
+	 */
+	public Object queryStudentExaminfoByStuid(int stuid) {
+	
+		return stuExaService.queryStudentExaminfoByStuid(stuid);
+	}
 }

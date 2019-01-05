@@ -67,6 +67,7 @@ public class LoginController {
 		map.put("access_token",pojo.getAccess_token());	
 		map.put("refresh_token",pojo.getRefresh_token());
 		map.put("uid", users.getUsersId());
+		map.put("rid", usersService.getRoleByUid(users.getUsersId()));
 		map.put("path", urlpath);
 		return new Result(map);
 	}

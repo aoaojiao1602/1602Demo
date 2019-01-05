@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<!-- 引入饿了么Element样式,本地样式文件所在目录下的fonts目录中需要有样式图标文件element-icons.woff -->
+		<link rel="stylesheet" href="css/element-ui.css">
+		<!-- vue语法环境 -->
+		<script src="js/vue.min.js"></script>
+		<script src="js/router.js"></script>
+		<script src="js/jquery.js"></script>
+
+		<!-- vue使用Ajax -->
+		<script src="js/axios.min.js"></script>
+		<!-- 引入饿了么Element组件库 -->
+		<script src="js/element-ui.js"></script>
+		<style type="text/css">
+			.el-collapse-item{
+				
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<el-collapse v-model="activeName" accordion >
+				<div  @click="duang(item.hourId)" v-for="(item,index) in section">
+					<el-collapse-item  :title="'第'+(index+1)+'章:  '+item.hourName" :name="index">
+					<div style="margin-left: 60px;">
+						<span>测试名称：{{sectionTest.testName}}</span>
+						<span v-if="isshow"><el-button type="primary" icon="el-icon-edit-outline" @click="submitTest()">开始测试</el-button></span>
+						<div>测试时间：{{sectionTest.spareTime}}</div>
+						<div>测试总分：{{sectionTest.testScore}}</div>
+						<div>测试次数：{{sectionTest.testNum}}</div>
+						<div>学生id：{{stuText.studentId}}</div>
+						<div>学生姓名：{{stuName}}</div>
+						<div>学生测试次数：{{stuText.testNum}}</div>
+						<div>学生最高分：{{stuText.testScore}}</div>
+						
+					</div>
+					</el-collapse-item>
+				</div>
+				<!-- //v-for="item in options" :key="item.value" :label="item.label" :value="item.value -->
+			</el-collapse>
+		</div>
+	</body>
+	<script>
+		document.onkeydown = function(event) {
+			if ((event.keyCode == 112) || //屏蔽 F1
+				(event.keyCode == 113) || //屏蔽 F2
+				(event.keyCode == 114) || //屏蔽 F3
+				(event.keyCode == 115) || //屏蔽 F4
+				(event.keyCode == 116) || //屏蔽 F5
+				(event.keyCode == 117) || //屏蔽 F6
+				(event.keyCode == 118) || //屏蔽 F7
+				(event.keyCode == 119) || //屏蔽 F8
+				(event.keyCode == 120) || //屏蔽 F9
+				(event.keyCode == 121) || //屏蔽 F10
+				(event.keyCode == 122) || //屏蔽 F11
+				(event.keyCode == 123) || //屏蔽 F12
+				(event.keyCode == 27)
+			) //屏蔽 F12
+			{
+				return false;
+			}
+		}
+		window.onhelp = function() {
+			return false;
+		}
+		var Main = {
+			data() {
+				return {
+					activeName: '1',
+					courseId:18,
+					section: [],
+					sectionTest:{
+						testName:'无',
+						spareTime:'无',
+						testScore: '无',
+						testNum:'无'
+					},
+					stuText:{
+						testNum:'无',
+						testScore:'无',
+						studentId:'无',
+					},
+					sectionTest1:{
+						testName:'无',
+						spareTime:'无',
+						testScore: '无',
+						testNum:'无'
+					},
+					stuText1:{
+						testNum:'无',
+						testScore:'无',
+						studentId:'无',
+					},
+					stuid:1,
+					stuName:'张三',
+					isshow:false
+				};
+			},
+			methods: {
+				submitTest(){
+					var other=this;
+					if(other.stuText.testNum<1){
+						this.$message({
+							type: 'info',
+							message: '您的次数已用完'
+						});
+					}else{
+						other.$confirm('会否进入本次测试?', '提示', {
+							confirmButtonText: '确定',
+							cancelButtonText: '取消',
+							type: 'warning',
+							center: true
+						}).then(() => {
+							window.location.href = "http://localhost:8000/liuwenjin/vueDemo/User_Testinfo.html?stuid=" + other.stuid +
+								"&testId=" + other.sectionTest.testId+"&stuName="+other.stuName;
+						}).catch(() => {
+							this.$message({
+								type: 'info',
+								message: '已取消提交'
+							});
+						});
+					}
+				},
+				duang(hourId){
+					var other=this;
+					other.sectionTest=other.sectionTest1;
+					other.stuText=other.stuText1;
+					other.isshow=false;
+					axios.get("http://localhost:8040/stuCheckTest", {
+							params: {
+								sectionid: hourId,
+								stuid:other.stuid
+							}
+						})
+						.then(function(response) {
+							if(response.data.testInfo!=null){
+								other.sectionTest=response.data.testInfo;
+								other.isshow=true;
+							}
+							if(response.data.studentTestInfo!=null){
+								other.stuText=response.data.studentTestInfo;
+							}
+							
+						})
+						.catch(function(error) {})
+				}
+			},
+			created: function() {
+				var other=this;
+				axios.get("http://localhost:8040/querySection", {
+						params: {
+							courseId: other.courseId
+						}
+					})
+					.then(function(response) {
+						other.section = response.data;
+					})
+					.catch(function(error) {})
+			}
+		}
+		var Ctor = Vue.extend(Main)
+		new Ctor().$mount('#app');
+	</script>
+</html>

@@ -258,5 +258,24 @@ public class StudentExamInfoServiceImpl implements StudentExamInfoService {
 		
 	}
 
+	
+	/* (非 Javadoc) 
+	 * <p>Title: queryStudentExaminfoByStuid</p> 
+	 * <p>Description: </p> 
+	 * @param stuid
+	 * @return 
+	 * @see com.lwj.springcloud.service.StudentExamInfoService#queryStudentExaminfoByStuid(int) 
+	*/
+	
+	@Override
+	public List<StudentExamInfo> queryStudentExaminfoByStuid(int stuid) {
+		// TODO Auto-generated method stub
+		return sExamInfoRepository.queryStudentExaminfoByStuid(stuid);
+		/**
+		 * queryStudentExaminfoByStuid(这里用一句话描述这个方法的作用)
+		*/
+		
+	}
+
 
 }

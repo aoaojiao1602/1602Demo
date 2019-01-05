@@ -32,10 +32,4 @@ public class UserServicesImpl implements UserServices {
 	public int updateById(UserInfo uid) {
 		return udao.updateById(uid);
 	}
-
-	@Override
-	public List<UserInfo> getUserId(Integer uid) {
-		// TODO Auto-generated method stub
-		return udao.getUserId(uid);
-	}
 }

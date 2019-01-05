@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<!-- vue语法环境 -->
+		<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+		<!-- vue使用Ajax -->
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<!-- 引入饿了么Element组件库 -->
+		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+		<style>
+			.iinpu {
+				width: 180px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<template>
+
+				<div class="block">
+					<el-form :inline="true" ref="form" :model="form" label-width="80px">
+						<el-form-item label="角色名:">
+							<el-input class="iinpu" size="mini" v-model="input" placeholder="请输入内容"></el-input>
+						</el-form-item>
+						<el-form-item label="角色说明:">
+							<el-input class="iinpu" size="mini" v-model="input" placeholder="请输入内容"></el-input>
+						</el-form-item>
+						<br/>
+						
+						<el-form-item>
+							<el-button type="primary" size="mini" plain icon="el-icon-search">查询</el-button>
+						</el-form-item>
+						<el-form-item>
+							<el-button type="primary" size="mini" @click="dialogFormVisible = true" icon="el-icon-plus" plain>新增角色</el-button>
+						</el-form-item>
+						
+					</el-form>
+					
+					
+					<div id="tabl">
+						<el-table :data="tableData" size="mini" :default-sort="{prop: 'date', order: 'descending'}" highlight-current-row @current-change="handleCurrentChange" style="width: 100%" max-height="400">
+							<el-table-column type="selection" width="55">
+							</el-table-column>
+							<el-table-column type="index" width="50" label="行号"></el-table-column>
+							<el-table-column prop="roleId" sortable label="角色编号" width="120">
+							</el-table-column>
+							<el-table-column prop="roleName" sortable label="角色" width="120">
+							</el-table-column>
+							<el-table-column prop="roleExplain"  label="角色说明" width="140">
+							</el-table-column>
+							<el-table-column prop="roleCreateTime"  label="角色创建时间" width="160">
+							</el-table-column>
+							<el-table-column prop="roleLastUpdateTime"  label="角色最新修改时间" width="160">
+							</el-table-column>
+							<el-table-column prop="address" fixed="right" label="角色操作" width="120">
+								<template slot-scope="scope">
+									<el-button @click.native.prevent="deleteRow(scope.row)" type="text" size="mini">
+										移除
+									</el-button>
+									<el-button type="text" size="mini" @click="updateroledialogFormVisible=true">编辑</el-button>
+								</template>
+							</el-table-column>
+                             <el-table-column prop="address" width="140" fixed="right" label="操作">
+								<template slot-scope="scope">
+									<el-button @click="updatemodul(scope.row)" type="text" size="mini">
+										菜单设置
+									</el-button>
+									<el-button type="text" size="mini">权限设置</el-button>
+								</template>
+							</el-table-column>
+						</el-table>
+					</div>
+					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChang" :current-page="page" :page-sizes="[10, 20, 30, 40]" :page-size="rows" layout="total, sizes, prev, pager, next, jumper" :total="total">
+					</el-pagination>
+				</div>
+
+			</template>
+			<el-dialog title="新增角色" :visible.sync="dialogFormVisible">
+				<el-form status-icon :rules="addrolerules" :model="addrolerulesfrom" ref="addrolerulesfrom">
+					<el-form-item prop="addrolename" class="" label="角色名" :label-width="formLabelWidth">
+						<el-input v-model="addrolerulesfrom.addrolename" placeholder="请输入角色名" style="width: 180px;" autocomplete="off"></el-input>
+					</el-form-item>
+					<el-form-item prop="addroleshuoming" class="" label="角色说明" :label-width="formLabelWidth">
+						<el-input v-model="addrolerulesfrom.addroleshuoming" placeholder="请输入角色说明" style="width: 180px;" autocomplete="off"></el-input>
+					</el-form-item>
+					
+				</el-form>
+				<div slot="footer" class="dialog-footer">
+					<el-button @click="dialogFormVisible = false">取 消</el-button>
+					<el-button type="primary" @click="addrolesubmitForm('addrolerulesfrom')">确 定</el-button>
+				</div>
+			</el-dialog>
+
+
+
+			<el-dialog title="编辑角色" :visible.sync="updateroledialogFormVisible">
+				<el-form status-icon :model="updateroleform" ref="updateroleform" :rules="updaterolerules">
+					<el-form-item label="角色" prop="updaterolename" :label-width="formLabelWidth" >
+						<el-input v-model="updateroleform.updaterolename" style="width: 180px;" autocomplete="off"></el-input>
+					</el-form-item>
+					<el-form-item label="角色说明" :label-width="formLabelWidth">
+						<el-input v-model="updateroleform.updateroleshuoming" style="width: 180px;" autocomplete="off"></el-input>
+					</el-form-item>
+					
+					
+				</el-form>
+				<div slot="footer" class="dialog-footer">
+					<el-button @click="updatedialogFormVisible = false">取 消</el-button>
+					<el-button type="primary" @click="updatedialogFormVisible = false">确 定</el-button>
+				</div>
+			</el-dialog>
+			
+			
+			
+		<!-- 	菜单设置 -->
+			<el-dialog title="菜单设置" :visible.sync="updatemoduledialog">
+				
+				<div slot="footer" class="dialog-footer">
+					<el-button @click="updatemoduledialog = false">取 消</el-button>
+					<el-button type="primary" @click="updatemoduledialog = false">确 定</el-button>
+				</div>
+			</el-dialog>
+			
+		</div>
+	</body>
+
+	<script>
+		new Vue({
+			el: '#app',
+			data: function() {
+				var checkrole = (rule, value, callback) => {
+					if(!value) {
+						return callback(new Error('角色名不能为空'));
+					}
+					
+				}
+				};
+				
+				return {
+					tableData: '',
+                    page: 1,
+				    rows:10,
+				    total:'',
+					currentRow: null,
+					
+                   
+					input: '',
+					pickerOptions2: {
+						shortcuts: [{
+							text: '最近一周',
+							onClick(picker) {
+								const end = new Date();
+								const start = new Date();
+								start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+								picker.$emit('pick', [start, end]);
+							}
+						}, {
+							text: '最近一个月',
+							onClick(picker) {
+								const end = new Date();
+								const start = new Date();
+								start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+								picker.$emit('pick', [start, end]);
+							}
+						}, {
+							text: '最近三个月',
+							onClick(picker) {
+								const end = new Date();
+								const start = new Date();
+								start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+								picker.$emit('pick', [start, end]);
+							}
+						}]
+					},
+					value7: '',
+					options: [{
+						value: '1',
+						label: '是'
+					}, {
+						value: '0',
+						label: '否'
+					}],
+					dialogFormVisible: false,
+					updateroledialogFormVisible: false,
+					updatemoduledialog:false,
+					formLabelWidth: '120px',
+					value: '',
+
+					form: {
+						name: '',
+						region: '',
+						date1: '',
+						date2: '',
+						delivery: false,
+						type: [],
+						resource: '',
+						desc: ''
+					},
+					addrolerulesfrom: {
+						addrolename: '',
+						addroleshuoming: ''
+						
+					},
+					addrolerules: {
+						addrolename: [{
+							required: true,
+							validator: checkrole,
+							trigger: 'blur'
+						}]
+					},
+					updateroleform: {
+						updaterolename: '',
+						updateroleshuoming: ''
+						
+					},
+					updaterolerules: {
+						updaterolename: [{
+							required: true,
+							validator: checkrole,
+							trigger: 'blur'
+						}]
+					}
+
+				};
+			},
+			
+			
+			created:function(){
+				/* this.$options.methods.userlistpage(); */
+				alert("111")
+				this.rolelistpage();
+			},
+			methods: {
+				rolelistpage(){
+					alert("11")
+					var _this=this;
+					axios({
+						method: 'get',
+						url: 'http://localhost:8006/role/queryRolesPage',
+						params: {
+						page: _this.page,
+						rows:_this.rows,
+						name:'',
+						access_token:
+						}
+					})
+					.then(function (response) {
+						_this.total=response.data.total;
+						_this.tableData=response.data.rows;
+						console.log(response);
+						console.log(response.data);
+						})
+						.catch(function (error) {
+						console.log(error);
+						});
+				},
+				addrolesubmitForm(formName) {
+					var _this=this;
+					this.$refs[formName].validate((valid) => {
+						if(valid) {
+							axios({
+								method: 'post',
+								url:'http://localhost:8006/role/insertRoles',
+								params: {
+								rolesName: _this.adduserrulesfrom.addrolename,
+								rolesExplan:_this.addrolerulesfrom.addroleshuoming
+							
+								}
+							})
+							.then(function (response) {
+							alert("添加成功");
+							_this.dialogFormVisible=false;
+								})
+								.catch(function (error) {
+								console.log(error);
+								});
+							
+						} else {
+							console.log('error submit!!');
+							return false;
+						}
+					});
+				},
+				updaterolesubmitForm(formName) {
+					
+				var _this=this;
+				this.$refs[formName].validate((valid) => {
+					if(valid) {
+						axios({
+							method: 'post',
+							url:'http://localhost:8006/role/updateRoles',
+							params: {
+							rolesNames: _this.updateroleform.updaterolename,
+							rolesExplan:_this.updateroleform.updateroleshuoming
+						
+							}
+						})
+						.then(function (response) {
+						alert("添加成功");
+						_this.dialogFormVisible=false;
+							})
+							.catch(function (error) {
+							console.log(error);
+							});
+						
+					} else {
+						console.log('error submit!!');
+						return false;
+					}
+				});
+				},
+				
+				deleteRow(row){
+			var _this=this;
+			_this.$confirm('此操作将永久删除该角色, 是否继续?', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
+				}).then(() => {
+			axios({
+				method: 'post',
+				url:'http://localhost:8006/role/deleteOneRoles',
+				params: {
+				rolesId: row.roleId
+				}
+			})
+			.then(function (response) {
+			_this.$message({
+				type: 'success',
+				message: response.data.message
+			});
+			_this.userlistpage();
+				})
+				.catch(function (error) {
+				console.log(error);
+				});
+				
+				}).catch(() => {
+					_this.$message({
+						type: 'info',
+						message: '已取消删除'
+					});          
+				});
+				},
+		
+				formatter(row, column) {
+					return row.address;
+				},
+				
+				handleCurrentChange(val) {
+					this.updateroleform.updaterolename=val.name;
+					this.updateroleform.updateroleshuoming=val.address;
+					console.log(val);
+					this.currentRow = val;
+				},
+				handleSizeChange(val) {
+					this.rows=val;
+					this.rolelistpage();
+					console.log(`每页 ${val} 条`);
+				},
+				handleCurrentChang(val) {
+					this.page=val;
+					this.rolelistpage();
+					console.log(`当前页: ${val}`);
+				},
+				updatemodul(data){
+					this.updatemoduledialog=true;
+				}
+
+			}
+		})
+	</script>
+	<script>
+	</script>
+
+</html>

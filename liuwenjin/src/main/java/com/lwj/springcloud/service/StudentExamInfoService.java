@@ -82,4 +82,14 @@ public interface StudentExamInfoService {
 	 */
 	
 	public Map<String, Object> checkExamInfo(int stuid, int examid);
+	
+	  /** 
+	 * http://localhost:8080/queryStudentExaminfoByStuid
+	  * 作者: 大娃   
+	  * 邮件: 1558936588@qq.com  
+	  * 时间: 2019年1月3日 下午10:19:51  
+	  * 版本: V1.0   
+	 */
+	
+	public List<StudentExamInfo> queryStudentExaminfoByStuid(int stuid);
 }

@@ -3,6 +3,8 @@ package com.ysd.boot.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -20,7 +22,7 @@ import lombok.Setter;
 public class Permissions implements Serializable{
 
 	
-	private Integer permissionId;
+	private Integer id;
 	
 	
 	
@@ -30,7 +32,7 @@ public class Permissions implements Serializable{
 	private String permissionModule;
 	
 	
-	private String permissionName;
+	private String label;
 	
 	
 	private Date permissionLastUpdateTime;
@@ -39,6 +41,8 @@ public class Permissions implements Serializable{
 	
 
 	private Boolean checked;
+	
+	private Boolean disabled;
 	
 	
 }

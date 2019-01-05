@@ -41,8 +41,8 @@ public class FansServicesImpl implements FansServices {
 	}
 
 	@Override
-	public int postMyfocus(Integer uid, Integer fid) {
-		return fdao.postMyfocus(uid, fid);
+	public int postMyfocus(Fans fans) {
+		return fdao.postMyfocus(fans);
 	}
 
 	@Override

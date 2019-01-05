@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<!-- vue语法环境 -->
+		<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+		<!-- vue使用Ajax -->
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<!-- 引入饿了么Element组件库 -->
+		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+		<style>
+			
+			.el-header,
+			.el-footer {
+				background-color: #B3C0D1;
+				color: #333;
+				text-align: center;
+				line-height: 60px;
+			}
+
+			.el-aside {
+				/* background-color: ; */
+				color: #333333;
+				text-align: center;
+				line-height: 200px;
+			}
+
+			.el-main {
+				background-color: #FFFFFF;
+				color: #333;
+				text-align: center;
+				height:800px;
+				/* line-height: 160px; */
+			}
+     
+			body>.el-container {
+				margin-bottom: 40px;
+				
+			}
+      
+			.el-container:nth-child(5) .el-aside,
+			.el-container:nth-child(6) .el-aside {
+				line-height: 260px;
+			}
+
+			.el-container:nth-child(7) .el-aside {
+				line-height: 320px;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- <script type="text/x-template" id="main-template">
+		    <div>
+		        <el-menu-item v-if="itemData.children==null" :index="itemData.index">
+		            <span>{{itemData.label}}</span>
+		        </el-menu-item>
+		
+		        <el-submenu v-if="itemData.children!=null" :index="itemData.index">
+		            <template slot="title">
+		                <span>{{itemData.label}}</span>
+		            </template>
+		            <!--调用组件自身，循环item的children，实现递归 -->
+		            <!-- <child v-for="item in itemData.children" :item-data="item"></child>
+		        </el-submenu>
+		    </div>
+		
+		</script> --> 
+		<div id="app">
+			<el-container>
+				<el-header>Header</el-header>
+				<el-container>
+					<el-aside style="width: 200px;">
+						 <el-tree :data="date" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
+        
+					
+					           <!-- <el-menu
+											
+					      class="el-menu-vertical-demo"
+					      @open="handleOpen"
+					      @close="handleClose"
+								 active-text-color="#303133"
+								 
+					      id="menu">
+					                <child v-for="item in date" :item-data="item"></child>
+					            </el-menu> -->
+					
+
+					 </el-aside>
+					<el-main>
+					
+   <el-tabs v-model="editableTabsValue" type="border-card" style="height:800px;" closable @tab-remove="removeTab">
+  <el-tab-pane
+    :key="item.name"
+    v-for="(item, index) in editableTabs"
+    :label="item.title"
+    :name="item.name"
+ v-html="item.content">
+   
+  </el-tab-pane>
+</el-tabs>
+
+					</el-main>
+				</el-container>
+			</el-container>
+		</div>
+	</body>
+	<script>
+		// 注册
+		/* Vue.component('child', {
+			props: ['itemData'],
+			// 同样也可以在 vm 实例中像 “this.message” 这样使用
+			template: '#main-template'
+		}) */
+		    var access_token = window.localStorage.getItem("access_token"); //获取登录页面中暂时存储的数据
+			var userId = window.localStorage.getItem("uid"); //
+			var refresh_token = window.localStorage.getItem("refresh_token");
+			var rid = window.localStorage.getItem("rid"); //
+		var app=new Vue({
+			el: '#app',
+			
+			
+			data:function() {
+				
+			return {
+				
+				
+				 date:'',
+				defaultProps: {
+				children: 'children',
+				label: 'label'
+				},
+					
+	    editableTabsValue: '0',
+        editableTabs: [],
+        tabIndex: 0
+      }
+			
+			},
+			
+			methods: {
+                lefttree(){
+					var _this=this;
+					axios.get('http://localhost:8006/role/queryRoleSetModuleTree?roleIds='+rid+'&access_token='+access_token)
+                	.then(function(response){
+					    _this.date=response.data
+                	})
+                	.catch(function(error){
+                		console.log(error);
+                	});
+					//console.log(this.date);
+					},
+			handleNodeClick(data) {
+				console.log(data);
+				
+						let newTabName = ++this.tabIndex + '';
+						var content="<iframe style='width:100%;height:600px;border:none;'  src=" + data.moduleUrl + "></iframe>" ;
+				this.editableTabs.push({
+				title: data.label,
+				name: newTabName,
+				content:content
+				});
+				this.editableTabsValue = newTabName;
+				/* this.$options.methods.handleTabsEdit(data, true); */
+			},
+			
+			
+			 removeTab(targetName) {
+				 let tabs = this.editableTabs;
+        let activeName = this.editableTabsValue;
+				
+		   if (activeName === targetName) {
+            tabs.forEach((tab, index) => {
+              if (tab.name === targetName) {
+                let nextTab = tabs[index + 1] || tabs[index - 1];
+                if (nextTab) {
+                  activeName = nextTab.name;
+                }
+              }
+            });
+          }
+		   this.editableTabsValue = activeName;
+          this.editableTabs = tabs.filter(tab => tab.name !== targetName);
+				 
+			}/* ,
+			handleOpen(key, keyPath) {
+			console.log("key=="+key,"kp=="+keyPath);
+			},
+			handleClose(key, keyPath) {
+			console.log(key, keyPath);
+			} */
+			 
+			
+			} ,
+			created:function(){
+				this.lefttree();
+				//this.$options.methods.lefttree();
+			}
+			})
+			
+	</script>
+	
+	
+	
+</html>

@@ -1,5 +1,7 @@
 package com.lhf.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 
 import com.lhf.entity.Notice;
@@ -16,4 +18,6 @@ public interface PicService {
 	public int deletePicByid(Integer picId);
 	//修改图片
 	public int postPic(Pic p);
+	//根据课程Id查询图片
+	public List<Pic> getPicBycourseId(Integer courseId);
 }

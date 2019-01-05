@@ -54,7 +54,7 @@ public class FileController {
      */
     @RequestMapping("/downloadFile")
     public ResponseEntity<byte[]> downloadFile(String fileName,HttpServletRequest request ){
-    	String classpath ="D:\\1602Demo\\file\\src\\main\\resources\\db\\";	
+    	String classpath ="D:\\1602Demo\\file\\src\\main\\resources\\static\\";	
     	String filePath=classpath+fileName;    	        
         HttpHeaders headers = new HttpHeaders();
         ResponseEntity<byte[]> entity = null;

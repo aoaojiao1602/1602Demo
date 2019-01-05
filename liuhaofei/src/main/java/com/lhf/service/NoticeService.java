@@ -1,5 +1,7 @@
 package com.lhf.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 
 import com.lhf.entity.Notice;
@@ -14,5 +16,6 @@ public interface NoticeService {
 	public int deleteNoticeByid(Integer noticeId);
 	//修改公告
 	public int postNotice(Notice n);
-	
+	//根据课程Id查询公告
+	public List<Notice> getNoticeBycourseId(Integer courseId);
 }

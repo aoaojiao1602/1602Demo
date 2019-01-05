@@ -59,5 +59,8 @@ private ScoreRepository sRepository;
 			}
 		};
 	}
-
+	@Override
+	public List<Score> getScoreBycourseId(Integer courseId) {
+		return sRepository.getScoreBycourseId(courseId);
+	}
 }

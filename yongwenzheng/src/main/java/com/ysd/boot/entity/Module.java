@@ -21,6 +21,7 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.AllArgsConstructor;
@@ -43,6 +44,8 @@ public class Module {
 	private Integer moduleId;
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注:父id'  ")
 	private Integer parentId;
+	
+	@JsonProperty("label")
 	@Column(columnDefinition="varchar(20)  NOT NULL comment '备注:模块姓名'  ")
 	private String moduleName;
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注:模块权重'  ")
