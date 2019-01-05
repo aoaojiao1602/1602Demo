@@ -1,4 +1,6 @@
 package com.gzz.repository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -20,5 +22,9 @@ public interface ReplyReopsitory extends JpaRepository<ProjectReply, Integer>{
 	@Query(value="DELETE FROM projectreplytb WHERE project_reply_id=?1",nativeQuery=true)
 	@Modifying
 	public int deleteReply(Integer replyId);
+	//查询对某一个主题的回复
+	@Query(value="SELECT * FROM projectreplytb WHERE project_reply_project_id=?1",nativeQuery=true)
+	public Page<ProjectReply> getReplyPage(Integer projectId,Pageable pageable);
+	
 
 }

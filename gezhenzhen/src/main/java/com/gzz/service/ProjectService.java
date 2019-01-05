@@ -20,7 +20,7 @@ public interface ProjectService {
 	//发表主题(所属的讨论区模块是老师答疑区)
 	public int putProject(Integer clazzId,String projectContent,String projectTitle,Integer projectUid,Integer moduleId);
 	//发表主题(所属的讨论区模块是综合讨论区)
-	public int putProjects(String projectContent,String projectCreatetime,String projectTitle,Integer projectUid,Integer moduleId);
+	public int putProjects(String projectContent,String projectTitle,Integer projectUid,Integer moduleId);
 	//查询用户自己所关注的主题
 	public List<Project> getProjectByProjectState(Integer projectState,Integer uId);
 	//查询用户自己所关注的主题的id

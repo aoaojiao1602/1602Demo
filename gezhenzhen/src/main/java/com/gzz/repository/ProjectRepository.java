@@ -20,9 +20,9 @@ public interface ProjectRepository extends JpaRepository<Project, Integer>{
 	@Modifying
 	public int putProject(Integer clazzId,String projectContent,String projectTitle,Integer projectUid,Integer moduleId);
 	//发表主题(所属的讨论区模块是综合讨论区)
-	@Query(value="INSERT INTO projecttb (project_content,project_createtime,project_title,u_id,project_moduleid) VALUE(?1,?2,?3,?4,?5)",nativeQuery=true)
+	@Query(value="INSERT INTO projecttb (project_content,project_createtime,project_title,u_id,project_moduleid) VALUE(?1,NOW(),?2,?3,?4)",nativeQuery=true)
 	@Modifying
-	public int putProjects(String projectContent,String projectCreatetime,String projectTitle,Integer projectUid,Integer moduleId);
+	public int putProjects(String projectContent,String projectTitle,Integer projectUid,Integer moduleId);
 	//查询用户自己所关注的主题
 	@Query(value="SELECT * FROM projecttb WHERE project_state=?1 AND u_id=?2 LIMIT 5",nativeQuery=true)
 	public List<Project> getProjectByProjectState(Integer projectState,Integer uId);

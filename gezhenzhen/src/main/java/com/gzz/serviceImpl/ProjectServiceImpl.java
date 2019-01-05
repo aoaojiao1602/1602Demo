@@ -36,9 +36,9 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 	//发表主题
 	@Transactional
-	public int putProjects(String projectContent, String projectCreatetime, String projectTitle, Integer projectUid,
+	public int putProjects(String projectContent,  String projectTitle, Integer projectUid,
 			Integer moduleId) {
-		return repository.putProjects(projectContent, projectCreatetime, projectTitle, projectUid, moduleId);
+		return repository.putProjects(projectContent, projectTitle, projectUid, moduleId);
 	}
 	//查询用户自己所关注的主题
 	@Transactional

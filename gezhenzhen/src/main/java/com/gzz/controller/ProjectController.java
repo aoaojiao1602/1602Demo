@@ -81,6 +81,7 @@ public class ProjectController {
 	public Object putProjects(Integer clazzId,String projectContent,String projectCreatetime,String projectTitle,Integer projectUid,Integer moduleId) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println("<>>>>>>>>>>>>>"+projectCreatetime);
+		System.out.println(projectUid+">>>>>>>>>>>");
 		if (moduleId==1) {
 			int n=service.putProject(clazzId, projectContent, projectTitle, projectUid, moduleId);
 			if (n>0) {
@@ -91,7 +92,7 @@ public class ProjectController {
 				map.put("msg", "发表失败");
 			}	
 		}else {
-			int m=service.putProjects(projectContent, projectCreatetime, projectTitle, projectUid, moduleId);
+			int m=service.putProjects(projectContent, projectTitle, projectUid, moduleId);
 			if (m>0) {
 				map.put("success", true);
 				map.put("msg", "发表成功");
