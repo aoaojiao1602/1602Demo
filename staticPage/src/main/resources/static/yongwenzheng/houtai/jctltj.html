@@ -30,20 +30,18 @@
  
   <div class="block">
 	  <el-form :inline="true" ref="form" :model="form" label-width="80px">
-	<el-form-item label="推荐位置">
-			<el-select  v-model="positionsId" placeholder="请选择" width="80px" >
-				<el-option label="无" value="0"></el-option>
-	
-				<el-option label="位置一" value="1"></el-option>
-				<el-option label="位置二" value="2"></el-option>
-				<el-option label="位置三" value="3"></el-option>
-				<el-option label="位置四" value="4"></el-option>
-				
-				
-		</el-form-item>
-		<el-form-item>
-			<el-button type="primary" size="mini" plain icon="el-icon-search" @click="courselistpage">查询</el-button>
-		</el-form-item>
+		<el-form-item label="推荐位置">
+		<el-select  v-model="positionsId" placeholder="请选择" width="80px" >
+			<el-option label="无" value="0"></el-option>
+
+			<el-option label="位置一" value="1"></el-option>
+			<el-option label="位置二" value="2"></el-option>
+		
+			
+	</el-form-item>
+	<el-form-item>
+		<el-button type="primary" size="mini" plain icon="el-icon-search" @click="courselistpage">查询</el-button>
+	</el-form-item>
  <el-form-item>
   <el-button type="primary" size="mini" @click="addtj" icon="el-icon-plus" plain>新增</el-button>
   </el-form-item>
@@ -55,16 +53,17 @@
 			style="width:1000px" max-height="400">
 			 <!-- <el-table-column type="selection" align="center" width="55"></el-table-column> --> 
 			  <el-table-column type="index" width="50" align="center" label="行号"></el-table-column>
-			<el-table-column prop="courseId" align="center"  label="课程推荐id" width="100">
+			<el-table-column prop="discusscourseId" align="center"  label="推荐id" width="100">
 			</el-table-column>
 	 	
 		<el-table-column prop="kechId" align="center"  sortable label="课程id" width="100">
 		</el-table-column>
-		<el-table-column prop="courseWeigh" align="center"  sortable label="课程权重" width="100">
+		<el-table-column prop="teacherId" align="center"  sortable label="老师id" width="100">
 		</el-table-column>
-		<el-table-column prop="navRemark" align="center"  sortable label="报名人数 " width="160">
+		<el-table-column prop="discussWeigh" align="center"  sortable label="权重" width="100">
 		</el-table-column>
-		<el-table-column prop="courseStatus" align="center"  :formatter="formartShow" label="是否推荐" width="100">
+		
+		<el-table-column prop="discussStatus" align="center"  :formatter="formartShow" label="主题推荐状态" width="100">
 		</el-table-column>
 		<el-table-column prop="positionsId" align="center"  label="推荐位置" width="160">
 		</el-table-column> 
@@ -100,21 +99,19 @@
 	 <el-dialog title="编辑推荐信息" :visible.sync="updatecoursedialogFormVisible">
 		<el-form status-icon :model="updatecourseform" ref="updatecourseform">
 		<el-form-item label="权重"  :label-width="formLabelWidth" >
-			<el-input v-model="updatecourseform.courseWeigh" style="width: 180px;" autocomplete="off"></el-input>
+			<el-input v-model="updatecourseform.discussWeigh" style="width: 180px;" autocomplete="off"></el-input>
 		</el-form-item>
 			 <el-form-item label="是否推荐"  :label-width="formLabelWidth">
-      <el-select prop="courseStatus" v-model="updatecourseform.courseStatus" placeholder="请选择">
+      <el-select  v-model="updatecourseform.discussStatus"  placeholder="请选择">
         <el-option label="是" value="1"></el-option>
         <el-option label="否" value="0"></el-option>
       </el-select>
     </el-form-item>
 				<el-form-item label="推荐位置"  :label-width="formLabelWidth">
-				<el-select prop="positionsId" v-model="updatecourseform.positionsId" placeholder="请选择">
+				<el-select  v-model="updatecourseform.positionsId" placeholder="请选择">
 					<el-option label="位置一" value="1"></el-option>
 					<el-option label="位置二" value="2"></el-option>
-					<el-option label="位置三" value="3"></el-option>
-					<el-option label="位置四" value="4"></el-option>
-				
+					
 					
 			</el-form-item>
 		</el-form>
@@ -158,10 +155,10 @@
 		formLabelWidth: '120px',
         value: '',
 		updatecourseform: {
-			courseId:'',
-			courseWeigh: '',
-			courseStatus: '',
-			positionsId:''
+			discusscourseId	:'',
+			positionsId:'',
+			discussStatus:'',
+			discussWeigh:''
 		},
        form: {
           name: '',
@@ -210,7 +207,7 @@
 					var _this=this;
 					axios({
 						method: 'get',
-						url: 'http://localhost:8006/course/queryCourseByPage',
+						url: 'http://localhost:8006/discusscourse/queryCourseByPage',
 						params: {
 						page: _this.page,
 						rows:_this.rows,
@@ -236,12 +233,12 @@
 						if(valid) {
 							axios({
 								method: 'post',
-								url:'http://localhost:8006/course/updateCourse',
+								url:'http://localhost:8006/discusscourse/updateDiscusscourse',
 								params: {
-								courseId:_this.updatecourseform.courseId,
+								discusscourseId	:_this.updatecourseform.discusscourseId	,
 								positionsId: _this.updatecourseform.positionsId,
-								courseStatus:_this.updatecourseform.courseStatus,
-								courseWeigh:_this.updatecourseform.courseWeigh,
+								discussStatus:_this.updatecourseform.discussStatus,
+								discussWeigh:_this.updatecourseform.discussWeigh,
 								access_token:access_token
 								}
 							})
@@ -252,7 +249,7 @@
 							type: 'success',
 							message: response.data.msg
 						});
-						_this.rolelistpage();
+						
 						
 							_this.updatecoursedialogFormVisible=false;
 								})
@@ -275,9 +272,9 @@
 		 	}).then(() => {
 		 axios({
 		 	method: 'delete',
-		 	url:'http://localhost:8006/course/deleteCourse',
+		 	url:'http://localhost:8006/discusscourse/deleteDiscusscourse',
 		 	params: {
-		 	courseId: row.courseId,
+		 	discusscourseId: row.discusscourseId,
 		 	access_token:access_token
 		 	}
 		 })
@@ -302,10 +299,10 @@
 		 	});
 	  },
 	  updatecourse(row){
-			this.updatecourseform.courseWeigh=row.courseWeigh;
+			this.updatecourseform.discussWeigh=row.discussWeigh;
 			this.updatecourseform.positionsId=row.positionsId;
-			this.updatecourseform.courseStatus=row.courseStatus;
-				this.updatecourseform.courseId=row.courseId;
+			this.updatecourseform.discussStatus=row.discussStatus;
+				this.updatecourseform.discusscourseId=row.discusscourseId;
 				this.updatecoursedialogFormVisible=true;
 			},
 	   setCurrent(row) {

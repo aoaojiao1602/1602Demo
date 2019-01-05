@@ -233,7 +233,7 @@ public class UsersController {
   	 	* @param uid
   	 	* @return
   	 	*/
-		if (usersService.getUserRoleCount(uid)>1) {
+		if (usersService.getUserRoleCount(uid)>=1) {
 			map.put("success", false);
 			map.put("message", "用户只能拥有一个角色，请删除原有角色，再添加新角色");
 		}

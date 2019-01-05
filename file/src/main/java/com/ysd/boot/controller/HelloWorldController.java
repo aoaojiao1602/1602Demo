@@ -77,7 +77,7 @@ public class HelloWorldController {
 		
     	String result;
 		if (fileService.insertFileByFile(fileM)>0) {
-			result="springcloud-file上传成功:   "+fileName;
+			result=fileName;
 		} else {
 			result="springcloud-file上传失败:   "+fileName;
 		}

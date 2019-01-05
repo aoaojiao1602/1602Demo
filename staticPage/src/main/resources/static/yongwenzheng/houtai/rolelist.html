@@ -25,15 +25,13 @@
 				<div class="block">
 					<el-form :inline="true" ref="form" :model="form" label-width="80px">
 						<el-form-item label="角色名:">
-							<el-input class="iinpu" size="mini" v-model="input" placeholder="请输入内容"></el-input>
+							<el-input class="iinpu" size="mini"  v-model="roleNamepage"  placeholder="请输入角色名"></el-input>
 						</el-form-item>
-						<el-form-item label="角色说明:">
-							<el-input class="iinpu" size="mini" v-model="input" placeholder="请输入内容"></el-input>
-						</el-form-item>
+						
 						<br/>
 						
 						<el-form-item>
-							<el-button type="primary" size="mini" plain icon="el-icon-search">查询</el-button>
+							<el-button type="primary" size="mini" plain icon="el-icon-search" @click="rolelistpage">查询</el-button>
 						</el-form-item>
 						<el-form-item>
 							<el-button type="primary" size="mini" @click="dialogFormVisible = true" icon="el-icon-plus" plain>新增角色</el-button>
@@ -43,29 +41,32 @@
 					
 					
 					<div id="tabl">
-						<el-table :data="tableData" size="mini" :default-sort="{prop: 'date', order: 'descending'}" highlight-current-row @current-change="handleCurrentChange" style="width: 100%" max-height="400">
+						<el-table :data="tableData" size="mini" 
+						:default-sort="{prop: 'date', order: 'descending'}"
+						 highlight-current-row @current-change="handleCurrentChange"
+							style="width:100%" max-height="400">
 							<el-table-column type="selection" width="55">
 							</el-table-column>
 							<el-table-column type="index" width="50" label="行号"></el-table-column>
-							<el-table-column prop="roleId" sortable label="角色编号" width="120">
+							<el-table-column prop="rolesId" sortable label="角色编号" width="120">
 							</el-table-column>
-							<el-table-column prop="roleName" sortable label="角色" width="120">
+							<el-table-column prop="rolesName" sortable label="角色" width="120">
 							</el-table-column>
-							<el-table-column prop="roleExplain"  label="角色说明" width="140">
+							<el-table-column prop="rolesExplan"  label="角色说明" width="140">
 							</el-table-column>
-							<el-table-column prop="roleCreateTime"  label="角色创建时间" width="160">
+							<el-table-column prop="rolesCreateTime"  label="角色创建时间" width="160">
 							</el-table-column>
-							<el-table-column prop="roleLastUpdateTime"  label="角色最新修改时间" width="160">
+							<el-table-column prop="rolesLastUpdateTime"  label="角色最新修改时间" width="160">
 							</el-table-column>
-							<el-table-column prop="address" fixed="right" label="角色操作" width="120">
+							<el-table-column prop="address"  label="角色操作" width="120">
 								<template slot-scope="scope">
 									<el-button @click.native.prevent="deleteRow(scope.row)" type="text" size="mini">
 										移除
 									</el-button>
-									<el-button type="text" size="mini" @click="updateroledialogFormVisible=true">编辑</el-button>
+									<el-button type="text" size="mini" @click="updateroledialog(scope.row)">编辑</el-button>
 								</template>
 							</el-table-column>
-                             <el-table-column prop="address" width="140" fixed="right" label="操作">
+                <el-table-column prop="address" width="140"  label="操作">
 								<template slot-scope="scope">
 									<el-button @click="updatemodul(scope.row)" type="text" size="mini">
 										菜单设置
@@ -100,7 +101,7 @@
 
 			<el-dialog title="编辑角色" :visible.sync="updateroledialogFormVisible">
 				<el-form status-icon :model="updateroleform" ref="updateroleform" :rules="updaterolerules">
-					<el-form-item label="角色" prop="updaterolename" :label-width="formLabelWidth" >
+					<el-form-item label="角色名" prop="updaterolename" :label-width="formLabelWidth" >
 						<el-input v-model="updateroleform.updaterolename" style="width: 180px;" autocomplete="off"></el-input>
 					</el-form-item>
 					<el-form-item label="角色说明" :label-width="formLabelWidth">
@@ -110,19 +111,28 @@
 					
 				</el-form>
 				<div slot="footer" class="dialog-footer">
-					<el-button @click="updatedialogFormVisible = false">取 消</el-button>
-					<el-button type="primary" @click="updatedialogFormVisible = false">确 定</el-button>
+					<el-button @click="updateroledialogFormVisible = false">取 消</el-button>
+					<el-button type="primary" @click="updaterolesubmitForm('updateroleform')">确 定</el-button>
 				</div>
 			</el-dialog>
 			
 			
 			
 		<!-- 	菜单设置 -->
-			<el-dialog title="菜单设置" :visible.sync="updatemoduledialog">
-				
+			<el-dialog title="菜单设置" :visible.sync="updatemoduledialog" :before-close="qkxz">
+				<el-tree
+				    id="shu"
+				  :data="data2"
+				  show-checkbox
+				  default-expand-all
+				  node-key="moduleId"
+				  ref="tree"
+					highlight-current
+				  :props="defaultProps">
+				</el-tree>
 				<div slot="footer" class="dialog-footer">
-					<el-button @click="updatemoduledialog = false">取 消</el-button>
-					<el-button type="primary" @click="updatemoduledialog = false">确 定</el-button>
+					<!-- <el-button @click="updatemoduledialog = false">取 消</el-button> -->
+					<el-button type="primary" @click="getCheckedKeys">确 定</el-button>
 				</div>
 			</el-dialog>
 			
@@ -130,25 +140,33 @@
 	</body>
 
 	<script>
+				var access_token = window.localStorage.getItem("access_token"); //获取登录页面中暂时存储的数据
+		var userIds = window.localStorage.getItem("uid"); //
+		var refresh_token = window.localStorage.getItem("refresh_token");
+		var rid = window.localStorage.getItem("rid"); //
+		var meth;
+		var rids;
+		var checkedarr=[];
+		var t;
 		new Vue({
 			el: '#app',
 			data: function() {
-				var checkrole = (rule, value, callback) => {
-					if(!value) {
-						return callback(new Error('角色名不能为空'));
-					}
-					
-				}
-				};
+				
 				
 				return {
+					data2:'', 
+					defaultCheckedKeys:[],
+					defaultProps: {
+						children: 'children',
+						label: 'label'
+					},
 					tableData: '',
-                    page: 1,
+            page: 1,
 				    rows:10,
 				    total:'',
 					currentRow: null,
-					
-                   
+					roleNamepage:'',
+                
 					input: '',
 					pickerOptions2: {
 						shortcuts: [{
@@ -209,35 +227,135 @@
 					addrolerules: {
 						addrolename: [{
 							required: true,
-							validator: checkrole,
+							message: '角色名不能为空',
 							trigger: 'blur'
 						}]
 					},
 					updateroleform: {
-						updaterolename: '',
+						rolesId:'',
+						updaterolename: '1',
 						updateroleshuoming: ''
 						
 					},
 					updaterolerules: {
-						updaterolename: [{
-							required: true,
-							validator: checkrole,
-							trigger: 'blur'
+						updaterolename: [
+							{required: true,message: '角色名不能为空',trigger: 'blur'
 						}]
 					}
 
 				};
 			},
-			
-			
 			created:function(){
-				/* this.$options.methods.userlistpage(); */
-				alert("111")
-				this.rolelistpage();
-			},
+		    this.rolelistpage();
+				this.lefttree();
+				t=this.$refs;
+				},
 			methods: {
+				lefttree(){
+						var _this=this;
+								 console.log("角色"+rids);
+								 axios({
+								 	method: 'get',
+								 	url:'http://localhost:8006/role/queryRoleSetModuleTree',
+								 	params: {
+								 	roleIds:rids,
+								 access_token:access_token
+								 	}
+								 })
+								 .then(function(response){
+								 		_this.data2=response.data;
+
+										console.log("_this.data2=="+_this.data2);
+									 meth.diguishuzu(response.data);
+									 
+										
+								 				})
+								 				.catch(function(error){
+								 					console.log(error);
+								 				});
+								 
+								 },
+								 qkxz(done){
+									 location.reload();
+									 done();
+								 },
+								 diguishuzu(children){
+									
+								   var _this=this;
+									 for(var i=0;i<children.length;i++){
+										 if(children[i].checked==true){
+										 checkedarr.push(children[i].moduleId);
+										 
+									   console.log("数组为"+checkedarr);
+										 }else{
+											 if(children[i].children!=undefined){
+												 meth.diguishuzu(children[i].children);
+												 }
+										 }
+										 t.tree.setCheckedKeys(checkedarr);
+				
+									 }
+								 },
+				      
+				      getCheckedKeys() {
+								var ids=this.$refs.tree.getCheckedKeys();
+								var idss=ids.join(",");
+								console.log(this.$refs.tree.getCheckedKeys());
+								var _this=this;
+								
+									axios({
+										method: 'post',
+										url:'http://localhost:8006/role/deleteRolesMoudelBy',
+										params: {
+										rid:rids,
+										access_token:access_token
+										}
+									})
+									.then(function (response) {
+									
+									        							axios({
+									        								method: 'post',
+									        								url:'http://localhost:8006/role/insertRolesMoudelBy',
+									        								params: {
+									        								moduleId:idss,
+									        								rid:rids,
+									        								access_token:access_token
+									        								}
+									        							})
+									        							.then(function (response) {
+									        								_this.$message({
+									        							type: 'success',
+									        							message: response.data.message
+									        						});
+									        						_this.rolelistpage();
+																			
+									        							_this.updatemoduledialog=false;
+									        						location.reload();
+																			
+																			
+									        								})
+									        								.catch(function (error) {
+									        								console.log(error);
+									        								});
+									
+									
+									
+									
+									
+								})
+								
+													
+															
+															
+														
+												
+				      },
+				      
+				      
+				      
+				   
 				rolelistpage(){
-					alert("11")
+					
 					var _this=this;
 					axios({
 						method: 'get',
@@ -245,8 +363,8 @@
 						params: {
 						page: _this.page,
 						rows:_this.rows,
-						name:'',
-						access_token:
+						name:_this.roleNamepage,
+						access_token:access_token
 						}
 					})
 					.then(function (response) {
@@ -264,17 +382,23 @@
 					this.$refs[formName].validate((valid) => {
 						if(valid) {
 							axios({
-								method: 'post',
+								method: 'put',
 								url:'http://localhost:8006/role/insertRoles',
 								params: {
-								rolesName: _this.adduserrulesfrom.addrolename,
-								rolesExplan:_this.addrolerulesfrom.addroleshuoming
-							
+								rolesName: _this.addrolerulesfrom.addrolename,
+								rolesExplan:_this.addrolerulesfrom.addroleshuoming,
+							  access_token:access_token
 								}
 							})
 							.then(function (response) {
-							alert("添加成功");
+						    _this.$message({
+							type: 'success',
+							message: response.data.message
+						});
+						_this.rolelistpage();
+
 							_this.dialogFormVisible=false;
+						
 								})
 								.catch(function (error) {
 								console.log(error);
@@ -296,13 +420,19 @@
 							url:'http://localhost:8006/role/updateRoles',
 							params: {
 							rolesNames: _this.updateroleform.updaterolename,
-							rolesExplan:_this.updateroleform.updateroleshuoming
-						
+							rolesExplan:_this.updateroleform.updateroleshuoming,
+						  rolesId:_this.updateroleform.rolesId,
+							access_token:access_token
 							}
 						})
 						.then(function (response) {
-						alert("添加成功");
-						_this.dialogFormVisible=false;
+					_this.$message({
+						type: 'success',
+						message: response.data.message
+					});
+					_this.rolelistpage();
+						_this.updateroledialogFormVisible=false;
+						
 							})
 							.catch(function (error) {
 							console.log(error);
@@ -323,10 +453,11 @@
 					type: 'warning'
 				}).then(() => {
 			axios({
-				method: 'post',
+				method: 'delete',
 				url:'http://localhost:8006/role/deleteOneRoles',
 				params: {
-				rolesId: row.roleId
+				rolesId: row.rolesId,
+				access_token:access_token
 				}
 			})
 			.then(function (response) {
@@ -334,7 +465,7 @@
 				type: 'success',
 				message: response.data.message
 			});
-			_this.userlistpage();
+			_this.rolelistpage();
 				})
 				.catch(function (error) {
 				console.log(error);
@@ -348,13 +479,9 @@
 				});
 				},
 		
-				formatter(row, column) {
-					return row.address;
-				},
 				
 				handleCurrentChange(val) {
-					this.updateroleform.updaterolename=val.name;
-					this.updateroleform.updateroleshuoming=val.address;
+					
 					console.log(val);
 					this.currentRow = val;
 				},
@@ -369,8 +496,25 @@
 					console.log(`当前页: ${val}`);
 				},
 				updatemodul(data){
-					this.updatemoduledialog=true;
+					rids=data.rolesId;
+					console.log("dat"+data.rolesId);
+					meth=this.$options.methods;
+
+				meth.lefttree();
+        this.updatemoduledialog=true;
+				
+				},
+				updateroledialog(row){
+					console.log("选中"+row.rolesName);
+					
+				
+					this.updateroleform.updaterolename=row.rolesName;
+					this.updateroleform.updateroleshuoming=row.rolesExplan;
+					this.updateroleform.rolesId=row.rolesId;
+					this.updateroledialogFormVisible=true;
+				
 				}
+				
 
 			}
 		})

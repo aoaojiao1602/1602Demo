@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>智慧教学平台 | 课程管理 | 章节课时</title>
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> 
+		<!-- vue语法环境 -->
+		<script src="https://unpkg.com/vue/dist/vue.min.js"></script> 
+		<!-- vue使用Ajax -->
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<!-- 引入饿了么Element组件库 -->
+		<script src="https://unpkg.com/element-ui/lib/index.js"></script> 
+	</head>
+	<body>
+		
+	<div id="app">	
+<el-tree
+  :data="data3"
+  show-checkbox
+  node-key="id"
+  :default-expanded-keys="[2, 3]"
+  :default-checked-keys="[5]">
+</el-tree>
+</div>
+<script>
+  var vm = new Vue({
+  	el: '#app',
+  	data() {
+      return {
+        data3: '',
+        defaultProps: {
+          children: 'children',
+          label: 'label'
+        }
+      };
+   },
+			created:function(){
+				this.lefttree();
+				//this.$options.methods.lefttree();
+			},
+			
+			methods: {
+                lefttree(){
+                
+					var _this=this;
+					axios.get('http://localhost:8006/permissions/queryPermissionTree?roleId=1')
+                	.then(function(response){
+					    _this.data3=response.data
+					  })
+                	.catch(function(error){
+                		console.log(error);
+                	});
+					//console.log(this.date);
+					}
+                }
+  	
+  })
+</script>
+ 
+
+		
+		
+	</body>
+</html>
+

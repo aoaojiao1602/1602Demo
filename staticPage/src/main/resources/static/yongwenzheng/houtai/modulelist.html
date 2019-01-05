@@ -13,98 +13,288 @@
 	</head>
 	<body>
 		<div id="app">
+			<div class="buttons">
+			  
+			  <el-button icon="el-icon-plus" type="primary" size="mini" @click="insertModule">添加</el-button>
+			  <el-button icon="el-icon-plus" type="primary" size="mini" @click="delmodule">删除</el-button>
+				<el-button icon="el-icon-plus" type="primary" size="mini" @click="updatemodule">修改</el-button>
+			</div>
 		<el-tree
   :data="data2"
-  show-checkbox
+  
   default-expand-all
-  node-key="id"
+  node-key="moduleId"
   ref="tree"
-  highlight-current
+	highlight-current
   :props="defaultProps">
 </el-tree>
 
-<div class="buttons">
-  <el-button @click="getCheckedNodes">通过 node 获取</el-button>
-  <el-button @click="getCheckedKeys">通过 key 获取</el-button>
-  <el-button @click="setCheckedNodes">通过 node 设置</el-button>
-  <el-button @click="setCheckedKeys">通过 key 设置</el-button>
-  <el-button @click="resetChecked">清空</el-button>
-</div>
+<el-dialog title="新增模块" :visible.sync="addmoduledialogFormVisible">
+				<el-form status-icon :model="addrolerulesfrom" ref="addrolerulesfrom">
+					<el-form-item   label="模块名称" :label-width="formLabelWidth">
+						<el-input v-model="addrolerulesfrom.label" placeholder="请输入模块名" style="width: 180px;" autocomplete="off"></el-input>
+					</el-form-item>
+					<el-form-item   label="模块路径" :label-width="formLabelWidth">
+						<el-input v-model="addrolerulesfrom.moduleUrl" placeholder="模块路径" style="width: 180px;" autocomplete="off"></el-input>
+					</el-form-item>
+					<el-form-item   label="权重值" :label-width="formLabelWidth">
+						<el-input v-model="addrolerulesfrom.moduleWeight" placeholder="权重值" style="width: 180px;" autocomplete="off"></el-input>
+					</el-form-item>
+				</el-form>
+				<div slot="footer" class="dialog-footer">
+					<el-button @click="addmoduledialogFormVisible = false">取 消</el-button>
+					<el-button type="primary" @click="addmodulesubmitForm('addrolerulesfrom')">确 定</el-button>
+				</div>
+			</el-dialog>
+			<el-dialog title="编辑模块" :visible.sync="updatemoduledialogFormVisible">
+							<el-form status-icon :model="updaterolerulesfrom" ref="updaterolerulesfrom">
+								<el-form-item   label="模块名称" :label-width="formLabelWidth">
+									<el-input v-model="updaterolerulesfrom.label" placeholder="请输入模块名" style="width: 180px;" autocomplete="off"></el-input>
+								</el-form-item>
+								<el-form-item   label="模块路径" :label-width="formLabelWidth">
+									<el-input v-model="updaterolerulesfrom.moduleUrl" placeholder="模块路径" style="width: 180px;" autocomplete="off"></el-input>
+								</el-form-item>
+								<el-form-item   label="权重值" :label-width="formLabelWidth">
+									<el-input v-model="updaterolerulesfrom.moduleWeight" placeholder="权重值" style="width: 180px;" autocomplete="off"></el-input>
+								</el-form-item>
+							</el-form>
+							<div slot="footer" class="dialog-footer">
+								<el-button @click="updatemoduledialogFormVisible = false">取 消</el-button>
+								<el-button type="primary" @click="updatemodulesubmitForm('updaterolerulesfrom')">确 定</el-button>
+							</div>
+						</el-dialog>
 </div>
 	</body>
 	<script>
-	new Vue({
-		el: '#app',
-    methods: {
-      getCheckedNodes() {
-        console.log(this.$refs.tree.getCheckedNodes());
-      },
-      getCheckedKeys() {
-        console.log(this.$refs.tree.getCheckedKeys());
-      },
-      setCheckedNodes() {
-        this.$refs.tree.setCheckedNodes([{
-          id: 5,
-          label: '二级 2-1'
-        }, {
-          id: 9,
-          label: '三级 1-1-1'
-        }]);
-      },
-      setCheckedKeys() {
-        this.$refs.tree.setCheckedKeys([3]);
-      },
-      resetChecked() {
-        this.$refs.tree.setCheckedKeys([]);
-      }
-    },
+			var access_token = window.localStorage.getItem("access_token"); //获取登录页面中暂时存储的数据
+		var userId = window.localStorage.getItem("uid"); //
+		var refresh_token = window.localStorage.getItem("refresh_token");
+		var rid = window.localStorage.getItem("rid"); //
+		var meth;
+		var checkedarr=[];
+		var t;
+		new Vue({
+			el:"#app",
+		  methods: {
+				updatemodulesubmitForm(formName){
+					
+					var ids=this.$refs.tree.getCurrentNode().moduleId;
+					
+					
+					var _this=this;
+					this.$refs[formName].validate((valid) => {
+						if(valid) {
+							axios({
+								method: 'post',
+								url:'http://localhost:8006/module/updateModule',
+								params: {
+								mName: _this.updaterolerulesfrom.label,
+								mUrl:_this.updaterolerulesfrom.moduleUrl,
+								mWeight:_this.updaterolerulesfrom.moduleWeight,
+								mid:ids,
+								access_token:access_token
+								}
+							})
+							.then(function (response) {
+						_this.$message({
+							type: 'success',
+							message: response.data.message
+						});
+						_this.lefttree();
+						
+							_this.updatemoduledialogFormVisible=false;
+							
+								})
+								.catch(function (error) {
+								console.log(error);
+								});
+							
+						} else {
+							console.log('error submit!!');
+							return false;
+						}
+					});
+				},
+				updatemodule(){
+					var a=this.$refs.tree.getCurrentNode();
+					if(a==null){
+					this.$message({
+						type: 'success',
+						message: '请选择节点名称'
+					});
+					return;
+					}
+					this.updaterolerulesfrom.moduleWeight=a.moduleWeight,
+					this.updaterolerulesfrom.moduleUrl=a.moduleUrl;
+						this.updaterolerulesfrom.label=a.label;
+						this.updaterolerulesfrom.moduleId=a.moduleId;
+					
+				
+					this.updatemoduledialogFormVisible=true;
+				},
+				delmodule(){
+					var mid=this.$refs.tree.getCurrentKey();
+					if(mid==null){
+					this.$message({
+						type: 'success',
+						message: '请选择节点名称'
+					});
+					return;
+					}
+					var _this=this;
+					_this.$confirm('此操作将永久删除该模块, 是否继续?', '提示', {
+							confirmButtonText: '确定',
+							cancelButtonText: '取消',
+							type: 'warning'
+						}).then(() => {
+					axios({
+						method: 'delete',
+						url:'http://localhost:8006/module/deleteModule',
+						params: {
+						mid:mid,
+						access_token:access_token
+						}
+					})
+					.then(function (response) {
+					_this.$message({
+						type: 'success',
+						message: response.data.message
+					});
+					_this.lefttree();
+						})
+						.catch(function (error) {
+						console.log(error);
+						});
+						
+						}).catch(() => {
+							_this.$message({
+								type: 'info',
+								message: '已取消删除'
+							});          
+						});
+				},
+				addmodulesubmitForm(formName){
+					
+					var ids=this.$refs.tree.getCurrentKey();
+					
+					
+					var _this=this;
+					this.$refs[formName].validate((valid) => {
+						if(valid) {
+							axios({
+								method: 'put',
+								url:'http://localhost:8006/module/insertModule',
+								params: {
+								mName: _this.addrolerulesfrom.label,
+								mUrl:_this.addrolerulesfrom.moduleUrl,
+								mWeight:_this.addrolerulesfrom.moduleWeight,
+								pid:ids,
+								access_token:access_token
+								}
+							})
+							.then(function (response) {
+						_this.$message({
+							type: 'success',
+							message: response.data.message
+						});
+						_this.lefttree();
+						
+							_this.addmoduledialogFormVisible=false;
+							
+								})
+								.catch(function (error) {
+								console.log(error);
+								});
+							
+						} else {
+							console.log('error submit!!');
+							return false;
+						}
+					});
+				},
+				 			lefttree(){
+								 meth=this.$options.methods;
+								
+				 var _this=this;
+				 axios.get('http://localhost:8006/role/queryRoleSetModuleTree?roleIds='+rid+'&access_token='+access_token)
+				 				.then(function(response){
+				 		_this.data2=response.data;
+					  
+				 				})
+				 				.catch(function(error){
+				 					console.log(error);
+				 				});
+				 //console.log(this.date);
+				 },
+				 insertModule(){
+					
+					 if(this.$refs.tree.getCurrentKey()==null){
+					 	this.$message({
+					 		type: 'success',
+					 		message: '请选择节点名称'
+					 	});
+					 	return;
+					 }
+					 this.addmoduledialogFormVisible=true;
+				 },
+       getCheckedKeys() {
+				var ids=this.$refs.tree.getCheckedKeys();
+				var idss=ids.join(",");
+				console.log(this.$refs.tree.getCheckedKeys());
+				var _this=this;
+									
+											axios({
+												method: 'post',
+												url:'http://localhost:8006/role/insertRolesMoudelBy',
+												params: {
+												moduleId:idss,
+												rid:rid,
+											  access_token:access_token
+												}
+											})
+											.then(function (response) {
+										    _this.$message({
+											type: 'success',
+											message: response.data.message
+										});
+										_this.rolelistpage();
+				
+											_this.dialogFormVisible=false;
+										
+												})
+												.catch(function (error) {
+												console.log(error);
+												});
+										}
+        },
 
-    data:function(){
+    data:function() {
       return {
-        data2: [{
-          id: 1,
-          label: '一级 1',
-          children: [{
-            id: 4,
-            label: '二级 1-1',
-            children: [{
-              id: 9,
-              label: '三级 1-1-1'
-            }, {
-              id: 10,
-              label: '三级 1-1-2'
-            }]
-          }]
-        }, {
-          id: 2,
-          label: '一级 2',
-          children: [{
-            id: 5,
-            label: '二级 2-1'
-          }, {
-            id: 6,
-            label: '二级 2-2'
-          }]
-        }, {
-          id: 3,
-          label: '一级 3',
-          children: [{
-            id: 7,
-            label: '二级 3-1'
-          }, {
-            id: 8,
-            label: '二级 3-2'
-          }]
-        }],
-		
+				formLabelWidth: '120px',
+				updaterolerulesfrom: {
+					moduleWeight: '',
+					moduleUrl: '',
+					label:'',
+					moduleId:''
+				},
+				updatemoduledialogFormVisible:false,
+				addrolerulesfrom: {
+					moduleWeight: '',
+					moduleUrl: '',
+					label:'',
+					parentId:''
+				},
+				addmoduledialogFormVisible:false,
+        data2:'', 
         defaultProps: {
           children: 'children',
           label: 'label'
         }
       };
-    }
-  });
-</script>
-
-
+    },
+	created:function(){
+		this.lefttree();
+		}
+		})
+	</script>
 </html>

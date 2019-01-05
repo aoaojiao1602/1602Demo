@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ysd.boot.entity.Module;
 import com.ysd.boot.service.ModuleService;
 
 @CrossOrigin
@@ -131,7 +132,6 @@ public class ModuleController {
 
 		return map;
 	}
-	
 	
 	
 	

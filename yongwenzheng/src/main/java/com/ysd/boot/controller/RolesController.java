@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ysd.boot.entity.Module;
 import com.ysd.boot.entity.Roles;
 import com.ysd.boot.service.ModuleService;
 import com.ysd.boot.service.RolesService;
@@ -149,6 +150,21 @@ public class RolesController {
     
     	return moduleService.queryRoleSetModuleTree(roleIds);
 	}
+	
+	
+	/***
+	 * 通过角色拥有的模块id
+	 * 查询角色拥有的子菜单
+	 *  http://localhost:8006/role/queryRolesTreeById?roleIds=1
+	 * @param name
+	 * @return
+	 */
+	@RequestMapping("/queryRolesTreeById")
+	public Object queryRolesTreeById(Integer roleIds,String access_token){
+		
+		return moduleService.queryRolesTreeById(roleIds);
+	}
+	
 	
 	
 	

@@ -78,4 +78,13 @@ public interface ModuleService {
 	 * @return
 	 */
 	public int deleteMoudle(Integer mid);
+	
+	
+	/***
+	 * 通过角色拥有的模块id
+	 * 查询角色拥有的子菜单
+	 * @param name
+	 * @return
+	 */
+	public List<Module> queryRolesTreeById(Integer rid);
 }

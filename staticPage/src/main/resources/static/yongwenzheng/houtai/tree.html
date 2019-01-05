@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> 
+		<!-- vue语法环境 -->
+		<script src="https://unpkg.com/vue/dist/vue.min.js"></script> 
+		<!-- vue使用Ajax -->
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<!-- 引入饿了么Element组件库 -->
+		<script src="https://unpkg.com/element-ui/lib/index.js"></script> 
+	</head>
+	<body>
+		<div id="app">
+		<el-tree
+  :data="data2"
+  show-checkbox
+  default-expand-all
+  node-key="moduleId"
+  ref="tree"
+	highlight-current
+  :props="defaultProps">
+</el-tree>
+
+<div class="buttons">
+  
+  <el-button @click="getCheckedKeys">添加</el-button>
+  
+</div>
+</div>
+	</body>
+	<script>
+			var access_token = window.localStorage.getItem("access_token"); //获取登录页面中暂时存储的数据
+		var userId = window.localStorage.getItem("uid"); //
+		var refresh_token = window.localStorage.getItem("refresh_token");
+		var rid = window.localStorage.getItem("rid"); //
+		var meth;
+		var checkedarr=[];
+		var t;
+		new Vue({
+			el:"#app",
+		
+			 methods: {
+				 			lefttree(){
+								 meth=this.$options.methods;
+								
+				 var _this=this;
+				 axios.get('http://localhost:8006/role/queryRoleSetModuleTree?roleIds='+rid+'&access_token='+access_token)
+				 				.then(function(response){
+				 		_this.data2=response.data;
+					  t=_this.$refs.tree;
+
+						 meth.diguishuzu(response.data);
+						
+				 				})
+				 				.catch(function(error){
+				 					console.log(error);
+				 				});
+				 //console.log(this.date);
+				 },
+				 diguishuzu(children){
+				   var _this=this;
+					 for(var i=0;i<children.length;i++){
+						 if(children[i].checked==true){
+						 checkedarr.push(children[i].moduleId);
+						 
+					   console.log("数组为"+checkedarr);
+						 }else{
+							 if(children[i].children!=undefined){
+								 meth.diguishuzu(children[i].children);
+								 }
+						 }
+						 t.setCheckedKeys(checkedarr);
+
+					 }
+				 },
+      
+      getCheckedKeys() {
+				var ids=this.$refs.tree.getCheckedKeys();
+				var idss=ids.join(",");
+				console.log(this.$refs.tree.getCheckedKeys());
+				var _this=this;
+									
+											axios({
+												method: 'post',
+												url:'http://localhost:8006/role/insertRolesMoudelBy',
+												params: {
+												moduleId:idss,
+												rid:rid,
+											  access_token:access_token
+												}
+											})
+											.then(function (response) {
+										    _this.$message({
+											type: 'success',
+											message: response.data.message
+										});
+										_this.rolelistpage();
+				
+											_this.dialogFormVisible=false;
+										
+												})
+												.catch(function (error) {
+												console.log(error);
+												});
+											
+										
+								
+      }
+      
+      
+      
+    },
+
+    data:function() {
+      return {
+				
+        data2:'', 
+        defaultProps: {
+          children: 'children',
+          label: 'label'
+        }
+      };
+    },
+	created:function(){
+		this.lefttree();
+		}
+		})
+	</script>
+</html>

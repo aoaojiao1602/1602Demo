@@ -23,12 +23,23 @@ public interface ModuleMapper extends JpaRepository<Module, Integer>,JpaSpecific
 	@Query(value = "SELECT * FROM moduletb WHERE parent_id=?1 AND module_name LIKE %?2%" , nativeQuery = true)
 	public List<Module> queryChildrenById(Integer moduleParentId,String moduleName);
 	
+	/***
+	 * 通过角色拥有的模块id
+	 * 查询角色拥有的子菜单
+	 * @param name
+	 * @return
+	 */
+	@Query(value = "SELECT * FROM moduletb WHERE parent_id=?1 AND module_id IN (?2)" , nativeQuery = true)
+	public List<Module> queryRolesChildrenById(Integer moduleParentId,List<Integer> moduleId);
+	
 	
 	/***
 	 *查询角色拥有的模块id
 	 */
 	@Query(value = "SELECT module_roles_id FROM module_roles WHERE roles_module_id=?1" , nativeQuery = true)
 	public List<Integer> queryByRolesIdGetSModuleId(Integer roleIds);
+	
+	
 	
 	
 	/***

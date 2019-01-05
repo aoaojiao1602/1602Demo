@@ -72,7 +72,8 @@ public class ModuleServiceImpl implements ModuleService{
 				
 				System.out.println("moduleId=====>"+moduleId);
 				//查询角色所拥有的菜单模块的根菜单
-				List<Module> rootList=moduleMapper.queryChildrenById(0, "");				
+				List<Module> rootList=moduleMapper.queryChildrenById(0, "");
+				
 				this.SetRoleModuleChildrens(rootList, moduleId);
 				
 				// TODO Auto-generated method stub
@@ -88,15 +89,25 @@ public class ModuleServiceImpl implements ModuleService{
 	@SuppressWarnings("unused")
 	private void SetRoleModuleChildrens(List<Module> parentList,List<Integer> moduleId) {
 		for (Module module : parentList) {
+			System.err.println(" adopdfkaopd"+module.getModuleId());
 			//查询子菜单
 			List<Module> chrildModule=moduleMapper.queryChildrenById(module.getModuleId(), "");
+			//System.err.println("模块："+chrildModule.size());
+			
 			if (chrildModule !=null && !chrildModule.isEmpty()) {//不为空，有子菜单
 				//设置子菜单
 				module.setChildren(chrildModule);
 				//如果有子菜单则继续递归设置子菜单
 				this.SetRoleModuleChildrens(chrildModule,moduleId);
+				if (moduleId.contains(module.getModuleId())) {
+					module.setChecked(true);
+				
+				}
+				
 				
 			}else {
+				System.err.println("我是打野"+module.getModuleId());
+				System.err.println(moduleId);
 				if (moduleId.contains(module.getModuleId())) {
 					module.setChecked(true);
 				
@@ -196,5 +207,42 @@ public class ModuleServiceImpl implements ModuleService{
 	public int deleteMoudle(Integer mid) {
 		
 		return moduleMapper.deleteMoudle(mid);
+	}
+	
+	
+	/***
+	 * 通过角色拥有的模块id
+	 * 查询角色拥有的子菜单
+	 * @param name
+	 * @return
+	 */
+	public List<Module> queryRolesTreeById(Integer rid){
+		List<Integer> moduleId=moduleMapper.queryByRolesIdGetSModuleId(rid);
+		
+		System.out.println("moduleId=====>"+moduleId);
+		//查询角色所拥有的菜单模块的根菜单
+		List<Module> rootList=moduleMapper.queryRolesChildrenById(0, moduleId);
+		
+		this.SetRoleModuleChildrensByrid(rootList, moduleId);
+		
+		// TODO Auto-generated method stub
+		return rootList;
+	}
+	
+	@SuppressWarnings("unused")
+	private void SetRoleModuleChildrensByrid(List<Module> parentList,List<Integer> moduleId) {
+		for (Module module : parentList) {
+			//查询子菜单
+			List<Module> chrildModule=moduleMapper.queryRolesChildrenById(module.getModuleId(), moduleId);
+			if (chrildModule !=null && !chrildModule.isEmpty()) {//不为空，有子菜单
+				//设置子菜单
+				module.setChildren(chrildModule);
+				//如果有子菜单则继续递归设置子菜单
+				this.SetRoleModuleChildrensByrid(chrildModule,moduleId);
+				
+			}
+			
+		}
+		
 	}
 }
