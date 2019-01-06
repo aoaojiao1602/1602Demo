@@ -11,7 +11,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lhf.entity.Courses;
-import com.lhf.entity.Hours;
 
 public interface CoursesRepository extends JpaRepository<Courses, Integer>,JpaSpecificationExecutor<Courses> {
 	//分页查询课程
@@ -62,5 +61,11 @@ public interface CoursesRepository extends JpaRepository<Courses, Integer>,JpaSp
 	 * @return
 	 */
 	public List<Courses> findByCourseCategory(Integer courseCategory);
-	
+	/**
+	 * 根据多个课程ID查询课程
+	 * @param courseId
+	 * @return
+	 */
+	@Query(value="SELECT * FROM courses WHERE course_id IN (?1)", nativeQuery = true)
+	public List<Courses> queryByCourseId(List<Integer> courseId);
 }

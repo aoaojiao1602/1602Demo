@@ -44,4 +44,10 @@ public interface CoursesService {
 	 * @return
 	 */
 	public List<Courses> findByCourseCategory(Integer courseCategory);
+	/**
+	 * 根据课程多个ID查询课程
+	 * @param courseId
+	 * @return
+	 */
+	public List<Courses> queryByCourseId(List<Integer> courseId);
 }

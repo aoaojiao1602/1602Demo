@@ -129,6 +129,7 @@ public class CoursesServiceImpl implements CoursesService {
 	public Courses findByCourseId(int courseId) {
 		return cRepository.findByCourseId(courseId);
 	}
+	
 	/**
 	 * 根据课程类别查询课程
 	 * @param courseCategory
@@ -137,5 +138,11 @@ public class CoursesServiceImpl implements CoursesService {
 	public List<Courses> findByCourseCategory(Integer courseCategory){
 		return cRepository.findByCourseCategory(courseCategory);
 	}
+
+	@Override
+	public List<Courses> queryByCourseId(List<Integer> courseId) {
+		return cRepository.queryByCourseId(courseId);
+	}
+
 	
 }

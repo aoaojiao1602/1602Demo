@@ -1,4 +1,5 @@
 package com.lhf.controller;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +22,7 @@ public class CoursesController {
 	@Autowired
 	private CoursesService cService;
 	/**查询方法
-	 * localhost:8050/courses/query?page=1&limit=2
-	 * @param c 实体类课程
+	 * localhost:8050/courses/query?page=1&limit=2`	
 	 * @param page 页码
 	 * @param limit 条数
 	 * @return
@@ -132,7 +132,25 @@ public class CoursesController {
 	public List<Courses> findByCourseCategory(Integer courseCategory){
 		return cService.findByCourseCategory(courseCategory);
 	}
-	
-	
+	/**
+	 * 根据课程多个ID查询课程
+	 * @param courseId
+	 * @return
+	 */
+	@RequestMapping("/queryByCourseId")
+	public List<Courses> queryByCourseId(List<Integer> courseId){
+		List<Courses> list=new ArrayList<Courses>();
+		for (Integer integer : courseId) {
+			list.add(cService.findByCourseId(integer));
+		}
+	   return list;
+	}
+	@RequestMapping("/a")
+	public List<Courses> queryByCourseId(){
+		List<Integer> ls=new ArrayList<Integer>();
+		ls.add(5);
+		ls.add(6);
+	   return this.queryByCourseId(ls);
+	}
 
 }
