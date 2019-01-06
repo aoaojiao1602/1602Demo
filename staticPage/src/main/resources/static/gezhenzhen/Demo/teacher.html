@@ -15,10 +15,10 @@
 			<div id="header" style="border: 1px solid #F5F7FA; height: 80px; width: 1000px;">
 				<a href="discuss.html" style="margin-left: 10px; margin-top: 40px; display: block; font-size: 14px; text-decoration: none;">讨论区&nbsp;&nbsp;&nbsp;&nbsp;></a>
 				<span style="margin-left: 90px; margin-top: -17px; display: block; font-size: 14px; color: #551a8b">老师答疑区</span>
-				<el-select v-model="value" placeholder="请选择" style="margin-left: 870px; margin-top: -25px; display: block;">
+				<!-- <el-select v-model="value" placeholder="请选择" style="margin-left: 870px; margin-top: -25px; display: block;">
 					<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
 					</el-option>
-				</el-select>
+				</el-select> -->
 			</div>
 			<div id="main" style=" border: 1px solid #F5F7FA; height: 150px; width: 1000px;">
 				<span style="margin-left: 10px; margin-top: 25px; display: block;">老师答疑区</span>
@@ -30,17 +30,17 @@
 			<div id="foot" style=" height: 1000px; width: 1000px;">
 				<div id="foot1" style="height: 60px; width: 300px;">
 					<h4 style="margin-top: 30px; margin-left: 10px; display: block;">全部主题</h4>
-					<el-select v-model="value" placeholder="请选择" style="margin-top: -53px; margin-left: 80px; display: block;">
+					<!-- <el-select v-model="value" placeholder="请选择" style="margin-top: -53px; margin-left: 80px; display: block;">
 						<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
 						</el-option>
-					</el-select>
+					</el-select> -->
 				</div>
 				<div id="foot2" style="height: 60px; width: 400px; margin-left: 600px; margin-top: -40px;">
 					<el-row>
-						<el-button size="small">最新发表</el-button>
-						<el-button size="small">最后回复</el-button>
+						<el-button size="small" @click="axios5(currentPage,pageSize)">最新发表</el-button>
+						<!-- <el-button size="small">最后回复</el-button>
 						<el-button size="small">回复数</el-button>
-						<el-button size="small">投票数</el-button>
+						<el-button size="small">投票数</el-button> -->
 					</el-row>
 					<template>
 						<el-form>
@@ -70,7 +70,7 @@
 		</div>
 	</body>
 	<script>
-		new Vue({
+		/* new Vue({
 			el: '#header',
 			data: {
 				options: [{
@@ -88,7 +88,7 @@
 				}],
 				value: '老师答疑区'
 			}
-		})
+		}) */
 		new Vue({
 			el: '#main',
 			data: {
@@ -159,13 +159,25 @@
 							console.log(response);
 							console.log(response.data);
 							console.log(vm.projectTitles);
-
+							
 						})
 						.catch(function(error) {
 							console.log(error);
 						});
 				},
+				aaa: function(item) {
+					alert(item.id)
+					alert(item.projectTitle);
+					console.log(item.id + "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+					window.localStorage.setItem("id", item.id);
+					window.localStorage.setItem("title", item.projectTitle);
+					window.localStorage.setItem("content", item.projectContent);
+					window.localStorage.setItem("projectCreatetime", item.projectCreatetime);
+					console.log(item.projectTitle);
+					window.location.href = "projectDetails.html";
+				}
 			},
+			
 		})
 	</script>
 </html>

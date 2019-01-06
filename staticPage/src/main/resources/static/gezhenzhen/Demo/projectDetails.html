@@ -9,8 +9,15 @@
 		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/element-ui.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="js/easyUI/themes/black/easyui.css">
+		<link rel="stylesheet" type="text/css" href="js/easyUI/themes/icon.css">
+		<script type="text/javascript" src="js/easyUI/jquery.min.js"></script>
+		<script type="text/javascript" src="js/easyUI/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="js/easyUI/locale/easyui-lang-zh_CN.js"></script>
 	</head>
+
 	<body>
+		<!-- <sssss> -->
 		<!-- #f8f8f8 -->
 		<div id="big" style="border:  1px solid #f8f8f8; height: auto;" width: 1000px;">
 			<div id="header">
@@ -18,21 +25,78 @@
 				<span style="margin-left: 90px; margin-top: -20px; display: block; font-size: 14px; color: #551a8b">主题详情</span>
 			</div>
 			<div id="main" style=" background: #f8f8f8; margin-left: 20px;border: 1px solid #f8f8f8;  width: 1000px; height:300px">
-				<h3 style="margin-left: 20px; margin-top: 20px; display: block;">学习</h3>
-				<span style="margin-left: 50px; margin-top: 10px; display: block; font-size:14px">如何学习</span>
-				<p style="margin-left: 70px; margin-top: 10px; display: block; font-size:13px">发表于：2018-10-10 23:02:33</p>
+				<h3 style="margin-left: 20px; margin-top: 20px; display: block;">{{title}}</h3>
+				<span style="margin-left: 50px; margin-top: 10px; display: block; font-size:14px">{{content}}</span>
+				<p style="margin-left: 70px; margin-top: 10px; display: block; font-size:13px">发表于：{{projectCreatetime}}</p>
 				<el-row>
-					<el-button style="margin-left: 300px; margin-top: 60px; display: block;">关注</el-button>
+					<!-- <el-button id="aa" style="margin-left: 300px; margin-top: 80px; display: block; ">关注</el-button> -->
+					<el-button style="margin-left: 400px; margin-top: -40px; display: block;" onclick="javascript:onTopClick();">回复</el-button>
+					<li class="el-icon-star-on" style="cursor:pointer; margin-left: 530px; margin-top: -20px; display: block;" @click="dianzan()"></li>
+					<li class="el-icon-bell" style="cursor:pointer; margin-left: 570px; margin-top: -15px; display: block;" @click="diancai()"></li>
+					<a href="javascript:void(0)" plain="true" onclick="jubao()" style="margin-left: 630px; margin-top: -20px; display: block;">举报</a>
 				</el-row>
+				<div id="jb" class="easyui-window" title="举报不良信息" data-options="modal:true,closed:true" style="width:400px;height:260px;padding:10px;">
+					<from id="addModuleForm">
+						<textarea style="height:150px; width:330px" id="context">请输入要举报的内容</textarea>
+					</from>
+					<div style="text-align:center;padding:5px">
+						<a href="javascript:void(0)" class="easyui-linkbutton" type="button" onclick="submitModuleForm()">保存</a>
+						<a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeUserForm1()">取消</a>
+					</div>
+				</div>
 			</div>
 			<div id="foot" style="border: 1px solid #f8f8f8; height: 450px; width: 1000px; margin-left: -30px;">
-				<form class="layui-input-block">
-					<div class="layui-input-block" style="margin-top: 15px;  display: block;">
-						<textarea name="projectContent" lay-verify="article_desc" class="layui-textarea" id="LAY_demo1" style="display: none">  </textarea>
+				<h3 style="margin-left: 70px;">对主题的回复</h3>
+				<div id="comment" style="border: 1px solid #f8f8f8; height: 450px; width: 1000px; margin-left: 50px;">
+					<el-form>
+						<el-form-item>
+							<div v-for="c in replyContent" style="margin-top: 10px; display: block; border: 1px solid #ffffff;">
+								<p>{{c.projectReplyContent}}</p>
+								<p style="margin-left: 100px; display: block;">{{c.projectReplyCreateTime}}</p>
+								<span id="replayId" style="display: none;">{{c.id}}</span>
+								<li class="el-icon-star-on" @click="RDZ(c)" style="cursor:pointer; margin-left: 530px; margin-top: -40px; display: block;">
+									<span style=" margin-left: 20px; margin-top: -13px;  display: block;">{{c.projectReplyGood.length}}</span>
+								</li>
+
+								<li class="el-icon-bell" @click="RZC(c)" style="cursor:pointer; margin-left: 580px; margin-top: -15px;  display: block;">
+									<span style=" margin-left: 20px; margin-top: -13px;  display: block;">{{c.projectReplyNotGood.length}}</span>
+								</li>
+								<!-- <span style="margin-left: 640px; display: block; margin-top: -25px;">评论</span> -->
+								<span @click="aaa(c)" style="margin-left: 700px; display: block; margin-top: -30px;">举报</span>
+							</div>
+						</el-form-item>
+					</el-form>
+					<el-dialog :title="title" :visible.sync="dialogVisible" width="45%">
+						<el-form ref="commentForm">
+							<el-form-item>
+								<el-col>
+									<textarea id="commentContent" placeholder="请填写举报内容" style="width: 100%; height: 200px;resize:none;"></textarea>
+								</el-col>
+								<el-col id="text_message" style="display: none;">
+									<i class="el-icon-warning"></i>请填写举报内容
+								</el-col>
+								<el-button type="primary" :plain="true" @click="createComment()" style=" margin-left: 400px; display: block; margin-top: 300px;">立即举报</el-button>
+								<el-button @click="dialogVisible = false" style=" margin-left: 300px; display: block; margin-top: -40px;">取消</el-button>
+							</el-form-item>
+						</el-form>
+					</el-dialog>
+					<div>
+						<el-pagination @size-change="handleSizeChange" ref="pagination" @current-change="handleCurrentChange"
+						 :current-page="currentPage" :page-sizes="[10, 20, 30, 40]" :page-size="pageSize=10" layout="total, sizes, prev, pager, next, jumper"
+						 :total="total">
+						</el-pagination>
 					</div>
-					<div class="layui-form-item">
-						<div class="layui-input-block" style="margin-top: 30px; display: block;">
-							<button class="layui-btn" lay-submit lay-filter="formDemo">发表回复</button>
+				</div>
+				<form class="layui-form" action="" style="width: 65%;margin-top: 20px;">
+					<input type="hidden" value="2" name="replyUid" />
+					<div class="layui-form-item" style="margin-left: -100px; display: block;">
+						<div id="abc" class="layui-input-block" style="margin-top: 15px; margin-left: 230px; display: block;">
+							<textarea name="projectReplyContent" lay-verify="article_desc" class="layui-textarea" id="LAY_demo1" style="display: none">  </textarea>
+						</div>
+						<div class="layui-form-item" style="margin-top: 30px; margin-left: 200px;  display: block;">
+							<div class="layui-input-block" style="margin-top: 30px; display: block;">
+								<button class="layui-btn" lay-submit lay-filter="formDemo">发表回复</button>
+							</div>
 						</div>
 					</div>
 				</form>
@@ -41,34 +105,285 @@
 	</body>
 
 	<script>
-		/* var id = window.localStorage.getItem("id");
-		var title = window.localStorage.getItem("title");
-		var content = window.localStorage.getItem("content");
-		alert(title);
-		alert(content);
-		alert(id); */
+		function onTopClick() {
+			window.location.hash = "#abc";
+		}
+
+		function jubao() {
+			$("#jb").window("open"); //打开窗口。            
+		}
+
+		function closeUserForm1() {
+			$('#addModuleForm').form('clear');
+		}
+		/* 先获取某个主题的id
+		   uid
+		   还有举报的内容
+		 */
+		function submitModuleForm() {
+			var id = window.localStorage.getItem("id");
+			//alert(id);
+			var content = $("#context").val();
+			//alert(content);
+			$.post(
+				"http://localhost:8021/projectReport/putProjectReport", {
+					reportContent: content,
+					reportUid: 1,
+					projectId: id
+				},
+				function(res) {
+					//alert(res.success);
+					if (res.success) {
+						$.messager.alert('举报信息', '举报成功'); //此处建议修改为$.messager.alert()方法，请查阅帮助文档，自行修改。
+						$("#jb").window("close");
+						$("#adduser_window").form("clear");
+					}
+				}, "json");
+		}
 	</script>
 	<script>
+		var id = window.localStorage.getItem("id");
 		new Vue({
 			el: '#main',
 			data: {
 				title: "",
 				context: "",
-				projectCreatetime:""
+				projectCreatetime: "",
+				id: id,
+				ids: ""
 			},
 			created: function() {
-				//var id = window.localStorage.getItem("id");
+				var id = window.localStorage.getItem("id");
 				var title = window.localStorage.getItem("title");
-				var content = window.localStorage.getItem("content");
-				var projectCreatetime=window.localStorage.getItem("projectCreatetime");
-				/* alert(title);
-				alert(content);
-				alert(projectCreatetime); */
+				var contents = window.localStorage.getItem("content");
+				var projectCreatetime = window.localStorage.getItem("projectCreatetime");
+				//alert(id);
+				this.id = id;
+				this.title = title;
+				this.content = contents;
+				this.projectCreatetime = projectCreatetime;
 			},
+			methods: {
+				dianzan: function() {
+					var vm = this;
+					axios({
+							url: 'http://localhost:8021/projectCount/putProjectCount',
+							params: {
+								projectCountUids: 1,
+								projectId: this.id
+							}
+						})
+						.then(function(response) {
+							vm.$message({
+								message: response.data.msg,
+								type: 'success'
+							});
+							console.log(response.data.msg);
+						//	alert(response.data.msg);
+							//location.reload();
+						})
+						.catch(function(error) {
+							console.log(error);
+							//	alert(error.msg);						
+						});
+				},
+				diancai: function() {
+					var vm = this;
+					axios({
+							url: 'http://localhost:8021/projectNotCount/putProjectNotCount',
+							params: {
+								projectNotCountUid: 1,
+								projectNotCountProjectId: this.id
+							}
+						})
+						.then(function(response) {
+							vm.$message({
+								message: response.data.msg,
+								type: 'success'
+							});
+							console.log(response);
+							//alert(response.data.msg);
+							//location.reload();
 
+						})
+						.catch(function(error) {
+							console.log(error);
+							//alert(error.msg);
+						});
+				}
+			},
 		})
 	</script>
 	<script>
+		new Vue({
+			el: '#comment',
+			data: {
+				replyContent: [],
+				currentPage: 1,
+				pageSize: 10,
+				total: '',
+				id: '',
+				dialogVisible: false,
+				title: '举报不良信息',
+				ids: ''
+			},
+			created: function() {
+				var id = window.localStorage.getItem("id");
+				this.id = id;
+				//alert(this.id);
+				this.axios5(this.currentPage, this.pageSize);
+			},
+			methods: {
+				handleClick(row) {
+					console.log(row);
+				},
+				handleSizeChange(val) {
+					console.log(`每页 ${val} 条`);
+					this.pageSize = val;
+					this.axios5(this.currentPage, val);
+				},
+				handleCurrentChange(val) {
+					console.log(`当前页: ${val}`);
+					this.currentPage = val;
+					this.axios5(val, this.pageSize);
+				},
+				axios5(page, limit) {
+					var vm = this;
+					//alert(this.id);
+					axios({
+							method: 'post',
+							url: 'http://localhost:8021/reply/getReplyPage',
+							params: {
+								page: page,
+								rows: limit,
+								projectId: this.id
+							}
+						})
+						.then(function(response) {
+							console.log(response.data);
+							vm.total = response.data.total;
+							vm.replyContent = response.data.rows;
+							//alert(vm.replyContent);
+							console.log(response);
+							console.log(response.data);
+							console.log(vm.replyContent);
+
+						})
+						.catch(function(error) {
+							console.log(error);
+						});
+				},
+				createComment: function() {
+					var vm = this;
+					//alert(vm.ids)
+					//document.getElementById("replayId").setAttribute('style', 'dispaly:inline;');
+					var replayId = document.getElementById("replayId").innerHTML;
+					//alert(replayId + "ghjgbjkbjb");
+					var commentContent = document.getElementById("commentContent").value;
+					//alert(commentContent);
+					if (commentContent.length < 0 || commentContent == '') {
+						document.getElementById("text_message").setAttribute('style', 'font-size: 12px; color: red;');
+					} else {
+						axios({
+							method: 'post',
+							url: 'http://localhost:8021/replyReport/putReport',
+							params: {
+								reportUid: 1,
+								replyId: vm.ids,
+								reportContent: commentContent
+							}
+						}).then(function(response) {
+							/* document.getElementById("replayId").setAttribute('style', 'dispaly:none;'); */
+							if (response.data > 0) {
+								vm.dialogVisible = false;
+								vm.$message({
+									showClose: true,
+									message: '举报成功!',
+									type: 'success',
+									center: true
+								});
+								window.location.href = "projectDetails.html";
+							} else {
+								vm.dialogVisible = false;
+								vm.$message({
+									showClose: true,
+									message: '举报失败!',
+									type: 'warning',
+									center: true
+								});
+							}
+						}).catch(function(error) {
+							console.log(error);
+						});
+					}
+				},
+				aaa: function(c) {
+					var vm = this;
+					vm.dialogVisible = true;
+					vm.ids = c.id;
+					//alert((c.id + "hhhhh"));
+				},
+				RDZ: function(c) {
+					var vm = this;
+					vm.ids = c.id;
+					//alert("eeeeee" + vm.ids);
+					//var replayId = document.getElementById("replayId").innerHTML;
+					//alert(replayId);
+					axios({
+							url: 'http://localhost:8021/replyGood/putReplyGood',
+							params: {
+								replyGoodUid: 1,
+								replyId: vm.ids
+							}
+						})
+						.then(function(response) {
+							vm.$message({
+								message: response.data.msg,
+								type: 'success'
+							});
+							console.log(response);
+							location.reload();
+
+						})
+						.catch(function(error) {
+							console.log(error);
+						});
+				},
+				RZC: function(c) {
+					var vm = this;
+					vm.ids = c.id;
+					axios({
+							url: 'http://localhost:8021/replyNotGood/putReplyNotGoo',
+							params: {
+								replyNotGoodUid: 1,
+								replyGoodUid: 1,
+								replyId: vm.ids,
+								replyNotGoodReplyId: vm.ids
+							}
+						})
+						.then(function(response) {
+							vm.$message({
+								message: response.data.msg,
+								type: 'success'
+							});
+							console.log(response);
+							location.reload();
+
+						})
+						.catch(function(error) {
+							console.log(error);
+						});
+				}
+
+			},
+		})
+	</script>
+
+	<script>
+		var id = window.localStorage.getItem("id");
+		var title = window.localStorage.getItem("title");
+		var contents = window.localStorage.getItem("content");
+		var projectCreatetime = window.localStorage.getItem("projectCreatetime");
 		//window.localStorage.setItem("id",item.id);
 		layui.use(['layer', 'form', 'layedit'], function() {
 			var form = layui.form;
@@ -82,6 +397,51 @@
 					alert(layedit.getContent(index)); //获取编辑器内容
 				}
 			};
+			//自定义验证规则
+			form.verify({
+				article_desc: function(value) {
+					layedit.sync(index);
+				}
+			});
+
+			//监听提交
+			form.on('submit(formDemo)', function(data) {
+				//alert(id + "9999")
+				layer.alert(JSON.stringify(data.field), {
+					icon: 5
+				});
+				$.ajax({
+					type: "post",
+					url: "http://localhost:8021/reply/putReply",
+					data: {
+						projectId: id,
+						replyUid: 1,
+						replyContent: layedit.getContent(index)
+					},
+					success: function(res) {
+						if (res.success) {
+							layer.alert(res.msg, {
+								icon: 6, // 显示笑脸
+								closeBtn: 1, // 是否显示关闭按钮
+								anim: 1,
+								time: 3000,
+							});
+							window.location.href = 'projectDetails.html';
+							return true;
+
+						} else {
+							layer.alert(res.msg, {
+								icon: 5, // 显示哭脸
+								closeBtn: 1,
+								anim: 1,
+								time: 3000,
+							});
+							layer.closeAll();
+						}
+					}
+				});
+				return false;
+			});
 		});
 	</script>
 </html>

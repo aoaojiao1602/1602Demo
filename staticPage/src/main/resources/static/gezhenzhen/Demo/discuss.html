@@ -30,35 +30,36 @@
 		<div id="big" style="border: 1px solid white; width: 1000px; height: auto;">
 			<div id="header" style="border: 1px solid #ECF5FF; height: 200px; width: 1000px;">
 				<h3 style="margin-left: 5px;">讨论区</h3>
-				<el-select v-model="value" placeholder="请选择" style="margin-left: 870px; margin-top: -43px; display: block;">
+				<!-- <el-select v-model="value" placeholder="请选择" style="margin-left: 870px; margin-top: -43px; display: block;">
 					<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
 					</el-option>
-				</el-select>
+				</el-select> -->
 				<span id="font1">欢迎大家来到讨论区！本讨论区供各位同学就课程问题进行讨论、交流、学习。请同学认真阅读下面的【讨论区使用规则】，然后在进行相关的发表，谢谢！</span>
 				<a href="fabiao.html" style="text-decoration: none;">
 					<el-button type="success" style="margin-top: 70px; margin-left: 5px; display: block;">发起主题</el-button>
 				</a>
 			</div>
-			<div id="main" style="border: 1px solid #ECF5FF; height: 700px; width: 1000px;">
+			<div id="main" style="border: 1px solid #ECF5FF; height: 750px; width: 1000px;">
 				<h4 style="margin-top: 30px; margin-left: 5px; display: block;">子模块</h4>
 				<div id="module" style="margin-top: 50px; display: block;">
 					<div id="img" style="background-image: url(img/捕获.PNG); width: 34.2px; height: 35px; margin-bottom: -65px; margin-left: 20px; display: block;">
 					</div>
 					<a href="teacher.html" style="margin-top: 30px; margin-left: 70px; display: block; text-decoration: none;">老师答疑区</a>
 					<div id="teacher" style="margin-left: 700px; margin-top: -20px; display: block;">
-						<div id="new1" :projectTitle="projectTitle" style="  height: 20px; width: 100px;">
-							<a href="colligation.html" style="text-decoration: none; color: #81a263;">{{projectTitle}} </a>
-							<!-- <span style="margin-top: 10px; margin-left: 30px; display:  block;">{{11111}}</span> -->
+						<div id="new1" style="height: 20px; width: 300px;">
+							<p @click="aaa()" style="text-decoration: none; color: #81a263;">{{projectTitle}} </p>
+							<p>{{time}}</p>
 						</div>
 					</div>
-					<div style="margin-left: 70px; display: block; font-size: 12px; color: #8C939D; ">发表关于作业、测试、课件内容希望能够得到老师回答的疑问。</div>
+					<div style="margin-left: 70px;  display: block; font-size: 12px; color: #8C939D; ">发表关于作业、测试、课件内容希望能够得到老师回答的疑问。</div>
 				</div>
 				<div id="img1" style="background-image: url(img/捕获1.PNG); width: 34.2px; height: 35px; margin-top: 20px; margin-left: 15px; display: block;">
 				</div>
 				<a href="student.html" style="margin-top:-30px; margin-left: 70px; display: block; text-decoration: none;">课堂交流区</a>
 				<div id="clazz" style="margin-left: 700px; margin-top: -20px; display: block;">
 					<div id="clazz" :projectTitle="projectTitle" style=" height: 20px; width: auto;">
-						<a href="colligation.html" style="text-decoration: none; color: #81a263;">{{projectTitle}} </a>
+						<p @click="aaa()" style="text-decoration: none; color: #81a263;">{{projectTitle}} </p>
+						<p>{{time}}</p>
 					</div>
 				</div>`
 				<div style="margin-left: 70px; margin-top: -20px; display: block; font-size: 12px; color: #8C939D; ">这里呈现的是在课件中作为教学内容的讨论</div>
@@ -66,8 +67,9 @@
 				</div>
 				<a href="colligation.html" style="margin-top: -35px; margin-left: 70px; display: block; text-decoration: none;">综合讨论区</a>
 				<div id="zong" style="margin-left: 700px; margin-top: -20px; display: block;">
-					<div id="he" :projectTitle="projectTitle" style=" height: 20px; width: 100px;">
-						<a href="colligation.html" style="text-decoration: none; color: #81a263;">{{projectTitle}} </a>
+					<div id="he" :projectTitle="projectTitle" style=" height: 20px; width: 300px;">
+						<p @click="aaa()" style="text-decoration: none; color: #81a263;">{{projectTitle}} </p>
+						<p>{{time}}</p>
 					</div>
 				</div>
 				<div style="margin-left: 70px; display: block; font-size: 12px; color: #8C939D; ">发表任何想与大家分享的经验及想法！关于本课程、学习、工作、生活等一般性话题</div>
@@ -76,15 +78,15 @@
 					<template>
 						<el-form ref="form">
 							<el-form-item>
-								<div v-for="s in projectTitles" style="margin-left: 15px; display: block;">
-									<a style="text-decoration: none; color: #000000;">{{s.projectTitle}}</a>
-									<span style="margin-top: -10px; margin-left: 50px; display: block; color: #2DACD1;">发表于{{s.projectCreatetime}}</span>
+								<div v-for="item in projectTitles" style="margin-left: 15px; display: block;">
+									<p @click="aaa(item)" style="text-decoration: none; color: #000000;">{{item.projectTitle}}</p>
+									<span style="margin-top: -30px; margin-left: 50px; display: block; color: #2DACD1;">发表于{{item.projectCreatetime}}</span>
 									<div style="margin-top: -40px; margin-left: 600px;">
-										浏览：<span id="liu">{{s.through.length}}</span></div>
+										浏览：<span id="liu">{{item.through.length}}</span></div>
 									<div style="margin-top: -40px; margin-left: 700px; display: block;">
-										回复：<span id="reply">{{s.projectReply.length}}</span></div>
+										回复：<span id="reply">{{item.projectReply.length}}</span></div>
 									<div style="margin-top: -40px; margin-left: 800px; display: block; ">
-										投票：<span id="tou">{{s.projectCount.length}}</span></div>
+										投票：<span id="tou">{{item.projectCount.length}}</span></div>
 								</div>
 							</el-form-item>
 							<el-form-item>
@@ -102,9 +104,9 @@
 				<div id="last" style="margin-left: 550px; margin-top: -40px;">
 					<el-row>
 						<el-button size="small" @click="axios5(currentPage,pageSize)">最新发表</el-button>
-						<el-button size="small">最后回复</el-button>
+						<!-- <el-button size="small">最后回复</el-button>
 						<el-button size="small">回复数</el-button>
-						<el-button size="small">投票数</el-button>
+						<el-button size="small">投票数</el-button> -->
 					</el-row>
 					<template>
 						<el-form>
@@ -112,7 +114,6 @@
 								<div v-for="item in projectTitles" style="margin-left: -550px; margin-top: 10px; display: block;">
 									<p @click="aaa(item)" style="text-decoration: none; margin-top: -20px; color: #000000;">{{item.projectTitle}}</p>
 									<span style="margin-top: -5px; margin-left: 50px; display: block; color: #2DACD1;">发表于{{item.projectCreatetime}}</span>
-									<span v-show="1!=1">{{item.id}}</span>
 									<div style="margin-top: -40px; margin-left: 600px;">
 										浏览：<span id="liu">{{item.through.length}}</span></div>
 									<div style="margin-top: -40px; margin-left: 700px; display: block;">
@@ -154,13 +155,13 @@
 			}
 		})
 	</script>
-
 	<script>
 		new Vue({
 			el: '#new1',
 			data: {
 				projectTitle: '',
-				projectCreatetime: ''
+				time:'',
+				id:''
 			},
 			mounted: function() {
 				this.$nextTick(function() {
@@ -178,15 +179,18 @@
 						})
 						.then(function(response) {
 							vm.projectTitle = response.data.projectTitle;
-							//alert(vm.projectTitle)
+							vm.time=response.data.projectCreatetime;
+							vm.id=response.data.id;
+							//alert(vm.id);
 							console.log(response);
 							console.log(response.data.projectTitle);
-
+							
 						})
 						.catch(function(error) {
 							console.log(error);
 						});
-				}
+				},
+				
 			},
 		})
 	</script>
@@ -194,7 +198,9 @@
 		new Vue({
 			el: '#clazz',
 			data: {
-				projectTitle: ''
+				projectTitle: '',
+				time:'',
+				id:''
 			},
 			mounted: function() {
 				this.$nextTick(function() {
@@ -213,6 +219,8 @@
 						})
 						.then(function(response) {
 							vm.projectTitle = response.data.projectTitle;
+							vm.time=response.data.projectCreatetime;
+							vm.id=response.data.id;
 							console.log(response);
 							console.log(response.data.projectTitle);
 						})
@@ -227,7 +235,9 @@
 		new Vue({
 			el: '#he',
 			data: {
-				projectTitle: ''
+				projectTitle: '',
+				time:'',
+				id:''
 			},
 			mounted: function() {
 				this.$nextTick(function() {
@@ -245,6 +255,8 @@
 						})
 						.then(function(response) {
 							vm.projectTitle = response.data.projectTitle;
+							vm.time=response.data.projectCreatetime;
+							vm.id=response.data.id;
 							console.log(response);
 							console.log(response.data.projectTitle);
 						})
@@ -286,6 +298,17 @@
 						.catch(function(error) {
 							console.log(error);
 						});
+				},
+				aaa: function(item) {
+					//alert(item.id)
+					//alert(item.projectTitle);
+					console.log(item.id + "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+					window.localStorage.setItem("id", item.id);
+					window.localStorage.setItem("title", item.projectTitle);
+					window.localStorage.setItem("content", item.projectContent);
+					window.localStorage.setItem("projectCreatetime", item.projectCreatetime);
+					console.log(item.projectTitle);
+					window.location.href = "projectDetails.html";
 				}
 			},
 		})
@@ -341,12 +364,13 @@
 						});
 				},
 				aaa: function(item) {
-					alert(item.id)
+					//alert(item.id)
+					//alert(item.projectTitle);
 					console.log(item.id + "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
 					window.localStorage.setItem("id", item.id);
 					window.localStorage.setItem("title", item.projectTitle);
 					window.localStorage.setItem("content", item.projectContent);
-					window.localStorage.setItem("projectCreatetime",item.projectCreatetime);
+					window.localStorage.setItem("projectCreatetime", item.projectCreatetime);
 					console.log(item.projectTitle);
 					window.location.href = "projectDetails.html";
 				}

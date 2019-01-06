@@ -19,7 +19,7 @@
 			<span style="margin-left: 90px; margin-top: -20px; display: block; font-size: 14px; color: #999999">发起新的主题</span>
 			<hr style="color: gray; border: 2px; width: 770px; margin-left: 110px; margin-top: 10px;" />
 			<form class="layui-form" action="" style="width: 65%;margin-top: 20px;">
-				<input type="hidden" value="1" name="projectUid" /> 
+				<input type="hidden" value="1" name="projectUid" id="uu"/> 
 				<div class="layui-form-item" style="margin-left: -100px; display: block;">
 					<div id="img3" style="background-image: url(img/xingxing.PNG); width: 34.2px; height: 30px; margin-top: 20px; margin-left: 100px; display: block;">
 					</div>
@@ -35,18 +35,17 @@
 					</div>
 				</div>
 
-
 				<div id="img3" style="background-image: url(img/xingxing.PNG); width: 34.2px; height: 30px; margin-top: 20px; margin-left: 5px; display: block;">
 				</div>
 				<span style="margin-left: 35px; margin-top: -33px; display: block;">标题</span>
 				<div class="layui-input-block" style="margin-left: 10px; margin-top: 10px; display: block;">
-					<input type="text" name="projectTitle" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+					<input id="context" type="text" name="projectTitle" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
 				</div>
 				<div id="img3" style="background-image: url(img/xingxing.PNG); width: 34.2px; height: 30px; margin-top: 20px; display: block;">
 				</div>
 				<span style="margin-left: 30px; display: block; margin-top: -30px;">内容</span>
 				<div class="layui-form-item" style="margin-left: -100px; display: block;">
-					<div class="layui-input-block" style="margin-top: 15px; display: block;">
+					<div id="ccc"  class="layui-input-block" style="margin-top: 15px; display: block;">
 						<textarea name="projectContent" lay-verify="article_desc" class="layui-textarea" id="LAY_demo1" style="display: none">  </textarea>
 					</div>
 					<div style="margin-left: 120px; display:  block;" id="zzz">
@@ -90,7 +89,7 @@
 			//编辑器外部操作
 			var active = {
 				content: function() {
-					alert(layedit.getContent(index)); //获取编辑器内容
+					//alert(layedit.getContent(index)); //获取编辑器内容
 				}
 			};
 
@@ -108,6 +107,18 @@
 
 			//监听提交
 			form.on('submit(formDemo)', function(data) {
+				var title=$("#context").val();
+				var id=$("#ids").val();
+				var content =$("#LAY_demo1").val();
+				var uid=$("#uu").val;
+				//alert(uid);
+				var projectCreatetime="2018-01-04";
+				console.log(title+">>>>>>>>>>>>>>");
+				console.log(content+">>>>>>>>>>>>>>");
+				console.log(projectCreatetime+">>>>>>>>>>>>>>");
+				window.localStorage.setItem("title",title);
+				window.localStorage.setItem("content",content);
+				window.localStorage.setItem("projectCreatetime",projectCreatetime);
 				layer.alert(JSON.stringify(data.field), {
 					icon: 5
 				});
