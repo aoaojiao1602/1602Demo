@@ -1,5 +1,6 @@
 package com.hwg.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,6 +48,71 @@ public class CourseCommentController {
 	public List<Coursecomment> getCommentByWhere(String ksTime,String jsTime){
 		return cService.getCommentByWhere(ksTime,jsTime);
 	}
+	
+	
+	
+
+	/**
+	 * 多条件分页查询
+	 * http://localhost:8010/getCourseComment?commentCourseId=1&page=1&rows=10
+	 * 
+	 * @param comment
+	 * @param page
+	 * @param rows
+	 * @return
+	 */
+	@RequestMapping("/getCourseComment")
+	public Object getCourseComment(Coursecomment comment, Integer page, Integer rows) {
+		int total = cService.countCourseComment(comment);
+		List<Map<String, Object>> list=cService.getCourseComment(comment.getCommentCourseId());
+		Map<String, Object> map = new HashMap<>();
+		map.put("total", total);
+		map.put("rows", list);
+		return map;
+	}
+
+	/**
+	 * 根据课程编号查询课程评价的平均星级 http://localhost:8010/getCommentStar?commentCourseId=1
+	 * 
+	 * @param comment
+	 * @return
+	 */
+	@RequestMapping("/getCommentStar")
+	public Object getCommentStar(Coursecomment comment) {
+		double c = cService.getCommentStar(comment);
+		double m = new BigDecimal(c).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
+		return m;
+	}
+
+	/**
+	 * 添加课程评论
+	 * http://localhost:8010/createComment?commentCourseId=1&commentContent=1&commentStar=4&commentStuId=13
+	 * 
+	 * @param comment
+	 * @return
+	 */
+	@RequestMapping("/createComment")
+	public Object createComment(Coursecomment comment) {
+		Coursecomment c = cService.createComment(comment);
+		if (c != null) {
+			return 1;
+		} else {
+			return -1;
+		}
+	}
+
+	/**
+	 * 给评论点赞 http://localhost:8010/updateCommentliked?commentId=1
+	 * 
+	 * @param comment
+	 * @return
+	 */
+	@RequestMapping("/updateCommentliked")
+	public int updateCommentliked(Coursecomment comment) {
+		return cService.updateCommentliked(comment);
+	}
+	
+	
 	
 	/**
 	 * 导出excel

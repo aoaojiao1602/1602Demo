@@ -75,6 +75,7 @@ public class LearnrecordController {
 		return lservice.getLearnrecordByStuId(stuId);
 	}
 	
+	
 	/**
 	 * 查询课程信息 返回list集合
 	 * @return

@@ -30,8 +30,8 @@ public class Coursecomment {
 	private Integer commentCourseId;
 	@Column(columnDefinition = "int unsigned NOT NULL comment '备注:课程类别编号'")
 	private Integer commentCourseCategoryId;
-	@Column(columnDefinition = "int unsigned DEFAULT NULL comment '备注:评论被赞次数'")
-	private Integer commentLike;
+	@Column(columnDefinition = "int unsigned DEFAULT(0) comment '备注:评论被赞次数 '")
+	private Integer commentLike=0;
 	@Column(columnDefinition = "int unsigned DEFAULT NULL comment '备注:评价星级'")
 	private Integer commentStar;
 	@Column(columnDefinition = "int unsigned NOT NULL comment '备注:学生编号'")
@@ -102,6 +102,13 @@ public class Coursecomment {
 	}
 	public void setCommentCourseCategoryId(Integer commentCourseCategoryId) {
 		this.commentCourseCategoryId = commentCourseCategoryId;
+	}
+	@Override
+	public String toString() {
+		return "Coursecomment [commentId=" + commentId + ", commentContent=" + commentContent + ", commentCourseId="
+				+ commentCourseId + ", commentCourseCategoryId=" + commentCourseCategoryId + ", commentLike="
+				+ commentLike + ", commentStar=" + commentStar + ", commentStuId=" + commentStuId + ", commentTime="
+				+ commentTime + ", filed1=" + filed1 + ", filed2=" + filed2 + "]";
 	}
 	
 	

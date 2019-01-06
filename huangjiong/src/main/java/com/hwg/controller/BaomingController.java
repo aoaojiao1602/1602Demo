@@ -1,5 +1,6 @@
 package com.hwg.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,22 @@ public class BaomingController {
 			return null;
 		}
 		
+	}
+	
+	/**
+	 * 查询指定学生的报名记录
+	 * @return
+	 */
+	@ApiImplicitParam(name="sid",value="学生id",dataType="Integer")
+	@ApiOperation("查询出当前学生报名的课程（返回课程id）")
+	@GetMapping("/getByStuRuturnId")
+	public List<Integer> getByStuRuturnId(Integer sid){
+		List<Baoming> bm=(List<Baoming>)bService.findBaomingBystuId(sid);
+		List<Integer> list=new ArrayList<>();
+		for (Baoming baoming : bm) {
+			list.add(baoming.getCourseId());
+		}
+		return list;
 	}
 	
 	

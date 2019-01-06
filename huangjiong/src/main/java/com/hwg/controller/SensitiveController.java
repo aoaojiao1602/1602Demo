@@ -3,6 +3,7 @@ package com.hwg.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -40,6 +41,21 @@ public class SensitiveController {
 	@GetMapping()
 	public List<Sensitive> getAll(){
 		return sService.getAll();
+	}
+	
+	
+	/**
+	 * 删除敏感词汇
+	 * @return
+	 */
+	@DeleteMapping()
+	public Object deleteThis(Sensitive entity) {
+		try {
+			sService.delete(entity);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 }

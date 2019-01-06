@@ -44,6 +44,7 @@ public class Common {
 	 */
 	@GetMapping("/queryUser")
 	public Object queryUser(Integer uid) {
+		System.err.println(uService.queryUser(uid));
 		return uService.queryUser(uid);
 	}
 }

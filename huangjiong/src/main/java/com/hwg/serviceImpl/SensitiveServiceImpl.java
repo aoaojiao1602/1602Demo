@@ -37,5 +37,12 @@ public class SensitiveServiceImpl implements SensitiveService{
 		// TODO Auto-generated method stub
 		return sDao.findAll();
 	}
+	
+	/**
+	 * 删除敏感词汇
+	 */
+	public void delete(Sensitive entity) {
+		sDao.delete(entity);
+	}
 
 }
