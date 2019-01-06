@@ -24,6 +24,9 @@ spring:
   application:
     #注册中心 服务名称
     name: huangjiong
+  data:
+    elasticsearch:
+      cluster-nodes: 127.0.0.1:9300
 server:
   port: 8010
 #logback
