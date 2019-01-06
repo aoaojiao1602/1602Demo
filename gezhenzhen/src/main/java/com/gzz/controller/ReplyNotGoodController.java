@@ -23,10 +23,12 @@ public class ReplyNotGoodController {
 	 * @return
 	 */
 	@RequestMapping("/putReplyNotGoo")
-	public Object putReplyNotGoo(Integer replyNotGoodReplyId, Integer replyNotGoodUid) {
+	public Object putReplyNotGoo(Integer replyGoodUid,Integer replyId,Integer replyNotGoodReplyId, Integer replyNotGoodUid) {
 		Map<String, Object> map=new HashMap<String, Object>();
 		//查询当前用户有没有对该回复进行点赞
-		int k=service.getReplyUid(replyNotGoodReplyId, replyNotGoodUid);
+		int k=service.getReplyUid(replyGoodUid, replyId);
+		System.out.println("k>>>>>>"+k);
+		System.out.println(replyNotGoodReplyId);
 		if (k>0) {
 			map.put("success", false);
 			map.put("msg", "该用户对该回复进行过点赞则不能进行点踩了");

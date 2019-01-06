@@ -1,5 +1,6 @@
 package com.gzz.controller;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.gzz.entity.Project;
 import com.gzz.service.ProjectService;
 
@@ -18,26 +18,30 @@ import com.gzz.service.ProjectService;
 @CrossOrigin
 public class ProjectController {
 	@Autowired
-	private ProjectService service;
-	
+	private ProjectService service;	
 	/**
 	 * 查询所有的主题
-	 * http://localhost:8021/project/getProjectPage?page=1&rows=2&projectCreatetime=2017-10-11
+	 * http://localhost:8021/project/getProjectPage?projectCreatetime=2017-10-11 12:12:12&page=1&rows=2
 	 * @param page页数
 	 * @param rows一页显示多少条
 	 * @return
 	 */
 	@RequestMapping("/getProjectPage")
-	public Object getProjectPage(String projectCreatetime,Integer page,Integer rows) {
+	public Object getProjectPage(Integer page,Integer rows) {
 		System.out.println("page====>" + page);
 		System.out.println("rows====>" + rows);
+		//System.out.println("projectCreatetime"+projectCreatetime);
 		Page<Project> page2 = null;
-		page2 = service.findAll (projectCreatetime,(page - 1), rows);
+		page2 = service.findAll ((page - 1), rows);
 		Long total = page2.getTotalElements();
 		List<Project> rows2 = page2.getContent();
+		for (Project project : rows2) {
+			System.out.println(">>>>>>>>>>>>"+project.getProjectCreatetime());
+		}
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("total", total);
 		map.put("rows", rows2);
+		//map.put("a", a);
 		return map;
 	}
 	/**
@@ -76,8 +80,10 @@ public class ProjectController {
 	@RequestMapping("/putProjectss")
 	public Object putProjects(Integer clazzId,String projectContent,String projectCreatetime,String projectTitle,Integer projectUid,Integer moduleId) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println("<>>>>>>>>>>>>>"+projectCreatetime);
+		System.out.println(projectUid+">>>>>>>>>>>");
 		if (moduleId==1) {
-			int n=service.putProject(clazzId, projectContent, projectCreatetime, projectTitle, projectUid, moduleId);
+			int n=service.putProject(clazzId, projectContent, projectTitle, projectUid, moduleId);
 			if (n>0) {
 				map.put("success", true);
 				map.put("msg", "发表成功");
@@ -86,7 +92,7 @@ public class ProjectController {
 				map.put("msg", "发表失败");
 			}	
 		}else {
-			int m=service.putProjects(projectContent, projectCreatetime, projectTitle, projectUid, moduleId);
+			int m=service.putProjects(projectContent, projectTitle, projectUid, moduleId);
 			if (m>0) {
 				map.put("success", true);
 				map.put("msg", "发表成功");
@@ -168,4 +174,96 @@ public class ProjectController {
 		int n=service.getCount(projectId);
 		return n;
 	}
+	/**
+	 * 查询属于老师答疑区的主题
+	 * http://localhost:8021/project/findAllTes
+	 * @param projectCreatetime主题发表的时间
+	 * @param moduleId模块的id
+	 * @param page页数
+	 * @param rows一页显示多少条
+	 * @return
+	 */
+	@RequestMapping("/findAllTes")
+	public Object findAllTes(String projectCreatetime, Integer moduleId,Integer page,Integer rows) {
+		System.out.println("moduleId====>" + moduleId);
+		System.out.println("page====>" + page);
+		System.out.println("rows====>" + rows);
+		Page<Project> page2 = null;
+		page2 = service.findAllTes(moduleId, page-1, rows);
+		Long total = page2.getTotalElements();
+		List<Project> rows2 = page2.getContent();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("total", total);
+		map.put("rows", rows2);
+		System.out.println(rows2);
+		return map;
+	}
+	/**
+	 * 查询属于老师答疑区的主题
+	 * http://localhost:8021/project/findAllClazz
+	 * @param projectCreatetime主题发表的时间
+	 * @param moduleId模块的id
+	 * @param page页数
+	 * @param rows一页显示多少条
+	 * @return
+	 */
+	@RequestMapping("/findAllClazz")
+	public Object findAllClazz(String projectCreatetime, Integer moduleId,Integer page,Integer rows) {
+		System.out.println("moduleId====>" + moduleId);
+		System.out.println("page====>" + page);
+		System.out.println("rows====>" + rows);
+		Page<Project> page2 = null;
+		page2 = service.findAllClazz(moduleId, page-1, rows);
+		Long total = page2.getTotalElements();
+		List<Project> rows2 = page2.getContent();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("total", total);
+		map.put("rows", rows2);
+		System.out.println(rows2);
+		return map;
+	}
+	/**
+	 * 按照投票数进行查询
+	 * http://localhost:8021/project/getProjectCount?page=1&rows=2
+	 * @param page页数
+	 * @param rows一页显示多少条
+	 * @return
+	 */
+	@RequestMapping("/getProjectCount")
+	public Object getProjectCount(Integer page,Integer rows) {
+		System.out.println("page====>" + page);
+		System.out.println("rows====>" + rows);
+		Page<Project> page2 = null;
+		page2 = service.getProjectCount(page-1, rows);
+		System.out.println(page2+">>>>>>>>>>>>");
+		Long total = page2.getTotalElements();
+		List<Project> rows2 = page2.getContent();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("total", total);
+		map.put("rows", rows2);
+		System.out.println(rows2);
+		return map;
+	}
+	/**
+	 * 按照投票数进行查询
+	 * http://localhost:8021/project/findAlls
+	 * @param page页数
+	 * @param rows一页显示多少条
+	 * @return
+	 */
+	/*@RequestMapping("/findAlls")
+	public Object findAlls(Integer page,Integer rows) {
+		System.out.println("page====>" + page);
+		System.out.println("rows====>" + rows);
+		Page<Project> page2 = null;
+		page2 = service.findAlls(page-1, rows);
+		System.out.println(page2+">>>>>>>>>>>>");
+		Long total = page2.getTotalElements();
+		List<Project> rows2 = page2.getContent();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("total", total);
+		map.put("rows", rows2);
+		System.out.println(rows2);
+		return map;
+	}*/
 }

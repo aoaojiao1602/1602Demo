@@ -85,8 +85,8 @@ public class PostbarServiceImpl implements PostbarService {
 	    return postbarRepository.getPostbarPageByuId(uId,pageable);
 	}
 	
-	public Page<Postbar> findAll(Integer page,Integer size){
-		Sort sort = new Sort(Sort.Direction.DESC, "postbarId"); 
+	public Page<Postbar> findAll(String postbarCreateTime,Integer page,Integer size){
+		Sort sort = new Sort(Sort.Direction.DESC, "postbarCreateTime"); 
 	    Pageable pageable = new PageRequest(page, size, sort);
 	    return postbarRepository.findAll(pageable);
 	}

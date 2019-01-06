@@ -22,15 +22,4 @@ spring:
     name: gezhenzhen 
 server:
   port: 8021
-feign:
-  hystrix:
-    enabled: true
-hystrix:
-  command:
-    default:
-      execution:
-        timeout:
-          enabled: true
-        isolation:
-          thread:
-            timeoutInMilliseconds: 50000          
+          

@@ -1,8 +1,9 @@
 package com.gzz.entity;
 
-import java.sql.Date;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -17,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -46,6 +49,7 @@ public class Project {
 	private String projectTitle;
 	@Column(length=200)
 	private String projectContent;
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(locale="zh",timezone="GMT+8",pattern="yyyy-MM-dd HH:mm:ss")
 	private Date projectCreatetime;
 	@Column(columnDefinition="TIMESTAMP",nullable=false,insertable=false,updatable=false)

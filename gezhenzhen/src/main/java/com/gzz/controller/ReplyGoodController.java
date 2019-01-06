@@ -26,8 +26,9 @@ public class ReplyGoodController {
 	public Object putReplyGood(Integer replyGoodUid, Integer replyId) {
 		Map<String, Object> map=new HashMap<String, Object>();
 		//查询当前用户有没有对该回复进行点踩
-		int k=servive.getReplyByUid(replyGoodUid, replyId);
+		int k=servive.getReplyUids(replyGoodUid, replyId);
 		if (k>0) {
+			System.out.println("1111");
 			map.put("success", false);
 			map.put("msg", "该用户对回复进行过点踩则不能进行点赞了");
 		} else {

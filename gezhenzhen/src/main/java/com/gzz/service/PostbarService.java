@@ -3,6 +3,7 @@ package com.gzz.service;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.gzz.entity.Postbar;
 
@@ -54,5 +55,5 @@ public interface PostbarService {
 	 */
 	public Page<Postbar> getPostbarPageByuId(Integer uId,Integer page,Integer size);
 	
-	public Page<Postbar> findAll(Integer page,Integer size);
+	public Page<Postbar> findAll(String postbarCreateTime,Integer page,Integer size);
 }

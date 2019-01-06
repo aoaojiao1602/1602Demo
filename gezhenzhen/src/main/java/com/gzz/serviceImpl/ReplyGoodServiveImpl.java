@@ -28,8 +28,8 @@ public class ReplyGoodServiveImpl implements ReplyGoodServive {
 	}
 	@Transactional
 	//查询当前用户有没有对该回复进行点踩
-	 public int getReplyUid(Integer replyGoodUid,Integer replyId) {
-		return reopsitory.getReplyByUid(replyGoodUid, replyId);
+	 public int getReplyUids(Integer replyGoodUid,Integer replyId) {
+		return reopsitory.getReplyUids(replyGoodUid, replyId);
 	}
 
 }

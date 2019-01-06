@@ -48,7 +48,7 @@ public class Postbar {
 	 private Set<PostbarCategory>  postbarCategorySet = new HashSet<PostbarCategory>();
 	@Column(length=50)
 	private String postbarTitle;
-	@Column(length=500)
+	@Column(length=200)
 	private String postbarContent;
 	@JsonFormat(locale="zh",timezone="GMT+8",pattern="yyyy-MM-dd HH:mm:ss")
 	private Date postbarCreateTime;

@@ -35,7 +35,7 @@ public class ReplyReportController {
 			map.put("msg", "举报失败");
 
 		}
-		return map;
+		return n;
 	}
 
 }
