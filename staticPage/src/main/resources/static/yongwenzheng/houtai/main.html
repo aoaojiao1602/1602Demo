@@ -13,11 +13,10 @@
 		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
 		<style>
 			
-			.el-header,
-			.el-footer {
+			.el-header{
 				background-color: #B3C0D1;
 				color: #333;
-				text-align: center;
+				/* text-align: center; */
 				line-height: 60px;
 			}
 
@@ -70,7 +69,15 @@
 		</script> --> 
 		<div id="app">
 			<el-container>
-				<el-header>Header</el-header>
+				<el-header>
+					
+					<span style="text-align: left;">欢迎* {{usersnamex}}*
+					来到智慧教学平台管理系统</span>
+					<span style="display: inline-block;margin-left: 400px;">智慧教学平台</span>
+					<span style="display: inline-block;margin-left: 400px;"><el-button type="primary" size="mini" @click="tuichu"  plain>退出登录</el-button></span>
+					
+					
+					</el-header>
 				<el-container>
 					<el-aside style="width: 200px;">
 						 <el-tree :data="date" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
@@ -118,6 +125,7 @@
 			var userId = window.localStorage.getItem("uid"); //
 			var refresh_token = window.localStorage.getItem("refresh_token");
 			var rid = window.localStorage.getItem("rid"); //
+			var usersnamex = window.localStorage.getItem("usersname");
 		var app=new Vue({
 			el: '#app',
 			
@@ -126,7 +134,7 @@
 				
 			return {
 				
-				
+				usersnamex:usersnamex,
 				 date:'',
 				defaultProps: {
 				children: 'children',
@@ -141,9 +149,43 @@
 			},
 			
 			methods: {
+				tuichu(){
+					 var _this=this;
+							 _this.$confirm('此操作将退出该系统, 是否继续?', '提示', {
+							 		confirmButtonText: '确定',
+							 		cancelButtonText: '取消',
+							 		type: 'warning'
+							 	}).then(() => {
+							 axios({
+							 	method: 'post',
+							 	url:'http://localhost:8006/login/userEndLogin',
+							 	params: {
+							 	
+							 	refresh_token:refresh_token
+							 	}
+							 })
+							 .then(function (response) {
+								window.localStorage.setItem("access_token",response.data.access_token);
+							
+								window.localStorage.setItem("refresh_token",response.data.refresh_token);
+					
+							 window.location.href = "login.html";
+							
+							 	})
+							 	.catch(function (error) {
+							 	console.log(error);
+							 	});
+							 	
+							 	}).catch(() => {
+							 		_this.$message({
+							 			type: 'info',
+							 			message: '已取消删除'
+							 		});          
+							 	});
+				},
                 lefttree(){
 					var _this=this;
-					axios.get('http://localhost:8006/role/queryRoleSetModuleTree?roleIds='+rid+'&access_token='+access_token)
+					axios.get('http://localhost:8006/role/queryRolesTreeById?roleIds='+rid+'&access_token='+access_token)
                 	.then(function(response){
 					    _this.date=response.data
                 	})

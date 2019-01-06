@@ -30,44 +30,32 @@
  
   <div class="block">
 	  <el-form :inline="true" ref="form" :model="form" label-width="80px">
-	<el-form-item label="推荐位置">
-			<el-select  v-model="positionsId" placeholder="请选择" width="80px" >
-				<el-option label="无" value="0"></el-option>
-	
-				<el-option label="位置一" value="1"></el-option>
-				<el-option label="位置二" value="2"></el-option>
-				<el-option label="位置三" value="3"></el-option>
-				<el-option label="位置四" value="4"></el-option>
-				
-				
-		</el-form-item>
+	 <el-form-item label="导航名:">
+	 	<el-input class="iinpu" size="mini" v-model="navpage" placeholder="请输入导航名称"></el-input>
+	 </el-form-item>
 		<el-form-item>
 			<el-button type="primary" size="mini" plain icon="el-icon-search" @click="courselistpage">查询</el-button>
 		</el-form-item>
  <el-form-item>
-  <el-button type="primary" size="mini" @click="addtj" icon="el-icon-plus" plain>新增</el-button>
+  <el-button type="primary" size="mini" @click="addcourse" icon="el-icon-plus" plain>新增</el-button>
   </el-form-item>
  
   </el-form>
     <div id="tabl">
 		<el-table :data="tableData" size="mini" border="true" :default-sort = "{prop: 'date', order: 'descending'}" 
 		 highlight-current-row @current-change="handleCurrentChange"
-			style="width:1000px" max-height="400">
+			style="width:520px" max-height="400">
 			 <!-- <el-table-column type="selection" align="center" width="55"></el-table-column> --> 
 			  <el-table-column type="index" width="50" align="center" label="行号"></el-table-column>
-			<el-table-column prop="courseId" align="center"  label="课程推荐id" width="100">
+			<el-table-column prop="navId" align="center"  label="导航编号" width="100">
 			</el-table-column>
 	 	
-		<el-table-column prop="kechId" align="center"  sortable label="课程id" width="100">
+		<el-table-column prop="navName" align="center"  sortable label="导航名称" width="100">
 		</el-table-column>
-		<el-table-column prop="courseWeigh" align="center"  sortable label="课程权重" width="100">
-		</el-table-column>
-		<el-table-column prop="navRemark" align="center"  sortable label="报名人数 " width="160">
-		</el-table-column>
-		<el-table-column prop="courseStatus" align="center"  :formatter="formartShow" label="是否推荐" width="100">
-		</el-table-column>
-		<el-table-column prop="positionsId" align="center"  label="推荐位置" width="160">
-		</el-table-column> 
+		<!-- <el-table-column prop="navRemark" align="center"  sortable label="备注" width="100">
+		</el-table-column> -->
+		
+		
 		<el-table-column  label="操作" align="center" width="180">
 				<template slot-scope="scope">
 					<el-button  @click="updatecourse(scope.row)"
@@ -96,27 +84,31 @@
   </div>
   </template>
 
-
-	 <el-dialog title="编辑推荐信息" :visible.sync="updatecoursedialogFormVisible">
-		<el-form status-icon :model="updatecourseform" ref="updatecourseform">
-		<el-form-item label="权重"  :label-width="formLabelWidth" >
-			<el-input v-model="updatecourseform.courseWeigh" style="width: 180px;" autocomplete="off"></el-input>
+ <el-dialog title="新增导航信息" :visible.sync="addcoursedialogFormVisible">
+		<el-form status-icon :model="addcourseform" ref="addcourseform">
+		<el-form-item label="导航名称"  :label-width="formLabelWidth" >
+			<el-input v-model="addcourseform.navname" style="width: 180px;" autocomplete="off"></el-input>
 		</el-form-item>
-			 <el-form-item label="是否推荐"  :label-width="formLabelWidth">
-      <el-select prop="courseStatus" v-model="updatecourseform.courseStatus" placeholder="请选择">
-        <el-option label="是" value="1"></el-option>
-        <el-option label="否" value="0"></el-option>
-      </el-select>
-    </el-form-item>
-				<el-form-item label="推荐位置"  :label-width="formLabelWidth">
-				<el-select prop="positionsId" v-model="updatecourseform.positionsId" placeholder="请选择">
-					<el-option label="位置一" value="1"></el-option>
-					<el-option label="位置二" value="2"></el-option>
-					<el-option label="位置三" value="3"></el-option>
-					<el-option label="位置四" value="4"></el-option>
+			<!-- <el-form-item label="备注"  :label-width="formLabelWidth" >
+				<el-input v-model="addcourseform.navremark" style="width: 180px;" autocomplete="off"></el-input>
+			</el-form-item> -->
 				
-					
-			</el-form-item>
+		</el-form>
+		<div slot="footer" class="dialog-footer">
+			<el-button @click="addcoursedialogFormVisible = false">取 消</el-button>
+			<el-button type="primary" @click="addtj('addcourseform')">确 定</el-button>
+		</div>
+	</el-dialog>
+
+	 <el-dialog title="编辑导航信息" :visible.sync="updatecoursedialogFormVisible">
+		<el-form status-icon :model="updatecourseform" ref="updatecourseform">
+		<el-form-item label="导航名称"  :label-width="formLabelWidth" >
+			<el-input v-model="updatecourseform.navname" style="width: 180px;" autocomplete="off"></el-input>
+		</el-form-item>
+			<!-- <el-form-item label="备注"  :label-width="formLabelWidth" >
+				<el-input v-model="updatecourseform.navremark" style="width: 180px;" autocomplete="off"></el-input>
+			</el-form-item> -->
+				
 		</el-form>
 		<div slot="footer" class="dialog-footer">
 			<el-button @click="updatecoursedialogFormVisible = false">取 消</el-button>
@@ -137,31 +129,30 @@
 			data:function() {
 				
 			return {
-				 rolegridData: '',
-				 rolegridData2: '',
+				 
 				page: 1,
 				rows:10,
 				total:'',
 				tableData:'',
-				positionsId:'',
+				
 		    currentRow: null,
-				 options: [{
-          value: '1',
-          label: '是'
-        }, {
-          value: '0',
-          label: '否'
-        }],
+				 navpage:'',
 		
 		updatecoursedialogFormVisible:false,
-		
+		addcoursedialogFormVisible:false,
 		formLabelWidth: '120px',
         value: '',
 		updatecourseform: {
-			courseId:'',
-			courseWeigh: '',
-			courseStatus: '',
-			positionsId:''
+			navId:'',
+			navremark: '',
+			navname: ''
+			
+		},
+		addcourseform: {
+		
+			navremark: '',
+			navname: ''
+			
 		},
        form: {
           name: '',
@@ -187,13 +178,16 @@
 					var _this=this;
 					axios({
 						method: 'put',
-						url: 'http://localhost:8006/course/addCourse',
+						url: 'http://localhost:8006/navigation/addNavigation',
 						params: {
+							navName:_this.addcourseform.navname,
 							access_token:access_token
 						}
 						
 					})
 					.then(function (response) {
+						_this.courselistpage();
+					_this.addcoursedialogFormVisible=false;
 						_this.$message({
 							type: 'success',
 							message: response.data.msg
@@ -210,11 +204,11 @@
 					var _this=this;
 					axios({
 						method: 'get',
-						url: 'http://localhost:8006/course/queryCourseByPage',
+						url: 'http://localhost:8006/navigation/queryNavigationByPage',
 						params: {
 						page: _this.page,
 						rows:_this.rows,
-					  id:_this.positionsId,
+					  name:_this.navpage,
 					  access_token:access_token
 						} 
 					})
@@ -236,23 +230,24 @@
 						if(valid) {
 							axios({
 								method: 'post',
-								url:'http://localhost:8006/course/updateCourse',
+								url:'http://localhost:8006/navigation/updateNavigation',
 								params: {
-								courseId:_this.updatecourseform.courseId,
-								positionsId: _this.updatecourseform.positionsId,
-								courseStatus:_this.updatecourseform.courseStatus,
-								courseWeigh:_this.updatecourseform.courseWeigh,
-								access_token:access_token
+								/* courseId:_this.updatecourseform.navremark, */
+								navName: _this.updatecourseform.navname,
+								navId:_this.updatecourseform.navId,
+						    access_token:access_token
 								}
 							})
 							.then(function (response) {
 								_this.courselistpage();
-                _this.updatecoursedialogFormVisible=false;
+	_this.updatecoursedialogFormVisible=false;
 						_this.$message({
 							type: 'success',
 							message: response.data.msg
 						});
-					
+						
+						
+						
 								})
 								.catch(function (error) {
 								console.log(error);
@@ -273,9 +268,9 @@
 		 	}).then(() => {
 		 axios({
 		 	method: 'delete',
-		 	url:'http://localhost:8006/course/deleteCourse',
+		 	url:'http://localhost:8006/navigation/deleteNavigation',
 		 	params: {
-		 	courseId: row.courseId,
+		 	navId: row.navId,
 		 	access_token:access_token
 		 	}
 		 })
@@ -298,12 +293,14 @@
 		 			message: '已取消删除'
 		 		});          
 		 	});
-	  },
+	  }, addcourse(row){
+		
+				this.addcoursedialogFormVisible=true;
+			},
 	  updatecourse(row){
-			this.updatecourseform.courseWeigh=row.courseWeigh;
-			this.updatecourseform.positionsId=row.positionsId;
-			this.updatecourseform.courseStatus=row.courseStatus;
-				this.updatecourseform.courseId=row.courseId;
+		
+			this.updatecourseform.navId=row.navId;
+				this.updatecourseform.navname=row.navName;
 				this.updatecoursedialogFormVisible=true;
 			},
 	   setCurrent(row) {
