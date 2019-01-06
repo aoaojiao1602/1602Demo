@@ -165,11 +165,12 @@
 							 	}
 							 })
 							 .then(function (response) {
-								window.localStorage.setItem("access_token",response.data.access_token);
-							
-								window.localStorage.setItem("refresh_token",response.data.refresh_token);
-					
-							 window.location.href = "login.html";
+								window.localStorage.removeItem("access_token")
+				        window.localStorage.removeItem("refresh_token")
+				        window.localStorage.removeItem("userId")
+								window.localStorage.removeItem("rid")
+								window.localStorage.removeItem("usersnamex")
+				        window.location.href = "login.html"
 							
 							 	})
 							 	.catch(function (error) {
