@@ -19,7 +19,7 @@ public interface PermissionsMapper extends JpaRepository<Permissions, Integer>{
 	public List<Integer> queryPermissionIdByRoleId(List<Integer> roleId);
 	
 	//通过权限id得到权限
-	@Query(value = "SELECT * FROM permissiontb WHERE permission_id IN (?1)" , nativeQuery = true)
+	@Query(value = "SELECT * FROM permissiontb WHERE permission_id IN (?1) AND permission_value IS NOT NULL" , nativeQuery = true)
 	public List<Permissions> queryPermissionByPermissionId(List<Integer> permissionId);
 	
 	
