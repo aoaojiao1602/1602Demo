@@ -3,6 +3,7 @@ package com.hwg;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -14,6 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @EnableSwagger2
 @EnableFeignClients
+@EnableElasticsearchRepositories
 @SpringCloudApplication // sprintCloud启动类
 public class Application {
 	   public static void main(String[] args) {
